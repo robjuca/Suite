@@ -24,4 +24,4 @@ Figura 1
 
     ![](media/c6a66df256daf27eb3648ed684493f9e.jpg)
 
-Figura
+Figura 2
