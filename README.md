@@ -11,7 +11,7 @@ Objetivo:
 
 ![figura 1](Docs/media/1dfbcb5311ca040aef14ec476ce203ba.jpg)
 
-Figura
+Figura 1
 
 -   Criar aplicativos (WPF) para gerenciar os gadgets e fazer o layout dos
     mesmos salvando o resultado em um banco de dados (SQL Server)
