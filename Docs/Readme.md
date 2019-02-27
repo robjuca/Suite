@@ -9,9 +9,19 @@ Objetivo:
     dados.  
     A ideia surgiu do site da Microsoft (figura: 1)
 
-![figura 1](media/1dfbcb5311ca040aef14ec476ce203ba.jpg)
+![figura 1](media/7c689849a72d1a01c953d89168f87a52.jpg)
 
-Figura
+Figura 1
 
 -   Criar aplicativos (WPF) para gerenciar os gadgets e fazer o layout dos
     mesmos salvando o resultado em um banco de dados (SQL Server)
+
+-   O projeto pode ser dividido como: (figura 2)  
+    - launcher (main app)  
+    - gadget (documento, Imagem, video etc.)  
+    - layout (bag, layout horizontal: shelf, drawer e layout vertical: chest)  
+    
+
+    ![](media/c6a66df256daf27eb3648ed684493f9e.jpg)
+
+Figura
