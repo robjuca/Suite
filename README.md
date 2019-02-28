@@ -6,7 +6,7 @@ Produzir uma lista vertical de gadgets (documento, imagem, vídeo etc.)
 arranjados em uma lista horizontal e salvar o resultado em um banco de dados.  
 A ideia surgiu do site da Microsoft (figura abaixo)
 
-![](Docs/media/7c689849a72d1a01c953d89168f87a52.jpg)
+![](Docs/media/figura 1.jpg)
 
 Criar aplicativos (WPF) para gerenciar gadgets e fazer o layout dos mesmos
 salvando o resultado em um banco de dados (SQL Server)
@@ -19,7 +19,7 @@ O projeto pode ser dividido como: (figura abaixo)
 |          | imagem                    | horizontal: shelf, drawer                   |
 |          | vídeo etc.                | vertical: chest                             |
 
-![](Docs/media/7695eb22e9276ac47ea0326af237b6cb.jpg)
+![](Docs/media/figura 2.jpg)
 
 *Layout*:
 
