@@ -1,6 +1,6 @@
-\*Projeto\*: Suite
+*Projeto: Suite
 
-\*Objetivo\*:
+*Objetivo:
 
 Produzir uma lista vertical de gadgets (documento, imagem, vídeo etc.)
 
@@ -8,7 +8,7 @@ arranjados em uma lista horizontal e salvar o resultado em um banco de dados.
 
 A ideia surgiu do site da Microsoft (figura abaixo)
 
-![](media/7c689849a72d1a01c953d89168f87a52.jpg)
+![](media/figura 1.jpg)
 
 Criar aplicativos (WPF) para gerenciar gadgets e fazer o layout dos mesmos
 
@@ -26,9 +26,9 @@ O projeto pode ser dividido como: (figura abaixo)
 
 \| \| vídeo etc. \| vertical: chest \|
 
-![](media/7695eb22e9276ac47ea0326af237b6cb.jpg)
+![](media/figura 2.jpg)
 
-\*Layout\*:
+*Layout:
 
 Os gadgets são formatados para uma matriz (dashboard) de 4cx3r dando um total de
 
@@ -62,7 +62,7 @@ Por exemplo:
 
 \| R3 \| \| \| \| \|
 
-\*Settings\*:
+*Settings:
 
 \\- tamanho (pixel) da coluna
 
