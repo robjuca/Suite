@@ -26,9 +26,12 @@ Os gadgets são formatados para uma matriz (dashboard) de 4cx3r dando um total d
 12 possíveis layouts (tamanhos). Para identificar uma cell neste dashboard
 usa-se “style” e “size”.
 
-| style | size | | (row) | (column) |
-|----------------------------------------------|--------------| | mini (row
-x 1) | 1 | | small (row x 2) | 2 | | large (row x 3) | 3 | | | 4 |
+| style  (row)| size (column) |
+|-----------------|--------------|
+| mini (rowx 1) | 1 | 
+| small (row x 2) | 2 | 
+| large (row x 3) | 3 | 
+| | 4 |
 
 Por exemplo:
 
