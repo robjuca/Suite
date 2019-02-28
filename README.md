@@ -1,6 +1,7 @@
 *Projeto*: Suite
 
 *Objetivo*:
+
 Produzir uma lista vertical de gadgets (documento, imagem, vídeo etc.)
 arranjados em uma lista horizontal e salvar o resultado em um banco de dados.
 A ideia surgiu do site da Microsoft (figura abaixo)
@@ -37,7 +38,9 @@ Por exemplo:
 | R3                    |    |    |    |    |
 
 *Settings*:
+
 \- tamanho (pixel) da coluna
+
 \- connection string SQL Server
 
 *Ferramentas* (tools):
