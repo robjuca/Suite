@@ -21,13 +21,14 @@ O projeto pode ser dividido como: (figura abaixo)
 ![](Docs/media/c6a66df256daf27eb3648ed684493f9e.jpg)
 
 *Layout*:
+
 Os gadgets são formatados para uma matriz (dashboard) de 4cx3r dando um total de
 12 possíveis layouts (tamanhos). Para identificar uma cell neste dashboard
 usa-se “style” e “size”.
 
-\| style \| size \| \| (row) \| (column) \|
-\|----------------------------------------------\|--------------\| \| mini (row
-x 1) \| 1 \| \| small (row x 2) \| 2 \| \| large (row x 3) \| 3 \| \| \| 4 \|
+| style | size | | (row) | (column) |
+|----------------------------------------------|--------------| | mini (row
+x 1) | 1 | | small (row x 2) | 2 | | large (row x 3) | 3 | | | 4 |
 
 Por exemplo:
 
