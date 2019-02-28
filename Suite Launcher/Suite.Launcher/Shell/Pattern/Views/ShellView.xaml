@@ -1,0 +1,94 @@
+﻿<Window x:Class="Suite.Launcher.Shell.Pattern.Views.TShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:caliburn="http://www.caliburnproject.org"
+        WindowStyle="None"
+        WindowState="Normal"
+        WindowStartupLocation="Manual"
+        ResizeMode="NoResize"
+        Left="10"
+        Top="10"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="12"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="Transparent"
+        AllowsTransparency="True"
+        SizeToContent="WidthAndHeight"
+        FontFamily="{StaticResource MaterialDesignFont}">
+
+    <Border VerticalAlignment="Top"
+            Background="Transparent">
+        <StackPanel Orientation="Horizontal">
+            <!--settings-->
+            <Button ToolTip="settings"
+                    IsEnabled="{Binding Model.IsSettingsEnabled}"
+                    caliburn:Message.Attach="[Event Click] = [OnSettingsCommadClicked ()]">
+                <ContentControl Style="{StaticResource MenuSettingsIcon}" />
+            </Button>
+            
+            <materialDesign:PopupBox Width="44"
+                                     Height="44"
+                                     ToolTip="gadget"
+                                     Background="LightPink" IsPopupOpen="True"
+                                     Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                                     PlacementMode="BottomAndAlignCentres">
+                <StackPanel>
+                    <!--document-->
+                    <Button ToolTip="document"
+                            
+                            caliburn:Message.Attach="[Event Click] = [OnDocumentCommadClicked ()]">
+                        <ContentControl Style="{StaticResource MenuDocumentIcon}" />
+                    </Button>
+
+                    <!--image-->
+                    <Button ToolTip="image"
+                            IsEnabled="{Binding Model.IsMenuEnabled}"
+                            caliburn:Message.Attach="[Event Click] = [OnImageCommadClicked ()]">
+                        <ContentControl Style="{StaticResource MenuImageIcon}" />
+                    </Button>
+                </StackPanel>
+            </materialDesign:PopupBox>
+
+            <materialDesign:PopupBox Width="44"
+                                     Height="44"
+                                     ToolTip="layout"
+                                     Background="LightBlue"
+                                     IsPopupOpen="True"
+                                     Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                                     PlacementMode="BottomAndAlignCentres">
+                <StackPanel>
+                    <!--bag-->
+                    <Button ToolTip="bag"
+                            IsEnabled="{Binding Model.IsMenuEnabled}"
+                            caliburn:Message.Attach="[Event Click] = [OnBagCommadClicked ()]">
+                        <ContentControl Style="{StaticResource MenuBagIcon}" />
+                    </Button>
+
+                    <!--shelf-->
+                    <Button ToolTip="shelf"
+                            IsEnabled="{Binding Model.IsMenuEnabled}"
+                            caliburn:Message.Attach="[Event Click] = [OnShelfCommadClicked ()]">
+                        <ContentControl Style="{StaticResource MenuShelfIcon}" />
+                    </Button>
+
+                    <!--drawer-->
+                    <Button ToolTip="drawer"
+                            IsEnabled="{Binding Model.IsMenuEnabled}"
+                            caliburn:Message.Attach="[Event Click] = [OnDrawerCommadClicked ()]">
+                        <ContentControl Style="{StaticResource MenuDrawerIcon}" />
+                    </Button>
+
+                    <!--chest-->
+                    <Button ToolTip="chest"
+                            IsEnabled="{Binding Model.IsMenuEnabled}"
+                            caliburn:Message.Attach="[Event Click] = [OnChestCommadClicked ()]">
+                        <ContentControl Style="{StaticResource MenuChestIcon}" />
+                    </Button>
+                </StackPanel>
+            </materialDesign:PopupBox>
+        </StackPanel>
+    </Border>
+</Window>

@@ -4,22 +4,26 @@
 ----------------------------------------------------------------*/
 
 //----- Include
-using System.Windows;
+
 //---------------------------//
 
-namespace Suite.Launcher
+namespace Suite.Launcher.Shell.Presentation
 {
-  public partial class TApp : Application
+  public class TPresentationCommand : IDelegateCommand
   {
-    #region Overrides
-    protected override void OnStartup (StartupEventArgs e)
-    {
-      rr.Library.Types.TSingleInstance.Make ();
+    #region IDelegateCommand Members
+    
 
-      base.OnStartup (e);
+    
+    #endregion
+
+    #region Constructor
+    public TPresentationCommand (TShellPresentation presentation)
+    {
+
     }
     #endregion
-  };
+  }
   //---------------------------//
 
 }  // namespace

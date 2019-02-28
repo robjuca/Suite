@@ -4,21 +4,14 @@
 ----------------------------------------------------------------*/
 
 //----- Include
-using System.Windows;
+
+using rr.Library.Infrastructure;
 //---------------------------//
 
 namespace Suite.Launcher
 {
-  public partial class TApp : Application
+  public class TBootstrapper : TBootstrapper<Shell.Pattern.ViewModels.IShellViewModel>
   {
-    #region Overrides
-    protected override void OnStartup (StartupEventArgs e)
-    {
-      rr.Library.Types.TSingleInstance.Make ();
-
-      base.OnStartup (e);
-    }
-    #endregion
   };
   //---------------------------//
 

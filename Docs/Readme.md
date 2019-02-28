@@ -1,5 +1,7 @@
 *Projeto*: Suite
 
+![](media/73b1518089c9bf2b6b6d0dec5b38286f.jpg)
+
 *Objetivo*:
 
 Produzir uma lista vertical de gadgets (documento, imagem, vídeo etc.)
@@ -16,11 +18,11 @@ salvando o resultado em um banco de dados (SQL Server)
 
 O projeto pode ser dividido como: (figura abaixo)
 
-| launcher | gadget                    | layout                                      |
-|----------|---------------------------|---------------------------------------------|
-| main app | documento                 | bag                                         |
-|          | imagem                    | horizontal: shelf, drawer                   |
-|          | vídeo etc.                | vertical: chest                             |
+| launcher | gadget     | layout                    |
+|----------|------------|---------------------------|
+| main app | documento  | bag                       |
+|          | imagem     | horizontal: shelf, drawer |
+|          | vídeo etc. | vertical: chest           |
 
 ![](media/c6a66df256daf27eb3648ed684493f9e.jpg)
 
@@ -32,13 +34,9 @@ Os gadgets são formatados para uma matriz (dashboard) de 4cx3r dando um total d
 
 usa-se “style” e “size”.
 
-| style                                        | size         |
-| (row)                                        | (column)     |
-|----------------------------------------------|--------------|
-| mini (row x 1)                               | 1            |
-| small (row x 2)                              | 2            |
-| large (row x 3)                              | 3            |
-|                                              | 4            |
+\| style \| size \| \| (row) \| (column) \|
+\|----------------------------------------------\|--------------\| \| mini (row
+x 1) \| 1 \| \| small (row x 2) \| 2 \| \| large (row x 3) \| 3 \| \| \| 4 \|
 
 Por exemplo:
 
@@ -56,9 +54,9 @@ Por exemplo:
 
 *Ferramentas* (tools):
 
-| IDE                | Language          | Tools                                                                                                   | UI                                            |
-|--------------------|-------------------|---------------------------------------------------------------------------------------------------------|-----------------------------------------------|
-| Visual Studio 2019 | C\# 7.3           | Caliburn.Micro 3.2 (MVVM pattern)                                                                       | MaterialDesignThemes 2.5                      |
-|                    | .Net 4.7.2        | XDMessaging.Lite 5                                                                                      | gong-wpf-dragdrop 1.1                         |
-|                    |                   | Microsoft.EntityFrameworkCore.SqlServer 2.2                                                             |                                               |
-|                    |                   | rrLibrary                                                                                               |                                               |
+| IDE                | Language   | Tools                                       | UI                       |
+|--------------------|------------|---------------------------------------------|--------------------------|
+| Visual Studio 2019 | C\# 7.3    | Caliburn.Micro 3.2 (MVVM pattern)           | MaterialDesignThemes 2.5 |
+|                    | .Net 4.7.2 | XDMessaging.Lite 5                          | gong-wpf-dragdrop 1.1    |
+|                    |            | Microsoft.EntityFrameworkCore.SqlServer 2.2 |                          |
+|                    |            | rrLibrary                                   |                          |

@@ -4,19 +4,16 @@
 ----------------------------------------------------------------*/
 
 //----- Include
-using System.Windows;
 //---------------------------//
 
-namespace Suite.Launcher
+namespace Suite.Launcher.Shell.Pattern.Views
 {
-  public partial class TApp : Application
+  public partial class TShellView 
   {
-    #region Overrides
-    protected override void OnStartup (StartupEventArgs e)
+    #region Constructor
+    public TShellView ()
     {
-      rr.Library.Types.TSingleInstance.Make ();
-
-      base.OnStartup (e);
+      InitializeComponent ();
     }
     #endregion
   };
