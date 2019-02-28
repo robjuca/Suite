@@ -3,17 +3,13 @@
 *Objetivo*:
 
 Produzir uma lista vertical de gadgets (documento, imagem, vídeo etc.)
-
 arranjados em uma lista horizontal e salvar o resultado em um banco de dados.
-
 A ideia surgiu do site da Microsoft (figura abaixo)
 
 ![](Docs/media/1dfbcb5311ca040aef14ec476ce203ba.jpg)
 
 Criar aplicativos (WPF) para gerenciar gadgets e fazer o layout dos mesmos
-
 salvando o resultado em um banco de dados (SQL Server)
-
 O projeto pode ser dividido como: (figura abaixo)
 
 | launcher | gadget     | layout                    |
@@ -27,21 +23,22 @@ O projeto pode ser dividido como: (figura abaixo)
 *Layout*:
 
 Os gadgets são formatados para uma matriz (dashboard) de 4cx3r dando um total de
-
 12 possíveis layouts (tamanhos). Para identificar uma cell neste dashboard
-
 usa-se “style” e “size”.
 
-\| style \| size \| \| (row) \| (column) \|
-\|----------------------------------------------\|--------------\| \| mini (row
-x 1) \| 1 \| \| small (row x 2) \| 2 \| \| large (row x 3) \| 3 \| \| \| 4 \|
+| style  (row)| size (column) |
+|-----------------|--------------|
+| mini (row x 1) | 1 | 
+| small (row x 2) | 2 | 
+| large (row x 3) | 3 | 
+| | 4 |
 
 Por exemplo:
 
-| style: small, size: 2 | C1 | C2 | C3 | C4 |
+| style: small, size: 3 | C1 | C2 | C3 | C4 |
 |-----------------------|----|----|----|----|
-| R1                    |    |    |    |    |
-| R2                    |    |    |    |    |
+| R1                    |  x  | x   | x   |    |
+| R2                    |  x  |  x  |  x  |    |
 | R3                    |    |    |    |    |
 
 *Settings*:
