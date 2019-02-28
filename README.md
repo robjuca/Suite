@@ -28,17 +28,17 @@ usa-se “style” e “size”.
 
 | style  (row)| size (column) |
 |-----------------|--------------|
-| mini (rowx 1) | 1 | 
+| mini (row x 1) | 1 | 
 | small (row x 2) | 2 | 
 | large (row x 3) | 3 | 
 | | 4 |
 
 Por exemplo:
 
-| style: small, size: 2 | C1 | C2 | C3 | C4 |
+| style: small, size: 3 | C1 | C2 | C3 | C4 |
 |-----------------------|----|----|----|----|
-| R1                    |    |    |    |    |
-| R2                    |    |    |    |    |
+| R1                    |  x  | x   | x   |    |
+| R2                    |  x  |  x  |  x  |    |
 | R3                    |    |    |    |    |
 
 *Settings*:
