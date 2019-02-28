@@ -8,7 +8,7 @@ arranjados em uma lista horizontal e salvar o resultado em um banco de dados.
 
 A ideia surgiu do site da Microsoft (figura abaixo)
 
-![](media/7c689849a72d1a01c953d89168f87a52.jpg)
+![](media/1dfbcb5311ca040aef14ec476ce203ba.jpg)
 
 Criar aplicativos (WPF) para gerenciar gadgets e fazer o layout dos mesmos
 
@@ -26,7 +26,7 @@ O projeto pode ser dividido como: (figura abaixo)
 
 \| \| vídeo etc. \| vertical: chest \|
 
-![](media/7695eb22e9276ac47ea0326af237b6cb.jpg)
+![](media/c6a66df256daf27eb3648ed684493f9e.jpg)
 
 \*Layout\*:
 
@@ -70,7 +70,7 @@ Por exemplo:
 
 \*Ferramentas\* (tools):
 
-\| IDE \| language \| tools \| UI \|
+\| IDE \| Language \| Tools \| UI \|
 
 \|--------------------\|-------------------\|---------------------------------------------------------------------------------------------------------\|-----------------------------------------------\|
 
