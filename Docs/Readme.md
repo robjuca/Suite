@@ -1,6 +1,6 @@
-*Projeto*: Suite
-
 ![](media/73b1518089c9bf2b6b6d0dec5b38286f.jpg)
+
+*Projeto*: Suite
 
 *Objetivo*:
 
@@ -18,33 +18,32 @@ salvando o resultado em um banco de dados (SQL Server)
 
 O projeto pode ser dividido como: (figura abaixo)
 
-| launcher | gadget     | layout                    |
-|----------|------------|---------------------------|
-| main app | documento  | bag                       |
-|          | imagem     | horizontal: shelf, drawer |
-|          | vídeo etc. | vertical: chest           |
+| launcher | gadget                    | layout                                      |
+|----------|---------------------------|---------------------------------------------|
+| main app | documento                 | bag                                         |
+|          | imagem                    | horizontal: shelf, drawer                   |
+|          | vídeo etc.                | vertical: chest                             |
 
 ![](media/c6a66df256daf27eb3648ed684493f9e.jpg)
 
 *Layout*:
 
-Os gadgets são formatados para uma matriz (dashboard) de 4cx3r dando um total de
+Os gadgets são formatados para uma matriz (dashboard) de 4cx4r dando um total de
 
-12 possíveis layouts (tamanhos). Para identificar uma cell neste dashboard
+16 possíveis layouts (tamanhos). Para identificar o size de uma cell neste
+dashboard
 
-usa-se “style” e “size”.
+usa-se “style”.
 
-\| style \| size \| \| (row) \| (column) \|
-\|----------------------------------------------\|--------------\| \| mini (row
-x 1) \| 1 \| \| small (row x 2) \| 2 \| \| large (row x 3) \| 3 \| \| \| 4 \|
+| Style               |                |
+|---------------------|----------------|
+| horizontal (column) | Vertical (row) |
+| mini                | mini           |
+| small               | small          |
+| large               | large          |
+| big                 | big            |
 
-Por exemplo:
-
-| style: small, size: 2 | C1 | C2 | C3 | C4 |
-|-----------------------|----|----|----|----|
-| R1                    |    |    |    |    |
-| R2                    |    |    |    |    |
-| R3                    |    |    |    |    |
+![](media/b1ce885d52718db50b27de09967fbb05.jpg)
 
 *Settings*:
 
@@ -54,9 +53,9 @@ Por exemplo:
 
 *Ferramentas* (tools):
 
-| IDE                | Language   | Tools                                       | UI                       |
-|--------------------|------------|---------------------------------------------|--------------------------|
-| Visual Studio 2019 | C\# 7.3    | Caliburn.Micro 3.2 (MVVM pattern)           | MaterialDesignThemes 2.5 |
-|                    | .Net 4.7.2 | XDMessaging.Lite 5                          | gong-wpf-dragdrop 1.1    |
-|                    |            | Microsoft.EntityFrameworkCore.SqlServer 2.2 |                          |
-|                    |            | rrLibrary                                   |                          |
+| IDE                | Language          | Tools                                                                                                   | UI                                            |
+|--------------------|-------------------|---------------------------------------------------------------------------------------------------------|-----------------------------------------------|
+| Visual Studio 2019 | C\# 7.3           | Caliburn.Micro 3.2 (MVVM pattern)                                                                       | MaterialDesignThemes 2.5                      |
+|                    | .Net 4.7.2        | XDMessaging.Lite 5                                                                                      | gong-wpf-dragdrop 1.1                         |
+|                    |                   | Microsoft.EntityFrameworkCore.SqlServer 2.2                                                             |                                               |
+|                    |                   | rrLibrary                                                                                               |                                               |

@@ -1,0 +1,364 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:controls="clr-namespace:Shared.Resources">
+
+    <!--TFooter-->
+    <Style TargetType="controls:TFooter">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:TFooter">
+                    <Grid VerticalAlignment="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <!--Copyright-->
+                        <StackPanel Grid.Column="0"
+                                    Orientation="Horizontal">
+                            <Image Source="/Assets/Images/App.ico"
+                                   Width="15"
+                                   Height="15"
+                                   Stretch="UniformToFill" />
+
+                            <TextBlock HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontSize="11"
+                                       Margin="7 0 0 0"
+                                       Text="Suite 18 Module" />
+
+                            <!--module name-->
+                            <TextBlock x:Name="PART_ModuleName"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontSize="11"
+                                       Margin="7 0 7 0" />
+
+                            <TextBlock HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontSize="11"
+                                       Text=" 2018" />
+                        </StackPanel>
+
+                        <!--Logo-->
+                        <TextBlock Grid.Column="1"
+                                   Margin="0 8 0 0"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   FontFamily="Segoe UI"
+                                   FontSize="12">
+                    <Run>rr</Run>
+                    <Run Foreground="Red"
+                            FontWeight="Bold"
+                            FontStyle="Italic">Soft</Run>
+                        </TextBlock>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--TShellStatusBar-->
+    <Style TargetType="controls:TShellStatusBar">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:TShellStatusBar">
+                    <StatusBar Background="Transparent">
+                        <StatusBarItem Margin="220 0 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <!--database connected-->
+                                <ContentControl Margin="5 0 0 0"
+                                                Visibility="{Binding Model.DatabaseOnVisibility}"
+                                                Style="{DynamicResource DatabaseOnIcon}" />
+
+                                <!--database disconnected-->
+                                <ContentControl Margin="5 0 0 0"
+                                                Visibility="{Binding Model.DatabaseOffVisibility}"
+                                                Style="{DynamicResource DatabaseOffIcon}" />
+
+                                <!--SQL authentication-->
+                                <ContentControl Margin="5 0 0 0"
+                                                Visibility="{Binding Model.SQLAuthenticationVisibility}"
+                                                Style="{DynamicResource SQLAuthenticationIcon}" />
+
+                                <!--Windows authentication-->
+                                <ContentControl Margin="5 0 0 0"
+                                                Visibility="{Binding Model.WindowsAuthenticationVisibility}"
+                                                Style="{DynamicResource WindowsAuthenticationIcon}" />
+
+                                <!--locked-->
+                                <ContentControl Margin="20 0 0 0"
+                                                Visibility="{Binding Model.LockedVisibility}"
+                                                Style="{DynamicResource LockedIcon}" />
+                            </StackPanel>
+                        </StatusBarItem>
+
+                        <StatusBarItem Margin="10 0 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <!--service icon-->
+                                <ContentControl Visibility="{Binding Model.ServiceReportVisibility}"
+                                                Style="{DynamicResource ServiceReportIcon}" />
+
+                                <!--service report-->
+                                <TextBlock Margin="5 0 0 0"
+                                           Text="{Binding Model.ServiceReportMessage}" />
+                            </StackPanel>
+                        </StatusBarItem>
+
+                        <StatusBarItem Margin="0 0 30 0"
+                                       HorizontalContentAlignment="Right">
+                            <!--message progress bar-->
+                            <StackPanel Margin="0 0 20 0"
+                                        Orientation="Horizontal">
+                                <!--message-->
+                                <Border>
+                                    <TextBlock Text="{Binding Model.Message}" />
+                                </Border>
+
+                                <!--progress-->
+                                <Border Margin="10 0 0 0">
+                                    <ProgressBar Value="{Binding Model.ProgressValue}"
+                                                 IsIndeterminate="{Binding Model.IsActiveProgress}"
+                                                 Style="{DynamicResource MaterialDesignCircularProgressBar}" />
+                                </Border>
+                            </StackPanel>
+                        </StatusBarItem>
+                    </StatusBar>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--TStyleSelector-->
+    <Style TargetType="controls:TStyleSelector">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:TStyleSelector">
+                    <Grid>
+                        <materialDesign:Card Padding="3"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Stretch">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <!--title-->
+                                <Border Grid.Row="0">
+                                    <TextBlock Text="style"
+                                               FontWeight="DemiBold"
+                                               Margin="0 0 3 4"
+                                               HorizontalAlignment="Right"
+                                               VerticalAlignment="Center" />
+                                </Border>
+
+                                <!--style-->
+                                <Border Grid.Row="1">
+                                    <Grid>
+                                        <!--horizontal layout-->
+                                        <Border x:Name="PART_HorizontalLayout">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Border x:Name="PART_HorizontalC0"
+                                                        Grid.Column="0" />
+
+                                                <Border x:Name="PART_HorizontalC1"
+                                                        Grid.Column="1" />
+
+                                                <Border x:Name="PART_HorizontalC2"
+                                                        Grid.Column="2" />
+
+                                                <Border x:Name="PART_HorizontalC3"
+                                                        Grid.Column="3" />
+                                            </Grid>
+                                        </Border>
+
+                                        <!--vertical layout-->
+                                        <Border x:Name="PART_VerticalLayout">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+
+                                                <Border x:Name="PART_VerticalR0"
+                                                        Grid.Row="0" />
+
+                                                <Border x:Name="PART_VerticalR1"
+                                                        Grid.Row="1" />
+
+                                                <Border x:Name="PART_VerticalR2"
+                                                        Grid.Row="2" />
+
+                                                <Border x:Name="PART_VerticalR3"
+                                                        Grid.Row="3" />
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+
+                            </Grid>
+                        </materialDesign:Card>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--TErrorBox-->
+    <Style TargetType="controls:TErrorBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:TErrorBox">
+                    <Border x:Name="PART_ErrorBox"
+                            Padding="20"
+                            Background="DimGray">
+                        <materialDesign:Card HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Stretch">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <!--title-->
+                                <Border Grid.Row="0">
+                                    <materialDesign:ColorZone Mode="PrimaryLight"
+                                                              Height="32"
+                                                              Padding="4"
+                                                              Background="Red"
+                                                              Foreground="White">
+                                        <!--title-->
+                                        <StackPanel Orientation="Horizontal">
+                                            <ContentControl Style="{DynamicResource ErrorIcon}" />
+
+                                            <TextBlock x:Name="PART_ErrorTitle"
+                                                       Margin="5 0 0 0"
+                                                       FontWeight="Bold"
+                                                       VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </materialDesign:ColorZone>
+                                </Border>
+
+                                <!--caption-->
+                                <Border Grid.Row="1"
+                                        Padding="10">
+                                    <StackPanel Orientation="Horizontal">
+                                        <ContentControl Style="{DynamicResource ArrowRightIcon}" />
+
+                                        <TextBlock x:Name="PART_ErrorCaption"
+                                                   Margin="5 0 0 0"
+                                                   Style="{DynamicResource MaterialDesignButtonTextBlock}" />
+                                    </StackPanel>
+                                </Border>
+
+                                <!--message-->
+                                <Border Grid.Row="2"
+                                        Padding="10">
+                                    <TextBox x:Name="PART_ErrorMessage"
+                                             IsEnabled="False"
+                                             AcceptsReturn="True"
+                                             TextWrapping="Wrap"
+                                             VerticalAlignment="Top"
+                                             VerticalScrollBarVisibility="Auto"
+                                             Style="{DynamicResource MaterialDesignTextAreaTextBox}" />
+                                </Border>
+
+                                <!--close-->
+                                <Border Grid.Row="3">
+                                    <Button Content="close"
+                                            VerticalAlignment="Bottom"
+                                            Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                                            CommandParameter="{x:Static Dock.Top}"
+                                            Style="{DynamicResource MaterialDesignFlatButton}" />
+                                </Border>
+                            </Grid>
+                        </materialDesign:Card>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--TApplyCommand-->
+    <Style TargetType="controls:TApplyCommand">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:TApplyCommand">
+                    <Border>
+                        <Grid>
+                            <!--busy, apply, cancel-->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <!--Busy-->
+                                <Border Grid.Column="0"
+                                        Padding="3 0 3 0">
+                                    <ContentControl x:Name="PART_ContentBusy"
+                                                    Style="{DynamicResource ContentBusyIcon}" />
+                                </Border>
+
+                                <!--apply-->
+                                <Border Grid.Column="1">
+                                    <Button x:Name="PART_ApplyButton">
+                                        <StackPanel Orientation="Horizontal">
+                                            <ContentControl Style="{DynamicResource ApplyCheckIcon}" />
+
+                                            <TextBlock Margin="3 0 0 0"
+                                                       Text="apply" />
+                                        </StackPanel>
+                                    </Button>
+                                </Border>
+
+                                <!--cancel-->
+                                <Border Grid.Column="2">
+                                    <Button x:Name="PART_CancelButton">
+                                        <StackPanel Orientation="Horizontal">
+                                            <ContentControl Style="{DynamicResource CanRemoveIcon}" />
+
+                                            <TextBlock Margin="3 0 0 0"
+                                                       Text="cancel" />
+                                        </StackPanel>
+                                    </Button>
+                                </Border>
+                            </Grid>
+
+                            <!--message progress-->
+                            <Border x:Name="PART_Panel"
+                                    Margin="1">
+                                <StackPanel Orientation="Horizontal">
+                                    <!--progress-->
+                                    <ProgressBar x:Name="PART_ProgressBar"
+                                                 Style="{DynamicResource MaterialDesignCircularProgressBar}"
+                                                 Value="0" />
+
+                                    <!--message-->
+                                    <TextBlock x:Name="PART_MessageText"
+                                               Margin="2 0 0 0"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

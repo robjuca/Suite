@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <ResourceDictionary.MergedDictionaries>
+        <!--icon-->
+        <ResourceDictionary Source="Icon/IconApp.xaml" />
+        <ResourceDictionary Source="Icon/IconError.xaml" />
+        <ResourceDictionary Source="Icon/IconModule.xaml" />
+        <ResourceDictionary Source="Icon/IconStatusbar.xaml" />
+        <ResourceDictionary Source="Icon/IconSupport.xaml" />
+        
+        <!--style-->
+        <ResourceDictionary Source="Style/Controls.xaml" />
+        <ResourceDictionary Source="Style/Button.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>
