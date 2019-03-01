@@ -42,6 +42,7 @@ usa-se “style”.
 *Settings*:
 
 \- tamanho (pixel) da coluna
+
 \- connection string SQL Server
 
 *Ferramentas* (tools):
