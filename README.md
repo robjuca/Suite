@@ -5,17 +5,12 @@
 *Objetivo*:
 
 Produzir uma lista vertical de gadgets (documento, imagem, vídeo etc.)
-
 arranjados em uma lista horizontal e salvar o resultado em um banco de dados.
-
 A ideia surgiu do site da Microsoft (figura abaixo)
-
 ![](media/1dfbcb5311ca040aef14ec476ce203ba.jpg)
 
 Criar aplicativos (WPF) para gerenciar gadgets e fazer o layout dos mesmos
-
 salvando o resultado em um banco de dados (SQL Server)
-
 O projeto pode ser dividido como: (figura abaixo)
 
 | launcher | gadget     | layout                    |
@@ -29,7 +24,6 @@ O projeto pode ser dividido como: (figura abaixo)
 *Layout*:
 
 Os gadgets são formatados para uma matriz (dashboard) de 4cx4r dando um total de
-
 16 possíveis layouts (tamanhos). Para identificar o size de uma cell neste
 dashboard
 
