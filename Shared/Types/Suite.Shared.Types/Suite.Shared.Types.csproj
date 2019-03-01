@@ -44,10 +44,19 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Bin\rr.Library.Types.dll</HintPath>
     </Reference>
+    <Reference Include="Suite.Server.Models.Component, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bin\Suite.Server.Models.Component.dll</HintPath>
+    </Reference>
+    <Reference Include="Suite.Server.Models.Infrastructure, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bin\Suite.Server.Models.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Activities.Presentation" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />

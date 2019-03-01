@@ -61,9 +61,29 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Bin\rr.Library.Types.dll</HintPath>
     </Reference>
+    <Reference Include="Suite.Server.Models.Infrastructure, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bin\Suite.Server.Models.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Suite.Server.Services.Component, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bin\Suite.Server.Services.Component.dll</HintPath>
+    </Reference>
+    <Reference Include="Suite.Shared.Message, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bin\Suite.Shared.Message.dll</HintPath>
+    </Reference>
     <Reference Include="Suite.Shared.Resources, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Bin\Suite.Shared.Resources.dll</HintPath>
+    </Reference>
+    <Reference Include="Suite.Shared.Types, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bin\Suite.Shared.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Suite.Shared.ViewModel, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bin\Suite.Shared.ViewModel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
