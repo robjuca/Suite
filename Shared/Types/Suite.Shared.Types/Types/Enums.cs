@@ -1,0 +1,193 @@
+﻿/*----------------------------------------------------------------
+  Copyright (C) 2001 R&R Soft - All rights reserved.
+  author: Roberto Oliveira Jucá    
+----------------------------------------------------------------*/
+
+//----- Include
+//---------------------------//
+
+namespace Shared.Types
+{
+  //-----TWhere
+  public enum TWhere
+  {
+    Collection,
+    Create,
+    Edit,
+    Factory,
+    None,
+  };
+  //---------------------------//
+
+  //-----TWhat
+  public enum TWhat
+  {
+    Database,
+    Model,
+    None,
+  };
+  //---------------------------//
+
+  //-----TModuleName
+  public enum TModuleName
+  {
+    Bag,
+    Edit,
+    None,
+    Services,
+    Settings,
+    Shell,
+    Collection,
+    Factory,
+  };
+  //---------------------------//
+
+  //-----TMessageAction
+  public enum TMessageAction
+  {
+    Authentication,
+    Changed,
+    Confirm,
+    DatabaseLocked,
+    DatabaseValidated,
+    Edit,
+    EditEnter,
+    EditLeave,
+    Error,
+    Focus,
+    Locked,
+    MenuSelected,
+    ModalEnter,
+    ModalLeave,
+    Modify,
+    None,
+    Release,
+    Reload,
+    Remove,
+    ReportClear,
+    ReportShow,
+    Request,
+    Response,
+    Select,
+    SettingsClosed,
+    SettingsValidated,
+    SettingsValidating,
+    ShutDown,
+    Unlocked,
+  };
+  //---------------------------// 
+
+  //----- TInternalMessageAction
+  public enum TInternalMessageAction
+  {
+    Back,
+    Change,
+    Cleanup,
+    Commit,
+    Craft,
+    DatabaseValidated,
+    Delete,
+    DeployEnter,
+    Drop,
+    Duplicated,
+    Edit,
+    EditEnter,
+    EditLeave,
+    Empty,
+    Filter,
+    FilterEnter,
+    FilterLeave,
+    Insert,
+    Key,
+    LockEnter,
+    LockLeave,
+    Modify,
+    Move,
+    NavigateForm,
+    None,
+    PropertySelect,
+    Refresh,
+    Reload,
+    Remove,
+    RemoveEnter,
+    Report,
+    Request,
+    Response,
+    Select,
+    SettingsValidated,
+    SettingsValidating,
+  };
+  //---------------------------// 
+
+  //----- TNavigateForm
+  public enum TNavigateForm
+  {
+    Back,
+    Front,
+    None,
+  };
+  //---------------------------//
+
+  //----- TChild
+  public enum TChild
+  {
+    Back,
+    Board,
+    Create,
+    Design,
+    Display,
+    Edit,
+    Filter,
+    Frame,
+    Front,
+    List,
+    None,
+    Property,
+  };
+  //---------------------------//
+
+  //----- TFilterEnabled
+  public enum TFilterEnabled
+  {
+    all,
+    enable,
+    disable
+  };
+  //---------------------------//
+
+  //----- TFilterPicture
+  public enum TFilterPicture
+  {
+    all,
+    distorted,
+    picture,
+  };
+  //---------------------------//
+
+  //----- TControlMode
+  public enum TControlMode
+  {
+    None,
+    Display,
+    Design,
+  };
+  //---------------------------//
+
+  //----- TControlModelMode
+  public enum TControlModelMode
+  {
+    None,
+    Local,
+    Default,
+  };
+  //---------------------------//
+
+  //----- TContentStatus
+  public enum TContentStatus
+  {
+    Standby,
+    Busy,
+  };
+  //---------------------------//
+
+}  // namespace

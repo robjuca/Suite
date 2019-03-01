@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{52c86695-b6f6-4864-8043-56861ddcb723}</ProjectGuid>
+    <ProjectGuid>{52C86695-B6F6-4864-8043-56861DDCB723}</ProjectGuid>
     <OutputType>library</OutputType>
-    <RootNamespace>Suite.Server.Models.Component</RootNamespace>
+    <RootNamespace>Server.Models.Component</RootNamespace>
     <AssemblyName>Suite.Server.Models.Component</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -14,12 +14,11 @@
     <WarningLevel>4</WarningLevel>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\..\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,72 +31,61 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-
   <ItemGroup>
+    <Reference Include="rr.Library.Helper, Version=1.0.2014.11, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Bin\rr.Library.Helper.dll</HintPath>
+    </Reference>
+    <Reference Include="Suite.Server.Model.Infrastructure, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Bin\Suite.Server.Model.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    
     <Reference Include="Microsoft.CSharp" />
-    
-    
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    
-    
-    <Reference Include="System.Net.Http"/>
-    
-    
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    
-    
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    
   </ItemGroup>
-
+  <ItemGroup />
   <ItemGroup>
-    <Page Include="UserControl1.xaml">
-       <Generator>MSBuild:Compile</Generator>
-       <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Infrastructure\CollectionAction.cs" />
+    <Compile Include="Infrastructure\ComponentOperation.cs" />
+    <Compile Include="Infrastructure\EntityAction.cs" />
+    <Compile Include="Infrastructure\ModelAction.cs" />
+    <Compile Include="Infrastructure\Model\ComponentModel.cs" />
+    <Compile Include="Models\CategoryRelation.cs" />
+    <Compile Include="Models\ComponentDescriptor.cs" />
+    <Compile Include="Models\ComponentInfo.cs" />
+    <Compile Include="Models\ComponentRelation.cs" />
+    <Compile Include="Models\ComponentStatus.cs" />
+    <Compile Include="Models\ExtensionDocument.cs" />
+    <Compile Include="Models\ExtensionGeometry.cs" />
+    <Compile Include="Models\ExtensionImage.cs" />
+    <Compile Include="Models\ExtensionLayout.cs" />
+    <Compile Include="Models\ExtensionNode.cs" />
+    <Compile Include="Models\ExtensionText.cs" />
+    <Compile Include="Models\Extension\CategoryRelationEntity.cs" />
+    <Compile Include="Models\Extension\ComponentDescriptorEntity.cs" />
+    <Compile Include="Models\Extension\ComponentInfoEntity.cs" />
+    <Compile Include="Models\Extension\ComponentRelationEntity.cs" />
+    <Compile Include="Models\Extension\ComponentStatusEntity.cs" />
+    <Compile Include="Models\Extension\ExtensionDocumentEntity.cs" />
+    <Compile Include="Models\Extension\ExtensionGeometryEntity.cs" />
+    <Compile Include="Models\Extension\ExtensionImageEntity.cs" />
+    <Compile Include="Models\Extension\ExtensionLayoutEntity.cs" />
+    <Compile Include="Models\Extension\ExtensionNodeEntity.cs" />
+    <Compile Include="Models\Extension\ExtensionTextEntity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
