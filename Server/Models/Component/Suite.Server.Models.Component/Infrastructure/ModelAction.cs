@@ -12,6 +12,14 @@ namespace Server.Models.Component
   public sealed class TModelAction
   {
     #region Property
+    #region Settings
+    public Settings SettingsModel
+    {
+      get;
+      private set;
+    }
+    #endregion
+
     #region Category
     public CategoryRelation CategoryRelationModel
     {
@@ -88,6 +96,9 @@ namespace Server.Models.Component
     #region Constructor
     TModelAction ()
     {
+      // Settings
+      SettingsModel = Settings.CreateDefault;
+
       // Category
       CategoryRelationModel = CategoryRelation.CreateDefault;
 
@@ -111,6 +122,8 @@ namespace Server.Models.Component
     public void CopyFrom (TModelAction alias)
     {
       if (alias.NotNull ()) {
+        SettingsModel.CopyFrom (alias.SettingsModel);
+
         CategoryRelationModel.CopyFrom (alias.CategoryRelationModel);
 
         ComponentDescriptorModel.CopyFrom (alias.ComponentDescriptorModel);

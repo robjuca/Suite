@@ -15,7 +15,8 @@ namespace Server.Models.Component
     public ExtensionLayout ()
     {
       Id = Guid.Empty;
-      Style = string.Empty;
+      StyleHorizontal = string.Empty;
+      StyleVertical = string.Empty;
       Width = 0;
       Height = 0;
     }
@@ -32,7 +33,8 @@ namespace Server.Models.Component
     {
       if (alias.NotNull ()) {
         Id = alias.Id;
-        Style = alias.Style;
+        StyleHorizontal = alias.StyleHorizontal;
+        StyleVertical = alias.StyleVertical;
         Width = alias.Width;
         Height = alias.Height;
       }
@@ -41,7 +43,8 @@ namespace Server.Models.Component
     public void Change (ExtensionLayout alias)
     {
       if (alias.NotNull ()) {
-        Style = alias.Style;
+        StyleHorizontal = alias.StyleHorizontal;
+        StyleVertical = alias.StyleVertical;
         Width = alias.Width;
         Height = alias.Height;
       }

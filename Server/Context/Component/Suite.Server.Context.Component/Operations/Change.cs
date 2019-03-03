@@ -30,6 +30,11 @@ namespace Server.Context.Component
 
       if (action.Operation.HasExtension) {
         switch (extension) {
+          case Models.Infrastructure.TExtension.Settings: {
+              ChangeSettings (context, action);
+            }
+            break;
+
           case Models.Infrastructure.TExtension.Full: {
               ChangeFull (context, action);
             }
@@ -57,6 +62,40 @@ namespace Server.Context.Component
     #endregion
 
     #region Support
+    void ChangeSettings (TModelContext context, Server.Models.Component.TEntityAction action)
+    {
+      /*
+      DATA IN
+      - action.ModelAction (Settings model)
+      */
+
+      try {
+        var modelList = context.Settings
+        .ToList ()
+      ;
+
+        // only one record
+        if (modelList.Count.Equals (1)) {
+          var model = modelList [0];
+          model.Change (action.ModelAction.SettingsModel);
+
+          context.Settings.Update (model);// change Settings model
+          context.SaveChanges (); // done
+
+          action.Result = TValidationResult.Success;
+        }
+
+        // wrong record count
+        else {
+          action.Result = new TValidationResult ($"[{action.Operation.CategoryType.Category} - Change Settings] Wrong record count!");
+        }
+      }
+
+      catch (Exception exception) {
+        Server.Models.Infrastructure.THelper.FormatException ("Change - Settings", exception, action);
+      }
+    }
+
     void ChangeFull (TModelContext context, Server.Models.Component.TEntityAction action)
     {
       /*

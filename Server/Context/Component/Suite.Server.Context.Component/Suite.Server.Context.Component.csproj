@@ -142,11 +142,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\EntityDataContext.cs" />
-    <Compile Include="Migrations\20181021143650_Component.cs" />
-    <Compile Include="Migrations\20181021143650_Component.Designer.cs">
-      <DependentUpon>20181021143650_Component.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\TModelContextModelSnapshot.cs" />
     <Compile Include="ModelContext.cs" />
     <Compile Include="Operations\Change.cs" />
     <Compile Include="Operations\Collection.cs" />

@@ -4,22 +4,15 @@
 ----------------------------------------------------------------*/
 
 //----- Include
-using System;
-using System.ComponentModel.DataAnnotations;
 //---------------------------//
 
 namespace Server.Models.Component
 {
-  public partial class ExtensionLayout
+  public partial class Settings
   {
-    [Key]
-    public Guid         Id { get; set; }
-
-    public string       StyleHorizontal { get; set; }
-    public string       StyleVertical { get; set; }
-    public int          Width { get; set; }
-    public int          Height { get; set; }
-  };
+    public string       MyName { get; set; }
+    public int          ColumnWidth { get; set; }
+  }
   //---------------------------//
 
 }  // namespace

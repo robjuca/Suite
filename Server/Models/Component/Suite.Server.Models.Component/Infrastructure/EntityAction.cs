@@ -71,6 +71,8 @@ namespace Server.Models.Component
 
         Id = ComponentModel.Id;
 
+        ModelAction.SettingsModel.CopyFrom (ComponentModel.SettingsModel);
+
         ModelAction.ComponentInfoModel.CopyFrom (ComponentModel.InfoModel);
         ModelAction.ComponentStatusModel.CopyFrom (ComponentModel.StatusModel);
 

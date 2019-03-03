@@ -31,6 +31,11 @@ namespace Server.Context.Component
 
       if (action.Operation.HasExtension) {
         switch (extension) {
+          case Models.Infrastructure.TExtension.Settings: {
+              SelectSettings (context, action);
+            }
+            break;
+
           case Models.Infrastructure.TExtension.ById: {
               SelectById (context, action);
             }
@@ -75,6 +80,39 @@ namespace Server.Context.Component
     #endregion
 
     #region Support
+    void SelectSettings (TModelContext context, Server.Models.Component.TEntityAction action)
+    {
+      try {
+        var modelList = context.Settings
+          .ToList ()
+        ;
+
+        if (modelList.Count.Equals (1)) {
+          var model = modelList [0];
+
+          if (model.MyName.Equals ("robjuca")) {
+            action.ModelAction.SettingsModel.CopyFrom (model);
+
+            action.Result = TValidationResult.Success;
+          }
+
+          // bad name
+          else {
+            action.Result = new TValidationResult ($"[{action.Operation.CategoryType.Category} - Settings] My Name can NOT be NULL or EMPTY or VALIDATE!");
+          }
+        }
+
+        // wrong record count
+        else {
+          action.Result = new TValidationResult ($"[{action.Operation.CategoryType.Category} - Settings] Wrong record count!");
+        }
+      }
+
+      catch (Exception exception) {
+        Server.Models.Infrastructure.THelper.FormatException ("Select Settings", exception, action);
+      }
+    }
+
     void SelectById (TModelContext context, Server.Models.Component.TEntityAction action)
     {
       /*

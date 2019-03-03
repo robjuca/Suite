@@ -14,6 +14,14 @@ namespace Server.Models.Component
   public class TComponentModel
   {
     #region Property
+    #region Settings
+    public Settings SettingsModel
+    {
+      get;
+      private set;
+    }
+    #endregion
+
     #region Component
     public ComponentInfo InfoModel
     {
@@ -88,11 +96,19 @@ namespace Server.Models.Component
       }
     }
 
-    public string Style
+    public string StyleHorizontal
     {
       get
       {
-        return (LayoutModel.Style);
+        return (LayoutModel.StyleHorizontal);
+      }
+    }
+
+    public string StyleVertical
+    {
+      get
+      {
+        return (LayoutModel.StyleVertical);
       }
     }
     #endregion
@@ -100,6 +116,8 @@ namespace Server.Models.Component
     #region Constructor
     protected TComponentModel ()
     {
+      SettingsModel = Settings.CreateDefault;
+
       InfoModel = ComponentInfo.CreateDefault;
       StatusModel = ComponentStatus.CreateDefault;
 
@@ -118,6 +136,11 @@ namespace Server.Models.Component
     public void Select (ComponentInfo info)
     {
       InfoModel.CopyFrom (info);
+    }
+
+    public void Select (Settings settings)
+    {
+      SettingsModel.CopyFrom (settings);
     }
 
     public void Select (ComponentStatus status)
@@ -171,6 +194,8 @@ namespace Server.Models.Component
     public TModelAction RequestModel ()
     {
       var modelAction = TModelAction.CreateDefault;
+      modelAction.SettingsModel.CopyFrom (SettingsModel);
+
       modelAction.ComponentInfoModel.CopyFrom (InfoModel);
       modelAction.ComponentStatusModel.CopyFrom (StatusModel);
 
@@ -189,6 +214,8 @@ namespace Server.Models.Component
     protected void CopyFrom (TComponentModel alias)
     {
       if (alias.NotNull ()) {
+        SettingsModel.CopyFrom (alias.SettingsModel);
+
         InfoModel.CopyFrom (alias.InfoModel);
         StatusModel.CopyFrom (alias.StatusModel);
 
@@ -210,6 +237,8 @@ namespace Server.Models.Component
       var model = new TComponentModel ();
 
       if (modelAction.NotNull ()) {
+        model.SettingsModel.CopyFrom (modelAction.SettingsModel);
+
         model.InfoModel.CopyFrom (modelAction.ComponentInfoModel);
         model.StatusModel.CopyFrom (modelAction.ComponentStatusModel);
 

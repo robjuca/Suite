@@ -4,8 +4,6 @@
 ----------------------------------------------------------------*/
 
 //----- Include
-using System.Collections.Generic;
-
 using Microsoft.EntityFrameworkCore;
 
 using Server.Models.Component;
@@ -16,11 +14,18 @@ namespace Server.Context.Component
   public partial class TModelContext : DbContext, Server.Models.Infrastructure.IModelContext
   {
     #region Property
+    #region Settings
+    public virtual DbSet<Settings> Settings
+    {
+      get; set;
+    }
+    #endregion
+
     #region Category
     public virtual DbSet<CategoryRelation> CategoryRelation
     {
       get; set;
-    } 
+    }
     #endregion
 
     #region Component

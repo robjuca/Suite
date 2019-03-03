@@ -34,6 +34,7 @@ namespace Server.Models.Infrastructure
     Minimum,
     Node,
     Relation,
+    Settings,
     Zap,
   };
   //---------------------------//

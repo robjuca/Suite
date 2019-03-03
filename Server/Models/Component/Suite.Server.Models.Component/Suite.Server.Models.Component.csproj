@@ -56,7 +56,11 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Settings.cd" />
+    <None Include="Extension.cd" />
+    <None Include="Component.cd" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastructure\CollectionAction.cs" />
     <Compile Include="Infrastructure\ComponentOperation.cs" />
@@ -73,6 +77,8 @@
     <Compile Include="Models\ExtensionImage.cs" />
     <Compile Include="Models\ExtensionLayout.cs" />
     <Compile Include="Models\ExtensionNode.cs" />
+    <Compile Include="Models\Extension\Settings.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\ExtensionText.cs" />
     <Compile Include="Models\Extension\CategoryRelationEntity.cs" />
     <Compile Include="Models\Extension\ComponentDescriptorEntity.cs" />
