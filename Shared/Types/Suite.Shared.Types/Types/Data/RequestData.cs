@@ -7,7 +7,7 @@
 using Shared.Types;
 //---------------------------//
 
-namespace Shared.Data
+namespace Shared.Types
 {
   public class TRequestData
   {

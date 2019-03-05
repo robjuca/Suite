@@ -7,11 +7,11 @@
 using System.Reflection;
 //---------------------------//
 
-[assembly: AssemblyTitle ("Suite Server Context Component")]
+[assembly: AssemblyTitle ("Suite Shared Services")]
 [assembly: AssemblyDescription ("This .NET assembly is a WPF library.")]
 [assembly: AssemblyConfiguration ("Build")]
 [assembly: AssemblyCompany ("R&R Soft")]
-[assembly: AssemblyProduct ("Suite.Server.Context.Component")]
+[assembly: AssemblyProduct ("Suite.Shared.Services")]
 [assembly: AssemblyCopyright ("Roberto Jucá (robjuca@pobox.com) Copyright © R&R Soft 2001")]
 [assembly: AssemblyTrademark ("R&R Soft® is a registered trademark of R&R Soft.")]
 [assembly: AssemblyCulture ("")]

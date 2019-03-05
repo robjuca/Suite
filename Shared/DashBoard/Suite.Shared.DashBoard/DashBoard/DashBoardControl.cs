@@ -229,10 +229,12 @@ namespace Shared.DashBoard
 
       action.ThrowNull ();
 
+      //TODO refazer review
       // size 
       action.ModelAction.ExtensionLayoutModel.Width = (Size.Columns * 300); // minimal (mini style)
       action.ModelAction.ExtensionLayoutModel.Height = (Size.Rows * 116); // minimal (mini style)
-      action.ModelAction.ExtensionLayoutModel.Style = string.Empty;
+      action.ModelAction.ExtensionLayoutModel.StyleHorizontal = string.Empty;
+      action.ModelAction.ExtensionLayoutModel.StyleVertical = string.Empty;
 
       foreach (var item in DashBoardItemSource) {
         if (item.IsBusy) {
@@ -672,13 +674,13 @@ namespace Shared.DashBoard
     {
       if (targetItem.Position.Column.NotEquals (sourceItem.Position.Column) && targetItem.Position.Row.NotEquals (sourceItem.Position.Row)) {
         // same style
-        if (targetItem.ContextStyle.Equals (sourceItem.ContextStyle)) {
+        if (targetItem.ContextStyleString.Equals (sourceItem.ContextStyleString)) {
           return (true);
         }
 
         // target standby (source small only)
         if (targetItem.IsStandby) {
-          if (sourceItem.ContextStyle.Equals ("small")) {
+          if (sourceItem.ContextStyleString.Equals ("small")) {
             // check for room
             var targetCol = targetItem.Position.Column;
             var targetRow = targetItem.Position.Row;

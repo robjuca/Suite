@@ -20,7 +20,7 @@ namespace Shared.Services
     {
       presentation.RequestPresentationCommand (this);
 
-      m_Services = new Dictionary<Server.Models.Infrastructure.TCategory, ViewModel.TEntityService> ();
+      m_Services = new Dictionary<Server.Models.Infrastructure.TCategory, Shared.ViewModel.TEntityService> ();
     }
     #endregion
 
@@ -42,7 +42,7 @@ namespace Shared.Services
     #endregion
 
     #region Event
-    void ServiceShowError (object sender, ViewModel.TErrorEventArgs e)
+    void ServiceShowError (object sender, Shared.ViewModel.TErrorEventArgs e)
     {
       ShowError (e.Error);
     }

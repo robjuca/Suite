@@ -9,7 +9,6 @@ using System;
 using rr.Library.Types;
 
 using Shared.Types;
-using Shared.ViewModel;
 //---------------------------//
 
 namespace Shared.DashBoard

@@ -65,11 +65,19 @@ namespace Shared.ViewModel
       }
     }
 
-    public string Style
+    public string StyleHorizontal
     {
       get
       {
-        return (Model.Style);
+        return (Model.StyleHorizontal);
+      }
+    }
+
+    public string StyleVertical
+    {
+      get
+      {
+        return (Model.StyleVertical);
       }
     }
 

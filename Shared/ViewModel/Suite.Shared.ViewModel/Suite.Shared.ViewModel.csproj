@@ -113,7 +113,6 @@
     <Compile Include="Shared\Message\IHandle.cs" />
     <Compile Include="Shared\Message\InternalMessage.cs" />
     <Compile Include="Shared\Model\ComponentModelItem.cs" />
-    <Compile Include="Shared\Model\DashBoardItem2.cs" />
     <Compile Include="Shared\Model\ShellModel.cs" />
     <Compile Include="Shared\Service\EntityService.cs" />
     <Compile Include="Shared\Style\StyleItem.cs" />

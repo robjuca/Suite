@@ -4,7 +4,6 @@
 ----------------------------------------------------------------*/
 
 //----- Include
-using System;
 using System.Collections.ObjectModel;
 //---------------------------//
 
@@ -29,7 +28,7 @@ namespace Shared.ViewModel
     {
       get
       {
-        return (MyStyle??ItemStyle);
+        return (MyStyleString??ItemStyleString);
       }
     }
     #endregion
@@ -37,13 +36,11 @@ namespace Shared.ViewModel
     #region Constructor
     protected TStyleItem (string style)
     {
-      ItemStyle = style;
+      ItemStyleString = style;
 
       SelectedIndex = -1;
 
       ItemsCollection = new ObservableCollection<I> ();
-      m_Collection = new Collection<I> ();
-      m_LockedItems = new Collection<Guid> ();
     }
     #endregion
 
@@ -59,13 +56,13 @@ namespace Shared.ViewModel
     #endregion
 
     #region Protected Property
-    protected string MyStyle
+    protected string MyStyleString
     {
       get;
       set;
     }
 
-    protected string ItemStyle
+    protected string ItemStyleString
     {
       get;
       set;
@@ -78,11 +75,6 @@ namespace Shared.ViewModel
         return (ItemsCollection.Count > 0);
       }
     }
-    #endregion
-
-    #region Fields
-    readonly Collection<I>                            m_Collection;
-    readonly Collection<Guid>                         m_LockedItems;
     #endregion
   };
   //---------------------------//

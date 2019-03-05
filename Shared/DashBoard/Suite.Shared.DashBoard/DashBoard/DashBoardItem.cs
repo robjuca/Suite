@@ -98,17 +98,17 @@ namespace Shared.DashBoard
       private set;
     }
 
-    public string ContextStyle
+    public string ContextStyleString
     {
       get;
       set;
     }
 
-    public string StringStyle
+    public string StyleString
     {
       get
       {
-        return (string.IsNullOrEmpty (ContextStyle) ? string.Empty : $"({ContextStyle})");
+        return (string.IsNullOrEmpty (ContextStyleString) ? string.Empty : $"({ContextStyleString})");
       }
     }
 
@@ -246,7 +246,8 @@ namespace Shared.DashBoard
         ComponentItemInfo.Model.CopyFrom (modelItem);
 
         Name = ComponentItemInfo.Model.Name;
-        ContextStyle = ComponentItemInfo.Model.Style;
+        //TODO: review
+        //ContextStyleString = ComponentItemInfo.Model.Style;
         Id = ComponentItemInfo.Model.Id;
 
         if (modelItem.NodeModelCollection.Count.Equals (1)) {
@@ -296,7 +297,7 @@ namespace Shared.DashBoard
         }
 
         Name = alias.Name;
-        ContextStyle = alias.ContextStyle;
+        ContextStyleString = alias.ContextStyleString;
         Id = alias.Id;
 
         ComponentItemInfo.Model.CopyFrom (alias.ComponentItemInfo.Model);
@@ -355,7 +356,7 @@ namespace Shared.DashBoard
 
       Name = string.Empty;
       Id = Guid.Empty;
-      ContextStyle = string.Empty;
+      ContextStyleString = string.Empty;
       Background = "#ffffff";
 
       // bag style mini (300 x 116) (margin 2)

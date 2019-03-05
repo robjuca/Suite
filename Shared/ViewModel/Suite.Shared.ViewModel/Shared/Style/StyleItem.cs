@@ -50,14 +50,15 @@ namespace Shared.ViewModel
           extension.Request ();
 
           foreach (var item in action.CollectionAction.ModelCollection) {
-            if (item.Value.ExtensionLayoutModel.Style.Equals (ItemStyle)) {
-              var model = Server.Models.Component.TComponentModel.Create (item.Value);
+            //TODO :review
+            //if (item.Value.ExtensionLayoutModel.Style.Equals (ItemStyleString)) {
+            //  var model = Server.Models.Component.TComponentModel.Create (item.Value);
 
-              var modelItem = TComponentModelItem.Create (model);
-              modelItem.Select (action.CategoryType.Category);
+            //  var modelItem = TComponentModelItem.Create (model);
+            //  modelItem.Select (action.CategoryType.Category);
 
-              ItemsCollection.Add (modelItem);
-            }
+            //  ItemsCollection.Add (modelItem);
+            //}
           }
         }
 
@@ -65,27 +66,12 @@ namespace Shared.ViewModel
           var item = ItemsCollection [0];
 
           if (item.NotNull ()) {
-            MyStyle = $"{item.LayoutModel.Style} {item.LayoutModel.Width} x {item.LayoutModel.Height}";
+            //TODO: review
+            //MyStyleString = $"{item.LayoutModel.Style} : {item.LayoutModel.Width} x {item.LayoutModel.Height}";
           }
         }
       }
     }
-
-    //public override void SelectContent (IEntityAction entityAction)
-    //{
-    //  /*
-    //   DATA:
-    //    action.CollectionAction.ComponentOperation.ParentCategoryCollection
-    //   */
-
-    //  if (entityAction.NotNull ()) {
-    //    var action = Server.Models.Component.TEntityAction.Request (entityAction);
-
-    //    foreach (var item in ItemsCollection) {
-    //      //item.Select (action);//???????????????????????
-    //    }
-    //  }
-    //}
     #endregion
 
     #region Property

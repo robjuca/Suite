@@ -75,7 +75,7 @@ namespace Shared.ViewModel
     {
       get
       {
-        return ($"{LayoutModel.Style} {LayoutModel.Width} x {LayoutModel.Height}");
+        return ($"{LayoutModel.StyleHorizontal},{LayoutModel.StyleVertical} : {LayoutModel.Width} x {LayoutModel.Height}");
       }
     }
 
@@ -256,33 +256,34 @@ namespace Shared.ViewModel
 
     public void AdjustSize ()
     {
-      var style = TContentStyle.TryToParse (Style);
+      //TODO: review
+      //var style = TContentStyle.TryToParse (Style);
 
-      switch (style) {
-        case TContentStyle.Style.mini: {
-            GeometryModel.SizeCols = 1;
-            GeometryModel.SizeRows = 1;
-          }
-          break;
+      //switch (style) {
+      //  case TContentStyle.Style.mini: {
+      //      GeometryModel.SizeCols = 1;
+      //      GeometryModel.SizeRows = 1;
+      //    }
+      //    break;
 
-        case TContentStyle.Style.small: {
-            GeometryModel.SizeCols = 1;
-            GeometryModel.SizeRows = 2;
-          }
-          break;
+      //  case TContentStyle.Style.small: {
+      //      GeometryModel.SizeCols = 1;
+      //      GeometryModel.SizeRows = 2;
+      //    }
+      //    break;
 
-        case TContentStyle.Style.large: {
-            GeometryModel.SizeCols = 1;
-            GeometryModel.SizeRows = 3;
-          }
-          break;
+      //  case TContentStyle.Style.large: {
+      //      GeometryModel.SizeCols = 1;
+      //      GeometryModel.SizeRows = 3;
+      //    }
+      //    break;
 
-        case TContentStyle.Style.big: {
-            GeometryModel.SizeCols = 2;
-            GeometryModel.SizeRows = 3;
-          }
-          break;
-      }
+      //  case TContentStyle.Style.big: {
+      //      GeometryModel.SizeCols = 2;
+      //      GeometryModel.SizeRows = 3;
+      //    }
+      //    break;
+      //}
     }
 
     public void RequestChild (TEntityAction action)
