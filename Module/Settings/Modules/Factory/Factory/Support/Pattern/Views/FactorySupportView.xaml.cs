@@ -6,18 +6,15 @@
 //----- Include
 //---------------------------//
 
-namespace Shared.Resources
+namespace Module.Settings.Factory.Support.Pattern.Views
 {
-  public static class TResource
+  public partial class TFactorySupportView : rr.Library.Infrastructure.ViewChildBase
   {
-    #region Data
-    public enum TModule
+    #region Constructor
+    public TFactorySupportView ()
     {
-      Shell,
-      Collection,
-      Factory,
-      Services,
-    };
+      InitializeComponent ();
+    } 
     #endregion
   };
   //---------------------------//

@@ -4,21 +4,14 @@
 ----------------------------------------------------------------*/
 
 //----- Include
+using rr.Library.Infrastructure;
 //---------------------------//
 
-namespace Shared.Resources
+namespace Module.Settings.Factory.Support.Pattern.ViewModels
 {
-  public static class TResource
+  public interface IFactorySupportViewModel : IViewModel
   {
-    #region Data
-    public enum TModule
-    {
-      Shell,
-      Collection,
-      Factory,
-      Services,
-    };
-    #endregion
+    
   };
   //---------------------------//
 

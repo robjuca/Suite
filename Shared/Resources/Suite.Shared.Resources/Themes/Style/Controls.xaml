@@ -26,7 +26,7 @@
                                        VerticalAlignment="Center"
                                        FontSize="11"
                                        Margin="7 0 0 0"
-                                       Text="Suite 18 Module" />
+                                       Text="Suite Module" />
 
                             <!--module name-->
                             <TextBlock x:Name="PART_ModuleName"
@@ -38,7 +38,7 @@
                             <TextBlock HorizontalAlignment="Left"
                                        VerticalAlignment="Center"
                                        FontSize="11"
-                                       Text=" 2018" />
+                                       Text=" 2019" />
                         </StackPanel>
 
                         <!--Logo-->

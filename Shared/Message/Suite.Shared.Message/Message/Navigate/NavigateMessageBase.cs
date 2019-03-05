@@ -24,6 +24,8 @@ namespace Shared.Message
       None,
       Collection,
       Factory,
+      Database,
+      Support
     };
 
     public enum TSender

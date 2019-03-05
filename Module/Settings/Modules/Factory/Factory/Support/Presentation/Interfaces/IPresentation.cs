@@ -4,21 +4,13 @@
 ----------------------------------------------------------------*/
 
 //----- Include
+using rr.Library.Infrastructure;
 //---------------------------//
 
-namespace Shared.Resources
+namespace Module.Settings.Factory.Support.Presentation
 {
-  public static class TResource
+  public interface IFactorySupportPresentation : IPresentation
   {
-    #region Data
-    public enum TModule
-    {
-      Shell,
-      Collection,
-      Factory,
-      Services,
-    };
-    #endregion
   };
   //---------------------------//
 

@@ -6,19 +6,10 @@
 //----- Include
 //---------------------------//
 
-namespace Shared.Resources
+namespace Module.Settings.Factory.Support.Pattern.Models
 {
-  public static class TResource
+  public class TFactorySupportModel
   {
-    #region Data
-    public enum TModule
-    {
-      Shell,
-      Collection,
-      Factory,
-      Services,
-    };
-    #endregion
   };
   //---------------------------//
 

@@ -1,0 +1,157 @@
+﻿<base:ViewChildBase x:Class="Module.Settings.Factory.Database.Pattern.Views.TSQLADBBackSettingsView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:caliburn="http://www.caliburnproject.org"
+                    DataContext="{x:Null}"
+                    x:Name="ModuleSQLADBBackSettingsViewModel">
+
+    <Border Padding="3"
+            Height="150">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <!--back apply-->
+            <Border Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <!--back-->
+                    <Border Grid.Column="0">
+                        <StackPanel Orientation="Horizontal">
+                            <Button HorizontalAlignment="Left"
+                                    Style="{DynamicResource MaterialDesignToolForegroundButton}"
+                                    Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                    caliburn:Message.Attach="[Event Click] = [OnBackCommadClicked ()]">
+
+                                <ContentControl Style="{DynamicResource BackIcon}" />
+                            </Button>
+
+                            <ContentControl Margin="5 0 0 0"
+                                            Style="{DynamicResource SQLAuthenticationIcon}" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--apply-->
+                    <Border Grid.Column="1"
+                            Padding="0 0 7 0">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right">
+                            <Button Width="70"
+                                    Content="apply"
+                                    HorizontalAlignment="Right"
+                                    Style="{DynamicResource MaterialDesignFlatButton}"
+                                    caliburn:Message.Attach="[Event Click] = [OnDatabaseApplyCommadClicked ()]" />
+
+                            <ContentControl Margin="5 0 0 0"
+                                            Visibility="{Binding Model.CheckVisibility}"
+                                            Style="{DynamicResource ApplyCheckIcon}" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!--context-->
+            <Border Grid.Row="1"
+                    Padding="7 0 7 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <!--server, db name-->
+                    <Border Grid.Column="0">
+                        <StackPanel>
+                            <!--server-->
+                            <Grid Margin="0 5 0 5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <ContentControl Grid.Column="0"
+                                                Style="{DynamicResource SettingsDatabaseServerIcon}" />
+
+                                <TextBox Grid.Column="1"
+                                         Margin="6 0 0 0"
+                                         Text="{Binding Model.DatabaseAuthentication.DatabaseServer}"
+                                         materialDesign:HintAssist.Hint="database server"
+                                         materialDesign:HintAssist.FloatingScale="1.0"
+                                         materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
+                                         Style="{DynamicResource MaterialDesignFloatingHintTextBox}" />
+                            </Grid>
+
+                            <!--database name-->
+                            <Grid Margin="0 5 0 5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <ContentControl Grid.Column="0"
+                                                Style="{DynamicResource DatabaseNameMiniIcon}" />
+
+                                <TextBox Grid.Column="1"
+                                         Margin="0 6 0 6"
+                                         Text="{Binding Model.DatabaseAuthentication.DatabaseName}"
+                                         materialDesign:HintAssist.Hint="database name"
+                                         materialDesign:HintAssist.FloatingScale="1.0"
+                                         Style="{DynamicResource MaterialDesignFloatingHintTextBox}" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!--user, pw-->
+                    <Border Grid.Column="1">
+                        <StackPanel>
+                            <!--user id-->
+                            <Grid Margin="0 5 0 5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <ContentControl Grid.Column="0"
+                                                Style="{DynamicResource SettingsUserIcon}" />
+
+                                <TextBox Grid.Column="1"
+                                         Margin="6 0 0 0"
+                                         Text="{Binding Model.DatabaseAuthentication.UserId}"
+                                         materialDesign:HintAssist.Hint="user Id"
+                                         materialDesign:HintAssist.FloatingScale="1.0"
+                                         Style="{DynamicResource MaterialDesignFloatingHintTextBox}" />
+                            </Grid>
+
+                            <!--password-->
+                            <Grid Margin="0 12 0 5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <ContentControl Grid.Column="0"
+                                                Style="{DynamicResource SettingsPasswordIcon}" />
+
+                                <TextBox Grid.Column="1"
+                                         Margin="6 0 0 0"
+                                         Text="{Binding Model.DatabaseAuthentication.UserPassword}"
+                                         materialDesign:HintAssist.Hint="user password"
+                                         materialDesign:HintAssist.FloatingScale="1.0"
+                                         Style="{DynamicResource MaterialDesignFloatingHintTextBox}" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+
+</base:ViewChildBase>

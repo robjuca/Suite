@@ -72,6 +72,12 @@ namespace Shared.ViewModel
     {
       CopyResult (result);
     }
+
+    public TFactoryMessageInternal (TInternalMessageAction messageAction, TAuthentication authentication, TTypeInfo typeInfo)
+      : base (TResource.TModule.Factory, messageAction, TNode.CreateDefault, typeInfo)
+    {
+      Support.Argument.Types.Select (authentication);
+    }
     #endregion
   };
   //---------------------------//

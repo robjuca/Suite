@@ -1,0 +1,90 @@
+﻿<base:ViewChildBase x:Class="Module.Settings.Factory.Database.Pattern.Views.TWADBFrontSettingsView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:caliburn="http://www.caliburnproject.org"
+                    DataContext="{x:Null}"
+                    x:Name="ModuleWADBFrontSettingsViewModel">
+
+    <Border Padding="6"
+            Height="150"
+            IsEnabled="{Binding Model.IsEnabled}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--title, authentication-->
+            <Border Grid.Row="0"
+                    VerticalAlignment="Top">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--Title-->
+                    <Border Grid.Column="0">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentControl Style="{StaticResource SettingsDatabaseConnectionIcon}" />
+                            <TextBlock Margin="5 0 0 0"
+                                       VerticalAlignment="Center"
+                                       Text="connection string" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--active-->
+                    <Border Grid.Column="1">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+                            <ContentControl Style="{StaticResource DatabaseOnIcon}" />
+
+                            <RadioButton x:Name="WinAuth"
+                                         Margin="5 0 0 0"
+                                         GroupName="Active"
+                                         Tag="Windows"
+                                         ToolTip="active"
+                                         VerticalAlignment="Center"
+                                         IsChecked="{Binding Model.IsCheckedAuthentication}"
+                                         caliburn:Message.Attach="[Event Checked] = [OnAuthenticationChecked (WinAuth.Tag)]" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--Authentication-->
+                    <Border Grid.Column="2">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right">
+                            <ContentControl Style="{StaticResource WindowsAuthenticationIcon}" />
+                            <TextBlock Margin="5 0 0 0"
+                                       VerticalAlignment="Center"
+                                       Text="authentication" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!--db connection-->
+            <Border Grid.Row="1"
+                    Padding="10 10 0 0"
+                    VerticalAlignment="Top">
+                <StackPanel>
+                    <TextBlock Text="{Binding Model.DatabaseConnection1}" />
+                </StackPanel>
+            </Border>
+
+            <!--Factory-->
+            <Border Grid.Row="2">
+                <Button HorizontalAlignment="Right"
+                        Content="Factory"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                        caliburn:Message.Attach="[Event Click] = [OnFactoryCommandClicked ()]" />
+            </Border>
+        </Grid>
+    </Border>
+
+</base:ViewChildBase>

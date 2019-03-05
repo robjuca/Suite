@@ -5,6 +5,7 @@
 
 //----- Include
 using rr.Library.Message;
+using rr.Library.Types;
 
 using Shared.Message;
 //---------------------------//
@@ -39,10 +40,26 @@ namespace Shared.ViewModel
   //----- TArgumentInternal
   public class TArgumentInternal : TArgumentInternal<TComponentModelItem>
   {
+    #region Property
+    public TAuthentication Authentication
+    {
+      get;
+      private set;
+    }
+    #endregion
+
     #region Constructor
     public TArgumentInternal ()
       : base (TComponentModelItem.CreateDefault)
     {
+      Authentication = TAuthentication.None;
+    }
+    #endregion
+
+    #region Members
+    public void Select (TAuthentication authentication)
+    {
+      Authentication = authentication;
     }
     #endregion
   };

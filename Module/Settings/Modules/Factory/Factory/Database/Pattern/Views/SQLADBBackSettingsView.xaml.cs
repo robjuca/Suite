@@ -6,18 +6,15 @@
 //----- Include
 //---------------------------//
 
-namespace Shared.Resources
+namespace Module.Settings.Factory.Database.Pattern.Views
 {
-  public static class TResource
+  public partial class TSQLADBBackSettingsView : rr.Library.Infrastructure.ViewChildBase
   {
-    #region Data
-    public enum TModule
+    #region Constructor
+    public TSQLADBBackSettingsView ()
     {
-      Shell,
-      Collection,
-      Factory,
-      Services,
-    };
+      InitializeComponent ();
+    } 
     #endregion
   };
   //---------------------------//

@@ -6,18 +6,15 @@
 //----- Include
 //---------------------------//
 
-namespace Shared.Resources
+namespace Module.Settings.Factory
 {
-  public static class TResource
+  public sealed class TModuleCatalog
   {
-    #region Data
-    public enum TModule
+    //just to add to catalog
+    #region Constructor
+    public TModuleCatalog ()
     {
-      Shell,
-      Collection,
-      Factory,
-      Services,
-    };
+    }
     #endregion
   };
   //---------------------------//

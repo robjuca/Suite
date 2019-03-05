@@ -6,18 +6,15 @@
 //----- Include
 //---------------------------//
 
-namespace Shared.Resources
+namespace Module.Settings.Factory.Database.Pattern.Views
 {
-  public static class TResource
+  public partial class TWADBFrontSettingsView : rr.Library.Infrastructure.ViewChildBase
   {
-    #region Data
-    public enum TModule
+    #region Constructoe
+    public TWADBFrontSettingsView ()
     {
-      Shell,
-      Collection,
-      Factory,
-      Services,
-    };
+      InitializeComponent ();
+    } 
     #endregion
   };
   //---------------------------//

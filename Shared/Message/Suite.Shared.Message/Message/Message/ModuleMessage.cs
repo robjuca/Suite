@@ -62,24 +62,6 @@ namespace Shared.Message
   };
   //---------------------------//
 
-  //----- TEditMessage
-  public class TEditMessage : TMessageModule
-  {
-    #region Constructor
-    public TEditMessage (TMessageAction messageAction, TTypeInfo typeInfo)
-      : base (TResource.TModule.Edit, messageAction, TNode.CreateDefault, typeInfo)
-    {
-    }
-
-    public TEditMessage (TValidationResult result, TMessageAction messageAction, TTypeInfo typeInfo)
-      : base (TResource.TModule.Edit, messageAction, TNode.CreateDefault, typeInfo)
-    {
-      CopyResult (result);
-    }
-    #endregion
-  };
-  //---------------------------//
-
   //----- TServicesMessage
   public class TServicesMessage : TMessageModule
   {
