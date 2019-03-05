@@ -31,7 +31,8 @@ namespace Shared.Types
       set
       {
         m_SelectedIndex = value;
-        RaisePropertyChanged ("StyleProperty");
+
+        RaisePropertyChanged ($"Style{Current.StyleInfo.LayoutString}Property");
       }
     }
 
@@ -47,28 +48,28 @@ namespace Shared.Types
     #region Constructor
     public TStylePropertyInfo ()
     {
-      Populate ();
+      Populate (TStyleLayout.None);
     }
     #endregion
 
     #region Members
-    public void Initialize ()
+    public void Initialize (TStyleLayout layout)
     {
-      Populate ();
+      Populate (layout);
 
-      Select ("mini", false);
+      Select (TStyleInfo.CreateDefault, false);
 
       StyleSelectedIndex = StyleItemsSource.IsNull () ? -1 : StyleItemsSource.Count.Equals (0) ? -1 : 0;
     }
 
-    public void Select (string style, bool locked)
+    public void Select (TStyleInfo styleInfo, bool locked)
     {
       TStylePropertyItem styleItem = null;
 
       for (int index = 0; index < StyleItemsSource.Count; index++) {
         styleItem = StyleItemsSource [index];
 
-        if (style.Equals (styleItem.Style)) {
+        if (styleInfo.Contains (styleItem.StyleInfo)) {
           StyleSelectedIndex = index;
           break;
         }
@@ -86,7 +87,7 @@ namespace Shared.Types
     #endregion
 
     #region Overrides
-    public override string ToString () => ($"{StyleItemsSource [m_SelectedIndex].Style} {StyleItemsSource [m_SelectedIndex].Pixel}");
+    public override string ToString () => ($"{StyleItemsSource [m_SelectedIndex].StyleInfo.StyleString} : {StyleItemsSource [m_SelectedIndex].SizeString}");
     #endregion
 
     #region Fields
@@ -94,14 +95,14 @@ namespace Shared.Types
     #endregion
 
     #region Support
-    void Populate ()
+    void Populate (TStyleLayout layout)
     {
       StyleItemsSource = new Collection<TStylePropertyItem>
       {
-        new TStylePropertyItem ("mini", "300x116", 300, 116),
-        new TStylePropertyItem ("small", "300x232", 300, 232),
-        new TStylePropertyItem ("large", "300x348", 300, 348),
-        new TStylePropertyItem ("big", "600x348", 600, 348)
+        new TStylePropertyItem (layout, TContentStyle.Style.mini),
+        new TStylePropertyItem (layout, TContentStyle.Style.small),
+        new TStylePropertyItem (layout, TContentStyle.Style.large),
+        new TStylePropertyItem (layout, TContentStyle.Style.big)
       };
 
       m_SelectedIndex = -1;

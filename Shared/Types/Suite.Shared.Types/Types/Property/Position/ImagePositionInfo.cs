@@ -53,39 +53,16 @@ namespace Shared.Types
     #endregion
 
     #region Members
-    public void SetupCollection (string style)
+    public void SetupCollection (TStyleInfo styleHorizontalInfo, TStyleInfo styleVerticalInfo)
     {
       ImagePositionItemsSource = new Collection<TImagePositionItem> ();
 
-      switch (Enum.Parse (typeof (TContentStyle.Style), style)) {
-        case TContentStyle.Style.mini:
-          ImagePositionItemsSource.Add (new TImagePositionItem ("left", "100x116", 100, 116));
-          ImagePositionItemsSource.Add (new TImagePositionItem ("right", "100x116", 100, 116));
-          ImagePositionItemsSource.Add (new TImagePositionItem ("full", "300x116", 300, 116));
-          ImagePositionItemsSource.Add (new TImagePositionItem ("none"));
-          break;
-
-        case TContentStyle.Style.small:
-          ImagePositionItemsSource.Add (new TImagePositionItem ("left", "130x232", 130, 232));
-          ImagePositionItemsSource.Add (new TImagePositionItem ("right", "130x232", 130, 232));
-          ImagePositionItemsSource.Add (new TImagePositionItem ("full", "300x232", 300, 232));
-          ImagePositionItemsSource.Add (new TImagePositionItem ("none"));
-          break;
-
-        case TContentStyle.Style.large:
-          ImagePositionItemsSource.Add (new TImagePositionItem ("top", "300x160", 300, 160));
-          ImagePositionItemsSource.Add (new TImagePositionItem ("bottom", "300x160", 300, 160));
-          ImagePositionItemsSource.Add (new TImagePositionItem ("full", "300x348", 300, 348));
-          ImagePositionItemsSource.Add (new TImagePositionItem ("none"));
-          break;
-
-        case TContentStyle.Style.big:
-          ImagePositionItemsSource.Add (new TImagePositionItem ("left", "300x348", 300, 348));
-          ImagePositionItemsSource.Add (new TImagePositionItem ("right", "300x348", 300, 348));
-          ImagePositionItemsSource.Add (new TImagePositionItem ("full", "600x348", 600, 348));
-          ImagePositionItemsSource.Add (new TImagePositionItem ("none"));
-          break;
-      }
+      ImagePositionItemsSource.Add (new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Left));
+      ImagePositionItemsSource.Add (new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Right));
+      ImagePositionItemsSource.Add (new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Top));
+      ImagePositionItemsSource.Add (new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Bottom));
+      ImagePositionItemsSource.Add (new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Full));
+      ImagePositionItemsSource.Add (new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.None));
 
       m_SelectedIndex = 0;
     }
@@ -104,7 +81,7 @@ namespace Shared.Types
     #endregion
 
     #region Overrides
-    public override string ToString () => ($"{ImagePositionItemsSource [m_SelectedIndex].Position} {ImagePositionItemsSource [m_SelectedIndex].Pixel}");
+    public override string ToString () => ($"{ImagePositionItemsSource [m_SelectedIndex].Position} {ImagePositionItemsSource [m_SelectedIndex].SizeString}");
     #endregion
 
     #region Fields

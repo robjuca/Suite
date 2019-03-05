@@ -190,4 +190,25 @@ namespace Shared.Types
   };
   //---------------------------//
 
+  //-----TImagePosition
+  public enum TImagePosition
+  {
+    Left,
+    Right,
+    Top,
+    Bottom,
+    Full,
+    None,
+  };
+  //---------------------------//
+
+  //-----TStyleLayout
+  public enum TStyleLayout
+  {
+    Horizontal,
+    Vertical,
+    None,
+  };
+  //---------------------------//
+
 }  // namespace

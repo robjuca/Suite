@@ -24,12 +24,24 @@ namespace Shared.Types
     #region Properties
     #region Layout
     [Category ("2 - Layout")]
-    [DisplayName ("Style")]
-    [Description ("current style")]
+    [DisplayName ("Style Horizontal")]
+    [Description ("current horizontal style")]
     [RefreshProperties (RefreshProperties.All)]
     [Browsable (true)]
     [Editor (typeof (TTextEditorStyle), typeof (PropertyValueEditor))]
-    public TStylePropertyInfo StyleProperty
+    public TStylePropertyInfo StyleHorizontalProperty
+    {
+      get;
+      set;
+    }
+
+    [Category ("2 - Layout")]
+    [DisplayName ("Style Vertical")]
+    [Description ("current vertical style")]
+    [RefreshProperties (RefreshProperties.All)]
+    [Browsable (true)]
+    [Editor (typeof (TTextEditorStyle), typeof (PropertyValueEditor))]
+    public TStylePropertyInfo StyleVerticalProperty
     {
       get;
       set;
@@ -191,8 +203,11 @@ namespace Shared.Types
       m_GeometryModel = ExtensionGeometry.CreateDefault;
       m_TextModel = ExtensionText.CreateDefault;
 
-      StyleProperty = new TStylePropertyInfo ();
-      StyleProperty.PropertyChanged += OnPropertyChanged;
+      StyleHorizontalProperty = new TStylePropertyInfo ();
+      StyleHorizontalProperty.PropertyChanged += OnPropertyChanged;
+
+      StyleVerticalProperty = new TStylePropertyInfo ();
+      StyleVerticalProperty.PropertyChanged += OnPropertyChanged;
 
       ImagePositionProperty = new TImagePositionInfo ();
       ImagePositionProperty.PropertyChanged += OnPropertyChanged;
@@ -204,9 +219,6 @@ namespace Shared.Types
       FooterVisibilityProperty.PropertyChanged += OnPropertyChanged;
 
       TPictureEditor.Cleanup += OnPictureEditorCleanup;
-
-      StyleProperty = new TStylePropertyInfo ();
-      StyleProperty.PropertyChanged += OnPropertyChanged;
 
       ColumnsProperty = TInt4PropertyInfo.Create (4);
       ColumnsProperty.PropertyChanged += Int4PropertyChanged;
@@ -267,7 +279,8 @@ namespace Shared.Types
               m_Names.Add ("HeaderVisibilityProperty");
               m_Names.Add ("FooterVisibilityProperty");
               m_Names.Add ("ImageProperty");
-              m_Names.Add ("StyleProperty");
+              m_Names.Add ("StyleHorizontalProperty");
+              m_Names.Add ("StyleVerticalProperty");
             }
             break;
 
@@ -278,7 +291,8 @@ namespace Shared.Types
               m_Names.Add ("HeaderVisibilityProperty");
               m_Names.Add ("FooterVisibilityProperty");
               m_Names.Add ("ImageProperty");
-              m_Names.Add ("StyleProperty");
+              m_Names.Add ("StyleHorizontalProperty");
+              m_Names.Add ("StyleVerticalProperty");
             }
             break;
 
@@ -290,7 +304,8 @@ namespace Shared.Types
               m_Names.Add ("HeaderVisibilityProperty");
               m_Names.Add ("FooterVisibilityProperty");
               m_Names.Add ("ImageProperty");
-              m_Names.Add ("StyleProperty");
+              m_Names.Add ("StyleHorizontalProperty");
+              m_Names.Add ("StyleVerticalProperty");
               m_Names.Add ("ColumnsProperty");
               m_Names.Add ("RowsProperty");
             }
@@ -301,7 +316,8 @@ namespace Shared.Types
 
     public void Initialize ()
     {
-      StyleProperty.Initialize ();
+      StyleHorizontalProperty.Initialize (TStyleLayout.Horizontal);
+      StyleVerticalProperty.Initialize (TStyleLayout.Vertical);
       ColumnsProperty.Initialize ();
       RowsProperty.Initialize ();
     }
@@ -331,7 +347,17 @@ namespace Shared.Types
         if (action.Id.NotEmpty ()) {
           bool locked = (action.ModelAction.ComponentStatusModel.Locked || action.ModelAction.ComponentStatusModel.Busy);
 
-          StyleProperty.Select (action.ModelAction.ExtensionLayoutModel.Style, locked);
+          var styleHorizontalString = action.ModelAction.ExtensionLayoutModel.StyleHorizontal;
+          var styleVerticalString = action.ModelAction.ExtensionLayoutModel.StyleVertical;
+
+          var styleInfoHorizontal = TStyleInfo.Create (TStyleLayout.Horizontal);
+          styleInfoHorizontal.Select (styleHorizontalString);
+
+          var styleInfoVertical = TStyleInfo.Create (TStyleLayout.Vertical);
+          styleInfoVertical.Select (styleVerticalString);
+
+          StyleHorizontalProperty.Select (styleInfoHorizontal, locked);
+          StyleVerticalProperty.Select (styleInfoVertical, locked);
 
           if (locked) {
             ColumnsProperty.Lock ();
@@ -449,7 +475,7 @@ namespace Shared.Types
       string propertyName = e.PropertyName;
 
       if (propertyName.Equals ("StyleProperty")) {
-        ImagePositionProperty.SetupCollection (StyleProperty.Current.Style);
+        ImagePositionProperty.SetupCollection (StyleHorizontalProperty.Current.StyleInfo, StyleVerticalProperty.Current.StyleInfo);
       }
 
       RaisePropertyChanged (propertyName);
@@ -475,21 +501,22 @@ namespace Shared.Types
 
     void Request ()
     {
-      m_GeometryModel.PositionImage = ImagePositionProperty.Current.Position;
+      m_GeometryModel.PositionImage = ImagePositionProperty.Current.PositionString;
 
       var category = Server.Models.Infrastructure.TCategoryType.FromValue (m_ModelCategory);
 
       if (category.Equals (Server.Models.Infrastructure.TCategory.Document)) {
-        m_ImageModel.Width = ImagePositionProperty.Current.Width;
-        m_ImageModel.Height = ImagePositionProperty.Current.Height;
+        m_ImageModel.Width = ImagePositionProperty.Current.Size.Width;
+        m_ImageModel.Height = ImagePositionProperty.Current.Size.Height;
       }
 
       m_DocumentModel.HeaderVisibility = HeaderVisibilityProperty.ToString ();
       m_DocumentModel.FooterVisibility = FooterVisibilityProperty.ToString ();
 
-      m_LayoutModel.Style = StyleProperty.Current.Style;
-      m_LayoutModel.Width = StyleProperty.Current.Width;
-      m_LayoutModel.Height = StyleProperty.Current.Height;
+      m_LayoutModel.StyleHorizontal = StyleHorizontalProperty.Current.StyleInfo.StyleString;
+      m_LayoutModel.StyleVertical = StyleVerticalProperty.Current.StyleInfo.StyleString;
+      m_LayoutModel.Width = StyleHorizontalProperty.Current.Size.Width;
+      m_LayoutModel.Height = StyleVerticalProperty.Current.Size.Height;
     }
     #endregion
 

@@ -4,6 +4,7 @@
 ----------------------------------------------------------------*/
 
 //----- Include
+using rr.Library.Types;
 //---------------------------//
 
 namespace Shared.Types
@@ -11,39 +12,44 @@ namespace Shared.Types
   public class TStylePropertyItem
   {
     #region Property
-    public string Style
+    public TStyleInfo StyleInfo
     {
-      get;
-      set;
+      get; 
     }
 
-    public string Pixel
+    public TSize Size
     {
       get;
-      set;
+      private set;
     }
 
-    public int Width
+    public string SizeString
     {
-      get;
-      set;
-    }
-
-    public int Height
-    {
-      get;
-      set;
+      get
+      {
+        return ($"{Size.Width} x {Size.Height}");
+      }
     }
     #endregion
 
     #region Constructor
-    public TStylePropertyItem (string style, string pixel, int width, int height)
+    TStylePropertyItem ()
     {
-      Style = style;
-      Pixel = pixel;
-      Width = width;
-      Height = height;
+      StyleInfo = TStyleInfo.CreateDefault;
+
+      Size = TSize.CreateDefault;
     }
+
+    public TStylePropertyItem (TStyleLayout layout, TContentStyle.Style style)
+      : this ()
+    {
+      StyleInfo = TStyleInfo.Create (layout);
+      StyleInfo.Select (style);
+    }
+    #endregion
+
+    #region Static
+    public static TStylePropertyItem CreateDefault => new TStylePropertyItem (); 
     #endregion
   };
   //---------------------------//

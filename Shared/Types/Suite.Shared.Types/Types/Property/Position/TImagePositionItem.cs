@@ -4,6 +4,9 @@
 ----------------------------------------------------------------*/
 
 //----- Include
+using System;
+
+using rr.Library.Types;
 //---------------------------//
 
 namespace Shared.Types
@@ -11,25 +14,29 @@ namespace Shared.Types
   public class TImagePositionItem
   {
     #region Property
-    public string Position
+    public TImagePosition Position
     {
       get;
-      set;
+      private set;
     }
 
-    public string Pixel
+    public string PositionString
     {
-      get;
-      set;
+      get
+      {
+        return (Position.ToString ());
+      }
     }
 
-    public int Width
+    public string SizeString
     {
-      get;
-      set;
+      get
+      {
+        return ($"{Size.Width} x {Size.Height}");
+      }
     }
 
-    public int Height
+    public TSize Size
     {
       get;
       set;
@@ -37,21 +44,80 @@ namespace Shared.Types
     #endregion
 
     #region Constructor
-    public TImagePositionItem (string position, string pixel, int width, int height)
+    TImagePositionItem ()
     {
-      Position = position;
-      Pixel = pixel;
-      Width = width;
-      Height = height;
+      Position = TImagePosition.None;
+      Size = TSize.CreateDefault;
     }
 
-    public TImagePositionItem (string position)
+    public TImagePositionItem (TStyleInfo styleHorizontalInfo, TStyleInfo styleVerticalInfo, TImagePosition imagePosition)
+      : this ()
     {
-      Position = position;
-      Pixel = "0x0";
-      Width = 0;
-      Height = 0;
+      Position = imagePosition;
+
+      if (imagePosition.Equals (TImagePosition.None).IsFalse ())  {
+        var contentStyle = TContentStyle.CreateDefault;
+        var width = contentStyle.MiniSize.Width;
+        var height = contentStyle.MiniSize.Height;
+
+        // columns
+        if (styleHorizontalInfo.IsLayoutHorizontal) {
+          switch (styleHorizontalInfo.Style) {
+            case TContentStyle.Style.small:
+              width = contentStyle.SmallSize.Width;
+              break;
+
+            case TContentStyle.Style.large:
+              width = contentStyle.LargeSize.Width;
+              break;
+
+            case TContentStyle.Style.big:
+              width = contentStyle.LargeSize.Width;
+              break;
+          }
+        }
+
+        // rows
+        if (styleVerticalInfo.IsLayoutVertical) {
+          switch (styleVerticalInfo.Style) {
+            case TContentStyle.Style.small:
+              height = contentStyle.SmallSize.Height;
+              break;
+
+            case TContentStyle.Style.large:
+              height = contentStyle.LargeSize.Height;
+              break;
+
+            case TContentStyle.Style.big:
+              height = contentStyle.BigSize.Height;
+              break;
+          }
+        }
+
+        switch (Position) {
+          case TImagePosition.Left:
+          case TImagePosition.Right:
+            Size.Width = (int) (width * .5); // 50%
+            Size.Height = height;
+            break;
+
+          case TImagePosition.Top:
+          case TImagePosition.Bottom:
+            Size.Width = width;
+            Size.Height = (int) (height * .4); // 40%
+            break;
+
+          case TImagePosition.Full:
+            Size.Width = width;
+            Size.Height = height;
+            break;
+        }
+      }
     }
+    #endregion
+
+    #region Static
+    public static TImagePositionItem CreateDefault => new TImagePositionItem (); 
     #endregion
   };
   //---------------------------//

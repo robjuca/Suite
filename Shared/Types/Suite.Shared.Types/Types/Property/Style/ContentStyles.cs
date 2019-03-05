@@ -5,11 +5,13 @@
 
 //----- Include
 using System;
+
+using rr.Library.Types;
 //---------------------------//
 
 namespace Shared.Types
 {
-  public static class TContentStyle
+  public class TContentStyle
   {
     #region Data
     public enum Style
@@ -20,21 +22,53 @@ namespace Shared.Types
       big,
       None,
     };
-    
-    public const int MiniWidth = 300;
-    public const int MiniHeight = 116;
-
-    public const int SmallWidth = 300;
-    public const int SmallHeight = 232;
-
-    public const int LargeWidth = 300;
-    public const int LargeHeight = 348;
-
-    public const int BigWidth = 600;
-    public const int BigHeight = 348;
     #endregion
 
     #region Property
+    public TSize MiniSize
+    {
+      get;
+      private set;
+    }
+
+    public TSize SmallSize
+    {
+      get
+      {
+        var size = TSize.CreateDefault;
+        size.Width = MiniSize.Width;
+        size.Height = (MiniSize.Height * 2);
+
+        return (size); // 1c x 2r
+      }
+    }
+
+    public TSize LargeSize
+    {
+      get
+      {
+        var size = TSize.CreateDefault;
+        size.Width = MiniSize.Width;
+        size.Height = (MiniSize.Height * 3);
+
+        return (size); // 1c x 3r
+      }
+    }
+
+    public TSize BigSize
+    {
+      get
+      {
+        var size = TSize.CreateDefault;
+        size.Width = MiniSize.Width;
+        size.Height = (MiniSize.Height * 4);
+
+        return (size); // 1c x 4r
+      }
+    }
+    #endregion
+
+    #region Static Property
     public static string MINI => (Style.mini.ToString ());
 
     public static string SMALL => (Style.small.ToString ());
@@ -46,9 +80,39 @@ namespace Shared.Types
     public static string NONE => (Style.None.ToString ());
 
     public static Array GetValues => (Enum.GetValues (typeof (Style)));
+
+    public static string [] Names = new string [] { MINI, SMALL, LARGE, BIG, NONE };
+
+    public static int ColumnWidth
+    {
+      get
+      {
+        return (m_ColumnWidth);
+      }
+    }
+    #endregion
+
+    #region Constructor
+    TContentStyle ()
+    {
+      if (m_ColumnWidth.Equals (0)) {
+        SelectColumnWidth (300);
+      }
+    }
     #endregion
 
     #region Members
+    public void SelectColumnWidth (int colunWidth)
+    {
+      m_ColumnWidth = colunWidth;
+      
+      var miniHeight = (int) (colunWidth * .5); // 50%
+
+      MiniSize = TSize.CreateDefault;
+      MiniSize.Width = colunWidth;
+      MiniSize.Height = miniHeight;
+    }
+
     public static Style TryToParse (string style)
     {
       Style someStyle = Style.None;
@@ -58,11 +122,15 @@ namespace Shared.Types
       }
 
       return (someStyle);
-    } 
+    }
     #endregion
 
-    #region Public Field
-    public static string [] Names = new string [] { MINI, SMALL, LARGE, BIG, NONE }; 
+    #region Fields
+    static int                              m_ColumnWidth = 0;
+    #endregion
+
+    #region Static
+    public static TContentStyle CreateDefault => new TContentStyle (); 
     #endregion
   };
   //---------------------------//
