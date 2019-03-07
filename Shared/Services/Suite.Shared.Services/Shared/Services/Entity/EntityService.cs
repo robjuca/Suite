@@ -67,11 +67,11 @@ namespace Shared.Services
           }
         }
       }
-    } 
+    }
     #endregion
 
     #region Fields
-    Dictionary<Server.Models.Infrastructure.TCategory, Shared.ViewModel.TEntityService>                m_Services;
+    readonly Dictionary<Server.Models.Infrastructure.TCategory, Shared.ViewModel.TEntityService>                  m_Services;
     #endregion
 
     #region Support

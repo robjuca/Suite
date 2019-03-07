@@ -75,6 +75,7 @@
 
                                     <!--settings-->
                                     <Button ToolTip="settings"
+                                            IsEnabled="{Binding Model.MenuLeftEnabled}"
                                             caliburn:Message.Attach="[Event Click] = [OnSettingsReportCommadClicked ()]">
                                         <ContentControl Style="{StaticResource MenuSettingsInfoIcon}" />
                                     </Button>

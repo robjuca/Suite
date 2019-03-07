@@ -67,6 +67,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Library\Bin\rr.Library.Types.dll</HintPath>
     </Reference>
+    <Reference Include="Suite.Server.Models.Component, Version=1.0.2019.3, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Suite.Server.Models.Infrastructure, Version=1.0.2019.3, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Suite.Shared.Message, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -138,6 +139,7 @@
     <Compile Include="Factory\Database\Presentation\Interfaces\IPresentation.cs" />
     <Compile Include="Factory\Database\Presentation\Presentation.cs" />
     <Compile Include="Factory\Database\Presentation\PresentationCommand.cs" />
+    <Compile Include="Factory\Support\Pattern\Models\SupportInfo.cs" />
     <Compile Include="Factory\Support\Pattern\Models\FactorySupportModel.cs" />
     <Compile Include="Factory\Support\Pattern\ViewModels\FactorySupportViewModel.cs" />
     <Compile Include="Factory\Support\Pattern\ViewModels\Interfaces\IFactorySupportViewModel.cs" />

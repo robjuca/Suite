@@ -4,6 +4,7 @@
 ----------------------------------------------------------------*/
 
 //----- Include
+using System;
 using System.ComponentModel.Composition;
 using System.Threading;
 
@@ -74,6 +75,15 @@ namespace Module.Settings.Shell.Pattern.ViewModels
           // Error
           if (message.Support.IsActionStatus (TActionStatus.Error)) {
             TDispatcher.Invoke (DatabaseSettingsErrorDispatcher);
+          }
+        }
+
+        // (Select - Settings)
+        if (message.IsAction (TMessageAction.Response)) {
+          if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Settings)) {
+            var action = Server.Models.Component.TEntityAction.Request (message.Support.Argument.Types.EntityAction);
+
+            TDispatcher.BeginInvoke (SelectSettingsDispatcher, action);
           }
         }
       }
@@ -201,16 +211,6 @@ namespace Module.Settings.Shell.Pattern.ViewModels
 
         TDispatcher.BeginInvoke (ShowErrorBoxDispatcher, errorMessage);
       }
-
-
-      //else {
-      //  var errorMessage = new TErrorMessage ("Save Settings Dispatcher", "Shell Settings", "DatabaseData is NULL")
-      //  {
-      //    Severity = TSeverity.Hight
-      //  };
-
-      //  TDispatcher.BeginInvoke (ShowErrorBoxDispatcher, errorMessage);
-      //}
     }
 
     void ChangeAuthenticationDispatcher (TAuthentication authentication)
@@ -241,18 +241,12 @@ namespace Module.Settings.Shell.Pattern.ViewModels
       var data = new TDatabaseConnection (filePath, fileName);
       data.SelectValidate (true);
 
-      Model.ClearPanels ();
-      Model.DatabaseStatus (true);
-      Model.Unlock ();
-
-      RaiseChanged ();
-
       TDispatcher.Invoke (CloseSnackbarDispatcher);
 
       Model.SnackbarContent.SetMessage ("Welcome to Suite application");
       TDispatcher.Invoke (ShowSnackbarDispatcher);
 
-      OnFactoryDatabaseCommadClicked (); // show current database settings
+      TDispatcher.Invoke (DatabaseValidateDispatcher);
     }
 
     void DatabaseSettingsErrorDispatcher ()
@@ -269,6 +263,62 @@ namespace Module.Settings.Shell.Pattern.ViewModels
       TDispatcher.Invoke (CloseSnackbarDispatcher);
 
       OnFactoryDatabaseCommadClicked (); // database factory
+    }
+
+    void DatabaseValidateDispatcher ()
+    {
+      if (m_DatabaseValidatingInProgress.IsFalse ()) {
+        Model.ClearPanels ();
+        Model.DatabaseStatus (true);
+        Model.Unlock ();
+
+        // open and validate current database (for sure)
+        if (DatabaseConnection.IsAuthentication) {
+          // to services (Select - Settings)
+          var action = Server.Models.Component.TEntityAction.Create (Server.Models.Infrastructure.TCategory.Settings, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Settings);
+
+          var message = new TShellMessage (TMessageAction.Request, TypeInfo);
+          message.Support.Argument.Types.Select (action);
+
+          DelegateCommand.PublishModuleMessage.Execute (message);
+
+          m_DatabaseValidatingInProgress = true;
+
+          Model.Lock ();
+          Model.MenuLeftDisable ();
+        }
+      }
+
+      RaiseChanged ();
+    }
+
+    void SelectSettingsDispatcher (Server.Models.Component.TEntityAction action)
+    {
+      m_DatabaseValidatingInProgress = false;
+
+      if (action.Result.IsValid) {
+        Model.Unlock ();
+        Model.MenuLeftEnable ();
+
+        Model.Select (action);
+
+        OnSettingsReportCommadClicked (); // show current settings
+
+        // to module
+        var entityAction = Server.Models.Component.TEntityAction.CreateDefault;
+        entityAction.Param1 = Model.ComponentModelItem;
+
+        var message = new TShellMessage (TMessageAction.DatabaseValidated, TypeInfo);
+        message.Support.Argument.Types.Select (entityAction);
+
+        DelegateCommand.PublishModuleMessage.Execute (message);
+      }
+
+      else {
+        Model.MenuLeftDisable ();
+      }
+
+      RaiseChanged ();
     }
 
     void ShutdowDispatcher ()
@@ -293,6 +343,8 @@ namespace Module.Settings.Shell.Pattern.ViewModels
     #region Overrides
     protected override void Initialize ()
     {
+      OnFactoryDatabaseCommadClicked (); // show current database settings
+
       Model.Lock ();
       Model.ShowPanels ();
       Model.SnackbarContent.SetMessage ("settings validating...");
@@ -317,6 +369,10 @@ namespace Module.Settings.Shell.Pattern.ViewModels
       get;
       set;
     }
+    #endregion
+
+    #region Field
+    bool                                    m_DatabaseValidatingInProgress; 
     #endregion
   };
   //---------------------------//

@@ -47,6 +47,11 @@ namespace Shared.Services.Presentation
         if (message.IsAction (TMessageAction.SettingsValidating)) {
           TDispatcher.Invoke (SettingsValidatingDispatcher);
         }
+
+        // Request
+        if (message.IsAction (TMessageAction.Request)) {
+          TDispatcher.BeginInvoke (RequestDispatcher, TServiceRequest.Create (message));
+        }
       }
 
       // collection

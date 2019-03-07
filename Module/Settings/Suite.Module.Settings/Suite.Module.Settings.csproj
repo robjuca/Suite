@@ -73,6 +73,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Bin\rr.Library.Types.dll</HintPath>
     </Reference>
+    <Reference Include="Suite.Server.Models.Component, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bin\Suite.Server.Models.Component.dll</HintPath>
+    </Reference>
+    <Reference Include="Suite.Server.Models.Infrastructure, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bin\Suite.Server.Models.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="Suite.Shared.Message, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Bin\Suite.Shared.Message.dll</HintPath>
@@ -122,6 +130,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Shell\Pattern\Models\PropertySettingsInfo.cs" />
     <Compile Include="Shell\Pattern\Models\ShellReportModel.cs" />
     <Compile Include="Shell\Pattern\Models\ShellFactorySupportModel.cs" />
     <Compile Include="Shell\Pattern\Models\ShellFactoryDatabaseModel.cs" />

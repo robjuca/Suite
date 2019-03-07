@@ -250,6 +250,16 @@ namespace Shared.ViewModel
     {
       Authentication = authentication;
     }
+
+    public void MenuLeftEnable ()
+    {
+      MenuLeftEnabled = true;
+    }
+
+    public void MenuLeftDisable ()
+    {
+      MenuLeftEnabled = false;
+    }
     #endregion
   };
   //---------------------------//

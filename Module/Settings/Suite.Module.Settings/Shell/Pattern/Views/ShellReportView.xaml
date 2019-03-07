@@ -6,6 +6,57 @@
                     DataContext="{x:Null}"
                     x:Name="ModuleShellReportViewModel">
 
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="PropertyInfoViewSource"
+                              Source="{Binding Model.PropertySettingsInfoCollection}" />
+
+        <DataTemplate x:Key="PropertyInfoDataTemplate">
+            <Border Padding="6"
+                    BorderThickness="0 .8 0 .8"
+                    BorderBrush="LightGray">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0">
+                        <StackPanel Orientation="Horizontal">
+                            <!--icon primary-->
+                            <ContentControl Margin="0 0 5 0"
+                                            Style="{Binding PropertyIconStylePrimary}" />
+
+                            <!--icon primary-->
+                            <ContentControl Margin="0 0 5 0"
+                                            Style="{Binding PropertyIconStyleSecondary}" />
+
+                            <!--PropertyName-->
+                            <TextBlock Text="{Binding PropertyName}"
+                                       FontWeight="Bold" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--value-->
+                    <Border Grid.Row="1"
+                            Padding="30 0 0 0">
+                        <ItemsControl ItemsSource="{Binding PropertyValueCollection}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <ContentControl Margin="0 0 5 0"
+                                                        Style="{Binding PropertyValueIconStyle}" />
+
+                                        <TextBlock Text="{Binding ValueString}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+
     <Border x:Name="Root"
             Opacity="0"
             Visibility="Collapsed">
@@ -89,6 +140,12 @@
                         </StackPanel>
                     </materialDesign:Card>
 
+                    <!-- property list-->
+                    <Border Padding="30 10 30 10">
+                        <ItemsControl ItemsSource="{Binding Source={StaticResource PropertyInfoViewSource}}"
+                                      ItemTemplate="{StaticResource PropertyInfoDataTemplate}">
+                        </ItemsControl>
+                    </Border>
                 </StackPanel>
             </Border>
         </Grid>

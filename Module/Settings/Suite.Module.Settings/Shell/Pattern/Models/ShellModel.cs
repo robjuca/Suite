@@ -4,6 +4,8 @@
 ----------------------------------------------------------------*/
 
 //----- Include
+using System;
+
 using Shared.ViewModel;
 using Shared.Types;
 //---------------------------//
@@ -17,13 +19,29 @@ namespace Module.Settings.Shell.Pattern.Models
     {
       get;
     }
+
+    public TComponentModelItem ComponentModelItem
+    {
+      get;
+      private set;
+    }
     #endregion
 
     #region Constructor
     public TShellModel ()
     {
       SnackbarContent = TSnackbarMessage.CreateDefault;
+      ComponentModelItem = TComponentModelItem.CreateDefault;
     }
+    #endregion
+
+    #region Members
+    internal void Select (Server.Models.Component.TEntityAction action)
+    {
+      action.ThrowNull ();
+
+      ComponentModelItem = TComponentModelItem.Create (action);
+    } 
     #endregion
   };
   //---------------------------//

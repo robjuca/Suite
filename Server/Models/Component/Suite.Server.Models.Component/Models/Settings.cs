@@ -4,12 +4,14 @@
 ----------------------------------------------------------------*/
 
 //----- Include
+using System.ComponentModel.DataAnnotations;
 //---------------------------//
 
 namespace Server.Models.Component
 {
   public partial class Settings
   {
+    [Key]
     public string       MyName { get; set; }
     public int          ColumnWidth { get; set; }
   }
