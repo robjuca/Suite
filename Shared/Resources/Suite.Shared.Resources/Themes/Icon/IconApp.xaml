@@ -37,7 +37,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Image Source="pack://application:,,,/Suite18.Shared.Resources;component/Images/Document.ico"
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Document.ico"
                                Width="24"
                                Height="24" />
                     </Border>
@@ -61,7 +61,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Image Source="pack://application:,,,/Suite18.Shared.Resources;component/Images/Image.ico"
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Image.ico"
                                Width="24"
                                Height="24" />
                     </Border>
@@ -85,7 +85,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Image Source="pack://application:,,,/Suite18.Shared.Resources;component/Images/Bag.ico"
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Bag.ico"
                                Width="24"
                                Height="24" />
                     </Border>
@@ -109,7 +109,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Image Source="pack://application:,,,/Suite18.Shared.Resources;component/Images/Shelf.ico"
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Shelf.ico"
                                Width="24"
                                Height="24" />
                     </Border>
@@ -133,7 +133,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Image Source="pack://application:,,,/Suite18.Shared.Resources;component/Images/Drawer.ico"
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Drawer.ico"
                                Width="24"
                                Height="24" />
                     </Border>
@@ -157,7 +157,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Image Source="pack://application:,,,/Suite18.Shared.Resources;component/Images/Chest.ico"
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Chest.ico"
                                Width="24"
                                Height="24" />
                     </Border>
@@ -181,9 +181,33 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Image Source="pack://application:,,,/Suite18.Shared.Resources;component/Images/Settings.ico"
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Settings.ico"
                                Width="24"
                                Height="24" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--MenuSettingsInfoIcon-->
+    <Style x:Key="MenuSettingsInfoIcon"
+           TargetType="{x:Type ContentControl}">
+        <Setter Property="ToolTip"
+                Value="settings info" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Settings.ico"
+                               Width="16"
+                               Height="16" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -205,7 +229,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Image Source="pack://application:,,,/Suite18.Shared.Resources;component/Images/Collection.ico"
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Collection.ico"
                                Width="24"
                                Height="24" />
                     </Border>
@@ -229,7 +253,55 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Image Source="pack://application:,,,/Suite18.Shared.Resources;component/Images/Factory.ico"
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Factory.ico"
+                               Width="24"
+                               Height="24" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--MenuDatabaseIcon-->
+    <Style x:Key="MenuDatabaseIcon"
+           TargetType="{x:Type ContentControl}">
+        <Setter Property="ToolTip"
+                Value="database" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Database.ico"
+                               Width="24"
+                               Height="24" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--MenuSupportIcon-->
+    <Style x:Key="MenuSupportIcon"
+           TargetType="{x:Type ContentControl}">
+        <Setter Property="ToolTip"
+                Value="support" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Support.ico"
                                Width="24"
                                Height="24" />
                     </Border>

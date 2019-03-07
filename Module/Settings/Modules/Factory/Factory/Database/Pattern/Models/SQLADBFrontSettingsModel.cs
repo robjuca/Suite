@@ -4,6 +4,8 @@
 ----------------------------------------------------------------*/
 
 //----- Include
+using System;
+
 using rr.Library.Types;
 //---------------------------//
 
@@ -49,7 +51,7 @@ namespace Module.Settings.Factory.Database.Pattern.Models
     #region Members
     internal void Populate (TDatabaseAuthentication data)
     {
-      if (data != null) {
+      if (data.NotNull ()) {
         if (data.Authentication.Equals (DatabaseAuthentication.Authentication)) {
           DatabaseAuthentication.CopyFrom (data);
 

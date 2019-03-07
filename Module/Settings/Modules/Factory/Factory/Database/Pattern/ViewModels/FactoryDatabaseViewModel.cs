@@ -41,7 +41,7 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
       // shell
       if (message.IsModule (TResource.TModule.Shell)) {
         if (message.IsAction (TMessageAction.Response)) {
-          TDispatcher.BeginInvoke (NotifyDispatcher, message.Support.Argument.Types.ConnectionData);
+          Model.Select (message.Support.Argument.Types.ConnectionData);
         }
       }
     }
@@ -51,6 +51,17 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
       if (message.IsModule (TResource.TModule.Factory)) {
         // from child only
         if (message.Node.IsRelationChild) {
+          if (message.IsAction (TInternalMessageAction.DatabaseRequest)) {
+            var authentication = message.Support.Argument.Types.Authentication;
+            
+            // to sibiling
+            var messageInternal = new TFactoryMessageInternal (TInternalMessageAction.DatabaseResponse, authentication, TypeInfo);
+            messageInternal.Node.SelectRelationParent (TChild.Front);
+            messageInternal.Support.Argument.Types.ConnectionData.CopyFrom (Model.Request (authentication));
+
+            DelegateCommand.PublishInternalMessage.Execute (messageInternal);
+          }
+
           if (message.IsAction (TInternalMessageAction.Change)) {
             // to module
             var messageModule = new TFactoryMessage (TMessageAction.Changed, TypeInfo);
@@ -63,6 +74,7 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
     }
     #endregion
 
+    #region Event
     public void OnAuthenticationChecked (object tag)
     {
       if (tag is string authentication) {
@@ -74,17 +86,6 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
 
         DelegateCommand.PublishMessage.Execute (messageModule);
       }
-    }
-
-    #region Dispatcher
-    void NotifyDispatcher (TDatabaseAuthentication databaseAuthentication)
-    {
-      // to sibiling
-      var message = new TFactoryMessageInternal (TInternalMessageAction.DatabaseValidated, TypeInfo);
-      message.Node.SelectRelationParent (TChild.Front);
-      message.Support.Argument.Types.ConnectionData.CopyFrom (databaseAuthentication);
-
-      DelegateCommand.PublishInternalMessage.Execute (message);
     } 
     #endregion
 

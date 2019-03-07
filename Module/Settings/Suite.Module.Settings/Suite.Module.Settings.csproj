@@ -122,14 +122,20 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Shell\Pattern\Models\ShellReportModel.cs" />
     <Compile Include="Shell\Pattern\Models\ShellFactorySupportModel.cs" />
     <Compile Include="Shell\Pattern\Models\ShellFactoryDatabaseModel.cs" />
     <Compile Include="Shell\Pattern\Models\ShellModel.cs" />
+    <Compile Include="Shell\Pattern\ViewModels\Interfaces\IShellReportViewModel.cs" />
     <Compile Include="Shell\Pattern\ViewModels\Interfaces\IShellFactorySupportViewModel.cs" />
     <Compile Include="Shell\Pattern\ViewModels\Interfaces\IShellFactoryDatabaseViewModel.cs" />
+    <Compile Include="Shell\Pattern\ViewModels\ShellReportViewModel.cs" />
     <Compile Include="Shell\Pattern\ViewModels\ShellFactorySupportViewModel.cs" />
     <Compile Include="Shell\Pattern\ViewModels\ShellFactoryDatabaseViewModel.cs" />
     <Compile Include="Shell\Pattern\ViewModels\ShellViewModel.cs" />
+    <Compile Include="Shell\Pattern\Views\ShellReportView.xaml.cs">
+      <DependentUpon>ShellReportView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Shell\Pattern\Views\ShellFactorySupportView.xaml.cs">
       <DependentUpon>ShellFactorySupportView.xaml</DependentUpon>
     </Compile>
@@ -166,6 +172,10 @@
     <Resource Include="Assets\Images\App.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Shell\Pattern\Views\ShellReportView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Shell\Pattern\Views\ShellFactorySupportView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

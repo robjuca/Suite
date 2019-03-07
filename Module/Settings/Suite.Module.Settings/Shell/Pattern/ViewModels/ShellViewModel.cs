@@ -35,6 +35,13 @@ namespace Module.Settings.Shell.Pattern.ViewModels
     #endregion
 
     #region View Event
+    public void OnSettingsReportCommadClicked ()
+    {
+      DelegateCommand.NotifyNavigateRequestMessage.Execute (new TNavigateRequestMessage (TNavigateMessage.TSender.Shell, TNavigateMessage.TWhere.Report));
+
+      RaiseChanged ();
+    }
+
     public void OnFactoryDatabaseCommadClicked ()
     {
       DelegateCommand.NotifyNavigateRequestMessage.Execute (new TNavigateRequestMessage (TNavigateMessage.TSender.Shell, TNavigateMessage.TWhere.Database));
@@ -71,7 +78,7 @@ namespace Module.Settings.Shell.Pattern.ViewModels
         }
       }
 
-      // edit
+      // factory
       if (message.IsModule (TResource.TModule.Factory)) {
         // Changed
         if (message.IsAction (TMessageAction.Changed)) {
@@ -137,7 +144,7 @@ namespace Module.Settings.Shell.Pattern.ViewModels
       DatabaseConnection = DatabaseConnection ?? new TDatabaseConnection (filePath, fileName);
 
       if (DatabaseConnection.Request ()) {
-        // notify edit
+        // notify factory database
         // SQL
         var message = new TShellMessage (TMessageAction.Response, TypeInfo);
         message.Support.Argument.Types.ConnectionData.CopyFrom (DatabaseConnection.Request (TAuthentication.SQL));
@@ -244,6 +251,8 @@ namespace Module.Settings.Shell.Pattern.ViewModels
 
       Model.SnackbarContent.SetMessage ("Welcome to Suite application");
       TDispatcher.Invoke (ShowSnackbarDispatcher);
+
+      OnFactoryDatabaseCommadClicked (); // show current database settings
     }
 
     void DatabaseSettingsErrorDispatcher ()
@@ -251,7 +260,15 @@ namespace Module.Settings.Shell.Pattern.ViewModels
       // notify main process
       NotifyMainProcess ("error");
 
+      Model.ClearPanels ();
+      Model.DatabaseStatus (false);
+      Model.Unlock ();
+
+      RaiseChanged ();
+
       TDispatcher.Invoke (CloseSnackbarDispatcher);
+
+      OnFactoryDatabaseCommadClicked (); // database factory
     }
 
     void ShutdowDispatcher ()

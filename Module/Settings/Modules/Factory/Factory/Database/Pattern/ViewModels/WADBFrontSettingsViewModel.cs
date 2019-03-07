@@ -37,9 +37,11 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
     {
       // from parent
       if (message.Node.IsParentToMe (TChild.Front)) {
-        if (message.IsAction (TInternalMessageAction.DatabaseValidated)) {
-          Model.Populate (message.Support.Argument.Types.ConnectionData);
-          RaiseChanged ();
+        if (message.Support.Argument.Types.Authentication.Equals (TAuthentication.Windows)) {
+          if (message.IsAction (TInternalMessageAction.DatabaseResponse)) {
+            Model.Populate (message.Support.Argument.Types.ConnectionData);
+            RaiseChanged ();
+          }
         }
       }
 
@@ -70,10 +72,10 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
     #endregion
 
     #region Event
-    public void OnFactoryCommandClicked ()
+    public void OnEditCommandClicked ()
     {
       // to sibiling 
-      var message = new TFactoryMessageInternal (TInternalMessageAction.EditEnter, TAuthentication.SQL, TypeInfo);
+      var message = new TFactoryMessageInternal (TInternalMessageAction.EditEnter, TAuthentication.Windows, TypeInfo);
       message.Node.SelectRelationSibiling (TChild.None);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -84,13 +86,22 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
     void ResponseDataDispatcher ()
     {
       // to sibiling back
-      var message = new TFactoryMessageInternal (TInternalMessageAction.Select, TypeInfo);
+      var message = new TFactoryMessageInternal (TInternalMessageAction.Select, TAuthentication.Windows, TypeInfo);
       message.Node.SelectRelationSibiling (TChild.Front);
       message.Support.Argument.Types.ConnectionData.CopyFrom (Model.DatabaseAuthentication);
-      message.Support.Argument.Types.Select (TAuthentication.Windows);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
-    } 
+    }
+    #endregion
+
+    #region Overrides
+    protected override void Initialize ()
+    {
+      // to parent
+      var message = new TFactoryMessageInternal (TInternalMessageAction.DatabaseRequest, TAuthentication.Windows, TypeInfo);
+      message.Node.SelectRelationChild (TChild.Front);
+      DelegateCommand.PublishInternalMessage.Execute (message);
+    }
     #endregion
 
     #region Property

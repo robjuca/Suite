@@ -37,9 +37,11 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
     {
       // from parent
       if (message.Node.IsParentToMe (TChild.Front)) {
-        if (message.IsAction (TInternalMessageAction.DatabaseValidated)) {
-          Model.Populate (message.Support.Argument.Types.ConnectionData);
-          RaiseChanged ();
+        if (message.Support.Argument.Types.Authentication.Equals (TAuthentication.SQL)) {
+          if (message.IsAction (TInternalMessageAction.DatabaseResponse)) {
+            Model.Populate (message.Support.Argument.Types.ConnectionData);
+            RaiseChanged ();
+          }
         }
       }
 
@@ -70,7 +72,7 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
     #endregion
 
     #region Event
-    public void OnFactoryCommandClicked ()
+    public void OnEditCommandClicked ()
     {
       // to sibiling 
       var message = new TFactoryMessageInternal (TInternalMessageAction.EditEnter, TAuthentication.Windows, TypeInfo);
@@ -89,7 +91,17 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
       message.Support.Argument.Types.ConnectionData.CopyFrom (Model.DatabaseAuthentication);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
-    } 
+    }
+    #endregion
+
+    #region Overrides
+    protected override void Initialize ()
+    {
+      // to parent
+      var message = new TFactoryMessageInternal (TInternalMessageAction.DatabaseRequest, TAuthentication.SQL, TypeInfo);
+      message.Node.SelectRelationChild (TChild.Front);
+      DelegateCommand.PublishInternalMessage.Execute (message);
+    }
     #endregion
 
     #region Property

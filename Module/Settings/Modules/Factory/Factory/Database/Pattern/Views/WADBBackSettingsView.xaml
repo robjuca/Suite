@@ -27,7 +27,7 @@
                     <Border Grid.Column="0">
                         <StackPanel Orientation="Horizontal">
                             <Button HorizontalAlignment="Left"
-                                    Style="{StaticResource MaterialDesignToolForegroundButton}"
+                                    Style="{DynamicResource MaterialDesignToolForegroundButton}"
                                     Command="{x:Static materialDesign:Flipper.FlipCommand}"
                                     caliburn:Message.Attach="[Event Click] = [OnBackCommadClicked ()]">
 

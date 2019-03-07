@@ -113,15 +113,17 @@ namespace Shared.Services.Presentation
 
       var data = new TDatabaseConnection (filePath, fileName);
 
-      // notify shell database success
-      var message = new TServicesMessage (TMessageAction.SettingsValidated, TypeInfo);
-
       // success
       if (data.Request ()) {
         if (data.IsValidate) {
           SelectConnectionString (data);
 
+          // notify shell database success
+          var message = new TServicesMessage (TMessageAction.SettingsValidated, TypeInfo);
           message.Support.Select (TActionStatus.Success);
+          message.Support.Argument.Types.Select (data.Authentication);
+
+          PublishInvoke (message);
         }
 
         else {
@@ -130,9 +132,8 @@ namespace Shared.Services.Presentation
             Severity = TSeverity.Hight
           };
 
-          // notify shell database success
-          message.Support.Select (TActionStatus.Error);
-          message.Support.ErrorMessage.CopyFrom (errorMessage);
+          // notify shell database error
+          NotifyDatabaseErrorHandler (errorMessage);
         }
       }
 
@@ -142,14 +143,9 @@ namespace Shared.Services.Presentation
           Severity = TSeverity.Hight
         };
 
-        // notify shell database success
-        message.Support.Select (TActionStatus.Error);
-        message.Support.ErrorMessage.CopyFrom (errorMessage);
+        // notify shell database error
+        NotifyDatabaseErrorHandler (errorMessage);
       }
-
-      message.Support.Argument.Types.Select (data.Authentication);
-
-      PublishInvoke (message);
     }
 
     void RequestDispatcher (TServiceRequest serviceRequest)
@@ -174,7 +170,7 @@ namespace Shared.Services.Presentation
     #endregion
 
     #region Fields
-    TEntityService                          m_EntityService;
+    readonly TEntityService                           m_EntityService;
     #endregion
 
     #region Property

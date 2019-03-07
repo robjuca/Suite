@@ -123,5 +123,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Database.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Support.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

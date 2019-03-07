@@ -34,7 +34,7 @@ namespace Module.Settings.Shell.Presentation
     #region IHandle
     public void Handle (TMessageModule message)
     {
-      if (ViewModel != null) {
+      if (ViewModel.NotNull ()) {
         if (message.IsModule (TResource.TModule.Shell).IsFalse ()) {
           ((IShellViewModel) ViewModel).Message (message);
         }
@@ -77,6 +77,10 @@ namespace Module.Settings.Shell.Presentation
 
         case TNavigateMessage.TWhere.Support:
           typeNavigateTo = typeof (Module.Settings.Shell.Pattern.ViewModels.TShellFactorySupportViewModel);
+          break;
+
+        case TNavigateMessage.TWhere.Report:
+          typeNavigateTo = typeof (Module.Settings.Shell.Pattern.ViewModels.TShellReportViewModel);
           break;
       }
 

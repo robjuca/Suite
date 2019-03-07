@@ -30,7 +30,7 @@
                     <!--Title-->
                     <Border Grid.Column="0">
                         <StackPanel Orientation="Horizontal">
-                            <ContentControl Style="{StaticResource SettingsDatabaseConnectionIcon}" />
+                            <ContentControl Style="{DynamicResource SettingsDatabaseConnectionIcon}" />
                             <TextBlock Margin="5 0 0 0"
                                        VerticalAlignment="Center"
                                        Text="connection string" />
@@ -41,7 +41,7 @@
                     <Border Grid.Column="1">
                         <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Center">
-                            <ContentControl Style="{StaticResource DatabaseOnIcon}" />
+                            <ContentControl Style="{DynamicResource DatabaseOnIcon}" />
 
                             <RadioButton x:Name="SqlAuth"
                                          Margin="5 0 0 0"
@@ -58,7 +58,7 @@
                     <Border Grid.Column="2">
                         <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Right">
-                            <ContentControl Style="{StaticResource SQLAuthenticationIcon}" />
+                            <ContentControl Style="{DynamicResource SQLAuthenticationIcon}" />
                             <TextBlock Margin="5 0 0 0"
                                        VerticalAlignment="Center"
                                        Text="authentication" />
@@ -78,14 +78,14 @@
                 </StackPanel>
             </Border>
 
-            <!--Factory-->
+            <!--edit-->
             <Border Grid.Row="2"
                     VerticalAlignment="Bottom">
                 <Button HorizontalAlignment="Right"
-                        Content="Factory"
+                        Content="edit"
                         Style="{StaticResource MaterialDesignFlatButton}"
                         Command="{x:Static materialDesign:Flipper.FlipCommand}"
-                        caliburn:Message.Attach="[Event Click] = [OnFactoryCommandClicked ()]" />
+                        caliburn:Message.Attach="[Event Click] = [OnEditCommandClicked ()]" />
             </Border>
         </Grid>
     </Border>

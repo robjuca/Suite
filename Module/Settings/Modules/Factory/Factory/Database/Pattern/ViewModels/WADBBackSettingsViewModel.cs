@@ -70,7 +70,7 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
       RaiseChanged ();
 
       // to sibiling 
-      var message = new TFactoryMessageInternal (TInternalMessageAction.EditLeave, TAuthentication.SQL, TypeInfo);
+      var message = new TFactoryMessageInternal (TInternalMessageAction.EditLeave, TAuthentication.Windows, TypeInfo);
       message.Node.SelectRelationSibiling (TChild.None);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -93,7 +93,7 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
     protected override void Initialize ()
     {
       // to sibiling
-      var message = new TFactoryMessageInternal (TInternalMessageAction.Request, rr.Library.Types.TAuthentication.Windows, TypeInfo);
+      var message = new TFactoryMessageInternal (TInternalMessageAction.Request, TAuthentication.Windows, TypeInfo);
       message.Node.SelectRelationSibiling (TChild.Back);
 
       DelegateCommand.PublishInternalMessage.Execute (message);

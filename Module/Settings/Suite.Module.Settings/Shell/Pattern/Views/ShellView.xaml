@@ -46,30 +46,39 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <!--left menu-->
+                            <!--settings, left menu-->
                             <Border Grid.Column="0"
                                     Margin="5 0 5 0">
-                                <!--left menu-->
-                                <materialDesign:PopupBox Height="34"
-                                                         Width="34"
-                                                         Margin="5 0 0 0"
-                                                         IsEnabled="{Binding Model.MenuLeftEnabled}"
-                                                         Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-                                                         PlacementMode="BottomAndAlignCentres">
-                                    <StackPanel>
-                                        <!--Database-->
-                                        <Button ToolTip="database"
-                                                caliburn:Message.Attach="[Event Click] = [OnFactoryDatabaseCommadClicked ()]">
-                                            <ContentControl Style="{StaticResource MenuCollectionIcon}" />
-                                        </Button>
+                                <StackPanel Orientation="Horizontal">
+                                    <!--left menu-->
+                                    <materialDesign:PopupBox Height="34"
+                                                             Width="34"
+                                                             Margin="5 0 5 0"
+                                                             IsEnabled="{Binding Model.MenuLeftEnabled}"
+                                                             Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                                                             PlacementMode="BottomAndAlignCentres">
+                                        <StackPanel>
+                                            <!--Database-->
+                                            <Button Margin="0 0 5 0"
+                                                    ToolTip="database"
+                                                    caliburn:Message.Attach="[Event Click] = [OnFactoryDatabaseCommadClicked ()]">
+                                                <ContentControl Style="{StaticResource MenuDatabaseIcon}" />
+                                            </Button>
 
-                                        <!--Support-->
-                                        <Button ToolTip="support"
-                                                caliburn:Message.Attach="[Event Click] = [OnFactorySupportCommadClicked ()]">
-                                            <ContentControl Style="{StaticResource MenuFactoryIcon}" />
-                                        </Button>
-                                    </StackPanel>
-                                </materialDesign:PopupBox>
+                                            <!--Support-->
+                                            <Button ToolTip="support"
+                                                    caliburn:Message.Attach="[Event Click] = [OnFactorySupportCommadClicked ()]">
+                                                <ContentControl Style="{StaticResource MenuSupportIcon}" />
+                                            </Button>
+                                        </StackPanel>
+                                    </materialDesign:PopupBox>
+
+                                    <!--settings-->
+                                    <Button ToolTip="settings"
+                                            caliburn:Message.Attach="[Event Click] = [OnSettingsReportCommadClicked ()]">
+                                        <ContentControl Style="{StaticResource MenuSettingsInfoIcon}" />
+                                    </Button>
+                                </StackPanel>
                             </Border>
 
                             <!--title-->
@@ -120,10 +129,11 @@
                                   Visibility="Collapsed"
                                   IsChecked="{Binding ElementName=MainSnackbar, Path=IsActive}" />
                     </Grid>
-                    
+
                     <!--context-->
                     <Border IsEnabled="{Binding Model.IsViewEnabled}">
                         <Grid>
+                            <views:TShellReportView />
                             <views:TShellFactoryDatabaseView />
                             <views:TShellFactorySupportView />
                         </Grid>
