@@ -6,6 +6,7 @@
 //----- Include
 using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 using Shared.ViewModel;
 //---------------------------//
@@ -20,6 +21,18 @@ namespace Module.Settings.Factory.Support.Pattern.Models
       get;
       private set;
     }
+
+    public Visibility ErrorPanelVisibility
+    {
+      get;
+      private set;
+    }
+
+    public string ErrorPanelMessage
+    {
+      get;
+      private set;
+    }
     #endregion
 
     #region Constructor
@@ -27,8 +40,11 @@ namespace Module.Settings.Factory.Support.Pattern.Models
     {
       SupportInfoCollection = new ObservableCollection<TSupportInfo>
       {
-        new TSupportInfo ("SettingsSupportIcon", "ColumnWidth", "(define o tamanho do style mini, min 250, max=600)")
+        new TSupportInfo ("SettingsSupportIcon", "ColumnWidth", "('mini' style column width [260 - 460])")
       };
+
+      ErrorPanelVisibility = Visibility.Hidden;
+      ErrorPanelMessage = string.Empty;
     }
     #endregion
 
@@ -40,7 +56,45 @@ namespace Module.Settings.Factory.Support.Pattern.Models
       foreach (var info in SupportInfoCollection) {
         info.Update (item);
       }
-    } 
+    }
+
+    internal bool Validate ()
+    {
+      CleanupErrorPanelMessage ();
+
+      foreach (var info in SupportInfoCollection) {
+        if (info.Validate ().IsFalse ()) {
+          ShowErrorPanelMessage (info.ErrorMessage);
+
+          return (false);
+        }
+      }
+
+      return (true);
+    }
+
+    internal void Request (Server.Models.Component.TEntityAction action)
+    {
+      if (action.NotNull ()) {
+        foreach (var info in SupportInfoCollection) {
+          info.Request (action);
+        }
+      }
+    }
+    #endregion
+
+    #region Support
+    void ShowErrorPanelMessage (string error)
+    {
+      ErrorPanelVisibility = Visibility.Visible;
+      ErrorPanelMessage = error;
+    }
+
+    void CleanupErrorPanelMessage ()
+    {
+      ErrorPanelVisibility = Visibility.Hidden;
+      ErrorPanelMessage = string.Empty;
+    }
     #endregion
   };
   //---------------------------//

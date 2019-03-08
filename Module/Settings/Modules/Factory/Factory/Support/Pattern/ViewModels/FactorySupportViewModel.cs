@@ -51,6 +51,32 @@ namespace Module.Settings.Factory.Support.Pattern.ViewModels
     }
     #endregion
 
+    #region Event
+    public void OnApplyCommadClicked ()
+    {
+      if (Model.Validate ()) {
+        TDispatcher.Invoke (ApplyDispatcher);
+      }
+
+      RaiseChanged ();
+    }
+    #endregion
+
+    #region Dispatcher
+    void ApplyDispatcher ()
+    {
+      var action = Server.Models.Component.TEntityAction.Create (Server.Models.Infrastructure.TCategory.Settings, Server.Models.Infrastructure.TOperation.Change, Server.Models.Infrastructure.TExtension.Settings);
+
+      Model.Request (action);
+
+      // to module
+      var messageModule = new TFactoryMessage (TMessageAction.Request, TypeInfo);
+      messageModule.Support.Argument.Types.Select (action);
+
+      DelegateCommand.PublishMessage.Execute (messageModule);
+    } 
+    #endregion
+
     #region Property
     IDelegateCommand DelegateCommand
     {

@@ -24,6 +24,27 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="ErrorMessageIcon"
+           TargetType="{x:Type ContentControl}">
+        <Setter Property="ToolTip"
+                Value="error" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/ErrorMessage.ico"
+                               Width="19"
+                               Height="19" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <!-- ____________________ -->
     
 </ResourceDictionary>

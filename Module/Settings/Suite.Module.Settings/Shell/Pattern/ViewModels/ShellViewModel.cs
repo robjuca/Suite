@@ -78,9 +78,17 @@ namespace Module.Settings.Shell.Pattern.ViewModels
           }
         }
 
-        // (Select - Settings)
+        // Response
         if (message.IsAction (TMessageAction.Response)) {
+          // (Select - Settings)
           if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Settings)) {
+            var action = Server.Models.Component.TEntityAction.Request (message.Support.Argument.Types.EntityAction);
+
+            TDispatcher.BeginInvoke (SelectSettingsDispatcher, action);
+          }
+
+          // (Change - Settings)
+          if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Change, Server.Models.Infrastructure.TExtension.Settings)) {
             var action = Server.Models.Component.TEntityAction.Request (message.Support.Argument.Types.EntityAction);
 
             TDispatcher.BeginInvoke (SelectSettingsDispatcher, action);
@@ -110,6 +118,23 @@ namespace Module.Settings.Shell.Pattern.ViewModels
 
           TDispatcher.Invoke (OpenSnackbarDispatcher);
           TDispatcher.BeginInvoke (ChangeAuthenticationDispatcher, message.Support.Argument.Types.Authentication);
+        }
+
+        // Request
+        if (message.IsAction (TMessageAction.Request)) {
+          Model.Lock ();
+          Model.ShowPanels ();
+          Model.SnackbarContent.SetMessage ("settings validating...");
+          RaiseChanged ();
+
+          TDispatcher.Invoke (OpenSnackbarDispatcher);
+
+          var action = Server.Models.Component.TEntityAction.Request (message.Support.Argument.Types.EntityAction);
+
+          var msg = new TShellMessage (TMessageAction.Request, TypeInfo);
+          msg.Support.Argument.Types.Select (action);
+
+          DelegateCommand.PublishModuleMessage.Execute (msg);
         }
       }
     }

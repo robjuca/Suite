@@ -74,7 +74,7 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
     #region Event
     public void OnEditCommandClicked ()
     {
-      // to sibiling 
+      // to sibiling (Windows)
       var message = new TFactoryMessageInternal (TInternalMessageAction.EditEnter, TAuthentication.Windows, TypeInfo);
       message.Node.SelectRelationSibiling (TChild.None);
 

@@ -42,6 +42,12 @@ namespace Module.Settings.Factory.Support.Pattern.Models
       get;
       set;
     }
+
+    public string ErrorMessage
+    {
+      get;
+      private set;
+    }
     #endregion
 
     #region Constructor
@@ -62,7 +68,26 @@ namespace Module.Settings.Factory.Support.Pattern.Models
           PropertyValue = item.SettingsModel.ColumnWidth;
         }
       }
-    } 
+    }
+
+    public bool Validate ()
+    {
+      var intValue = int.Parse (PropertyValue.ToString ());
+
+      if ((intValue >= 260) && (intValue <= 460)) {
+        ErrorMessage = string.Empty;
+        return (true);
+      }
+
+      ErrorMessage = $"{intValue}: Value dismatch! ColumnWidth value must be 260 - 460";
+
+      return (false);
+    }
+
+    public void Request (Server.Models.Component.TEntityAction action)
+    {
+      action.ModelAction.SettingsModel.ColumnWidth = int.Parse (PropertyValue.ToString ());
+    }
     #endregion
   };
   //---------------------------//

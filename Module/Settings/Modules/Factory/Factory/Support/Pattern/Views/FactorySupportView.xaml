@@ -3,6 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
+                    xmlns:validation="clr-namespace:rr.Library.Helper;assembly=rr.Library.Helper"
                     xmlns:caliburn="http://www.caliburnproject.org"
                     DataContext="{x:Null}"
                     x:Name="ModuleSettingsFactorySupportViewModel">
@@ -26,7 +27,7 @@
                             <!--support icon-->
                             <ContentControl Margin="0 0 5 0"
                                             Style="{Binding PropertyIconStyle}" />
-                            
+
                             <!--PropertyName-->
                             <TextBlock Text="{Binding PropertyName}"
                                        FontWeight="Bold" />
@@ -43,13 +44,25 @@
                                     Margin="20 0 0 0">
                             <TextBlock Text="value:"
                                        VerticalAlignment="Bottom" />
-                            
-                            <TextBox Margin="5 0 0 0"
-                                     HorizontalContentAlignment="Center"
-                                     Width="100"
-                                     Text="{Binding PropertyValue}"/>
-                        </StackPanel>
 
+                            <TextBox Margin="5 0 0 0"
+                                     Width="100"
+                                     HorizontalContentAlignment="Center"
+                                     materialDesign:HintAssist.Hint="260 - 460"
+                                     materialDesign:HintAssist.FloatingScale="1.0"
+                                     materialDesign:TextFieldAssist.TextBoxViewMargin="3"
+                                     materialDesign:ValidationAssist.UsePopup="True"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                <TextBox.Text>
+                                    <Binding Path="PropertyValue"
+                                             UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validation:TNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
                     </Border>
                 </Grid>
             </Border>
@@ -89,14 +102,35 @@
                 </ItemsControl>
             </Border>
 
-            <!--apply button-->
+            <!--error panel, apply button-->
             <Border Grid.Row="2"
                     Padding="0 0 5 5"
                     VerticalAlignment="Bottom">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                <Button Width="70"
-                        Content="apply"
-                        HorizontalAlignment="Right" />
+                    <!--error panel-->
+                    <Border Grid.Column="0"
+                            Visibility="{Binding Model.ErrorPanelVisibility}">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+                            <ContentControl Style="{DynamicResource ErrorMessageIcon}" />
+                            <TextBlock Margin="5 0 0 0"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding Model.ErrorPanelMessage}" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--apply button-->
+                    <Border Grid.Column="1">
+                        <Button Width="70"
+                                Content="apply"
+                                caliburn:Message.Attach="[Event Click] = [OnApplyCommadClicked ()]" />
+                    </Border>
+                </Grid>
             </Border>
         </Grid>
     </Border>
