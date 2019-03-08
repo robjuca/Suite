@@ -47,6 +47,7 @@
 
                             <TextBox Margin="5 0 0 0"
                                      Width="100"
+                                     MaxLength="3"
                                      HorizontalContentAlignment="Center"
                                      materialDesign:HintAssist.Hint="260 - 460"
                                      materialDesign:HintAssist.FloatingScale="1.0"
@@ -57,7 +58,7 @@
                                     <Binding Path="PropertyValue"
                                              UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
-                                            <validation:TNotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                            <validation:TNumberOnlyValidationRule ValidatesOnTargetUpdated="True" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>

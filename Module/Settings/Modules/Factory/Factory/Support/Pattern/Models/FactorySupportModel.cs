@@ -40,7 +40,7 @@ namespace Module.Settings.Factory.Support.Pattern.Models
     {
       SupportInfoCollection = new ObservableCollection<TSupportInfo>
       {
-        new TSupportInfo ("SettingsSupportIcon", "ColumnWidth", "('mini' style column width [260 - 460])")
+        new TSupportInfo ("SettingsSupportIcon", "ColumnWidth", "('mini' style column width [260 - 460 pixel])")
       };
 
       ErrorPanelVisibility = Visibility.Hidden;
