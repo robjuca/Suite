@@ -32,13 +32,13 @@
             <materialDesign:PopupBox Width="44"
                                      Height="44"
                                      ToolTip="gadget"
-                                     Background="LightPink" IsPopupOpen="True"
+                                     Background="LightPink" 
                                      Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
                                      PlacementMode="BottomAndAlignCentres">
                 <StackPanel>
                     <!--document-->
                     <Button ToolTip="document"
-                            
+                            IsEnabled="{Binding Model.IsMenuEnabled}"
                             caliburn:Message.Attach="[Event Click] = [OnDocumentCommadClicked ()]">
                         <ContentControl Style="{StaticResource MenuDocumentIcon}" />
                     </Button>
@@ -56,7 +56,6 @@
                                      Height="44"
                                      ToolTip="layout"
                                      Background="LightBlue"
-                                     IsPopupOpen="True"
                                      Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
                                      PlacementMode="BottomAndAlignCentres">
                 <StackPanel>

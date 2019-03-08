@@ -41,6 +41,9 @@ CALL :error "Could not find Visual Studio directory."
 	echo --- DASHBOARD . . .
 	msbuild.exe "D:\Documents\GitHub\Source\Repository\WPF\Suite\Shared\DashBoard\Suite Shared DashBoard.sln" -t:rebuild -verbosity:minimal -nologo
 	
+	echo --- SERVICES . . .
+	msbuild.exe "D:\Documents\GitHub\Source\Repository\WPF\Suite\Shared\Services\Suite Shared Services.sln" -t:rebuild -verbosity:minimal -nologo
+	
 	   
 	
 	echo --- DOCUMENT . . .
@@ -61,10 +64,7 @@ CALL :error "Could not find Visual Studio directory."
 	echo --- CHEST . . .
 	rem msbuild.exe "D:\Documents\Visual Studio 2017\Projects\WPF\2018\Suite18\Shared\Chest\Suite18 Shared Module Chest.sln" /t:rebuild /verbosity:minimal /nologo 
 		
-	echo --- SETTINGS . . .
-	rem msbuild.exe "D:\Documents\Visual Studio 2017\Projects\WPF\2018\Suite18\Shared\Settings\Suite18 Shared Module Settings.sln" /t:rebuild /verbosity:minimal /nologo 
-	
-	
+		
 	
 	GOTO:rebuild_2
 

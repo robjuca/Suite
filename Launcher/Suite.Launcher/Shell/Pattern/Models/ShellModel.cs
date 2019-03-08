@@ -26,7 +26,7 @@ namespace Suite.Launcher.Shell.Pattern.Models
     #region Constructor
     public TShellModel ()
     {
-      IsMenuEnabled = true;
+      IsMenuEnabled = false;
       IsSettingsEnabled = true;
     }
     #endregion
@@ -53,7 +53,7 @@ namespace Suite.Launcher.Shell.Pattern.Models
     internal void SettingsOnly ()
     {
       IsMenuEnabled = false;
-      IsSettingsEnabled = false;
+      IsSettingsEnabled = true;
     }
     #endregion
   };

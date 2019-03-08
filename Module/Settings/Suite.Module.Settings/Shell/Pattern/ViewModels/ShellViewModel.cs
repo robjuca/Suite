@@ -141,7 +141,7 @@ namespace Module.Settings.Shell.Pattern.ViewModels
     #endregion
 
     #region Dispatcher
-    void ShowSnackbarDispatcher ()
+    void ShowSnackbarDispatcher (bool shutdown = false)
     {
       System.Threading.Tasks.Task.Factory.StartNew (() =>
       {
@@ -152,7 +152,9 @@ namespace Module.Settings.Shell.Pattern.ViewModels
           bar.MessageQueue.Enqueue (Model.SnackbarContent.Message);
         }
 
-        TDispatcher.Invoke (ShutdowDispatcher);
+        if (shutdown) {
+          TDispatcher.Invoke (ShutdownDispatcher);
+        }
 
       }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext ());
     }
@@ -269,7 +271,7 @@ namespace Module.Settings.Shell.Pattern.ViewModels
       TDispatcher.Invoke (CloseSnackbarDispatcher);
 
       Model.SnackbarContent.SetMessage ("Welcome to Suite application");
-      TDispatcher.Invoke (ShowSnackbarDispatcher);
+      TDispatcher.BeginInvoke (ShowSnackbarDispatcher, false);
 
       TDispatcher.Invoke (DatabaseValidateDispatcher);
     }
@@ -346,7 +348,7 @@ namespace Module.Settings.Shell.Pattern.ViewModels
       RaiseChanged ();
     }
 
-    void ShutdowDispatcher ()
+    void ShutdownDispatcher ()
     {
       if (Properties.Settings.Default.Shutdown) {
         Properties.Settings.Default.Shutdown = false;

@@ -118,7 +118,7 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
     {
       var module = m_CurrentModule.ToString ();
       var key = m_Modules [module];
-      var processName = $"Suite18.Module.{module}.exe";
+      var processName = m_CurrentModule.Equals (TProcessName.Settings) ? $"Suite.Module.{module}.exe" : $"Suite.Gadget.{module}.exe";
 
       if (m_Process.ContainsKey (key)) {
         if (m_Process [key].HasExited) {
@@ -153,7 +153,7 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
     {
       var module = m_CurrentModule.ToString ();
       var key = m_Modules [module];
-      var processName = $"Suite18.Module.{module}.exe";
+      var processName = m_CurrentModule.Equals (TProcessName.Settings) ? $"Suite.Module.{module}.exe" : $"Suite.Gadget.{module}.exe";
 
       if (m_Process.ContainsKey (key)) {
         if (m_Process [key].HasExited) {
@@ -312,7 +312,7 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
     {
       (FrameworkElementView as System.Windows.Window).Closing += OnClosing;
 
-      //OnSettingsCommadClicked ();
+      OnSettingsCommadClicked ();
     }
     #endregion
 
@@ -404,7 +404,7 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
     Dictionary<string, string>                                m_Modules;
     TProcessName                                              m_CurrentModule;
     bool                                                      m_SettingsValidating;
-    static string []                                          Modules = new string [] { DOCUMENT, IMAGE, BAG, SHELF, DRAWER, CHEST, SETTINGS };
+    static readonly string []                                 Modules = new string [] { DOCUMENT, IMAGE, BAG, SHELF, DRAWER, CHEST, SETTINGS };
     #endregion
 
     #region Support
