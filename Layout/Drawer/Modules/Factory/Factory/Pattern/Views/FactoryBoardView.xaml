@@ -1,0 +1,15 @@
+﻿<base:ViewChildBase x:Class="Module.Factory.Pattern.Views.TFactoryBoardView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
+                    xmlns:dashboard="clr-namespace:Shared.DashBoard;assembly=Suite18.Shared.DashBoard"
+                    xmlns:caliburn="http://www.caliburnproject.org"
+                    DataContext="{x:Null}"
+                    x:Name="ModuleFactoryBoardViewModel">
+
+    <Border Padding="2">
+        <!--dashboard-->
+        <dashboard:TDashBoardControl caliburn:Message.Attach="[Event Loaded] = [OnDashBoardControlLoaded ($source)]; [Event DropFromSource] = [OnDashBoardDropFromSource ($eventArgs)]; [Event ContentMoved] = [OnDashBoardContentMoved ($eventArgs)]; [Event ContentRemoved] = [OnDashBoardContentRemoved ($eventArgs)]" />
+    </Border>
+
+</base:ViewChildBase>

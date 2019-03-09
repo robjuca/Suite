@@ -1,0 +1,122 @@
+﻿<Window x:Class="Layout.Drawer.Shell.Pattern.Views.TShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Shared.Resources;assembly=Suite.Shared.Resources"
+        xmlns:views="clr-namespace:Layout.Drawer.Shell.Pattern.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:caliburn="http://www.caliburnproject.org"
+        WindowStyle="ToolWindow"
+        WindowState="Normal"
+        WindowStartupLocation="CenterScreen"
+        Width="1236"
+        Height="736"
+        ResizeMode="NoResize"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="12"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{StaticResource MaterialDesignFont}">
+
+    <Border>
+        <materialDesign:DialogHost>
+            <materialDesign:DrawerHost IsTopDrawerOpen="{Binding Model.IsErrorBoxOpen}">
+                <!--error box-->
+                <materialDesign:DrawerHost.TopDrawerContent>
+                    <controls:TErrorBox ErrorBoxWidth="700"
+                                        ErrorBoxHeight="600"
+                                        ErrorTitle="{Binding Model.ErrorBoxContent.Title}"
+                                        ErrorCaption="{Binding Model.ErrorBoxContent.Caption}"
+                                        ErrorMessage="{Binding Model.ErrorBoxContent.Message}" />
+                </materialDesign:DrawerHost.TopDrawerContent>
+
+                <!--main-->
+                <DockPanel>
+                    <!--left menu, title, module icon, module name-->
+                    <materialDesign:ColorZone DockPanel.Dock="Top"
+                                              Height="34"
+                                              materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                              Mode="PrimaryMid">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <!--left menu-->
+                            <Border Grid.Column="0"
+                                    Margin="5 0 5 0">
+                                <!--left menu-->
+                                <materialDesign:PopupBox Height="34"
+                                                         Width="34"
+                                                         Margin="5 0 0 0"
+                                                         IsEnabled="{Binding Model.MenuLeftEnabled}"
+                                                         Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                                                         PlacementMode="BottomAndAlignCentres">
+                                    <StackPanel>
+                                        <!--collection-->
+                                        <Button ToolTip="collection"
+                                                caliburn:Message.Attach="[Event Click] = [OnCollectionCommadClicked ()]">
+                                            <ContentControl Style="{StaticResource MenuCollectionIcon}" />
+                                        </Button>
+
+                                        <!--factory-->
+                                        <Button ToolTip="factory"
+                                                caliburn:Message.Attach="[Event Click] = [OnFactoryCommadClicked ()]">
+                                            <ContentControl Style="{StaticResource MenuFactoryIcon}" />
+                                        </Button>
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                            </Border>
+
+                            <!--title-->
+                            <Border Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                                <TextBlock Text="[Suite - Layout]" />
+                            </Border>
+
+                            <!--module icon-->
+                            <Border Grid.Column="2">
+                                <ContentControl ToolTip="Drawer"
+                                                Style="{StaticResource AppIcon}" />
+                            </Border>
+
+                            <!--module name-->
+                            <Border Grid.Column="3"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                                <TextBlock Text="Drawer" />
+                            </Border>
+                        </Grid>
+                    </materialDesign:ColorZone>
+
+                    <!-- footer statusbar-->
+                    <Border DockPanel.Dock="Bottom"
+                            Margin="5 0 5 3"
+                            Background="Transparent">
+                        <Grid>
+                            <!--footer-->
+                            <controls:TFooter Name="Layout_Drawer" />
+
+                            <!--statusbar-->
+                            <controls:TShellStatusBar />
+                        </Grid>
+                    </Border>
+
+                    <!--context-->
+                    <Border IsEnabled="{Binding Model.IsViewEnabled}">
+                        <Grid>
+                            <views:TShellCollectionView />
+                            <views:TShellFactoryView />
+                        </Grid>
+                    </Border>
+                </DockPanel>
+            </materialDesign:DrawerHost>
+        </materialDesign:DialogHost>
+    </Border>
+
+</Window>

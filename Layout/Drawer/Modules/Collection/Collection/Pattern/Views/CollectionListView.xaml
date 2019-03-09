@@ -1,0 +1,92 @@
+﻿<base:ViewChildBase x:Class="Module.Collection.Pattern.Views.TCollectionListView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
+                    xmlns:caliburn="http://www.caliburnproject.org"
+                    DataContext="{x:Null}"
+                    x:Name="ModuleCollectionListViewModel">
+
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="ModelItemsViewSource"
+                              Source="{Binding Model.ItemsCollection}" />
+
+        <DataTemplate x:Key="ListDataTemplate">
+            <Border Padding="2 6 2 6"
+                    BorderThickness="0 .8 0 .8"
+                    BorderBrush="LightGray"
+                    Width="130">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <!--name-->
+                    <Border Grid.Row="0">
+                        <TextBlock Text="{Binding Name}"
+                                   FontWeight="Bold" />
+                    </Border>
+
+                    <!--size, busy-->
+                    <Border Grid.Row="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!--size-->
+                            <Border Grid.Column="0">
+                                <TextBlock Text="{Binding SizeString}" />
+                            </Border>
+
+                            <!--busy-->
+                            <Border Grid.Column="2"
+                                    Visibility="{Binding BusyVisibility}">
+                                <ContentControl Style="{StaticResource ContentBusyIcon}" />
+                            </Border>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Border Padding="2">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--title, icon-->
+            <Border Grid.Column="0"
+                    Padding="2">
+                <StackPanel>
+                    <TextBlock Text="{Binding Model.Title}" />
+
+                    <ContentControl Style="{StaticResource ContentDrawerIcon}" />
+                </StackPanel>
+            </Border>
+
+            <!--list-->
+            <Border Grid.Column="1"
+                    Padding="2"
+                    HorizontalAlignment="Left">
+                <ListView x:Name="List"
+                          SelectedIndex="{Binding Model.SelectedIndex}"
+                          ItemsSource="{Binding Source={StaticResource ModelItemsViewSource}}"
+                          ItemTemplate="{StaticResource ListDataTemplate}"
+                          caliburn:Message.Attach="[Event SelectionChanged] = [OnSelectionChanged (List.SelectedItem)]">
+
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Width="1170" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                </ListView>
+            </Border>
+        </Grid>
+    </Border>
+
+</base:ViewChildBase>
