@@ -21,7 +21,7 @@ CALL :error "Could not find Visual Studio directory."
     GOTO:rebuild_1
 
 :rebuild_1
-	title rebuild 6-Suite Launcher at D:\Documents\GitHub\Source\Repository\WPF\Suite\Launcher
+	title rebuild 6-Suite Modules at D:\Documents\GitHub\Source\Repository\WPF\Suite\Launcher
 	echo  -- SUITE MODULES
 	
 	rem "do not change this order"

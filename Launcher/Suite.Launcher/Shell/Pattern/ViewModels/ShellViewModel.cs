@@ -224,6 +224,7 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
                 break;
 
               case "closed": {
+                  RemoveProcess (SETTINGS);
                   Model.EnableAll ();
                   RaiseChanged ();
                 }
@@ -419,7 +420,7 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
       if (m_Process.ContainsKey (key)) {
         var process = m_Process [key];
 
-        if (process.HasExited == false) {
+        if (process.HasExited.IsFalse ()) {
           process.Kill ();
         }
 

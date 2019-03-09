@@ -1,0 +1,52 @@
+﻿<base:ViewChildBase x:Class="Module.Collection.Pattern.Views.TCollectionView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
+                    xmlns:views="clr-namespace:Module.Collection.Pattern.Views"
+                    DataContext="{x:Null}"
+                    x:Name="ModuleCollectionViewModel">
+
+    <Border>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <!--title-->
+            <Border Grid.Row="0">
+                <materialDesign:Card HorizontalAlignment="Stretch"
+                                     Padding="4">
+                    <StackPanel Margin="0 0 10 0"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="collection"
+                                   VerticalAlignment="Center" />
+
+                        <ContentControl Margin="5 0 0 0"
+                                        Style="{DynamicResource ModuleCollectionIcon}" />
+                    </StackPanel>
+                </materialDesign:Card>
+            </Border>
+
+            <!--content-->
+            <Border Grid.Row="1"
+                    Padding="4">
+                <StackPanel>
+                    <!--display-->
+                    <Border >
+                        <views:TCollectionDisplayView />
+                    </Border>
+
+                    <!--list-->
+                    <Border >
+                        <views:TCollectionListView />
+                    </Border>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+
+</base:ViewChildBase>

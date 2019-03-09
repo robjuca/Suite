@@ -1,0 +1,136 @@
+﻿<base:ViewChildBase x:Class="Module.Collection.Pattern.Views.TCollectionListView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:controls="clr-namespace:Shared.Resources;assembly=Suite18.Shared.Resources"
+                    xmlns:caliburn="http://www.caliburnproject.org"
+                    DataContext="{x:Null}"
+                    x:Name="ModuleCollectionListViewModel">
+
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="ModelItemsViewSource"
+                              Source="{Binding Model.ItemsCollection}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Category" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+
+        <DataTemplate x:Key="ListDataTemplate">
+            <Border Padding="2"
+                    BorderThickness="0 .1 0 .1"
+                    BorderBrush="LightGray">
+                <Border>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <!--disable-->
+                        <Border Grid.Row="0">
+                            <ContentControl Margin="0 0 5 0"
+                                            Visibility="{Binding Model.DisableVisibility}"
+                                            Style="{StaticResource DisableIcon}" />
+                        </Border>
+
+                        <!--name, busy-->
+                        <Border Grid.Row="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <!--name-->
+                                <Border Grid.Column="0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <ContentControl Style="{StaticResource ContentDocumentIcon}"
+                                                        Visibility="{Binding DocumentVisibility}" />
+
+                                        <ContentControl Style="{StaticResource ContentImageIcon}"
+                                                        Visibility="{Binding ImageVisibility}" />
+
+                                        <TextBlock Margin="5 0 0 0"
+                                                   VerticalAlignment="Center"
+                                                   Text="{Binding Model.Name}"
+                                                   FontWeight="Bold" />
+                                    </StackPanel>
+                                </Border>
+
+                                <!--busy-->
+                                <Border Grid.Column="1"
+                                        Padding="0 0 3 0">
+                                    <ContentControl Visibility="{Binding Model.BusyVisibility}"
+                                                    Style="{StaticResource ContentBusyIcon}" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Border Padding="2">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <!--filter-->
+            <Border Grid.Row="0">
+                <materialDesign:Flipper  VerticalAlignment="Top"
+                                         HorizontalAlignment="Stretch"
+                                         Style="{StaticResource MaterialDesignCardFlipper}">
+
+                    <materialDesign:Flipper.FrontContent>
+                        <Border Height="35"
+                                Padding="2">
+                            <Button Content="filter"
+                                    HorizontalAlignment="Right"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    IsEnabled="{Binding Model.IsEnabledFilter}"
+                                    Command="{x:Static materialDesign:Flipper.FlipCommand}" />
+                        </Border>
+                    </materialDesign:Flipper.FrontContent>
+
+                    <materialDesign:Flipper.BackContent>
+                        <TextBlock Text="filter" />
+                    </materialDesign:Flipper.BackContent>
+                </materialDesign:Flipper>
+            </Border>
+
+            <!--style-->
+            <Border Grid.Row="1"
+                    Padding="2">
+                <controls:TStyleSelector x:Name="StyleSelector"
+                                         SelectStyle="{Binding Model.StyleSelectorSelect}"
+                                         caliburn:Message.Attach="[Event StyleSelected] = [OnStyleSelected (StyleSelector.StyleName)]" />
+            </Border>
+
+            <!--title-->
+            <Border Grid.Row="2"
+                    Padding="2">
+                <TextBlock HorizontalAlignment="Center"
+                           Text="{Binding Model.Title}" />
+            </Border>
+
+            <!--list-->
+            <Border Grid.Row="3"
+                    Padding="2">
+                <ListBox x:Name="List"
+                         Height="455"
+                         HorizontalContentAlignment="Stretch"
+                         VerticalAlignment="Top"
+                         SelectedIndex="{Binding Model.SelectedIndex}"
+                         ItemsSource="{Binding Source={StaticResource ModelItemsViewSource}}"
+                         ItemTemplate="{StaticResource ListDataTemplate}"
+                         caliburn:Message.Attach="[Event SelectionChanged] = [OnSelectionChanged (List.SelectedItem)]" />
+            </Border>
+        </Grid>
+    </Border>
+</base:ViewChildBase>

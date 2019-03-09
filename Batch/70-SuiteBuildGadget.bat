@@ -21,7 +21,7 @@ CALL :error "Could not find Visual Studio directory."
     GOTO:rebuild_1
 
 :rebuild_1
-	title rebuild 7-Suite Launcher at D:\Documents\GitHub\Source\Repository\WPF\Suite\Gadget
+	title rebuild 7-Suite Gadget at D:\Documents\GitHub\Source\Repository\WPF\Suite\Gadget
 	echo  -- SUITE GADGET
 	
 	rem "do not change this order"
@@ -29,11 +29,14 @@ CALL :error "Could not find Visual Studio directory."
 	echo --- DOCUMENT . . .
 	msbuild.exe "D:\Documents\GitHub\Source\Repository\WPF\Suite\Gadget\Document\Suite Gadget Document.sln" -t:rebuild -verbosity:minimal -nologo
 	
+	echo --- IMAGE . . .
+	msbuild.exe "D:\Documents\GitHub\Source\Repository\WPF\Suite\Gadget\Image\Suite Gadget Image.sln" -t:rebuild -verbosity:minimal -nologo
+	
     GOTO:rebuild_2
 
 :rebuild_2
-	    GOTO:eof
-	
+
+	pause
 
 
 

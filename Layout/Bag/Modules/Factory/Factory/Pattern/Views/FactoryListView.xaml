@@ -1,0 +1,139 @@
+﻿<base:ViewChildBase x:Class="Module.Factory.Pattern.Views.TFactoryListView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
+                    xmlns:caliburn="http://www.caliburnproject.org"
+                    DataContext="{x:Null}"
+                    x:Name="ModuleFactoryListViewModel"
+                    IsEnabled="{Binding Model.IsEnabledView}">
+
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="ComponentModelViewSource"
+                              Source="{Binding Model.ComponentModelCollection}" />
+    </UserControl.Resources>
+
+    <Border Padding="3"
+            Width="300">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <!--component selector-->
+            <Border Grid.Row="0">
+                <StackPanel>
+                    <TextBlock Margin="0 0 0 5"
+                               HorizontalAlignment="Center"
+                               Text="component selector"
+                               Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+
+                    <ComboBox DisplayMemberPath="Name"
+                              IsEnabled="{Binding Model.IsCategoryEnabled}"
+                              SelectedIndex="{Binding Model.ComponentSelectorIndex}"
+                              ItemsSource="{Binding Model.ComponentSelectorSource}"
+                              caliburn:Message.Attach="[Event SelectionChanged] = [OnComponentSelectorChanged ()]" />
+                </StackPanel>
+            </Border>
+
+            <!--icon, count-->
+            <Border Grid.Row="1"
+                    Padding="5 10 5 10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--icon-->
+                    <Border Grid.Column="0">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentControl Visibility="{Binding Model.DocumentVisibility}"
+                                            Style="{StaticResource ContentDocumentIcon}" />
+
+                            <ContentControl Visibility="{Binding Model.ImageVisibility}"
+                                            Style="{StaticResource ContentImageIcon}" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--style-->
+                    <Border Grid.Column="1">
+                        <TextBlock HorizontalAlignment="Center"
+                                   Text="{Binding Model.Style}" />
+                    </Border>
+
+                    <!--count-->
+                    <Border Grid.Column="2">
+                        <TextBlock Text="{Binding Model.ComponentCount}"
+                                   HorizontalAlignment="Right" />
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!--list-->
+            <Border Grid.Row="2">
+                <materialDesign:Card Padding="3"
+                                     VerticalAlignment="Stretch">
+                    <ListBox HorizontalContentAlignment="Stretch"
+                             VerticalAlignment="Top"
+                             ItemsSource="{Binding Source={StaticResource ComponentModelViewSource}}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="2"
+                                        BorderThickness="0 .1 0 .1"
+                                        BorderBrush="LightGray">
+                                    <Border>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <!--image-->
+                                            <Border Grid.Column="0"
+                                                    Visibility="{Binding ImageVisibility}">
+                                                <CheckBox IsChecked="{Binding ImageChecked}"
+                                                          caliburn:Message.Attach="[Event Checked] = [OnComponentImageChecked ($dataContext)]; [Event Unchecked] = [OnComponentImageUnchecked ($dataContext)]" />
+                                            </Border>
+
+                                            <!--document-->
+                                            <Border Grid.Column="1"
+                                                    Visibility="{Binding DocumentVisibility}">
+                                                <RadioButton GroupName="Document"
+                                                             VerticalAlignment="Center"
+                                                             IsChecked="{Binding DocumentChecked}"
+                                                             caliburn:Message.Attach="[Event Checked] = [OnComponentDocumentChecked ($dataContext)]" />
+                                            </Border>
+
+                                            <!--name-->
+                                            <Border Grid.Column="2">
+                                                <TextBlock Margin="5 0 0 0"
+                                                           Text="{Binding Name}"
+                                                           VerticalAlignment="Center"
+                                                           Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                                            </Border>
+
+                                            <!--remove-->
+                                            <Border Grid.Column="3"
+                                                    Visibility="{Binding CanRemoveVisibility}">
+                                                <Button caliburn:Message.Attach="[Event Click] = [OnComponentDocumentCanRemoveClicked ($dataContext)]">
+                                                    <ContentControl Style="{DynamicResource CanRemoveIcon}" />
+                                                </Button>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </materialDesign:Card>
+            </Border>
+        </Grid>
+    </Border>
+
+</base:ViewChildBase>

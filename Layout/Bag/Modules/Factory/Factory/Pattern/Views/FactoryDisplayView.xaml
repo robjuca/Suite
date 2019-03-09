@@ -1,0 +1,204 @@
+﻿<base:ViewChildBase x:Class="Module.Factory.Pattern.Views.TFactoryDisplayView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:caliburn="http://www.caliburnproject.org"
+                    xmlns:converter="clr-namespace:rr.Library.Converter;assembly=rr.Library.Converter"
+                    xmlns:dragdrop="urn:gong-wpf-dragdrop"
+                    xmlns:document="clr-namespace:Shared.Module.Document;assembly=Suite18.Shared.Module.Document"
+                    xmlns:image="clr-namespace:Shared.Module.Image;assembly=Suite18.Shared.Module.Image"
+                    DataContext="{x:Null}"
+                    x:Name="ModuleFactoryDisplayViewModel">
+
+    <UserControl.Resources>
+        <converter:TByteArrayToBitmapImageConverter x:Key="ImageConverter" />
+
+        <CollectionViewSource x:Key="FrameItemsViewSource"
+                              Source="{Binding Model.OrderFrameItemsSource}" />
+    </UserControl.Resources>
+
+    <Border Padding="3">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <!--component, style, count-->
+            <Border Grid.Row="0"
+                    Padding="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--component-->
+                    <Border Grid.Column="0"
+                            Width="60">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentControl Visibility="{Binding Model.DocumentVisibility}"
+                                            Style="{StaticResource ContentDocumentIcon}" />
+
+                            <ContentControl Visibility="{Binding Model.ImageVisibility}"
+                                            Style="{StaticResource ContentImageIcon}" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--style-->
+                    <Border Grid.Column="1">
+                        <TextBlock HorizontalAlignment="Center"
+                                   Text="{Binding Model.Style}" />
+                    </Border>
+
+                    <!--count-->
+                    <Border Grid.Column="2">
+                        <TextBlock HorizontalAlignment="Center"
+                                   Text="{Binding Model.ComponentCount}" />
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!--content-->
+            <Border Grid.Row="1">
+                <materialDesign:Card Padding="1"
+                                     HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Stretch">
+                    <Grid>
+                        <!--document-->
+                        <Border Visibility="{Binding Model.DocumentVisibility}">
+                            <document:TComponentDisplayControl x:Name="DocumentControl"
+                                                               Model="{Binding Model.ComponentDocumentControlModel}" />
+                        </Border>
+
+                        <!--image-->
+                        <Border Visibility="{Binding Model.ImageVisibility}"
+                                Padding="3">
+                            <materialDesign:Flipper HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Top"
+                                                    Style="{StaticResource MaterialDesignCardFlipper}">
+
+                                <!--image list-->
+                                <materialDesign:Flipper.FrontContent>
+                                    <StackPanel Margin="3">
+                                        <!--command-->
+                                        <Border>
+                                            <Button HorizontalAlignment="Right"
+                                                    IsEnabled="{Binding Model.IsEnabledOrder}"
+                                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                                    Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                                    caliburn:Message.Attach="[Event Click] = [OnOrderClicked ()]">
+                                                <ContentControl Style="{StaticResource OrderIcon}" />
+                                            </Button>
+
+                                        </Border>
+
+                                        <!--image control-->
+                                        <Border Padding="6">
+                                            <image:TComponentControl x:Name="ImageControl"
+                                                                     Height="520"
+                                                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                                     Model="{Binding Model.ComponentImageControlModel}" />
+                                        </Border>
+                                    </StackPanel>
+
+                                </materialDesign:Flipper.FrontContent>
+
+                                <!--image order-->
+                                <materialDesign:Flipper.BackContent>
+                                    <Border Padding="3"
+                                            Height="548">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+
+                                            <!--icon, back-->
+                                            <Border Grid.Row="0">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!--icon-->
+                                                    <Border Grid.Column="0">
+                                                        <ContentControl Style="{StaticResource OrderIcon}" />
+                                                    </Border>
+
+                                                    <!--CanRemove-->
+                                                    <Border Grid.Column="1">
+                                                        <TextBlock Text="image order"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   Style="{DynamicResource MaterialDesignBody2TextBlock}" />
+                                                    </Border>
+
+                                                    <!--back-->
+                                                    <Border Grid.Column="2">
+                                                        <Button Style="{StaticResource MaterialDesignToolForegroundButton}"
+                                                                Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                                                caliburn:Message.Attach="[Event Click] = [OnOrderBackClicked ()]">
+                                                            <ContentControl Style="{StaticResource BackIcon}" />
+                                                        </Button>
+                                                    </Border>
+                                                </Grid>
+                                            </Border>
+
+                                            <!--order view-->
+                                            <Border Grid.Row="1">
+                                                <ListView x:Name="FrameList"
+                                                          dragdrop:DragDrop.IsDragSource="True"
+                                                          dragdrop:DragDrop.IsDropTarget="True"
+                                                          dragdrop:DragDrop.UseDefaultEffectDataTemplate="True"
+                                                          dragdrop:DragDrop.UseDefaultDragAdorner="True"
+                                                          SelectionMode="Single"
+                                                          ItemsSource="{Binding Source={StaticResource FrameItemsViewSource}}">
+                                                    <ListView.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto" />
+                                                                    <RowDefinition />
+                                                                </Grid.RowDefinitions>
+
+                                                                <Border Grid.Row="0">
+                                                                    <TextBlock Text="{Binding Name}" />
+                                                                </Border>
+
+                                                                <!--image-->
+                                                                <Border Grid.Row="1"
+                                                                        Width="120"
+                                                                        Height="80">
+                                                                    <Image Stretch="Fill"
+                                                                           ToolTip="{Binding Name}"
+                                                                           Source="{Binding ImageModel.Image, Converter={StaticResource ImageConverter}}" />
+                                                                </Border>
+                                                            </Grid>
+
+                                                        </DataTemplate>
+                                                    </ListView.ItemTemplate>
+
+                                                    <ListView.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <WrapPanel Width="600" />
+                                                        </ItemsPanelTemplate>
+                                                    </ListView.ItemsPanel>
+                                                </ListView>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </materialDesign:Flipper.BackContent>
+                            </materialDesign:Flipper>
+                        </Border>
+                    </Grid>
+                </materialDesign:Card>
+            </Border>
+        </Grid>
+    </Border>
+
+</base:ViewChildBase>

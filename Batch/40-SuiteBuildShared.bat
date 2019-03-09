@@ -21,7 +21,7 @@ CALL :error "Could not find Visual Studio directory."
 
 
 :rebuild_1
-	title rebuild 4-Suite Server Models at D:\Documents\GitHub\Source\Repository\WPF\Suite\Shared
+	title rebuild 4-Suite Shared at D:\Documents\GitHub\Source\Repository\WPF\Suite\Shared
 	echo SUITE SHARED
 	 
 	rem "do not change this order"
@@ -45,24 +45,25 @@ CALL :error "Could not find Visual Studio directory."
 	msbuild.exe "D:\Documents\GitHub\Source\Repository\WPF\Suite\Shared\Services\Suite Shared Services.sln" -t:rebuild -verbosity:minimal -nologo
 	
 	   
-	
+	echo SUITE SHARED GADGET
 	echo --- DOCUMENT . . .
-	rem msbuild.exe "D:\Documents\Visual Studio 2017\Projects\WPF\2018\Suite18\Shared\Document\Suite18 Shared Module Document.sln" /t:rebuild /verbosity:minimal /nologo 
+	msbuild.exe "D:\Documents\GitHub\Source\Repository\WPF\Suite\Shared\Document\Suite Shared Gadget Document.sln" -t:rebuild -verbosity:minimal -nologo
 	
 	echo --- IMAGE . . .
-	rem msbuild.exe "D:\Documents\Visual Studio 2017\Projects\WPF\2018\Suite18\Shared\Image\Suite18 Shared Module Image.sln" /t:rebuild /verbosity:minimal /nologo 
+	msbuild.exe "D:\Documents\GitHub\Source\Repository\WPF\Suite\Shared\Image\Suite Shared Gadget Image.sln" -t:rebuild -verbosity:minimal -nologo
 		
+	echo SUITE SHARED LAYOUT
 	echo --- BAG . . .
-    rem msbuild.exe "D:\Documents\Visual Studio 2017\Projects\WPF\2018\Suite18\Shared\Bag\Suite18 Shared Module Bag.sln" /t:rebuild /verbosity:minimal /nologo 
+    msbuild.exe "D:\Documents\GitHub\Source\Repository\WPF\Suite\Shared\Bag\Suite Shared Layout Bag.sln" -t:rebuild -verbosity:minimal -nologo
 	
 	echo --- SHELF . . .
-	rem msbuild.exe "D:\Documents\Visual Studio 2017\Projects\WPF\2018\Suite18\Shared\Shelf\Suite18 Shared Module Shelf.sln" /t:rebuild /verbosity:minimal /nologo 
+	msbuild.exe "D:\Documents\GitHub\Source\Repository\WPF\Suite\Shared\Shelf\Suite Shared Layout Shelf.sln" -t:rebuild -verbosity:minimal -nologo
 		
 	echo --- DRAWER . . .
-	rem msbuild.exe "D:\Documents\Visual Studio 2017\Projects\WPF\2018\Suite18\Shared\Drawer\Suite18 Shared Module Drawer.sln" /t:rebuild /verbosity:minimal /nologo 
+	msbuild.exe "D:\Documents\GitHub\Source\Repository\WPF\Suite\Shared\Drawer\Suite Shared Layout Drawer.sln" -t:rebuild -verbosity:minimal -nologo
 	
 	echo --- CHEST . . .
-	rem msbuild.exe "D:\Documents\Visual Studio 2017\Projects\WPF\2018\Suite18\Shared\Chest\Suite18 Shared Module Chest.sln" /t:rebuild /verbosity:minimal /nologo 
+	msbuild.exe "D:\Documents\GitHub\Source\Repository\WPF\Suite\Shared\Chest\Suite Shared Layout Chest.sln" -t:rebuild -verbosity:minimal -nologo
 		
 		
 	

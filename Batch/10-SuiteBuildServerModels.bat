@@ -38,4 +38,4 @@ CALL :error "Could not find Visual Studio directory."
 :rebuild_2
 	rem start "D:\Documents\GitHub\Source\Repository\WPF\Suite\Batch\2-SuiteBuildServerContext.bat"
 	
-
+pause

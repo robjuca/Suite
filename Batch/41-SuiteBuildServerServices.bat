@@ -19,7 +19,7 @@ CALL :error "Could not find Visual Studio directory."
     GOTO:rebuild_1
 
 :rebuild_1
-	title rebuild 3-Suite Server Models at D:\Documents\GitHub\Source\Repository\WPF\Suite\Server\Services
+	title rebuild 3-Suite Server Services at D:\Documents\GitHub\Source\Repository\WPF\Suite\Server\Services
 	echo SUITE SERVER SERVICES
 	 
 	rem "do not change this order"
