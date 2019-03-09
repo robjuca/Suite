@@ -1,8 +1,8 @@
 *Projeto*: Suite
 
-![](media/73b1518089c9bf2b6b6d0dec5b38286f.jpg)
+![](Docs/media/73b1518089c9bf2b6b6d0dec5b38286f.jpg)
 
-![](media/48edbf6725eabd4e44f7351b30205604.png)
+![](Docs/media/48edbf6725eabd4e44f7351b30205604.png)
 
 *Objetivo*:
 
@@ -20,7 +20,7 @@ dividido como: (figura abaixo)
 |          | imagem     | horizontal: shelf, drawer |
 |          | vídeo etc. | vertical: chest           |
 
-![](media/c6a66df256daf27eb3648ed684493f9e.jpg)
+![](Docs/media/c6a66df256daf27eb3648ed684493f9e.jpg)
 
 *Layout*:
 
@@ -38,7 +38,7 @@ usa-se “style”.
 | large               | large          |
 | big                 | big            |
 
-![](media/b1ce885d52718db50b27de09967fbb05.jpg)
+![](Docs/media/b1ce885d52718db50b27de09967fbb05.jpg)
 
 *Settings*:
 
