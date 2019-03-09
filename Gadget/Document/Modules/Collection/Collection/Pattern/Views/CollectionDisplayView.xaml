@@ -1,0 +1,97 @@
+﻿<base:ViewChildBase x:Class="Module.Collection.Pattern.Views.TCollectionDisplayView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
+                    xmlns:control="clr-namespace:Shared.Module.Document;assembly=Suite18.Shared.Module.Document"
+                    xmlns:caliburn="http://www.caliburnproject.org"
+                    DataContext="{x:Null}"
+                    x:Name="ModuleCollectionDisplayViewModel">
+
+    <Border IsEnabled="{Binding Model.IsViewEnabled}">
+        <materialDesign:Card Padding="2"
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="Stretch">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--display-->
+                <Border Grid.Row="0">
+                    <materialDesign:Card HorizontalAlignment="Center"
+                                         VerticalAlignment="Center">
+                        <control:TComponentDisplayControl x:Name="DisplayControl"
+                                                          Model="{Binding Model.ComponentControlModel}" />
+                    </materialDesign:Card>
+                </Border>
+
+                <!--edit Document name-->
+                <Border Grid.Row="1"
+                        Padding="10">
+                    <materialDesign:Card  Padding="10 2 10 2"
+                                          HorizontalAlignment="Stretch">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <!--busy edit remove style distorted-->
+                            <Border Grid.Column="0">
+                                <StackPanel Orientation="Horizontal">
+                                    <!--busy-->
+                                    <ContentControl Margin="0 0 5 0"
+                                                    Visibility="{Binding Model.BusyVisibility}"
+                                                    Style="{StaticResource ContentBusyIcon}" />
+
+                                    <!--edit-->
+                                    <Button BorderThickness="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="12"
+                                            IsEnabled="{Binding Model.IsEditCommandEnabled}"
+                                            Background="Transparent"
+                                            ToolTip="edit"
+                                            caliburn:Message.Attach="[Event Click] = [OnEditCommadClicked ()]">
+                                        <ContentControl Style="{StaticResource EditIcon}" />
+                                    </Button>
+
+                                    <!--remove-->
+                                    <Button Margin="8 0 8 0"
+                                            BorderThickness="0"
+                                            HorizontalAlignment="Left"
+                                            FontSize="12"
+                                            IsEnabled="{Binding Model.IsRemoveCommandEnabled}"
+                                            Background="Transparent"
+                                            ToolTip="remove"
+                                            caliburn:Message.Attach="[Event Click] = [OnRemoveCommadClicked ()]">
+                                        <ContentControl Style="{StaticResource RemoveIcon}" />
+                                    </Button>
+
+                                    <!--style-->
+                                    <TextBlock Margin="6 0 5 0"
+                                               VerticalAlignment="Center"
+                                               Text="{Binding Model.ComponentModelItem.Style}" />
+
+                                    <!--distorted-->
+                                    <ContentControl Margin="5 0 0 0"
+                                                    Visibility="{Binding Model.DistortedVisibility}"
+                                                    Style="{StaticResource DistortedPictureIcon}" />
+                                </StackPanel>
+                            </Border>
+
+                            <!--Document name-->
+                            <Border Grid.Column="1">
+                                <TextBlock TextAlignment="Right"
+                                           VerticalAlignment="Center"
+                                           Text="{Binding Model.ComponentModelItem.Name}" />
+                            </Border>
+                        </Grid>
+                    </materialDesign:Card>
+                </Border>
+            </Grid>
+        </materialDesign:Card>
+    </Border>
+
+</base:ViewChildBase>

@@ -1,0 +1,35 @@
+﻿<base:ViewChildBase x:Class="Module.Factory.Pattern.Views.TFactoryPropertyView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
+                    xmlns:controls="clr-namespace:rr.Library.Controls;assembly=rr.Library.Controls"
+                    xmlns:resources="clr-namespace:Shared.Resources;assembly=Suite18.Shared.Resources"
+                    xmlns:caliburn="http://www.caliburnproject.org"
+                    DataContext="{x:Null}"
+                    x:Name="ModuleFactoryPropertyViewModel">
+
+    <Border Width="240">
+        <StackPanel>
+            <!--component-->
+            <controls:TPropertyGrid VerticalAlignment="Stretch"
+                                    IsEnabled="{Binding Model.ComponentModelProperty.IsInfoEnabled}"
+                                    SelectedObject="{Binding Model.ComponentModelProperty.ComponentModel}"
+                                    caliburn:Message.Attach="[Event Loaded] = [OnPropertyGridComponentLoaded ($source)]" />
+
+            <!--message, progress, busy, apply, cancel-->
+            <resources:TApplyCommand ShowPanel="{Binding Model.ComponentModelProperty.ShowPanel}"
+                                     ProgressBarActive="{Binding Model.ComponentModelProperty.IsActiveProgress}"
+                                     MessageText="{Binding Model.ComponentModelProperty.MessagePanel}"
+                                     ContentBusyVisibility="{Binding Model.ComponentModelProperty.BusyVisibility}"
+                                     ApplyEnabled="{Binding Model.ComponentModelProperty.IsEnabledApply}"
+                                     CancelEnabled="{Binding Model.ComponentModelProperty.IsEnabledCancel}"
+                                     caliburn:Message.Attach="[Event Apply] = [OnApplyCommadClicked ()]; [Event Cancel] = [OnCancelCommadClicked ()]" />
+
+            <!--extension-->
+            <controls:TPropertyGrid VerticalAlignment="Stretch"
+                                    SelectedObject="{Binding Model.ComponentModelProperty.ExtensionModel}"
+                                    caliburn:Message.Attach="[Event Loaded] = [OnPropertyGridExtensionLoaded ($source)]" />
+        </StackPanel>
+    </Border>
+
+</base:ViewChildBase>

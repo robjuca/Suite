@@ -1,6 +1,8 @@
+*Projeto*: Suite
+
 ![](media/73b1518089c9bf2b6b6d0dec5b38286f.jpg)
 
-*Projeto*: Suite
+![](media/48edbf6725eabd4e44f7351b30205604.png)
 
 *Objetivo*:
 

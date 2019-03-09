@@ -37,12 +37,12 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
 
       string [] keys = new string []
         {
-          "Module.Document",
-          "Module.Image",
-          "Module.Bag",
-          "Module.Shelf",
-          "Module.Drawer",
-          "Module.Chest",
+          "Gadget.Document",
+          "Gadget.Image",
+          "Layout.Bag",
+          "Layout.Shelf",
+          "Layout.Drawer",
+          "Layout.Chest",
           "Module.Settings",
         };
 
@@ -73,37 +73,37 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
     public void OnDocumentCommadClicked ()
     {
       m_CurrentModule = TProcessName.Document;
-      THelper.DispatcherLater (StartProcessDispatcher);
+      TDispatcher.BeginInvoke (StartProcessDispatcher, "Suite.Gadget");
     }
 
     public void OnImageCommadClicked ()
     {
       m_CurrentModule = TProcessName.Image;
-      THelper.DispatcherLater (StartProcessDispatcher);
+      TDispatcher.BeginInvoke (StartProcessDispatcher, "Suite.Gadget");
     }
 
     public void OnBagCommadClicked ()
     {
       m_CurrentModule = TProcessName.Bag;
-      THelper.DispatcherLater (StartProcessDispatcher);
+      TDispatcher.BeginInvoke( StartProcessDispatcher, "Suite.Layout");
     }
 
     public void OnShelfCommadClicked ()
     {
       m_CurrentModule = TProcessName.Shelf;
-      THelper.DispatcherLater (StartProcessDispatcher);
+      TDispatcher.BeginInvoke (StartProcessDispatcher, "Suite.Layout");
     }
 
     public void OnDrawerCommadClicked ()
     {
       m_CurrentModule = TProcessName.Drawer;
-      THelper.DispatcherLater (StartProcessDispatcher);
+      TDispatcher.BeginInvoke (StartProcessDispatcher, "Suite.Layout");
     }
 
     public void OnChestCommadClicked ()
     {
       m_CurrentModule = TProcessName.Chest;
-      THelper.DispatcherLater (StartProcessDispatcher);
+      TDispatcher.BeginInvoke (StartProcessDispatcher, "Suite.Layout");
     }
 
     public void OnSettingsCommadClicked ()
@@ -116,44 +116,47 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
     #region Dispatcher
     void StartSettingsProcessDispatcher ()
     {
-      var module = m_CurrentModule.ToString ();
-      var key = m_Modules [module];
-      var processName = m_CurrentModule.Equals (TProcessName.Settings) ? $"Suite.Module.{module}.exe" : $"Suite.Gadget.{module}.exe";
+      if (m_CurrentModule.Equals (TProcessName.Settings)) {
+        var module = m_CurrentModule.ToString ();
+        var key = m_Modules [module];
+        var processName = $"Suite.Module.{module}.exe";
 
-      if (m_Process.ContainsKey (key)) {
-        if (m_Process [key].HasExited) {
-          m_Process [key].Start ();
-        }
-      }
-
-      else {
-        var processKey = key;
-
-        if (m_CurrentModule.Equals (TProcessName.Settings)) {
-          if (m_SettingsValidating) {
-            processKey += ".Validating";
+        if (m_Process.ContainsKey (key)) {
+          if (m_Process [key].HasExited) {
+            m_Process [key].Start ();
           }
         }
 
-        Process process = new Process
-        {
-          StartInfo = new ProcessStartInfo (processName, processKey)
-        };
+        else {
+          var processKey = key;
 
-        process.Start ();
+          if (m_CurrentModule.Equals (TProcessName.Settings)) {
+            if (m_SettingsValidating) {
+              processKey += ".Validating";
+            }
+          }
 
-        m_Process.Add (key, process);
+          Process process = new Process
+          {
+            StartInfo = new ProcessStartInfo (processName, processKey)
+          };
+
+          process.Start ();
+
+          m_Process.Add (key, process);
+        }
+
+        Model.DisableAll ();
+        RaiseChanged ();
       }
-
-      Model.DisableAll ();
-      RaiseChanged ();
     }
 
-    void StartProcessDispatcher ()
+    void StartProcessDispatcher (string processName)
     {
       var module = m_CurrentModule.ToString ();
       var key = m_Modules [module];
-      var processName = m_CurrentModule.Equals (TProcessName.Settings) ? $"Suite.Module.{module}.exe" : $"Suite.Gadget.{module}.exe";
+
+      processName += $".{module}.exe";
 
       if (m_Process.ContainsKey (key)) {
         if (m_Process [key].HasExited) {

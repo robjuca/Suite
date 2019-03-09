@@ -110,7 +110,7 @@
                             Background="Transparent">
                         <Grid>
                             <!--footer-->
-                            <controls:TFooter Name="Settings" />
+                            <controls:TFooter Name="Module_Settings" />
 
                             <!--statusbar-->
                             <controls:TShellStatusBar />

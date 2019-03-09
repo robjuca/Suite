@@ -1,0 +1,208 @@
+﻿<base:ViewChildBase x:Class="Module.Collection.Pattern.Views.TCollectionListCanRemoveView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
+                    xmlns:controls="clr-namespace:Shared.Resources;assembly=Suite18.Shared.Resources"
+                    xmlns:caliburn="http://www.caliburnproject.org"
+                    DataContext="{x:Null}"
+                    x:Name="ModuleCollectionListCanRemoveViewModel">
+
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="CanRemoveModelItemsViewSource"
+                              Source="{Binding Model.ItemsCollection}" />
+
+        <DataTemplate x:Key="ListDataTemplate">
+            <Border Padding="2"
+                    BorderThickness="0 .1 0 .1"
+                    BorderBrush="LightGray">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <!--remove check-->
+                    <Border Grid.Column="0">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Margin="0 0 3 0"
+                                      IsChecked="{Binding CanRemove}" />
+
+                            <ContentControl Style="{StaticResource CanRemoveIcon}" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--name-->
+                    <Border Grid.Column="1">
+                        <TextBlock HorizontalAlignment="Right"
+                                   Text="{Binding Name}" />
+                    </Border>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Border Padding="4">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--title, back-->
+            <Border Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <!--filter-->
+                    <Border Grid.Column="0">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentControl Style="{DynamicResource FilterIcon}" />
+
+                            <TextBlock Margin="5 0 0 0"
+                                       VerticalAlignment="Center"
+                                       Text="CanRemove" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--back-->
+                    <Border Grid.Column="1">
+                        <Button HorizontalAlignment="Right"
+                                caliburn:Message.Attach="[Event Click] = [OnBackCommadClicked ()]">
+                            <ContentControl Style="{DynamicResource BackIcon}" />
+                        </Button>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!--style-->
+            <Border Grid.Row="1"
+                    Padding="0 5 0 0">
+                <StackPanel HorizontalAlignment="Stretch">
+                    <controls:TStyleSelector x:Name="StyleSelectorCanRemove"
+                                             SelectStyle="{Binding Model.StyleSelectorSelect}"
+                                             caliburn:Message.Attach="[Event StyleSelected] = [OnStyleSelected (StyleSelectorCanRemove.StyleName)]" />
+
+                    <TextBlock Padding="0 5 0 0"
+                               HorizontalAlignment="Center"
+                               Text="{Binding Model.StyleInfo}" />
+                </StackPanel>
+            </Border>
+
+            <!--list-->
+            <Border Grid.Row="2"
+                    Margin="0 10 0 0">
+                <ListBox HorizontalContentAlignment="Stretch"
+                         VerticalAlignment="Top"
+                         ItemsSource="{Binding Source={StaticResource CanRemoveModelItemsViewSource}}"
+                         ItemTemplate="{StaticResource ListDataTemplate}" />
+            </Border>
+
+            <!--check all-->
+            <Border Grid.Row="3">
+                <CheckBox Content="check all"
+                          caliburn:Message.Attach="[Event Checked] = [OnCheckAllChecked ()]; [Event Unchecked] = [OnCheckAllUnchecked ()]" />
+            </Border>
+
+            <!--apply-->
+            <Border Grid.Row="4">
+                <materialDesign:Flipper  VerticalAlignment="Top"
+                                         HorizontalAlignment="Stretch"
+                                         Style="{StaticResource MaterialDesignCardFlipper}">
+
+                    <materialDesign:Flipper.FrontContent>
+                        <Border Height="70"
+                                Padding="3">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <!--message progress-->
+                                <Border Grid.Row="0">
+                                    <StackPanel Orientation="Horizontal"
+                                                Margin="0 0 10 0"
+                                                HorizontalAlignment="Right">
+                                        <!--message-->
+                                        <TextBlock Margin="0 0 10 0"
+                                                   VerticalAlignment="Center"
+                                                   Text="{Binding Model.MessagePanel}" />
+
+                                        <!--progress-->
+                                        <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                                     Value="0"
+                                                     IsIndeterminate="{Binding Model.IsActiveProgress}" />
+                                    </StackPanel>
+                                </Border>
+
+                                <!--apply-->
+                                <Border Grid.Row="1">
+                                    <Button Content="apply"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Bottom"
+                                            Command="{x:Static materialDesign:Flipper.FlipCommand}" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </materialDesign:Flipper.FrontContent>
+
+                    <materialDesign:Flipper.BackContent>
+                        <Border Height="70"
+                                Padding="3">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <!--question-->
+                                <Border Grid.Row="0">
+                                    <StackPanel>
+                                        <TextBlock HorizontalAlignment="Center"
+                                                   Text="{Binding Model.Question}" />
+
+                                        <TextBlock HorizontalAlignment="Center"
+                                                   Text="CONFIRM?" />
+                                    </StackPanel>
+                                </Border>
+
+                                <!--confirm-->
+                                <Border Grid.Row="1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--ok-->
+                                        <Border Grid.Column="0">
+                                            <Button Content="ok"
+                                                    HorizontalAlignment="Left"
+                                                    Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                                    caliburn:Message.Attach="[Event Click] = [OnApplyOkCommadClicked ()]" />
+                                        </Border>
+
+                                        <!--cancel-->
+                                        <Border Grid.Column="1">
+                                            <Button Content="cancel"
+                                                    HorizontalAlignment="Right"
+                                                    Command="{x:Static materialDesign:Flipper.FlipCommand}" />
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </materialDesign:Flipper.BackContent>
+                </materialDesign:Flipper>
+            </Border>
+        </Grid>
+    </Border>
+
+</base:ViewChildBase>

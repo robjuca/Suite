@@ -1,17 +1,18 @@
-![](Docs/media/73b1518089c9bf2b6b6d0dec5b38286f.jpg)
-
 *Projeto*: Suite
+
+![](media/73b1518089c9bf2b6b6d0dec5b38286f.jpg)
+
+![](media/48edbf6725eabd4e44f7351b30205604.png)
 
 *Objetivo*:
 
 Produzir uma lista vertical de gadgets (documento, imagem, vídeo etc.)
-arranjados em uma lista horizontal e salvar o resultado em um banco de dados.
-A ideia surgiu do site da Microsoft (figura abaixo)
-![](media/1dfbcb5311ca040aef14ec476ce203ba.jpg)
+arranjados em uma lista horizontal e salvar o resultado em um banco de dados. A
+ideia surgiu do site da Microsoft (figura abaixo)
 
 Criar aplicativos (WPF) para gerenciar gadgets e fazer o layout dos mesmos
-salvando o resultado em um banco de dados (SQL Server)
-O projeto pode ser dividido como: (figura abaixo)
+salvando o resultado em um banco de dados (SQL Server) O projeto pode ser
+dividido como: (figura abaixo)
 
 | launcher | gadget     | layout                    |
 |----------|------------|---------------------------|
@@ -19,7 +20,7 @@ O projeto pode ser dividido como: (figura abaixo)
 |          | imagem     | horizontal: shelf, drawer |
 |          | vídeo etc. | vertical: chest           |
 
-![](Docs/media/c6a66df256daf27eb3648ed684493f9e.jpg)
+![](media/c6a66df256daf27eb3648ed684493f9e.jpg)
 
 *Layout*:
 
@@ -37,7 +38,7 @@ usa-se “style”.
 | large               | large          |
 | big                 | big            |
 
-![](Docs/media/b1ce885d52718db50b27de09967fbb05.jpg)
+![](media/b1ce885d52718db50b27de09967fbb05.jpg)
 
 *Settings*:
 
