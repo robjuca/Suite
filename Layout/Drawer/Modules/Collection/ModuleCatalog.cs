@@ -6,7 +6,7 @@
 //----- Include
 //---------------------------//
 
-namespace Module.Collection
+namespace Layout.Collection
 {
   public sealed class TModuleCatalog
   {

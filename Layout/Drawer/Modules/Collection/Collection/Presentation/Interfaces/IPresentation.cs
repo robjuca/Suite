@@ -7,7 +7,7 @@
 using rr.Library.Infrastructure;
 //---------------------------//
 
-namespace Module.Collection.Presentation
+namespace Layout.Collection.Presentation
 {
   public interface ICollectionPresentation : IPresentation
   {

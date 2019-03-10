@@ -9,11 +9,11 @@ using rr.Library.Types;
 
 using Shared.Message;
 
-using Shared.Module.Shelf;
+using Shared.Layout.Shelf;
 using Shared.ViewModel;
 //---------------------------//
 
-namespace Module.Factory.Presentation
+namespace Layout.Factory.Presentation
 {
   public interface IDelegateCommand : IPresentationCommand
   {

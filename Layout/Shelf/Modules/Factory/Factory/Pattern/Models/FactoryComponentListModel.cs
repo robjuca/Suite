@@ -15,7 +15,7 @@ using Shared.Types;
 using Shared.ViewModel;
 //---------------------------//
 
-namespace Module.Factory.Pattern.Models
+namespace Layout.Factory.Pattern.Models
 {
   public class TFactoryComponentListModel
   {
@@ -130,11 +130,12 @@ namespace Module.Factory.Pattern.Models
       foreach (var component in m_ComponentTryToInsertItems) {
         var itemInfo = component.Value;
 
-        if (itemInfo.Style.Equals (StyleSelectorSelect)) {
-          if (m_ComponentRemovedItems.ContainsKey (itemInfo.Id).IsFalse ()) {
-            ComponentSourceCollection.Add (itemInfo);
-          }
-        }
+        //TODO: review
+        //if (itemInfo.Style.Equals (StyleSelectorSelect)) {
+        //  if (m_ComponentRemovedItems.ContainsKey (itemInfo.Id).IsFalse ()) {
+        //    ComponentSourceCollection.Add (itemInfo);
+        //  }
+        //}
       }
     }
 
@@ -196,7 +197,7 @@ namespace Module.Factory.Pattern.Models
 
     //      var position = TPosition.Create (col, row);
 
-    //      var bagModelItem = new Shared.Module.Bag.TModelItem (bagModel.BagInfo, bagModel.BagLayout, bagModel.BagImage);
+    //      var bagModelItem = new Shared.Layout.Bag.TModelItem (bagModel.BagInfo, bagModel.BagLayout, bagModel.BagImage);
 
     //      var modelInfo = new TModelInfo (TContentType.Bag);
     //      modelInfo.Insert (bagModelItem);
@@ -441,7 +442,8 @@ namespace Module.Factory.Pattern.Models
           var model = item.Value;
 
           idToRemove = model.Id;
-          style = model.Style;
+          //TODO: review
+          //style = model.Style;
 
           break;
         }

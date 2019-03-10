@@ -10,10 +10,10 @@ using System.Linq;
 
 using Shared.ViewModel;
 
-using Shared.Module.Drawer;
+using Shared.Layout.Drawer;
 //---------------------------//
 
-namespace Module.Collection.Pattern.Models
+namespace Layout.Collection.Pattern.Models
 {
   public class TCollectionDisplayModel
   {

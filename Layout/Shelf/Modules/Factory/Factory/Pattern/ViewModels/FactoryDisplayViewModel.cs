@@ -16,13 +16,13 @@ using Shared.Types;
 using Shared.Resources;
 using Shared.ViewModel;
 
-using Shared.Module.Shelf;
+using Shared.Layout.Shelf;
 
-using Module.Factory.Presentation;
-using Module.Factory.Pattern.Models;
+using Layout.Factory.Presentation;
+using Layout.Factory.Pattern.Models;
 //---------------------------//
 
-namespace Module.Factory.Pattern.ViewModels
+namespace Layout.Factory.Pattern.ViewModels
 {
   [Export ("ModuleFactoryDisplayViewModel", typeof (IFactoryDisplayViewModel))]
   public class TFactoryDisplayViewModel : TViewModelAware<TFactoryDisplayModel>, IHandleMessageInternal, IFactoryDisplayViewModel
@@ -178,7 +178,8 @@ namespace Module.Factory.Pattern.ViewModels
     void ResponseDataDispatcher (Server.Models.Component.TEntityAction action)
     {
       if (action.Param2 is TContentInfo contentInfo) {
-        contentInfo.Select (action.ModelAction.ExtensionLayoutModel.Style);
+        //TODO: review
+        //contentInfo.Select (action.ModelAction.ExtensionLayoutModel.Style);
 
         Model.Select (contentInfo);
 
@@ -217,7 +218,7 @@ namespace Module.Factory.Pattern.ViewModels
       var position = Model.ContentInfo.Position;
       var childCategory = childModelItem.Category;
 
-      var controlModel = Shared.Module.Bag.TComponentControlModel.CreateDefault;
+      var controlModel = Shared.Layout.Bag.TComponentControlModel.CreateDefault;
       controlModel.SelectModel (node.ParentId, Server.Models.Infrastructure.TCategoryType.FromValue (node.ParentCategory));
       controlModel.SelectChildModel (childId, childCategory, childStyle, childModelItem);
 
@@ -228,10 +229,10 @@ namespace Module.Factory.Pattern.ViewModels
 
     void EditDispatcher (Server.Models.Component.TEntityAction action)
     {
-      var controlModelCollection = new Dictionary<TPosition, Shared.Module.Bag.TComponentControlModel> (); // bag child model (document or image or video)
+      var controlModelCollection = new Dictionary<TPosition, Shared.Layout.Bag.TComponentControlModel> (); // bag child model (document or image or video)
 
-      if (action.Param2 is Dictionary<TPosition, Shared.Module.Bag.TComponentControlModel> childModels) {
-        controlModelCollection = new Dictionary<TPosition, Shared.Module.Bag.TComponentControlModel> (childModels); // child model
+      if (action.Param2 is Dictionary<TPosition, Shared.Layout.Bag.TComponentControlModel> childModels) {
+        controlModelCollection = new Dictionary<TPosition, Shared.Layout.Bag.TComponentControlModel> (childModels); // child model
       }
 
       foreach (var item in controlModelCollection) {

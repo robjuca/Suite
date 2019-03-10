@@ -13,10 +13,10 @@ using rr.Library.Types;
 
 using Shared.ViewModel;
 
-using Shared.Module.Shelf;
+using Shared.Layout.Shelf;
 //---------------------------//
 
-namespace Module.Collection.Pattern.Models
+namespace Layout.Collection.Pattern.Models
 {
   public class TCollectionDisplayModel
   {
@@ -39,7 +39,7 @@ namespace Module.Collection.Pattern.Models
       private set;
     }
 
-    public Dictionary<TPosition, Shared.Module.Bag.TComponentControlModel> ControlModelCollection
+    public Dictionary<TPosition, Shared.Layout.Bag.TComponentControlModel> ControlModelCollection
     {
       get;
       private set;
@@ -161,7 +161,7 @@ namespace Module.Collection.Pattern.Models
       action.Id = ComponentModelItem.Id; // shelf Id
       action.ModelAction.CopyFrom (ComponentModelItem.RequestModel ()); // shelf model
       action.Param1 = new Collection<TComponentModelItem> (ComponentModelItemCollection); // relation
-      action.Param2 = new Dictionary<TPosition, Shared.Module.Bag.TComponentControlModel> (ControlModelCollection); // child model
+      action.Param2 = new Dictionary<TPosition, Shared.Layout.Bag.TComponentControlModel> (ControlModelCollection); // child model
     }
 
     internal void SelectChildNode (Guid id, Server.Models.Infrastructure.TCategory category, TPosition position, Server.Models.Component.TEntityAction action)
@@ -187,11 +187,13 @@ namespace Module.Collection.Pattern.Models
         var childComponentModelItem = TComponentModelItem.Create (childModelItem);
         childComponentModelItem.Select (childCategory);
 
-        var childStyle = childComponentModelItem.Style;
+        //TODO: review
+        //var childStyle = childComponentModelItem.Style;
 
-        var controlModel = Shared.Module.Bag.TComponentControlModel.CreateDefault;
+        var controlModel = Shared.Layout.Bag.TComponentControlModel.CreateDefault;
         controlModel.SelectModel (id, category);
-        controlModel.SelectChildModel (childId, childCategory, childStyle, childComponentModelItem);
+        //TODO: review
+        //controlModel.SelectChildModel (childId, childCategory, childStyle, childComponentModelItem);
 
         ControlModelCollection.Add (position, controlModel);
       }
@@ -199,7 +201,7 @@ namespace Module.Collection.Pattern.Models
 
     internal void SelectManyChildNode (Guid id, Server.Models.Infrastructure.TCategory category, TPosition position, Server.Models.Component.TEntityAction action)
     {
-      var controlModel = Shared.Module.Bag.TComponentControlModel.CreateDefault;
+      var controlModel = Shared.Layout.Bag.TComponentControlModel.CreateDefault;
       controlModel.SelectModel (id, category);
 
       // child node 
@@ -223,9 +225,10 @@ namespace Module.Collection.Pattern.Models
         var childComponentModelItem = TComponentModelItem.Create (childModelItem);
         childComponentModelItem.Select (childCategory);
 
-        var childStyle = childComponentModelItem.Style;
-        
-        controlModel.SelectChildModel (childId, childCategory, childStyle, childComponentModelItem);
+        //TODO: review
+        //var childStyle = childComponentModelItem.Style;
+        //TODO: review
+        //controlModel.SelectChildModel (childId, childCategory, childStyle, childComponentModelItem);
       }
 
       ControlModelCollection.Add (position, controlModel);
@@ -236,7 +239,7 @@ namespace Module.Collection.Pattern.Models
       ComponentControlModel = TComponentControlModel.CreateDefault; // shelf control model
       ComponentModelItem = TComponentModelItem.CreateDefault; // shelf model
       ComponentModelItemCollection = new Collection<TComponentModelItem> (); // relation model
-      ControlModelCollection = new Dictionary<TPosition, Shared.Module.Bag.TComponentControlModel> (); // child model
+      ControlModelCollection = new Dictionary<TPosition, Shared.Layout.Bag.TComponentControlModel> (); // child model
 
       IsRemoveCommandEnabled = false;
     }

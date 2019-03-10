@@ -10,10 +10,10 @@ using System.Linq;
 
 using Shared.ViewModel;
 
-using Shared.Module.Drawer;
+using Shared.Layout.Drawer;
 //---------------------------//
 
-namespace Module.Factory.Pattern.Models
+namespace Layout.Factory.Pattern.Models
 {
   public class TFactoryDisplayModel
   {

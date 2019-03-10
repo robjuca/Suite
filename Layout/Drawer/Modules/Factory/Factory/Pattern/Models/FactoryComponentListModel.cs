@@ -14,7 +14,7 @@ using Server.Models.Component;
 using Shared.ViewModel;
 //---------------------------//
 
-namespace Module.Factory.Pattern.Models
+namespace Layout.Factory.Pattern.Models
 {
   public class TFactoryComponentListModel
   {
@@ -419,7 +419,8 @@ namespace Module.Factory.Pattern.Models
           var model = item.Value;
 
           idToRemove = model.Id;
-          style = model.Style;
+          //TODO: review
+          //style = model.Style;
 
           break;
         }

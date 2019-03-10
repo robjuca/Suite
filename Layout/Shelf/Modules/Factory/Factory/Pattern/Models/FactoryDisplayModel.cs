@@ -10,10 +10,10 @@ using rr.Library.Types;
 
 using Shared.Types;
 
-using Shared.Module.Shelf;
+using Shared.Layout.Shelf;
 //---------------------------//
 
-namespace Module.Factory.Pattern.Models
+namespace Layout.Factory.Pattern.Models
 {
   public class TFactoryDisplayModel
   {

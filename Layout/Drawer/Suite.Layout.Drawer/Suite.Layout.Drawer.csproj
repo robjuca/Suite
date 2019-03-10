@@ -108,7 +108,16 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Modules\Collection\Suite.Layout.Drawer.Collection.csproj">
+      <Project>{15456d78-7e79-49dc-b363-3f8771e20bd3}</Project>
+      <Name>Suite.Layout.Drawer.Collection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Factory\Suite.Layout.Drawer.Factory.csproj">
+      <Project>{1036118d-e12d-4cfb-b01b-bf423602f718}</Project>
+      <Name>Suite.Layout.Drawer.Factory</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

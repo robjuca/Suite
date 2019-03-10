@@ -18,11 +18,11 @@ using Shared.Resources;
 using Shared.Types;
 using Shared.ViewModel;
 
-using Module.Factory.Presentation;
-using Module.Factory.Pattern.Models;
+using Layout.Factory.Presentation;
+using Layout.Factory.Pattern.Models;
 //---------------------------//
 
-namespace Module.Factory.Pattern.ViewModels
+namespace Layout.Factory.Pattern.ViewModels
 {
   [Export ("ModuleFactoryPropertyViewModel", typeof (IFactoryPropertyViewModel))]
   public class TFactoryPropertyViewModel : TViewModelAware<TFactoryPropertyModel>, IHandleMessageInternal, IFactoryPropertyViewModel

@@ -16,13 +16,13 @@ using Shared.Resources;
 using Shared.Types;
 using Shared.ViewModel;
 
-using Shared.Module.Drawer;
+using Shared.Layout.Drawer;
 
-using Module.Factory.Presentation;
-using Module.Factory.Pattern.Models;
+using Layout.Factory.Presentation;
+using Layout.Factory.Pattern.Models;
 //---------------------------//
 
-namespace Module.Factory.Pattern.ViewModels
+namespace Layout.Factory.Pattern.ViewModels
 {
   [Export ("ModuleFactoryDisplayViewModel", typeof (IFactoryDisplayViewModel))]
   public class TFactoryDisplayViewModel : TViewModelAware<TFactoryDisplayModel>, IHandleMessageInternal, IFactoryDisplayViewModel

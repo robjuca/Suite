@@ -6,7 +6,7 @@
 //----- Include
 //---------------------------//
 
-namespace Module.Collection.Pattern.Models
+namespace Layout.Collection.Pattern.Models
 {
   public class TCollectionModel
   {

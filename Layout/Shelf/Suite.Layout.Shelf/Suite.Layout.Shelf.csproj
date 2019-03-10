@@ -108,7 +108,16 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Modules\Collection\Suite.Layout.Shelf.Collection.csproj">
+      <Project>{5c60b7cc-4bca-413e-a5de-03fd2caa223b}</Project>
+      <Name>Suite.Layout.Shelf.Collection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Factory\Suite.Layout.Shelf.Factory.csproj">
+      <Project>{4be48660-6851-4c05-88d7-204c9e16e839}</Project>
+      <Name>Suite.Layout.Shelf.Factory</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

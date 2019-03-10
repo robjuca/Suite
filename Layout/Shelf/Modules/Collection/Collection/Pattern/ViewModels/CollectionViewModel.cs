@@ -14,11 +14,11 @@ using Shared.Message;
 using Shared.ViewModel;
 
 
-using Module.Collection.Presentation;
-using Module.Collection.Pattern.Models;
+using Layout.Collection.Presentation;
+using Layout.Collection.Pattern.Models;
 //---------------------------//
 
-namespace Module.Collection.Pattern.ViewModels
+namespace Layout.Collection.Pattern.ViewModels
 {
   [Export ("ModuleCollectionViewModel", typeof (ICollectionViewModel))]
   public class TCollectionViewModel : TViewModelAware<TCollectionModel>, IHandleMessageModule, IHandleMessageInternal, ICollectionViewModel

@@ -49,26 +49,28 @@
                             <Border Grid.Column="0"
                                     Margin="5 0 5 0">
                                 <!--left menu-->
-                                <materialDesign:PopupBox Height="34"
-                                                         Width="34"
-                                                         Margin="5 0 0 0"
-                                                         IsEnabled="{Binding Model.MenuLeftEnabled}"
-                                                         Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
-                                                         PlacementMode="BottomAndAlignCentres">
-                                    <StackPanel>
-                                        <!--collection-->
-                                        <Button ToolTip="collection"
-                                                caliburn:Message.Attach="[Event Click] = [OnCollectionCommadClicked ()]">
-                                            <ContentControl Style="{StaticResource MenuCollectionIcon}" />
-                                        </Button>
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="5 0 0 0"
+                                            IsEnabled="{Binding Model.MenuLeftEnabled}">
+                                    <!--collection-->
+                                    <Button ToolTip="collection"
+                                            Width="26"
+                                            Height="26"
+                                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                            caliburn:Message.Attach="[Event Click] = [OnCollectionCommadClicked ()]">
+                                        <ContentControl Style="{StaticResource MenuCollectionMiniIcon}" />
+                                    </Button>
 
-                                        <!--factory-->
-                                        <Button ToolTip="factory"
-                                                caliburn:Message.Attach="[Event Click] = [OnFactoryCommadClicked ()]">
-                                            <ContentControl Style="{StaticResource MenuFactoryIcon}" />
-                                        </Button>
-                                    </StackPanel>
-                                </materialDesign:PopupBox>
+                                    <!--factory-->
+                                    <Button ToolTip="factory"
+                                            Width="26"
+                                            Height="26"
+                                            Margin="10 0 0 0"
+                                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                            caliburn:Message.Attach="[Event Click] = [OnFactoryCommadClicked ()]">
+                                        <ContentControl Style="{StaticResource MenuFactoryMiniIcon}" />
+                                    </Button>
+                                </StackPanel>
                             </Border>
 
                             <!--title-->

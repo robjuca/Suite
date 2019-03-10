@@ -6,7 +6,7 @@
 //----- Include
 //---------------------------//
 
-namespace Module.Collection.Pattern.Views
+namespace Layout.Collection.Pattern.Views
 {
   public partial class TCollectionDisplayView : rr.Library.Infrastructure.ViewChildBase
   {

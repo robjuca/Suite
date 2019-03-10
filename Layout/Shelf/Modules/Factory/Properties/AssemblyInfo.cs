@@ -7,11 +7,11 @@
 using System.Reflection;
 //---------------------------//
 
-[assembly: AssemblyTitle ("Suite18 Module Shelf Factory")]
+[assembly: AssemblyTitle ("Suite Module Shelf Factory")]
 [assembly: AssemblyDescription ("This .NET assembly is a WPF class library.")]
 [assembly: AssemblyConfiguration ("Build")]
 [assembly: AssemblyCompany ("R&R Soft")]
-[assembly: AssemblyProduct ("Suite18.Module.Shelf.Factory")]
+[assembly: AssemblyProduct ("Suite.Module.Shelf.Factory")]
 [assembly: AssemblyCopyright ("Roberto Jucá (robjuca@pobox.com) Copyright © R&R Soft 2001")]
 [assembly: AssemblyTrademark ("R&R Soft® is a registered trademark of R&R Soft.")]
 [assembly: AssemblyCulture ("")]

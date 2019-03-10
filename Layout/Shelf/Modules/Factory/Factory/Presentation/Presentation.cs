@@ -12,11 +12,11 @@ using rr.Library.Infrastructure;
 
 using Shared.Message;
 
-using Shared.Module.Shelf;
+using Shared.Layout.Shelf;
 using Shared.ViewModel;
 //---------------------------//
 
-namespace Module.Factory.Presentation
+namespace Layout.Factory.Presentation
 {
   [Export (typeof (IFactoryPresentation))]
   public class TFactoryPresentation : TPresentation, IHandleNavigateResponse, IFactoryPresentation

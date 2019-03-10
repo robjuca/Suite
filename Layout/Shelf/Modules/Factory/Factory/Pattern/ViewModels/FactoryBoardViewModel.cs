@@ -16,11 +16,11 @@ using Shared.Resources;
 using Shared.ViewModel;
 using Shared.DashBoard;
 
-using Module.Factory.Presentation;
-using Module.Factory.Pattern.Models;
+using Layout.Factory.Presentation;
+using Layout.Factory.Pattern.Models;
 //---------------------------//
 
-namespace Module.Factory.Pattern.ViewModels
+namespace Layout.Factory.Pattern.ViewModels
 {
   [Export ("ModuleFactoryBoardViewModel", typeof (IFactoryBoardViewModel))]
   public class TFactoryBoardViewModel : TViewModelAware<TFactoryBoardModel>, IHandleMessageInternal, IFactoryBoardViewModel
@@ -342,7 +342,7 @@ namespace Module.Factory.Pattern.ViewModels
       action.Id // shelf Id
       action.ModelAction // shelf model
       action.Param1 {TComponentModelItem} // relation
-      action.Param2  {Shared.Module.Bag.TComponentControlModel} // child model
+      action.Param2  {Shared.Layout.Bag.TComponentControlModel} // child model
       */
 
       m_DashBoardControl.SelectModel (action);
@@ -373,7 +373,8 @@ namespace Module.Factory.Pattern.ViewModels
     void ContentRemoved (TDashBoardItem item)
     {
       //?????????????????????????????
-      var style = item.ContextStyle;
+      //TODO: review
+      //var style = item.ContextStyle;
       var contentItem = new TDashBoardItem (item); // preserve
 
       //if (Model.RemoveContent (item.Id, out TPosition position)) {
