@@ -12,7 +12,7 @@ using Shared.Types;
 using Shared.ViewModel;
 //---------------------------//
 
-namespace Module.Collection.Pattern.Models
+namespace Gadget.Collection.Pattern.Models
 {
   public class TCollectionListCanRemoveModel
   {

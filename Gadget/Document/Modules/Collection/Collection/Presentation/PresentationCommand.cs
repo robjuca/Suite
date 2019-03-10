@@ -10,7 +10,7 @@ using Shared.Message;
 using Shared.ViewModel;
 //---------------------------//
 
-namespace Module.Collection.Presentation
+namespace Gadget.Collection.Presentation
 {
   public class TPresentationCommand : IDelegateCommand
   {

@@ -13,11 +13,11 @@ using Shared.Resources;
 using Shared.Types;
 using Shared.ViewModel;
 
-using Module.Collection.Presentation;
-using Module.Collection.Pattern.Models;
+using Gadget.Collection.Presentation;
+using Gadget.Collection.Pattern.Models;
 //---------------------------//
 
-namespace Module.Collection.Pattern.ViewModels
+namespace Gadget.Collection.Pattern.ViewModels
 {
   [Export ("ModuleCollectionDisplayViewModel", typeof (ICollectionDisplayViewModel))]
   public class TCollectionDisplayViewModel : TViewModelAware<TCollectionDisplayModel>, IHandleMessageInternal, ICollectionDisplayViewModel
@@ -100,7 +100,7 @@ namespace Module.Collection.Pattern.ViewModels
     {
       Model.Select (item);
 
-      if (FrameworkElementView.FindName ("DisplayControl") is Shared.Module.Document.TComponentDisplayControl control) {
+      if (FrameworkElementView.FindName ("DisplayControl") is Shared.Gadget.Document.TComponentDisplayControl control) {
         control.RefreshDesign ();
       }
 

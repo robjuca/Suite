@@ -9,10 +9,10 @@ using System.Windows;
 
 using Shared.ViewModel;
 
-using Shared.Module.Document;
+using Shared.Gadget.Document;
 //---------------------------//
 
-namespace Module.Collection.Pattern.Models
+namespace Gadget.Collection.Pattern.Models
 {
   public sealed class TCollectionDisplayModel
   {
@@ -134,7 +134,8 @@ namespace Module.Collection.Pattern.Models
       ComponentControlModel.RtfParagraph = ComponentModelItem.DocumentModel.Paragraph;
 
       ComponentControlModel.ExternalLink = ComponentModelItem.TextModel.ExternalLink;
-      ComponentControlModel.Style = ComponentModelItem.LayoutModel.Style;
+      //TODO: review
+      //ComponentControlModel.Style = ComponentModelItem.LayoutModel.Style;
       ComponentControlModel.Width = ComponentModelItem.LayoutModel.Width;
       ComponentControlModel.Height = ComponentModelItem.LayoutModel.Height;
       

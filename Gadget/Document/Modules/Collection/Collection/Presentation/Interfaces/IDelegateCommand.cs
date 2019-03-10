@@ -10,10 +10,10 @@ using rr.Library.Types;
 using Shared.Message;
 using Shared.ViewModel;
 
-using Shared.Module.Document;
+using Shared.Gadget.Document;
 //---------------------------//
 
-namespace Module.Collection.Presentation
+namespace Gadget.Collection.Presentation
 {
   public interface IDelegateCommand : IPresentationCommand
   {

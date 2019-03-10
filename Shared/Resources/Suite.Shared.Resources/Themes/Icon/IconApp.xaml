@@ -214,6 +214,30 @@
         </Setter>
     </Style>
 
+    <!--MenuCollectionMiniIcon-->
+    <Style x:Key="MenuCollectionMiniIcon"
+           TargetType="{x:Type ContentControl}">
+        <Setter Property="ToolTip"
+                Value="collection" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Collection.ico"
+                               Width="16"
+                               Height="16" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--MenuCollectionIcon-->
     <Style x:Key="MenuCollectionIcon"
            TargetType="{x:Type ContentControl}">
@@ -232,6 +256,30 @@
                         <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Collection.ico"
                                Width="24"
                                Height="24" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--MenuFactoryMiniIcon-->
+    <Style x:Key="MenuFactoryMiniIcon"
+           TargetType="{x:Type ContentControl}">
+        <Setter Property="ToolTip"
+                Value="factory" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/Factory.ico"
+                               Width="16"
+                               Height="16" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

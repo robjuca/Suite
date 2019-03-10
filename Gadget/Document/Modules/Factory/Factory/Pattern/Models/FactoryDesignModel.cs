@@ -4,10 +4,10 @@
 ----------------------------------------------------------------*/
 
 //----- Include
-using Shared.Module.Document;
+using Shared.Gadget.Document;
 //---------------------------//
 
-namespace Module.Factory.Pattern.Models
+namespace Gadget.Factory.Pattern.Models
 {
   public class TFactoryDesignModel
   {

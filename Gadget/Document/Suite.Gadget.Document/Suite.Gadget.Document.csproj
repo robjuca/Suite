@@ -166,5 +166,15 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Modules\Collection\Suite.Gadget.Document.Collection.csproj">
+      <Project>{cca700a1-fa70-431e-9100-75132f8864de}</Project>
+      <Name>Suite.Gadget.Document.Collection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Factory\Suite.Gadget.Document.Factory.csproj">
+      <Project>{d9d145ae-d20b-4275-aca4-81d19f368d38}</Project>
+      <Name>Suite.Gadget.Document.Factory</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

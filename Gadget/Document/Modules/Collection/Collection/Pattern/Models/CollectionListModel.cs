@@ -11,7 +11,7 @@ using Shared.Types;
 using Shared.ViewModel;
 //---------------------------//
 
-namespace Module.Collection.Pattern.Models
+namespace Gadget.Collection.Pattern.Models
 {
   public sealed class TCollectionListModel
   {
@@ -170,7 +170,8 @@ namespace Module.Collection.Pattern.Models
             var itemModel = styleItem.ItemsCollection [index];
 
             if (itemModel.Id.Equals (m_Current)) {
-              StyleSelectorSelect = itemModel.Style;
+              //TODO: Review
+              //StyleSelectorSelect = itemModel.Style;
               SelectedIndex = index;
 
               break;

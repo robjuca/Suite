@@ -6,7 +6,7 @@
 //----- Include
 //---------------------------//
 
-namespace Module.Factory.Pattern.Views
+namespace Gadget.Factory.Pattern.Views
 {
   public partial class TFactoryPropertyView : rr.Library.Infrastructure.ViewChildBase
   {

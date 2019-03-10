@@ -6,7 +6,7 @@
 //----- Include
 //---------------------------//
 
-namespace Module.Collection.Pattern.Views
+namespace Gadget.Collection.Pattern.Views
 {
   public partial class TCollectionListCanRemoveView : rr.Library.Infrastructure.ViewChildBase
   {
