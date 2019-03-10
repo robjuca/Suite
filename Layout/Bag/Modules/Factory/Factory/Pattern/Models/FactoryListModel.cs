@@ -17,7 +17,7 @@ using Server.Models.Component;
 using Shared.ViewModel;
 //---------------------------//
 
-namespace Module.Factory.Pattern.Models
+namespace Layout.Factory.Pattern.Models
 {
   public class TFactoryListModel : NotificationObject
   {
@@ -216,17 +216,18 @@ namespace Module.Factory.Pattern.Models
           var modelAction = item.Value;
 
           // same style only
-          if (modelAction.ExtensionLayoutModel.Style.Equals (m_LayoutInfo.Style)) {
-            // enabled only 
-            if (modelAction.ComponentInfoModel.Enabled) {
-              // can not be part of node
-              if (modelAction.ExtensionNodeModel.ChildId.Equals (id).IsFalse ()) {
-                var model = TComponentModel.Create (modelAction);
+          //TODO: review
+          //if (modelAction.ExtensionLayoutModel.Style.Equals (m_LayoutInfo.Style)) {
+          //  // enabled only 
+          //  if (modelAction.ComponentInfoModel.Enabled) {
+          //    // can not be part of node
+          //    if (modelAction.ExtensionNodeModel.ChildId.Equals (id).IsFalse ()) {
+          //      var model = TComponentModel.Create (modelAction);
 
-                ComponentModelCollection.Add (new TComponentSourceInfo (category, TComponentModelItem.Create (model)));
-              }
-            }
-          }
+          //      ComponentModelCollection.Add (new TComponentSourceInfo (category, TComponentModelItem.Create (model)));
+          //    }
+          //  }
+          //}
         }
       }
 
@@ -311,7 +312,8 @@ namespace Module.Factory.Pattern.Models
     {
       m_LayoutInfo.CopyFrom (action.ModelAction.ExtensionLayoutModel);
 
-      Style = $"[ style: {action.ModelAction.ExtensionLayoutModel.Width} x {action.ModelAction.ExtensionLayoutModel.Height} - {action.ModelAction.ExtensionLayoutModel.Style} ]";
+      //TODO: review
+      //Style = $"[ style: {action.ModelAction.ExtensionLayoutModel.Width} x {action.ModelAction.ExtensionLayoutModel.Height} - {action.ModelAction.ExtensionLayoutModel.Style} ]";
 
       ComponentSelectorIndex = 0;
     }

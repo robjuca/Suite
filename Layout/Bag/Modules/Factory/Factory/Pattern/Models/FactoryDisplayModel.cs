@@ -15,18 +15,18 @@ using Server.Models.Component;
 using Shared.ViewModel;
 //---------------------------//
 
-namespace Module.Factory.Pattern.Models
+namespace Layout.Factory.Pattern.Models
 {
   public class TFactoryDisplayModel
   {
     #region Property
-    public Shared.Module.Document.TComponentControlModel ComponentDocumentControlModel
+    public Shared.Gadget.Document.TComponentControlModel ComponentDocumentControlModel
     {
       get;
       set;
     }
 
-    public Shared.Module.Image.TComponentControlModel ComponentImageControlModel
+    public Shared.Gadget.Image.TComponentControlModel ComponentImageControlModel
     {
       get;
       set;
@@ -82,8 +82,8 @@ namespace Module.Factory.Pattern.Models
     #region Constructor
     public TFactoryDisplayModel ()
     {
-      ComponentDocumentControlModel = Shared.Module.Document.TComponentControlModel.CreateDefault;
-      ComponentImageControlModel = Shared.Module.Image.TComponentControlModel.CreateDefault;
+      ComponentDocumentControlModel = Shared.Gadget.Document.TComponentControlModel.CreateDefault;
+      ComponentImageControlModel = Shared.Gadget.Image.TComponentControlModel.CreateDefault;
 
       DocumentVisibility = Visibility.Collapsed;
       ImageVisibility = Visibility.Collapsed;
@@ -265,7 +265,8 @@ namespace Module.Factory.Pattern.Models
       var width = action.ModelAction.ExtensionLayoutModel.Width;
       var height = action.ModelAction.ExtensionLayoutModel.Height;
 
-      Style = $"[ style: {width} x {height} - {action.ModelAction.ExtensionLayoutModel.Style} ]";
+      //TODO: review
+      //Style = $"[ style: {width} x {height} - {action.ModelAction.ExtensionLayoutModel.Style} ]";
 
       ComponentImageControlModel.Cleanup ();
 
@@ -281,7 +282,8 @@ namespace Module.Factory.Pattern.Models
       ComponentDocumentControlModel.RtfParagraph = model.DocumentModel.Paragraph;
 
       ComponentDocumentControlModel.ExternalLink = model.TextModel.ExternalLink;
-      ComponentDocumentControlModel.Style = model.LayoutModel.Style;
+      //TODO: review
+      //ComponentDocumentControlModel.Style = model.LayoutModel.Style;
       ComponentDocumentControlModel.Width = model.LayoutModel.Width;
       ComponentDocumentControlModel.Height = model.LayoutModel.Height;
 

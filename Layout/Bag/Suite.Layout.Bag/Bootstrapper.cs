@@ -17,8 +17,8 @@ namespace Layout.Bag
     protected override void ConfigureCatalog ()
     {
       // modules
-      //AddToCatalog (new AssemblyCatalog (typeof (Collection.TModuleCatalog).Assembly));
-      //AddToCatalog (new AssemblyCatalog (typeof (Factory.TModuleCatalog).Assembly));
+      AddToCatalog (new AssemblyCatalog (typeof (Collection.TModuleCatalog).Assembly));
+      AddToCatalog (new AssemblyCatalog (typeof (Factory.TModuleCatalog).Assembly));
       AddToCatalog (new AssemblyCatalog (typeof (Shared.Services.TModuleCatalog).Assembly));
 
       // create instance

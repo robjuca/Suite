@@ -12,10 +12,10 @@ using Server.Models.Component;
 
 using Shared.ViewModel;
 
-using Shared.Module.Bag;
+using Shared.Layout.Bag;
 //---------------------------//
 
-namespace Module.Collection.Pattern.Models
+namespace Layout.Collection.Pattern.Models
 {
   public sealed class TCollectionDisplayModel
   {
@@ -176,7 +176,8 @@ namespace Module.Collection.Pattern.Models
 
         ChildId = models.Key;
         ChildCategory = Server.Models.Infrastructure.TCategoryType.FromValue (modelAction.ExtensionNodeModel.ChildCategory);
-        ChildStyle = modelAction.ExtensionLayoutModel.Style;
+        //TODO: review
+        //ChildStyle = modelAction.ExtensionLayoutModel.Style;
 
         var modelBase = TComponentModel.Create (modelAction);
 
@@ -241,20 +242,22 @@ namespace Module.Collection.Pattern.Models
     #region Support
     void SelectStyle (TComponentModelItem model)
     {
-      if (string.IsNullOrEmpty (model.LayoutModel.Style)) {
-        Cleanup ();
-      }
+      //TODO: review
+      //if (string.IsNullOrEmpty (model.LayoutModel.Style)) {
+      //  Cleanup ();
+      //}
 
-      else {
-        ComponentControlModel.Cleanup ();
+      //else {
+      //  ComponentControlModel.Cleanup ();
 
-        var width = model.LayoutModel.Width;
-        var height = model.LayoutModel.Height;
+      //  var width = model.LayoutModel.Width;
+      //  var height = model.LayoutModel.Height;
 
-        Style = $"[ style: {width} x {height} - {model.LayoutModel.Style} ]";
+      //  //TODO: review
+      //  //Style = $"[ style: {width} x {height} - {model.LayoutModel.Style} ]";
 
-        m_Count = 0;
-      }
+      //  m_Count = 0;
+      //}
     }
 
     void Select (TComponentModelItem childModel)

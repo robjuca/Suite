@@ -8,15 +8,15 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 //---------------------------//
 
-[assembly: AssemblyTitle ("Suite18 Module Bag Factory")]
+[assembly: AssemblyTitle ("Suite Layout Bag Factory")]
 [assembly: AssemblyDescription ("This .NET assembly is a WPF library.")]
 [assembly: AssemblyConfiguration ("Build")]
 [assembly: AssemblyCompany ("R&R Soft")]
-[assembly: AssemblyProduct ("Suite18.Module.Bag.Factory")]
+[assembly: AssemblyProduct ("Suite.Layout.Bag.Factory")]
 [assembly: AssemblyCopyright ("Roberto Jucá (robjuca@pobox.com) Copyright © R&R Soft 2001")]
 [assembly: AssemblyTrademark ("R&R Soft® is a registered trademark of R&R Soft.")]
 [assembly: AssemblyCulture ("")]
-[assembly: AssemblyVersion ("1.0.2018.4")]
-[assembly: AssemblyFileVersion ("1.0.2018.4")]
+[assembly: AssemblyVersion ("1.0.2019.3")]
+[assembly: AssemblyFileVersion ("1.0.2019.3")]
 [assembly: ComVisible (false)]
 //---------------------------//

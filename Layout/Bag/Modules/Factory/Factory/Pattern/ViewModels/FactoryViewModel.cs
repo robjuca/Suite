@@ -13,11 +13,11 @@ using Shared.Resources;
 using Shared.Message;
 using Shared.ViewModel;
 
-using Module.Factory.Presentation;
-using Module.Factory.Pattern.Models;
+using Layout.Factory.Presentation;
+using Layout.Factory.Pattern.Models;
 //---------------------------//
 
-namespace Module.Factory.Pattern.ViewModels
+namespace Layout.Factory.Pattern.ViewModels
 {
   [Export ("ModuleFactoryViewModel", typeof (IFactoryViewModel))]
   public class TFactoryViewModel : TViewModelAware<TFactoryModel>, IHandleMessageModule, IHandleMessageInternal, IFactoryViewModel

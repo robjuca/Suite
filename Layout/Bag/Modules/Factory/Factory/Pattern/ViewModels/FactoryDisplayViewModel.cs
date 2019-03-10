@@ -15,11 +15,11 @@ using Shared.Types;
 using Shared.Resources;
 using Shared.ViewModel;
 
-using Module.Factory.Presentation;
-using Module.Factory.Pattern.Models;
+using Layout.Factory.Presentation;
+using Layout.Factory.Pattern.Models;
 //---------------------------//
 
-namespace Module.Factory.Pattern.ViewModels
+namespace Layout.Factory.Pattern.ViewModels
 {
   [Export ("ModuleFactoryDisplayViewModel", typeof (IFactoryDisplayViewModel))]
   public class TFactoryDisplayViewModel : TViewModelAware<TFactoryDisplayModel>, IHandleMessageInternal, IFactoryDisplayViewModel
@@ -143,11 +143,11 @@ namespace Module.Factory.Pattern.ViewModels
     #region Support
     void RefreshAll ()
     {
-      if (FrameworkElementView.FindName ("DocumentControl") is Shared.Module.Document.TComponentDisplayControl documentControl) {
+      if (FrameworkElementView.FindName ("DocumentControl") is Shared.Gadget.Document.TComponentDisplayControl documentControl) {
         documentControl.RefreshDesign ();
       }
 
-      if (FrameworkElementView.FindName ("ImageControl") is Shared.Module.Image.TComponentControl imageControl) {
+      if (FrameworkElementView.FindName ("ImageControl") is Shared.Gadget.Image.TComponentControl imageControl) {
         imageControl.RefreshDesign ();
       }
 

@@ -7,7 +7,7 @@
 using rr.Library.Infrastructure;
 //---------------------------//
 
-namespace Module.Collection.Pattern.ViewModels
+namespace Layout.Collection.Pattern.ViewModels
 {
   public interface ICollectionDisplayViewModel : IViewModel
   {

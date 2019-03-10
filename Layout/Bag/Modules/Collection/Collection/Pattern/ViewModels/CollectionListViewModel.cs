@@ -16,11 +16,11 @@ using Shared.Types;
 using Shared.Resources;
 using Shared.ViewModel;
 
-using Module.Collection.Presentation;
-using Module.Collection.Pattern.Models;
+using Layout.Collection.Presentation;
+using Layout.Collection.Pattern.Models;
 //---------------------------//
 
-namespace Module.Collection.Pattern.ViewModels
+namespace Layout.Collection.Pattern.ViewModels
 {
   [Export ("ModuleCollectionListViewModel", typeof (ICollectionListViewModel))]
   public class TCollectionListViewModel : TViewModelAware<TCollectionListModel>, IHandleMessageInternal, ICollectionListViewModel
@@ -88,7 +88,8 @@ namespace Module.Collection.Pattern.ViewModels
       RefreshCollection ();
 
       var modelItem = TComponentModelItem.CreateDefault;
-      modelItem.LayoutModel.Style = style;
+      //TODO: review
+      //modelItem.LayoutModel.Style = style;
 
       if (Model.Current.NotNull ()) {
         modelItem.CopyFrom (Model.Current);

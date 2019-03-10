@@ -16,13 +16,13 @@ using Shared.Resources;
 using Shared.Types;
 using Shared.ViewModel;
 
-using Shared.Module.Bag;
+using Shared.Layout.Bag;
 
-using Module.Collection.Presentation;
-using Module.Collection.Pattern.Models;
+using Layout.Collection.Presentation;
+using Layout.Collection.Pattern.Models;
 //---------------------------//
 
-namespace Module.Collection.Pattern.ViewModels
+namespace Layout.Collection.Pattern.ViewModels
 {
   [Export ("ModuleCollectionDisplayViewModel", typeof (ICollectionDisplayViewModel))]
   public class TCollectionDisplayViewModel : TViewModelAware<TCollectionDisplayModel>, IHandleMessageInternal, ICollectionDisplayViewModel
