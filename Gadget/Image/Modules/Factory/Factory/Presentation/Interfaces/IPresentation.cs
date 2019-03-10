@@ -7,7 +7,7 @@
 using rr.Library.Infrastructure;
 //---------------------------//
 
-namespace Module.Factory.Presentation
+namespace Gadget.Factory.Presentation
 {
   public interface IFactoryPresentation : IPresentation
   {

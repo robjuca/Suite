@@ -8,11 +8,11 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 //---------------------------//
 
-[assembly: AssemblyTitle ("Suite18 Module Image Collection")]
+[assembly: AssemblyTitle ("Suite Module Image Collection")]
 [assembly: AssemblyDescription ("This .NET assembly is a WPF library.")]
 [assembly: AssemblyConfiguration ("Build")]
 [assembly: AssemblyCompany ("R&R Soft")]
-[assembly: AssemblyProduct ("Suite18.Module.Image.Collection")]
+[assembly: AssemblyProduct ("Suite.Module.Image.Collection")]
 [assembly: AssemblyCopyright ("Roberto Jucá (robjuca@pobox.com) Copyright © R&R Soft 2001")]
 [assembly: AssemblyTrademark ("R&R Soft® is a registered trademark of R&R Soft.")]
 [assembly: AssemblyCulture ("")]

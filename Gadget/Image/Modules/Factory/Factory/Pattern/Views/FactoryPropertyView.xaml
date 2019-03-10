@@ -1,9 +1,9 @@
-﻿<base:ViewChildBase x:Class="Module.Factory.Pattern.Views.TFactoryPropertyView"
+﻿<base:ViewChildBase x:Class="Gadget.Factory.Pattern.Views.TFactoryPropertyView"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
                     xmlns:controls="clr-namespace:rr.Library.Controls;assembly=rr.Library.Controls"
-                    xmlns:resources="clr-namespace:Shared.Resources;assembly=Suite18.Shared.Resources"
+                    xmlns:resources="clr-namespace:Shared.Resources;assembly=Suite.Shared.Resources"
                     xmlns:caliburn="http://www.caliburnproject.org"
                     DataContext="{x:Null}"
                     x:Name="ModuleFactoryPropertyViewModel">

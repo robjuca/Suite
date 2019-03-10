@@ -14,7 +14,7 @@ using Shared.Message;
 using Shared.ViewModel;
 //---------------------------//
 
-namespace Module.Collection.Presentation
+namespace Gadget.Collection.Presentation
 {
   [Export (typeof (ICollectionPresentation))]
   public class TCollectionPresentation : TPresentation, ICollectionPresentation

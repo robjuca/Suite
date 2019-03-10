@@ -15,11 +15,11 @@ using Shared.Types;
 using Shared.Resources;
 using Shared.ViewModel;
 
-using Module.Collection.Presentation;
-using Module.Collection.Pattern.Models;
+using Gadget.Collection.Presentation;
+using Gadget.Collection.Pattern.Models;
 //---------------------------//
 
-namespace Module.Collection.Pattern.ViewModels
+namespace Gadget.Collection.Pattern.ViewModels
 {
   [Export ("ModuleCollectionDisplayViewModel", typeof (ICollectionDisplayViewModel))]
   public class TCollectionDisplayViewModel : TViewModelAware<TCollectionDisplayModel>, IHandleMessageInternal, ICollectionDisplayViewModel

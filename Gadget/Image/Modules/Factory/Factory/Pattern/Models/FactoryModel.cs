@@ -6,7 +6,7 @@
 //----- Include
 //---------------------------//
 
-namespace Module.Factory.Pattern.Models
+namespace Gadget.Factory.Pattern.Models
 {
   public class TFactoryModel
   {

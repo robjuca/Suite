@@ -7,7 +7,7 @@
 using rr.Library.Infrastructure;
 //---------------------------//
 
-namespace Module.Factory.Pattern.ViewModels
+namespace Gadget.Factory.Pattern.ViewModels
 {
   public interface IFactoryListViewModel : IViewModel
   {

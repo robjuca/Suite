@@ -11,7 +11,7 @@ using Shared.Message;
 using Shared.ViewModel;
 //---------------------------//
 
-namespace Module.Collection.Presentation
+namespace Gadget.Collection.Presentation
 {
   public interface IDelegateCommand : IPresentationCommand
   {

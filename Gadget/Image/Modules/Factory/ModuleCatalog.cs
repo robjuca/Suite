@@ -6,7 +6,7 @@
 //----- Include
 //---------------------------//
 
-namespace Module.Factory
+namespace Gadget.Factory
 {
   public sealed class TModuleCatalog
   {

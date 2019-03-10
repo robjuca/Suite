@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D9D145AE-D20B-4275-ACA4-81D19F368D38}</ProjectGuid>
     <OutputType>library</OutputType>
-    <RootNamespace>Module.Factory</RootNamespace>
-    <AssemblyName>Suite18.Module.Image.Factory</AssemblyName>
+    <RootNamespace>Gadget.Factory</RootNamespace>
+    <AssemblyName>Suite.Gadget.Image.Factory</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -77,30 +77,33 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Library\Bin\rr.Library.Types.dll</HintPath>
     </Reference>
-    <Reference Include="Suite18.Server.Models.Component, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Suite.Server.Models.Component, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Bin\Suite18.Server.Models.Component.dll</HintPath>
+      <HintPath>..\..\..\..\Bin\Suite.Server.Models.Component.dll</HintPath>
     </Reference>
-    <Reference Include="Suite18.Server.Models.Infrastructure, Version=1.0.2018.4, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Suite.Server.Models.Infrastructure, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Bin\Suite18.Server.Models.Infrastructure.dll</HintPath>
+      <HintPath>..\..\..\..\Bin\Suite.Server.Models.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Suite18.Shared.Message, Version=1.0.2018.4, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Suite.Shared.Gadget.Image, Version=1.0.2019.4, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Bin\Suite18.Shared.Message.dll</HintPath>
+      <HintPath>..\..\..\..\Bin\Suite.Shared.Gadget.Image.dll</HintPath>
     </Reference>
-    <Reference Include="Suite18.Shared.Module.Image, Version=1.0.2018.4, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Suite.Shared.Message, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Bin\Suite18.Shared.Module.Image.dll</HintPath>
+      <HintPath>..\..\..\..\Bin\Suite.Shared.Message.dll</HintPath>
     </Reference>
-    <Reference Include="Suite18.Shared.Resources, Version=1.0.2018.4, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Suite.Shared.Resources, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Bin\Suite18.Shared.Resources.dll</HintPath>
+      <HintPath>..\..\..\..\Bin\Suite.Shared.Resources.dll</HintPath>
     </Reference>
-    <Reference Include="Suite18.Shared.Types, Version=1.0.2018.4, Culture=neutral, PublicKeyToken=null" />
-    <Reference Include="Suite18.Shared.ViewModel, Version=1.0.2018.8, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Suite.Shared.Types, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Bin\Suite18.Shared.ViewModel.dll</HintPath>
+      <HintPath>..\..\..\..\Bin\Suite.Shared.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Suite.Shared.ViewModel, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Bin\Suite.Shared.ViewModel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />

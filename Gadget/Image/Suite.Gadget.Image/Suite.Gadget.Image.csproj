@@ -120,7 +120,16 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Modules\Collection\Suite.Gadget.Image.Collection.csproj">
+      <Project>{4412b7cf-7358-418e-9718-003bf2ace286}</Project>
+      <Name>Suite.Gadget.Image.Collection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Factory\Suite.Gadget.Image.Factory.csproj">
+      <Project>{d9d145ae-d20b-4275-aca4-81d19f368d38}</Project>
+      <Name>Suite.Gadget.Image.Factory</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

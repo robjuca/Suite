@@ -14,7 +14,7 @@ using Shared.Message;
 using Shared.ViewModel;
 //---------------------------//
 
-namespace Module.Factory.Presentation
+namespace Gadget.Factory.Presentation
 {
   [Export (typeof (IFactoryPresentation))]
   public class TFactoryPresentation : TPresentation, IFactoryPresentation

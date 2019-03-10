@@ -12,7 +12,7 @@ using Server.Models.Component;
 using Shared.Types;
 //---------------------------//
 
-namespace Module.Factory.Pattern.Models
+namespace Gadget.Factory.Pattern.Models
 {
   public class TFactoryDisplayModel
   {
@@ -151,7 +151,8 @@ namespace Module.Factory.Pattern.Models
       ImageWidth = action.ModelAction.ExtensionLayoutModel.Width;
       ImageHeight = action.ModelAction.ExtensionLayoutModel.Height;
 
-      DesiredSize = $"style: {action.ModelAction.ExtensionLayoutModel.Width} x {action.ModelAction.ExtensionLayoutModel.Height} - {action.ModelAction.ExtensionLayoutModel.Style}";
+      //TODO: review
+      //DesiredSize = $"style: {action.ModelAction.ExtensionLayoutModel.Width} x {action.ModelAction.ExtensionLayoutModel.Height} - {action.ModelAction.ExtensionLayoutModel.Style}";
 
       ValidateDistortedImage ();
     }

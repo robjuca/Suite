@@ -11,11 +11,10 @@ using rr.Library.Types;
 
 using Server.Models.Component;
 
-using Shared.Data;
 using Shared.Types;
 //---------------------------//
 
-namespace Module.Factory.Pattern.Models
+namespace Gadget.Factory.Pattern.Models
 {
   public class TFactoryPropertyModel : NotificationObject
   {
