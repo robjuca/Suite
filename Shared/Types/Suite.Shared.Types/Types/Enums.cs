@@ -24,6 +24,7 @@ namespace Shared.Types
   {
     Database,
     Model,
+    Settings,
     None,
   };
   //---------------------------//
@@ -203,15 +204,6 @@ namespace Shared.Types
     Top,
     Bottom,
     Full,
-    None,
-  };
-  //---------------------------//
-
-  //-----TStyleLayout
-  public enum TStyleLayout
-  {
-    Horizontal,
-    Vertical,
     None,
   };
   //---------------------------//

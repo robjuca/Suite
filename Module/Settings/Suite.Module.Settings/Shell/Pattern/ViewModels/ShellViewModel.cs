@@ -178,34 +178,8 @@ namespace Module.Settings.Shell.Pattern.ViewModels
       var filePath = System.Environment.CurrentDirectory;
       var fileName = TNames.SettingsIniFileName;
 
-      DatabaseConnection = DatabaseConnection ?? new TDatabaseConnection (filePath, fileName);
-
-      if (DatabaseConnection.Request ()) {
-        // notify factory database
-        // SQL
-        var message = new TShellMessage (TMessageAction.Response, TypeInfo);
-        message.Support.Argument.Types.ConnectionData.CopyFrom (DatabaseConnection.Request (TAuthentication.SQL));
-
-        DelegateCommand.PublishModuleMessage.Execute (message);
-
-        // Windows
-        message = new TShellMessage (TMessageAction.Response, TypeInfo);
-        message.Support.Argument.Types.ConnectionData.CopyFrom (DatabaseConnection.Request (TAuthentication.Windows));
-
-        DelegateCommand.PublishModuleMessage.Execute (message);
-
-        // settings validating
-        TDispatcher.Invoke (RequestServiceValidationDispatcher);
-      }
-
-      else {
-        var errorMessage = new TErrorMessage ("Settings ERROR", "Load Settings Dispatcher", (string) DatabaseConnection.Result.ErrorContent)
-        {
-          Severity = TSeverity.Hight
-        };
-
-        TDispatcher.BeginInvoke (ShowErrorBoxDispatcher, errorMessage);
-      }
+      LoadSupportSettings (filePath, fileName);
+      LoadDatabaseSettings (filePath, fileName);
     }
 
     void SaveSettingsDispatcher (TDatabaseAuthentication databaseAuthentication)
@@ -266,14 +240,24 @@ namespace Module.Settings.Shell.Pattern.ViewModels
       var fileName = TNames.SettingsIniFileName;
 
       var data = new TDatabaseConnection (filePath, fileName);
-      data.SelectValidate (true);
 
-      TDispatcher.Invoke (CloseSnackbarDispatcher);
+      if (data.Request ()) {
+        TDispatcher.Invoke (CloseSnackbarDispatcher);
 
-      Model.SnackbarContent.SetMessage ("Welcome to Suite application");
-      TDispatcher.BeginInvoke (ShowSnackbarDispatcher, false);
+        Model.SnackbarContent.SetMessage ("Welcome to Suite application");
+        TDispatcher.BeginInvoke (ShowSnackbarDispatcher, false);
 
-      TDispatcher.Invoke (DatabaseValidateDispatcher);
+        TDispatcher.Invoke (DatabaseValidateDispatcher);
+      }
+
+      else {
+        var errorMessage = new TErrorMessage ("Settings ERROR", "Load Settings Dispatcher", (string) data.Result.ErrorContent)
+        {
+          Severity = TSeverity.Hight
+        };
+
+        TDispatcher.BeginInvoke (ShowErrorBoxDispatcher, errorMessage);
+      }
     }
 
     void DatabaseSettingsErrorDispatcher ()
@@ -339,6 +323,9 @@ namespace Module.Settings.Shell.Pattern.ViewModels
         message.Support.Argument.Types.Select (entityAction);
 
         DelegateCommand.PublishModuleMessage.Execute (message);
+
+        // update INI support section
+        SupportSettings.Change ("ColumnWidth", action.ModelAction.SettingsModel.ColumnWidth.ToString ()); ;
       }
 
       else {
@@ -396,10 +383,66 @@ namespace Module.Settings.Shell.Pattern.ViewModels
       get;
       set;
     }
+
+    TSupportSettings SupportSettings
+    {
+      get;
+      set;
+    }
     #endregion
 
     #region Field
-    bool                                    m_DatabaseValidatingInProgress; 
+    bool                                    m_DatabaseValidatingInProgress;
+    #endregion
+
+    #region Support
+    void LoadDatabaseSettings (string filePath, string fileName)
+    {
+      DatabaseConnection = DatabaseConnection ?? new TDatabaseConnection (filePath, fileName);
+
+      // database
+      if (DatabaseConnection.Request ()) {
+        // notify factory database
+        // SQL
+        var message = new TShellMessage (TMessageAction.Response, TypeInfo);
+        message.Support.Argument.Types.ConnectionData.CopyFrom (DatabaseConnection.Request (TAuthentication.SQL));
+
+        DelegateCommand.PublishModuleMessage.Execute (message);
+
+        // Windows
+        message = new TShellMessage (TMessageAction.Response, TypeInfo);
+        message.Support.Argument.Types.ConnectionData.CopyFrom (DatabaseConnection.Request (TAuthentication.Windows));
+
+        DelegateCommand.PublishModuleMessage.Execute (message);
+
+        // settings validating
+        TDispatcher.Invoke (RequestServiceValidationDispatcher);
+      }
+
+      else {
+        var errorMessage = new TErrorMessage ("Settings ERROR", "Load Settings Dispatcher", (string) DatabaseConnection.Result.ErrorContent)
+        {
+          Severity = TSeverity.Hight
+        };
+
+        TDispatcher.BeginInvoke (ShowErrorBoxDispatcher, errorMessage);
+      }
+    }
+
+    void LoadSupportSettings (string filePath, string fileName)
+    {
+      SupportSettings = SupportSettings ?? TSupportSettings.Create (filePath, fileName);
+
+      // supprt
+      if (SupportSettings.Validate ().IsFalse ()) {
+        var errorMessage = new TErrorMessage ("Settings ERROR", "Load Settings Dispatcher", (string) SupportSettings.Result.ErrorContent)
+        {
+          Severity = TSeverity.Hight
+        };
+
+        TDispatcher.BeginInvoke (ShowErrorBoxDispatcher, errorMessage);
+      }
+    }
     #endregion
   };
   //---------------------------//

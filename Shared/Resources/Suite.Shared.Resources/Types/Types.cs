@@ -18,6 +18,13 @@ namespace Shared.Resources
       Factory,
       Services,
     };
+
+    public enum TStyleMode
+    {
+      Horizontal,
+      Vertical,
+      None,
+    };
     #endregion
   };
   //---------------------------//

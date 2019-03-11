@@ -32,7 +32,7 @@ namespace Shared.Types
       {
         m_SelectedIndex = value;
 
-        RaisePropertyChanged ($"Style{Current.StyleInfo.LayoutString}Property");
+        RaisePropertyChanged ($"Style{Current.StyleInfo.StyleModeString}Property");
       }
     }
 
@@ -48,14 +48,14 @@ namespace Shared.Types
     #region Constructor
     public TStylePropertyInfo ()
     {
-      Populate (TStyleLayout.None);
+      Populate (TContentStyle.Mode.None);
     }
     #endregion
 
     #region Members
-    public void Initialize (TStyleLayout layout)
+    public void Initialize (TContentStyle.Mode styleMode)
     {
-      Populate (layout);
+      Populate (styleMode);
 
       Select (TStyleInfo.CreateDefault, false);
 
@@ -95,14 +95,14 @@ namespace Shared.Types
     #endregion
 
     #region Support
-    void Populate (TStyleLayout layout)
+    void Populate (TContentStyle.Mode styleMode)
     {
       StyleItemsSource = new Collection<TStylePropertyItem>
       {
-        new TStylePropertyItem (layout, TContentStyle.Style.mini),
-        new TStylePropertyItem (layout, TContentStyle.Style.small),
-        new TStylePropertyItem (layout, TContentStyle.Style.large),
-        new TStylePropertyItem (layout, TContentStyle.Style.big)
+        new TStylePropertyItem (styleMode, TContentStyle.Style.mini),
+        new TStylePropertyItem (styleMode, TContentStyle.Style.small),
+        new TStylePropertyItem (styleMode, TContentStyle.Style.large),
+        new TStylePropertyItem (styleMode, TContentStyle.Style.big)
       };
 
       m_SelectedIndex = -1;

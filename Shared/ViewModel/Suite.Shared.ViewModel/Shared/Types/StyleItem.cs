@@ -5,6 +5,8 @@
 
 //----- Include
 using System.Collections.ObjectModel;
+
+using Shared.Types;
 //---------------------------//
 
 namespace Shared.ViewModel
@@ -24,19 +26,31 @@ namespace Shared.ViewModel
       set;
     }
 
-    public string Style
+    public TContentStyle.Mode StyleMode
     {
       get
       {
-        return (MyStyleString??ItemStyleString);
+        return (StyleInfo.StyleMode);
       }
+    }
+
+    public TStyleInfo StyleInfo
+    {
+      get;
     }
     #endregion
 
     #region Constructor
-    protected TStyleItem (string style)
+    protected TStyleItem (TContentStyle.Mode styleMode, string style)
+      : this ()
     {
-      ItemStyleString = style;
+      StyleInfo = TStyleInfo.Create (styleMode);
+      StyleInfo.Select (style);
+    }
+
+    TStyleItem ()
+    {
+      StyleInfo = TStyleInfo.CreateDefault;
 
       SelectedIndex = -1;
 
@@ -56,18 +70,6 @@ namespace Shared.ViewModel
     #endregion
 
     #region Protected Property
-    protected string MyStyleString
-    {
-      get;
-      set;
-    }
-
-    protected string ItemStyleString
-    {
-      get;
-      set;
-    }
-
     protected bool HasItems
     {
       get

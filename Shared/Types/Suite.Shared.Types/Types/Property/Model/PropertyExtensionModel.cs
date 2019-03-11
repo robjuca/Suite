@@ -22,8 +22,8 @@ namespace Shared.Types
   public class TPropertyExtensionModel : NotificationObject
   {
     #region Properties
-    #region Layout
-    [Category ("2 - Layout")]
+    #region Style
+    [Category ("2 - Style")]
     [DisplayName ("Style Horizontal")]
     [Description ("current horizontal style")]
     [RefreshProperties (RefreshProperties.All)]
@@ -35,7 +35,7 @@ namespace Shared.Types
       set;
     }
 
-    [Category ("2 - Layout")]
+    [Category ("2 - Style")]
     [DisplayName ("Style Vertical")]
     [Description ("current vertical style")]
     [RefreshProperties (RefreshProperties.All)]
@@ -45,9 +45,11 @@ namespace Shared.Types
     {
       get;
       set;
-    }
+    } 
+    #endregion
 
-    [Category ("2 - Layout")]
+    #region Layout
+    [Category ("3 - Layout")]
     [DisplayName ("Image Position")]
     [Description ("current image position")]
     [RefreshProperties (RefreshProperties.All)]
@@ -59,7 +61,7 @@ namespace Shared.Types
       set;
     }
 
-    [Category ("2 - Layout")]
+    [Category ("3 - Layout")]
     [DisplayName ("Link")]
     [Description ("link for external Url")]
     [RefreshProperties (RefreshProperties.All)]
@@ -79,7 +81,7 @@ namespace Shared.Types
       }
     }
 
-    [Category ("2 - Layout")]
+    [Category ("3 - Layout")]
     [DisplayName ("Header Visibility")]
     [Description ("show header")]
     [RefreshProperties (RefreshProperties.All)]
@@ -91,7 +93,7 @@ namespace Shared.Types
       set;
     }
 
-    [Category ("2 - Layout")]
+    [Category ("3 - Layout")]
     [DisplayName ("Footer Visibility")]
     [Description ("show footer")]
     [RefreshProperties (RefreshProperties.All)]
@@ -103,7 +105,7 @@ namespace Shared.Types
       set;
     }
 
-    [Category ("2 - Layout")]
+    [Category ("4 - Board")]
     [DisplayName ("Columns")]
     [Description ("select columns size")]
     [RefreshProperties (RefreshProperties.All)]
@@ -115,7 +117,7 @@ namespace Shared.Types
       set;
     }
 
-    [Category ("2 - Layout")]
+    [Category ("4 - Board")]
     [DisplayName ("Rows")]
     [Description ("select rows size")]
     [RefreshProperties (RefreshProperties.All)]
@@ -129,7 +131,7 @@ namespace Shared.Types
     #endregion
 
     #region Text
-    [Category ("3 - Text")]
+    [Category ("5 - Text")]
     [DisplayName ("Caption")]
     [MaxLength (40)]
     [Description ("max length = 40")]
@@ -148,7 +150,7 @@ namespace Shared.Types
       }
     }
 
-    [Category ("3 - Text")]
+    [Category ("5 - Text")]
     [DisplayName ("Description")]
     [MaxLength (40)]
     [Description ("max length = 40")]
@@ -169,7 +171,7 @@ namespace Shared.Types
     #endregion
 
     #region ImageProperty
-    [Category ("4 - Image")]
+    [Category ("6 - Image")]
     [DisplayName ("Browse")]
     [Description ("current image")]
     [RefreshProperties (RefreshProperties.All)]
@@ -204,10 +206,7 @@ namespace Shared.Types
       m_TextModel = ExtensionText.CreateDefault;
 
       StyleHorizontalProperty = new TStylePropertyInfo ();
-      StyleHorizontalProperty.PropertyChanged += OnPropertyChanged;
-
       StyleVerticalProperty = new TStylePropertyInfo ();
-      StyleVerticalProperty.PropertyChanged += OnPropertyChanged;
 
       ImagePositionProperty = new TImagePositionInfo ();
       ImagePositionProperty.PropertyChanged += OnPropertyChanged;
@@ -221,10 +220,7 @@ namespace Shared.Types
       TPictureEditor.Cleanup += OnPictureEditorCleanup;
 
       ColumnsProperty = TInt4PropertyInfo.Create (4);
-      ColumnsProperty.PropertyChanged += Int4PropertyChanged;
-
       RowsProperty = TInt4PropertyInfo.Create (3);
-      RowsProperty.PropertyChanged += Int4PropertyChanged;
 
       m_Names = new Collection<string> ();
       m_ModelCategory = Server.Models.Infrastructure.TCategoryType.ToValue (Server.Models.Infrastructure.TCategory.None);
@@ -316,10 +312,15 @@ namespace Shared.Types
 
     public void Initialize ()
     {
-      StyleHorizontalProperty.Initialize (TStyleLayout.Horizontal);
-      StyleVerticalProperty.Initialize (TStyleLayout.Vertical);
+      StyleHorizontalProperty.Initialize (TContentStyle.Mode.Horizontal);
+      StyleVerticalProperty.Initialize (TContentStyle.Mode.Vertical);
       ColumnsProperty.Initialize ();
       RowsProperty.Initialize ();
+
+      StyleHorizontalProperty.PropertyChanged += OnPropertyChanged;
+      StyleVerticalProperty.PropertyChanged += OnPropertyChanged;
+      ColumnsProperty.PropertyChanged += Int4PropertyChanged;
+      RowsProperty.PropertyChanged += Int4PropertyChanged;
     }
 
     public void SelectModel (TEntityAction action)
@@ -350,10 +351,10 @@ namespace Shared.Types
           var styleHorizontalString = action.ModelAction.ExtensionLayoutModel.StyleHorizontal;
           var styleVerticalString = action.ModelAction.ExtensionLayoutModel.StyleVertical;
 
-          var styleInfoHorizontal = TStyleInfo.Create (TStyleLayout.Horizontal);
+          var styleInfoHorizontal = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
           styleInfoHorizontal.Select (styleHorizontalString);
 
-          var styleInfoVertical = TStyleInfo.Create (TStyleLayout.Vertical);
+          var styleInfoVertical = TStyleInfo.Create (TContentStyle.Mode.Vertical);
           styleInfoVertical.Select (styleVerticalString);
 
           StyleHorizontalProperty.Select (styleInfoHorizontal, locked);
@@ -488,7 +489,7 @@ namespace Shared.Types
     ExtensionText                                     m_TextModel;
     ExtensionDocument                                 m_DocumentModel;
     ExtensionGeometry                                 m_GeometryModel;
-    Collection<string>                                m_Names;
+    readonly Collection<string>                       m_Names;
     int                                               m_ModelCategory;
     #endregion
 

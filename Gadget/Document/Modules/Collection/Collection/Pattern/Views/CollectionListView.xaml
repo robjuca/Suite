@@ -229,8 +229,9 @@
                     <Border Grid.Row="1"
                             Padding="2">
                         <controls:TStyleSelector x:Name="StyleSelector"
-                                                 SelectStyle="{Binding Model.StyleSelectorSelect}"
-                                                 caliburn:Message.Attach="[Event StyleSelected] = [OnStyleSelected (StyleSelector.StyleName)]" />
+                                                 SelectStyleHorizontal="{Binding Model.StyleHorizontalSelectorSelect}"
+                                                 SelectStyleVertical="{Binding Model.StyleVerticalSelectorSelect}"
+                                                 caliburn:Message.Attach="[Event StyleHorizontalSelected] = [OnStyleHorizontalSelected (StyleSelector.StyleHorizontalName)]; [Event StyleVerticalSelected] = [OnStyleVerticalSelected (StyleSelector.StyleVerticalName)]" />
                     </Border>
 
                     <!--title-->

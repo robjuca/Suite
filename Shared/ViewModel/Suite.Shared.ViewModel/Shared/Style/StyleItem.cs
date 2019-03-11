@@ -17,8 +17,8 @@ namespace Shared.ViewModel
   public sealed class TStyleItem : TStyleItem<TComponentModelItem>
   {
     #region Constructor
-    public TStyleItem (string style)
-      : base (style)
+    public TStyleItem (TContentStyle.Mode styleMode, string style)
+      : base (styleMode, style)
     {
     }
     #endregion
@@ -50,24 +50,27 @@ namespace Shared.ViewModel
           extension.Request ();
 
           foreach (var item in action.CollectionAction.ModelCollection) {
-            //TODO :review
-            //if (item.Value.ExtensionLayoutModel.Style.Equals (ItemStyleString)) {
-            //  var model = Server.Models.Component.TComponentModel.Create (item.Value);
+            var modelStyle = TContentStyle.NONE;
 
-            //  var modelItem = TComponentModelItem.Create (model);
-            //  modelItem.Select (action.CategoryType.Category);
+            switch (StyleMode) {
+              case TContentStyle.Mode.Horizontal:
+                modelStyle = item.Value.ExtensionLayoutModel.StyleHorizontal;
+                break;
 
-            //  ItemsCollection.Add (modelItem);
-            //}
-          }
-        }
+              case TContentStyle.Mode.Vertical:
+                modelStyle = item.Value.ExtensionLayoutModel.StyleVertical;
+                
+                break;
+            }
 
-        if (HasItems) {
-          var item = ItemsCollection [0];
+            if (modelStyle.Equals (StyleInfo.StyleString)) {
+              var model = Server.Models.Component.TComponentModel.Create (item.Value);
 
-          if (item.NotNull ()) {
-            //TODO: review
-            //MyStyleString = $"{item.LayoutModel.Style} : {item.LayoutModel.Width} x {item.LayoutModel.Height}";
+              var modelItem = TComponentModelItem.Create (model);
+              modelItem.Select (action.CategoryType.Category);
+
+              ItemsCollection.Add (modelItem);
+            }
           }
         }
       }
@@ -75,11 +78,11 @@ namespace Shared.ViewModel
     #endregion
 
     #region Property
-    public static TStyleItem CreateMini => new TStyleItem (TContentStyle.MINI);
-    public static TStyleItem CreateSmall => new TStyleItem (TContentStyle.SMALL);
-    public static TStyleItem CreateLarge => new TStyleItem (TContentStyle.LARGE);
-    public static TStyleItem CreateBig => new TStyleItem (TContentStyle.BIG);
-    public static TStyleItem CreateNone => new TStyleItem (TContentStyle.NONE);
+    public static TStyleItem CreateMini (TContentStyle.Mode styleMode) => new TStyleItem (styleMode, TContentStyle.MINI);
+    public static TStyleItem CreateSmall (TContentStyle.Mode styleMode) => new TStyleItem (styleMode, TContentStyle.SMALL);
+    public static TStyleItem CreateLarge (TContentStyle.Mode styleMode) => new TStyleItem (styleMode, TContentStyle.LARGE);
+    public static TStyleItem CreateBig (TContentStyle.Mode styleMode) => new TStyleItem (styleMode, TContentStyle.BIG);
+    public static TStyleItem CreateNone (TContentStyle.Mode styleMode) => new TStyleItem (styleMode, TContentStyle.NONE);
     #endregion
   };
   //---------------------------//

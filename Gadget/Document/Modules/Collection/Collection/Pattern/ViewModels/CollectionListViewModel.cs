@@ -111,11 +111,20 @@ namespace Gadget.Collection.Pattern.ViewModels
     #endregion
 
     #region View Event
-    public void OnStyleSelected (string style)
+    public void OnStyleHorizontalSelected (string style)
     {
       Enum.TryParse (style, out TContentStyle.Style selectedStyle);
 
-      Model.SelectStyle (selectedStyle);
+      Model.SelectStyleHorizontal (selectedStyle);
+
+      TDispatcher.Invoke (RefreshAllDispatcher);
+    }
+
+    public void OnStyleVerticalSelected (string style)
+    {
+      Enum.TryParse (style, out TContentStyle.Style selectedStyle);
+
+      Model.SelectStyleVertical (selectedStyle);
 
       TDispatcher.Invoke (RefreshAllDispatcher);
     }

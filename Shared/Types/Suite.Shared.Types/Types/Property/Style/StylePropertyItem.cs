@@ -23,6 +23,14 @@ namespace Shared.Types
       private set;
     }
 
+    public string StyleString
+    {
+      get
+      {
+        return (StyleInfo.StyleString);
+      }
+    }
+
     public string SizeString
     {
       get
@@ -40,10 +48,10 @@ namespace Shared.Types
       Size = TSize.CreateDefault;
     }
 
-    public TStylePropertyItem (TStyleLayout layout, TContentStyle.Style style)
+    public TStylePropertyItem (TContentStyle.Mode styleModet, TContentStyle.Style style)
       : this ()
     {
-      StyleInfo = TStyleInfo.Create (layout);
+      StyleInfo = TStyleInfo.Create (styleModet);
       StyleInfo.Select (style);
     }
     #endregion

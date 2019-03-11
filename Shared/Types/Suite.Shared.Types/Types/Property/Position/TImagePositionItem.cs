@@ -61,7 +61,7 @@ namespace Shared.Types
         var height = contentStyle.MiniSize.Height;
 
         // columns
-        if (styleHorizontalInfo.IsLayoutHorizontal) {
+        if (styleHorizontalInfo.IsStyleModeHorizontal) {
           switch (styleHorizontalInfo.Style) {
             case TContentStyle.Style.small:
               width = contentStyle.SmallSize.Width;
@@ -78,7 +78,7 @@ namespace Shared.Types
         }
 
         // rows
-        if (styleVerticalInfo.IsLayoutVertical) {
+        if (styleVerticalInfo.IsStyleModeVertical) {
           switch (styleVerticalInfo.Style) {
             case TContentStyle.Style.small:
               height = contentStyle.SmallSize.Height;

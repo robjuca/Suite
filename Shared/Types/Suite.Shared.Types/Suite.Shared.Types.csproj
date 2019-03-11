@@ -88,6 +88,7 @@
     <Compile Include="Types\Property\Style\StylePropertyInfo.cs" />
     <Compile Include="Types\Property\Style\StylePropertyItem.cs" />
     <Compile Include="Types\Property\Visibility\VisibilityInfo.cs" />
+    <Compile Include="Types\Support\SupportSettings.cs" />
     <Compile Include="Types\Support\ConfirmMessage.cs" />
     <Compile Include="Types\Support\ContentInfo.cs" />
     <Compile Include="Types\Support\FilterInfo.cs" />

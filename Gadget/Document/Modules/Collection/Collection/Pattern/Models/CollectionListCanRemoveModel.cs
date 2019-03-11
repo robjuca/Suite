@@ -39,7 +39,7 @@ namespace Gadget.Collection.Pattern.Models
     {
       get
       {
-        return ($"{StyleSelectorModel.Current.Style} [ {StyleSelectorModel.Current.ItemsCollection.Count} ]");
+        return ($"{StyleSelectorModel.Current.StyleInfo.StyleString} [ {StyleSelectorModel.Current.ItemsCollection.Count} ]");
       }
     }
 
@@ -69,7 +69,8 @@ namespace Gadget.Collection.Pattern.Models
     {
       ItemsCollection = new ObservableCollection<TComponentModelItem> ();
 
-      StyleSelectorModel = TStyleSelectorModel.CreateDefault;
+      //TODO: review
+      StyleSelectorModel = TStyleSelectorModel.Create (TContentStyle.Mode.None);
     }
     #endregion
 

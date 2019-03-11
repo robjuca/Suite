@@ -12,7 +12,7 @@ namespace Shared.Types
   public class TStyleInfo
   {
     #region Property
-    public TStyleLayout Layout
+    public TContentStyle.Mode StyleMode
     {
       get;
       private set;
@@ -24,11 +24,11 @@ namespace Shared.Types
       private set;
     }
 
-    public string LayoutString
+    public string StyleModeString
     {
       get
       {
-        return (Layout.ToString ());
+        return (StyleMode.ToString ());
       }
     }
 
@@ -48,19 +48,19 @@ namespace Shared.Types
       }
     }
 
-    public bool IsLayoutHorizontal
+    public bool IsStyleModeHorizontal
     {
       get
       {
-        return (Layout.Equals (TStyleLayout.Horizontal));
+        return (StyleMode.Equals (TContentStyle.Mode.Horizontal));
       }
     }
 
-    public bool IsLayoutVertical
+    public bool IsStyleModeVertical
     {
       get
       {
-        return (Layout.Equals (TStyleLayout.Vertical));
+        return (StyleMode.Equals (TContentStyle.Mode.Vertical));
       }
     }
     #endregion
@@ -68,14 +68,14 @@ namespace Shared.Types
     #region Constructor
     TStyleInfo ()
     {
-      Layout = TStyleLayout.None;
+      StyleMode = TContentStyle.Mode.None;
       Style = TContentStyle.Style.None;
     }
 
-    TStyleInfo (TStyleLayout layout)
+    TStyleInfo (TContentStyle.Mode styleMode)
       : this ()
     {
-      Layout = layout;
+      StyleMode = styleMode;
     }
     #endregion
 
@@ -101,7 +101,7 @@ namespace Shared.Types
     #region Static
     public static TStyleInfo CreateDefault => new TStyleInfo ();
 
-    public static TStyleInfo Create (TStyleLayout layout) => new TStyleInfo (layout);
+    public static TStyleInfo Create (TContentStyle.Mode styleMode) => new TStyleInfo (styleMode);
     #endregion
   };
   //---------------------------//

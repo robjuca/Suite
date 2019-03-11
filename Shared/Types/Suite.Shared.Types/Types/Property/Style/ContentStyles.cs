@@ -22,6 +22,13 @@ namespace Shared.Types
       big,
       None,
     };
+
+    public enum Mode
+    {
+      Horizontal,
+      Vertical,
+      None,
+    };
     #endregion
 
     #region Property

@@ -86,7 +86,8 @@
                     Padding="0 5 0 0">
                 <StackPanel HorizontalAlignment="Stretch">
                     <controls:TStyleSelector x:Name="StyleSelectorCanRemove"
-                                             SelectStyle="{Binding Model.StyleSelectorSelect}"
+                                             SelectStyleHorizontal="{Binding Model.StyleSelectorSelect}"
+                                             SelectStyleVertical="{Binding Model.StyleSelectorSelect}"
                                              caliburn:Message.Attach="[Event StyleSelected] = [OnStyleSelected (StyleSelectorCanRemove.StyleName)]" />
 
                     <TextBlock Padding="0 5 0 0"
