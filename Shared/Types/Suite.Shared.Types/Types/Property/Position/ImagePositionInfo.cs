@@ -55,14 +55,15 @@ namespace Shared.Types
     #region Members
     public void SetupCollection (TStyleInfo styleHorizontalInfo, TStyleInfo styleVerticalInfo)
     {
-      ImagePositionItemsSource = new Collection<TImagePositionItem> ();
-
-      ImagePositionItemsSource.Add (new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Left));
-      ImagePositionItemsSource.Add (new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Right));
-      ImagePositionItemsSource.Add (new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Top));
-      ImagePositionItemsSource.Add (new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Bottom));
-      ImagePositionItemsSource.Add (new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Full));
-      ImagePositionItemsSource.Add (new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.None));
+      ImagePositionItemsSource = new Collection<TImagePositionItem>
+      {
+        new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Left),
+        new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Right),
+        new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Top),
+        new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Bottom),
+        new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Full),
+        new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.None)
+      };
 
       m_SelectedIndex = 0;
     }

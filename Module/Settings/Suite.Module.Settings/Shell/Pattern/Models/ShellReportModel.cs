@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 
 using rr.Library.Types;
 
+using Shared.Types;
 using Shared.ViewModel;
 //---------------------------//
 
@@ -95,9 +96,13 @@ namespace Module.Settings.Shell.Pattern.Models
     {
       PropertySettingsInfoCollection.Clear ();
 
+      var contentStyle = TContentStyle.CreateDefault;
+      contentStyle.SelectColumnWidth (ComponentModelItem.SettingsModel.ColumnWidth);
+
       // support
       var propertySettingsInfo = new TPropertySettingsInfo ("SettingsSupportIcon", "ColumnWidth");
       propertySettingsInfo.AddPropertyValue (new TPropertyValueInfo (ComponentModelItem.SettingsModel.ColumnWidth.ToString ()));
+      propertySettingsInfo.AddPropertyValue (new TPropertyValueInfo (contentStyle.DashBoardSizeString));
 
       PropertySettingsInfoCollection.Add (propertySettingsInfo);
 

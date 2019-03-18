@@ -1,8 +1,8 @@
 
 @echo off
 
-IF EXIST C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Current\Bin\msbuild.exe (
-    CALL :rebuild "C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Current\Bin\"
+IF EXIST D:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\msbuild.exe (
+    CALL :rebuild "D:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
     GOTO:eof
 )
 
@@ -15,7 +15,7 @@ CALL :error "Could not find Visual Studio directory."
     GOTO:eof
 
 :rebuild
-    chdir /d C:\
+    chdir /d D:\
     chdir %1
     GOTO:rebuild_1
 

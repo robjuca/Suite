@@ -35,7 +35,7 @@ namespace Shared.Types
     {
       get
       {
-        return ($"{Size.Width} x {Size.Height}");
+        return (StyleInfo.IsStyleModeHorizontal ? Size.Width.ToString () : StyleInfo.IsStyleModeVertical ? Size.Height.ToString () : string.Empty);
       }
     }
     #endregion
@@ -48,11 +48,24 @@ namespace Shared.Types
       Size = TSize.CreateDefault;
     }
 
-    public TStylePropertyItem (TContentStyle.Mode styleModet, TContentStyle.Style style)
+    public TStylePropertyItem (TContentStyle.Mode styleMode, TContentStyle.Style style)
       : this ()
     {
-      StyleInfo = TStyleInfo.Create (styleModet);
+      StyleInfo = TStyleInfo.Create (styleMode);
       StyleInfo.Select (style);
+
+      var contentStyle = TContentStyle.CreateDefault;
+      var size = contentStyle.RequestStyleSize (styleMode, style);
+
+      switch (styleMode) {
+        case TContentStyle.Mode.Horizontal:
+          Size.Width = size;
+          break;
+
+        case TContentStyle.Mode.Vertical:
+          Size.Height = size;
+          break;
+      }
     }
     #endregion
 

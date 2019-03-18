@@ -5,6 +5,7 @@
 
 //----- Include
 using System;
+using System.Collections.Generic;
 
 using rr.Library.Types;
 //---------------------------//
@@ -32,45 +33,47 @@ namespace Shared.Types
     #endregion
 
     #region Property
-    public TSize MiniSize
-    {
-      get;
-      private set;
-    }
-
-    public TSize SmallSize
+    public TSize WindowSize
     {
       get
       {
         var size = TSize.CreateDefault;
-        size.Width = MiniSize.Width;
-        size.Height = (MiniSize.Height * 2);
+        size.Width = RequestStyleSize (Mode.Horizontal, Style.big);
+        size.Height = RequestStyleSize (Mode.Vertical, Style.big);
 
-        return (size); // 1c x 2r
+        return (size); 
       }
     }
 
-    public TSize LargeSize
+    public string WindowSizeString
     {
       get
       {
-        var size = TSize.CreateDefault;
-        size.Width = MiniSize.Width;
-        size.Height = (MiniSize.Height * 3);
-
-        return (size); // 1c x 3r
+        return ($"{WindowSize.Width} x {WindowSize.Height}");
       }
     }
 
-    public TSize BigSize
+    public string HorizontalStyleSizeString
     {
       get
       {
-        var size = TSize.CreateDefault;
-        size.Width = MiniSize.Width;
-        size.Height = (MiniSize.Height * 4);
+        return ($"-> style horizontal:{Environment.NewLine}mini: {RequestStyleSizeString (Mode.Horizontal, Style.mini)}{Environment.NewLine}big: {RequestStyleSizeString (Mode.Horizontal, Style.big)}");
+      }
+    }
 
-        return (size); // 1c x 4r
+    public string VerticalStyleSizeString
+    {
+      get
+      {
+        return ($"-> style vertical:{Environment.NewLine}mini: {RequestStyleSizeString (Mode.Vertical, Style.mini)}{Environment.NewLine}big: {RequestStyleSizeString (Mode.Vertical, Style.big)}");
+      }
+    }
+
+    public string DashBoardSizeString
+    {
+      get
+      {
+        return ($"{HorizontalStyleSizeString}{Environment.NewLine}{VerticalStyleSizeString}{Environment.NewLine}-> dashboard size: {WindowSizeString}");
       }
     }
     #endregion
@@ -100,24 +103,65 @@ namespace Shared.Types
     #endregion
 
     #region Constructor
-    TContentStyle ()
+    static TContentStyle ()
     {
       if (m_ColumnWidth.Equals (0)) {
-        SelectColumnWidth (300);
+        var supportSettings = TSupportSettings.CreateDefault;
+
+        if (supportSettings.Validate ()) {
+          var supportData = TSupportSettingsData.CreateDefault;
+          var settingsValue = supportData.Request ("ColumnWidth");
+
+          m_ColumnWidth = int.Parse (settingsValue);
+        }
       }
+
+      // columns (1 - 4)
+      m_HorizontalSizeStyles = new Dictionary<Style, int> ()
+      {
+        {TContentStyle.Style.mini, (MiniSize.Width * 1)},
+        {TContentStyle.Style.small, (MiniSize.Width * 2)},
+        {TContentStyle.Style.large, (MiniSize.Width * 3)},
+        {TContentStyle.Style.big, (MiniSize.Width * 4)},
+      };
+
+      // rows (1 - 4)
+      m_VerticalSizeStyles = new Dictionary<Style, int> ()
+      {
+        {TContentStyle.Style.mini, (MiniSize.Height * 1)},
+        {TContentStyle.Style.small, (MiniSize.Height * 2)},
+        {TContentStyle.Style.large, (MiniSize.Height * 3)},
+        {TContentStyle.Style.big, (MiniSize.Height * 4)},
+      };
     }
     #endregion
 
     #region Members
-    public void SelectColumnWidth (int colunWidth)
+    public void SelectColumnWidth (int columnWidth)
     {
-      m_ColumnWidth = colunWidth;
-      
-      var miniHeight = (int) (colunWidth * .5); // 50%
+      m_ColumnWidth = columnWidth;
+    }
 
-      MiniSize = TSize.CreateDefault;
-      MiniSize.Width = colunWidth;
-      MiniSize.Height = miniHeight;
+    public int RequestStyleSize (TContentStyle.Mode mode, TContentStyle.Style style)
+    {
+      int size = 0;
+
+      switch (mode) {
+        case Mode.Horizontal:
+          size = m_HorizontalSizeStyles [style];
+          break;
+
+        case Mode.Vertical:
+          size = m_VerticalSizeStyles [style];
+          break;
+      }
+
+      return (size);
+    }
+
+    public string RequestStyleSizeString (TContentStyle.Mode mode, TContentStyle.Style style)
+    {
+      return (RequestStyleSize (mode, style).ToString ());
     }
 
     public static Style TryToParse (string style)
@@ -132,8 +176,29 @@ namespace Shared.Types
     }
     #endregion
 
+    #region Property
+    static TSize MiniSize
+    {
+      get
+      {
+        if (m_MiniSize.IsNull ()) {
+          var miniHeight = (int) (m_ColumnWidth * .5); // 50%
+
+          m_MiniSize = TSize.CreateDefault;
+          m_MiniSize.Width = m_ColumnWidth; // 1c
+          m_MiniSize.Height = miniHeight; // 1r
+        }
+
+        return (m_MiniSize);
+      }
+    } 
+    #endregion
+
     #region Fields
-    static int                              m_ColumnWidth = 0;
+    static TSize                                                          m_MiniSize; 
+    static int                                                            m_ColumnWidth = 0;
+    static readonly Dictionary<TContentStyle.Style, int>                  m_HorizontalSizeStyles;
+    static readonly Dictionary<TContentStyle.Style, int>                  m_VerticalSizeStyles;
     #endregion
 
     #region Static

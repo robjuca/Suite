@@ -321,6 +321,8 @@ namespace Shared.Types
       StyleVerticalProperty.PropertyChanged += OnPropertyChanged;
       ColumnsProperty.PropertyChanged += Int4PropertyChanged;
       RowsProperty.PropertyChanged += Int4PropertyChanged;
+
+      ImagePositionProperty.SetupCollection (StyleHorizontalProperty.Current.StyleInfo, StyleVerticalProperty.Current.StyleInfo);
     }
 
     public void SelectModel (TEntityAction action)

@@ -313,8 +313,6 @@ namespace Module.Settings.Shell.Pattern.ViewModels
 
         Model.Select (action);
 
-        OnSettingsReportCommadClicked (); // show current settings
-
         // to module
         var entityAction = Server.Models.Component.TEntityAction.CreateDefault;
         entityAction.Param1 = Model.ComponentModelItem;
@@ -325,7 +323,9 @@ namespace Module.Settings.Shell.Pattern.ViewModels
         DelegateCommand.PublishModuleMessage.Execute (message);
 
         // update INI support section
-        SupportSettings.Change ("ColumnWidth", action.ModelAction.SettingsModel.ColumnWidth.ToString ()); ;
+        SupportSettings.Change ("ColumnWidth", action.ModelAction.SettingsModel.ColumnWidth.ToString ()); 
+
+        OnSettingsReportCommadClicked (); // show current settings
       }
 
       else {

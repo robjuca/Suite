@@ -5,7 +5,6 @@
 
 //----- Include
 using System;
-using System.Collections.Generic;
 
 using rr.Library.Helper;
 //---------------------------//
@@ -26,10 +25,12 @@ namespace Shared.Types
       Result = TValidationResult.CreateDefault;
       IniFileManager = TIniFileManager.CreatDefault;
 
-      m_Keys = new Dictionary<string, string>
-      {
-        { "ColumnWidth", "0" }
-      };
+      m_SupportSettingsData = TSupportSettingsData.CreateDefault;
+
+      m_FilePath = System.Environment.CurrentDirectory;
+      m_FileName = TNames.SettingsIniFileName;
+
+      IniFileManager.SelectPath (m_FilePath, m_FileName);
     }
 
     TSupportSettings (string filePath, string fileName)
@@ -47,14 +48,28 @@ namespace Shared.Types
       Result.CopyFrom (IniFileManager.ValidatePath ());
 
       if (Result.IsValid) {
+        // create new section
         if (IniFileManager.ContainsSection (SupportSection).IsFalse ()) {
           var token = IniFileManager.AddSection (SupportSection);
 
-          foreach (var key in m_Keys) {
-            IniFileManager.AddKey (token, key.Key, key.Value);
+          foreach (var settingsName in m_SupportSettingsData.SettingsNames) {
+            var keyName = settingsName;
+            var keyValue = m_SupportSettingsData.Request (settingsName);
+
+            IniFileManager.AddKey (token, keyName, keyValue);
           }
 
           IniFileManager.SaveChanges ();
+        }
+
+        // update support settings data
+        else {
+          foreach (var settingsName in m_SupportSettingsData.SettingsNames) {
+            if (IniFileManager.ContainsKey (SupportSection, settingsName)) {
+              var settingsValue = IniFileManager.RequestKey (SupportSection, settingsName);
+              m_SupportSettingsData.Select (settingsName, settingsValue);
+            }
+          }
         }
 
         res = true;
@@ -68,6 +83,8 @@ namespace Shared.Types
       if (Result.IsValid) {
         IniFileManager.ChangeKey (SupportSection, keyName, keyValue);
         IniFileManager.SaveChanges ();
+
+        m_SupportSettingsData.Select (keyName, keyValue);
       }
     }
     #endregion
@@ -81,11 +98,14 @@ namespace Shared.Types
 
     #region Fields
     const string                                      SupportSection = "SupportSection";
-    readonly Dictionary<string, string>               m_Keys;
+    readonly TSupportSettingsData                     m_SupportSettingsData;
+    readonly string                                   m_FilePath;
+    readonly string                                   m_FileName;
     #endregion
 
     #region Static
-    public static TSupportSettings Create (string filePath, string fileName) => new TSupportSettings (filePath, fileName); 
+    public static TSupportSettings CreateDefault => new TSupportSettings ();
+    public static TSupportSettings Create (string filePath, string fileName) => new TSupportSettings (filePath, fileName);
     #endregion
   };
   //---------------------------//

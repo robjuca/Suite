@@ -39,7 +39,7 @@ namespace Shared.Types
     public TSize Size
     {
       get;
-      set;
+      private set;
     }
     #endregion
 
@@ -57,47 +57,13 @@ namespace Shared.Types
 
       if (imagePosition.Equals (TImagePosition.None).IsFalse ())  {
         var contentStyle = TContentStyle.CreateDefault;
-        var width = contentStyle.MiniSize.Width;
-        var height = contentStyle.MiniSize.Height;
-
-        // columns
-        if (styleHorizontalInfo.IsStyleModeHorizontal) {
-          switch (styleHorizontalInfo.Style) {
-            case TContentStyle.Style.small:
-              width = contentStyle.SmallSize.Width;
-              break;
-
-            case TContentStyle.Style.large:
-              width = contentStyle.LargeSize.Width;
-              break;
-
-            case TContentStyle.Style.big:
-              width = contentStyle.LargeSize.Width;
-              break;
-          }
-        }
-
-        // rows
-        if (styleVerticalInfo.IsStyleModeVertical) {
-          switch (styleVerticalInfo.Style) {
-            case TContentStyle.Style.small:
-              height = contentStyle.SmallSize.Height;
-              break;
-
-            case TContentStyle.Style.large:
-              height = contentStyle.LargeSize.Height;
-              break;
-
-            case TContentStyle.Style.big:
-              height = contentStyle.BigSize.Height;
-              break;
-          }
-        }
+        var width = contentStyle.RequestStyleSize (styleHorizontalInfo.StyleMode, styleHorizontalInfo.Style);
+        var height = contentStyle.RequestStyleSize (styleVerticalInfo.StyleMode, styleVerticalInfo.Style);
 
         switch (Position) {
           case TImagePosition.Left:
           case TImagePosition.Right:
-            Size.Width = (int) (width * .5); // 50%
+            Size.Width = (int) (width * .4); // 40%
             Size.Height = height;
             break;
 
