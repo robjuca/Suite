@@ -4,7 +4,6 @@
 ----------------------------------------------------------------*/
 
 //----- Include
-using System;
 using System.Collections.ObjectModel;
 
 using rr.Library.Types;

@@ -46,10 +46,16 @@ namespace Shared.Gadget.Document
       set;
     }
 
-    public string Style
+    public string HorizontalStyleString
     {
       get;
-      set;
+      private set;
+    }
+
+    public string VerticalStyleString
+    {
+      get;
+      private set;
     }
 
     public int Width
@@ -126,8 +132,8 @@ namespace Shared.Gadget.Document
       if (action.NotNull ()) {
         PropertyName = propertyName;
 
-        //TODO: review
-        //Style = action.ModelAction.ExtensionLayoutModel.Style;
+        HorizontalStyleString = action.ModelAction.ExtensionLayoutModel.StyleHorizontal;
+        VerticalStyleString = action.ModelAction.ExtensionLayoutModel.StyleVertical;
         Width = action.ModelAction.ExtensionLayoutModel.Width;
         Height = action.ModelAction.ExtensionLayoutModel.Height;
 
@@ -152,8 +158,8 @@ namespace Shared.Gadget.Document
     public void SelectModel (TComponentModelItem item)
     {
       if (item.NotNull ()) {
-        //TODO: review
-        //Style = item.LayoutModel.Style;
+        HorizontalStyleString = item.LayoutModel.StyleHorizontal;
+        VerticalStyleString = item.LayoutModel.StyleVertical;
 
         Width = item.LayoutModel.Width;
         Height = item.LayoutModel.Height;
@@ -195,7 +201,8 @@ namespace Shared.Gadget.Document
       if (alias.NotNull ()) {
         PropertyName = alias.PropertyName;
 
-        Style = alias.Style;
+        HorizontalStyleString = alias.HorizontalStyleString;
+        VerticalStyleString = alias.VerticalStyleString;
         Width = alias.Width;
         Height = alias.Height;
 
@@ -217,7 +224,8 @@ namespace Shared.Gadget.Document
     {
       PropertyName = string.Empty;
       ExternalLink = string.Empty;
-      Style = string.Empty;
+      HorizontalStyleString = string.Empty;
+      VerticalStyleString = string.Empty;
       Width = 0;
       Height = 0;
       ImageGeometry = TGeometry.CreateDefault;

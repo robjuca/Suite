@@ -33,12 +33,19 @@
                 </Border>
 
                 <!--design-->
-                <Border Grid.Row="1">
-                    <materialDesign:Card HorizontalAlignment="Center">
-                        <design:TComponentDesignControl x:Name="Design"
-                                                        Model="{Binding Model.ComponentControlModel}"
-                                                        caliburn:Message.Attach="[Event Loaded] = [OnDesignLoaded ($source)]" />
-                    </materialDesign:Card>
+                <Border Grid.Row="1"
+                        Padding="5">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto"
+                                  Padding="5">
+                        <materialDesign:Card HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Margin="5">
+                            <design:TComponentDesignControl x:Name="Design"
+                                                            Model="{Binding Model.ComponentControlModel}"
+                                                            caliburn:Message.Attach="[Event Loaded] = [OnDesignLoaded ($source)]" />
+                        </materialDesign:Card>
+                    </ScrollViewer>
                 </Border>
 
                 <!--RTF-->

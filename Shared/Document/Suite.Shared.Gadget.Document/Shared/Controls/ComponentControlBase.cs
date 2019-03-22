@@ -29,7 +29,7 @@ namespace Shared.Gadget.Document
     {
       get
       {
-        return ($"style: {Model.Style} ({Model.Width} x {Model.Height})");
+        return ($"style: {Model.HorizontalStyleString}, {Model.VerticalStyleString} ({Model.Width} x {Model.Height})");
       }
     }
 
@@ -240,78 +240,48 @@ namespace Shared.Gadget.Document
       m_FullGrid.Children.Clear ();
       m_BorderPanel.Children.Clear ();
 
-      //Document tyle image position
-      if (string.IsNullOrEmpty (Model.Style).IsFalse () && string.IsNullOrEmpty (Model.ImageGeometry.Position.Position).IsFalse ()) {
-        var style = Enum.Parse (typeof (TContentStyle.Style), Model.Style);
-        var position = Enum.Parse (typeof (Positions.Image), Model.ImageGeometry.Position.Position);
+      //Document image position
+      if (string.IsNullOrEmpty (Model.ImageGeometry.Position.Position).IsFalse ()) {
+        var position = Enum.Parse (typeof (Positions.Image), Model.ImageGeometry.Position.Position.ToLower ());
 
-        switch (style) {
-          case TContentStyle.Style.mini:
-          case TContentStyle.Style.small:
-          case TContentStyle.Style.big: {
-              switch (position) {
-                case Positions.Image.left:
-                  m_Image.SetValue (DockPanel.DockProperty, Dock.Left);
+        switch (position) {
+          case Positions.Image.left:
+            m_Image.SetValue (DockPanel.DockProperty, Dock.Left);
 
-                  m_BorderPanel.Children.Add (m_Image);
-                  m_BorderPanel.Children.Add (m_ContentPanel);
-                  break;
-
-                case Positions.Image.right:
-                  m_Image.SetValue (DockPanel.DockProperty, Dock.Right);
-
-                  m_BorderPanel.Children.Add (m_Image);
-                  m_BorderPanel.Children.Add (m_ContentPanel);
-                  break;
-
-                case Positions.Image.full: {
-                    m_FullGrid.Children.Add (m_Image);
-                    m_FullGrid.Children.Add (m_ContentPanel);
-
-                    m_BorderPanel.Children.Add (m_FullGrid);
-                  }
-
-                  break;
-
-                case Positions.Image.none:
-                  m_BorderPanel.Children.Add (m_ContentPanel);
-                  break;
-              }
-            }
-
+            m_BorderPanel.Children.Add (m_Image);
+            m_BorderPanel.Children.Add (m_ContentPanel);
             break;
 
-          case TContentStyle.Style.large: {
-              switch (position) {
-                case Positions.Image.top:
-                  m_Image.SetValue (DockPanel.DockProperty, Dock.Top);
+          case Positions.Image.right:
+            m_Image.SetValue (DockPanel.DockProperty, Dock.Right);
 
-                  m_BorderPanel.Children.Add (m_Image);
-                  m_BorderPanel.Children.Add (m_ContentPanel);
-                  break;
+            m_BorderPanel.Children.Add (m_Image);
+            m_BorderPanel.Children.Add (m_ContentPanel);
+            break;
 
-                case Positions.Image.bottom:
-                  m_Image.SetValue (DockPanel.DockProperty, Dock.Bottom);
+          case Positions.Image.top:
+            m_Image.SetValue (DockPanel.DockProperty, Dock.Top);
 
-                  m_BorderPanel.Children.Add (m_Image);
-                  m_BorderPanel.Children.Add (m_ContentPanel);
-                  break;
+            m_BorderPanel.Children.Add (m_Image);
+            m_BorderPanel.Children.Add (m_ContentPanel);
+            break;
 
-                case Positions.Image.full: {
-                    m_FullGrid.Children.Add (m_Image);
-                    m_FullGrid.Children.Add (m_ContentPanel);
+          case Positions.Image.bottom:
+            m_Image.SetValue (DockPanel.DockProperty, Dock.Bottom);
 
-                    m_BorderPanel.Children.Add (m_FullGrid);
-                  }
+            m_BorderPanel.Children.Add (m_Image);
+            m_BorderPanel.Children.Add (m_ContentPanel);
+            break;
 
-                  break;
+          case Positions.Image.full:
+            m_FullGrid.Children.Add (m_Image);
+            m_FullGrid.Children.Add (m_ContentPanel);
 
-                case Positions.Image.none:
-                  m_BorderPanel.Children.Add (m_ContentPanel);
-                  break;
-              }
-            }
+            m_BorderPanel.Children.Add (m_FullGrid);
+            break;
 
+          case Positions.Image.none:
+            m_BorderPanel.Children.Add (m_ContentPanel);
             break;
         }
       }

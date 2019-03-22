@@ -477,7 +477,7 @@ namespace Shared.Types
     {
       string propertyName = e.PropertyName;
 
-      if (propertyName.Equals ("StyleProperty")) {
+      if (propertyName.Equals ("StyleHorizontalProperty")|| propertyName.Equals ("StyleVerticalProperty")) {
         ImagePositionProperty.SetupCollection (StyleHorizontalProperty.Current.StyleInfo, StyleVerticalProperty.Current.StyleInfo);
       }
 
