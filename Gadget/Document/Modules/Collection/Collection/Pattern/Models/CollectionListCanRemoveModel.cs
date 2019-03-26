@@ -35,13 +35,13 @@ namespace Gadget.Collection.Pattern.Models
       set;
     }
 
-    public string StyleInfo
-    {
-      get
-      {
-        return ($"{StyleSelectorModel.Current.StyleInfo.StyleString} [ {StyleSelectorModel.Current.ItemsCollection.Count} ]");
-      }
-    }
+    //public string StyleInfo
+    //{
+    //  get
+    //  {
+    //    return ($"{StyleSelectorModel.Current.StyleInfo.StyleString} [ {StyleSelectorModel.Current.ItemsCollection.Count} ]");
+    //  }
+    //}
 
     public string MessagePanel
     {
@@ -84,6 +84,7 @@ namespace Gadget.Collection.Pattern.Models
             .ToList ()
           ;
 
+          //TODO: review
           //if (list.Count.Equals (1)) {
           //  //check busy (disable  and not busy)
           //  if (list [0].Locked) {
@@ -120,7 +121,8 @@ namespace Gadget.Collection.Pattern.Models
     {
       StyleSelectorModel.Select (selectedStyle);
 
-      ItemsCollection = new ObservableCollection<TComponentModelItem> (StyleSelectorModel.Request (selectedStyle).ItemsCollection);
+      //TODO: review
+      //ItemsCollection = new ObservableCollection<TComponentModelItem> (StyleSelectorModel.Request (selectedStyle).ItemsCollection);
     }
 
     internal void ShowPanels ()

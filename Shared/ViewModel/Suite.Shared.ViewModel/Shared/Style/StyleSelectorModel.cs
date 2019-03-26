@@ -9,23 +9,23 @@ using Shared.Types;
 
 namespace Shared.ViewModel
 {
-  public sealed class TStyleSelectorModel : TStyleSelectorModel<TStyleItem>
+  public sealed class TStyleSelectorModel : TStyleSelectorModel<TStyleModelItem>
   {
     #region Constructor
     TStyleSelectorModel (TContentStyle.Mode styleMode)
       : base (
-          TStyleItem.CreateMini (styleMode), 
-          TStyleItem.CreateSmall (styleMode), 
-          TStyleItem.CreateLarge (styleMode), 
-          TStyleItem.CreateBig (styleMode), 
-          TStyleItem.CreateNone (styleMode)
+          TStyleModelItem.CreateMini (styleMode), 
+          TStyleModelItem.CreateSmall (styleMode), 
+          TStyleModelItem.CreateLarge (styleMode), 
+          TStyleModelItem.CreateBig (styleMode), 
+          TStyleModelItem.CreateNone (styleMode)
         )
     {
     }
     #endregion
 
     #region Overrides
-    public override void SelectItem (TStyleItem styleItem, Server.Models.Component.TEntityAction action)
+    public override void SelectItem (TStyleModelItem styleItem, Server.Models.Component.TEntityAction action)
     {
       styleItem.SelectItem (action);
     }

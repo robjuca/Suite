@@ -129,25 +129,7 @@ namespace Gadget.Collection.Pattern.Models
     #region Support
     void SelectModel ()
     {
-      ComponentControlModel.RtfHeader = ComponentModelItem.DocumentModel.Header;
-      ComponentControlModel.RtfFooter = ComponentModelItem.DocumentModel.Footer;
-      ComponentControlModel.RtfParagraph = ComponentModelItem.DocumentModel.Paragraph;
-
-      ComponentControlModel.ExternalLink = ComponentModelItem.TextModel.ExternalLink;
-      //TODO: review
-      //ComponentControlModel.Style = ComponentModelItem.LayoutModel.Style;
-      ComponentControlModel.Width = ComponentModelItem.LayoutModel.Width;
-      ComponentControlModel.Height = ComponentModelItem.LayoutModel.Height;
-      
-      ComponentControlModel.HeaderVisibility = ComponentModelItem.DocumentModel.HeaderVisibility;
-      ComponentControlModel.FooterVisibility = ComponentModelItem.DocumentModel.FooterVisibility;
-
-      ComponentControlModel.ImageGeometry.Position.Position = ComponentModelItem.GeometryModel.PositionImage;
-      ComponentControlModel.ImageGeometry.Size.Width = ComponentModelItem.ImageModel.Width;
-      ComponentControlModel.ImageGeometry.Size.Height = ComponentModelItem.ImageModel.Height;
-      ComponentControlModel.ImageDistorted = ComponentModelItem.ImageModel.Distorted;
-      ComponentControlModel.Image = ComponentModelItem.ImageModel.Image;
-
+      ComponentControlModel.SelectModel (ComponentModelItem);
       ComponentControlModel.PropertyName = "all";
     }
     #endregion

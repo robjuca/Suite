@@ -4,36 +4,14 @@
 ----------------------------------------------------------------*/
 
 //----- Include
-using System.Collections.ObjectModel;
-
 using Shared.Types;
 //---------------------------//
 
 namespace Shared.ViewModel
 {
-  public abstract class TStyleItem<I> 
+  public abstract class TStyleItem
   {
     #region Property
-    public ObservableCollection<I> ItemsCollection
-    {
-      get;
-      private set;
-    }
-
-    public int SelectedIndex
-    {
-      get;
-      set;
-    }
-
-    public TContentStyle.Mode StyleMode
-    {
-      get
-      {
-        return (StyleInfo.StyleMode);
-      }
-    }
-
     public TStyleInfo StyleInfo
     {
       get;
@@ -51,31 +29,12 @@ namespace Shared.ViewModel
     TStyleItem ()
     {
       StyleInfo = TStyleInfo.CreateDefault;
-
-      SelectedIndex = -1;
-
-      ItemsCollection = new ObservableCollection<I> ();
     }
     #endregion
 
     #region Virtual Members
-    public virtual I GetCurrent ()
-    {
-      return ((I) new object ());
-    }
-
     public virtual void SelectItem (Server.Models.Component.TEntityAction entityAction)
     {
-    }
-    #endregion
-
-    #region Protected Property
-    protected bool HasItems
-    {
-      get
-      {
-        return (ItemsCollection.Count > 0);
-      }
     }
     #endregion
   };

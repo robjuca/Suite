@@ -83,7 +83,11 @@ namespace Gadget.Factory.Pattern.Models
     #region Members
     internal void PropertySelect (string propertyName, TEntityAction action)
     {
-      if (propertyName.Equals ("StyleProperty")) {
+      if (propertyName.Equals ("StyleHorizontalProperty")) {
+        SelectStyle (action);
+      }
+
+      if (propertyName.Equals ("StyleVerticalProperty")) {
         SelectStyle (action);
       }
 
@@ -151,8 +155,7 @@ namespace Gadget.Factory.Pattern.Models
       ImageWidth = action.ModelAction.ExtensionLayoutModel.Width;
       ImageHeight = action.ModelAction.ExtensionLayoutModel.Height;
 
-      //TODO: review
-      //DesiredSize = $"style: {action.ModelAction.ExtensionLayoutModel.Width} x {action.ModelAction.ExtensionLayoutModel.Height} - {action.ModelAction.ExtensionLayoutModel.Style}";
+      DesiredSize = $"style: {action.ModelAction.ExtensionLayoutModel.StyleHorizontal}, {action.ModelAction.ExtensionLayoutModel.StyleVertical} ({action.ModelAction.ExtensionLayoutModel.Width} x {action.ModelAction.ExtensionLayoutModel.Height})";
 
       ValidateDistortedImage ();
     }

@@ -115,7 +115,8 @@
     <Compile Include="Shared\Model\ComponentModelItem.cs" />
     <Compile Include="Shared\Model\ShellModel.cs" />
     <Compile Include="Shared\Service\EntityService.cs" />
-    <Compile Include="Shared\Style\StyleItem.cs" />
+    <Compile Include="Shared\Style\StyleComponentModel.cs" />
+    <Compile Include="Shared\Style\StyleModelItem.cs" />
     <Compile Include="Shared\Style\StyleSelectorModel.cs" />
     <Compile Include="Shared\Style\StyleSelectorModelBase.cs" />
     <Compile Include="Shared\Types\ComponentItemInfo.cs" />

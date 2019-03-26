@@ -10,7 +10,7 @@
 
     <UserControl.Resources>
         <CollectionViewSource x:Key="ModelItemsViewSource"
-                              Source="{Binding Model.ItemsCollection}" />
+                              Source="{Binding Model.StyleComponentModel.ItemsCollection}" />
 
         <DataTemplate x:Key="ListDataTemplate">
             <Border Padding="2"
@@ -58,7 +58,8 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <Border Padding="2">
+    <Border Padding="2"
+            Width="240">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -94,8 +95,9 @@
             <Border Grid.Row="1"
                     Padding="2">
                 <controls:TStyleSelector x:Name="StyleSelector"
-                                         SelectStyle="{Binding Model.StyleSelectorSelect}"
-                                         caliburn:Message.Attach="[Event StyleSelected] = [OnStyleSelected (StyleSelector.StyleName)]" />
+                                         SelectStyleHorizontal="{Binding Model.StyleHorizontalSelectorSelect}"
+                                         SelectStyleVertical="{Binding Model.StyleVerticalSelectorSelect}"
+                                         caliburn:Message.Attach="[Event StyleHorizontalSelected] = [OnStyleHorizontalSelected (StyleSelector.StyleHorizontalName)]; [Event StyleVerticalSelected] = [OnStyleVerticalSelected (StyleSelector.StyleVerticalName)]" />
             </Border>
 
             <!--title-->
@@ -109,9 +111,6 @@
             <Border Grid.Row="3"
                     Padding="2">
                 <ListBox x:Name="List"
-                         Height="455"
-                         HorizontalContentAlignment="Stretch"
-                         VerticalAlignment="Top"
                          SelectedIndex="{Binding Model.SelectedIndex}"
                          ItemsSource="{Binding Source={StaticResource ModelItemsViewSource}}"
                          ItemTemplate="{StaticResource ListDataTemplate}"

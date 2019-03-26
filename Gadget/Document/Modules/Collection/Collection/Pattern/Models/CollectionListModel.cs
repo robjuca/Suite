@@ -16,10 +16,9 @@ namespace Gadget.Collection.Pattern.Models
   public sealed class TCollectionListModel
   {
     #region Property
-    public ObservableCollection<TComponentModelItem> ItemsCollection
+    public TStyleComponentModel StyleComponentModel
     {
       get;
-      private set;
     }
 
     public Collection<string> FilterEnabledItemsSource
@@ -56,7 +55,7 @@ namespace Gadget.Collection.Pattern.Models
     {
       get
       {
-        return ($"{CurrentStyleString} [ {StyleHorizontalSelectorModel.Current.ItemsCollection.Count} ]");
+        return ($"{CurrentStyleString}  [ {StyleComponentModel. ItemsCount} ]");
       }
     }
 
@@ -94,7 +93,7 @@ namespace Gadget.Collection.Pattern.Models
     {
       get
       {
-        return (SelectedIndex.Equals (-1) ? Guid.Empty : ItemsCollection [SelectedIndex].Id);
+        return (Current.Id);
       }
     }
 
@@ -102,7 +101,7 @@ namespace Gadget.Collection.Pattern.Models
     {
       get
       {
-        return (SelectedIndex.Equals (-1) ? TComponentModelItem.CreateDefault : ItemsCollection [SelectedIndex]);
+        return (StyleComponentModel.RequestItem (SelectedIndex));
       }
     }
     #endregion
@@ -110,7 +109,7 @@ namespace Gadget.Collection.Pattern.Models
     #region Constructor
     public TCollectionListModel ()
     {
-      ItemsCollection = new ObservableCollection<TComponentModelItem> ();
+      StyleComponentModel = TStyleComponentModel.CreateDefault;
 
       StyleHorizontalSelectorModel = TStyleSelectorModel.Create (TContentStyle.Mode.Horizontal);
       StyleHorizontalSelectorSelect = string.Empty;
@@ -143,15 +142,15 @@ namespace Gadget.Collection.Pattern.Models
     #region Members
     internal void Select (Server.Models.Component.TEntityAction action)
     {
+      // DATA IN:
+      // action.CollectionAction.ModelCollection
+
       action.ThrowNull ();
 
-      StyleHorizontalSelectorModel.SelectItem (action);
       StyleHorizontalSelectorSelect = string.IsNullOrEmpty (StyleHorizontalSelectorSelect) ? TContentStyle.MINI : StyleHorizontalSelectorSelect;
-
-      StyleVerticalSelectorModel.SelectItem (action);
       StyleVerticalSelectorSelect = string.IsNullOrEmpty (StyleVerticalSelectorSelect) ? TContentStyle.MINI : StyleVerticalSelectorSelect;
 
-      SelectStyle (m_SelectedStyleHorizontal, m_SelectedStyleVertical);
+      SelectStyle (m_SelectedStyleHorizontal, m_SelectedStyleVertical, action);
     }
 
     internal void Update (Server.Models.Component.TEntityAction action)
@@ -163,46 +162,27 @@ namespace Gadget.Collection.Pattern.Models
 
     internal void PreserveCurrent ()
     {
-      m_Current = Id;
+      m_CurrentId = Id;
     }
 
     internal void DiscardCurrent ()
     {
-      m_Current = Guid.Empty;
+      m_CurrentId = Guid.Empty;
     }
 
     internal void TryToSelect ()
     {
-      if (m_Current.NotEmpty ()) {
-        foreach (TContentStyle.Style style in TContentStyle.GetValues) {
-          var styleHorizontalItem = StyleHorizontalSelectorModel.Request (style);
-          var styleVerticalItem = StyleVerticalSelectorModel.Request (style);
+      if (m_CurrentId.NotEmpty ()) {
+        var item = StyleComponentModel.RequestComponentModel (m_CurrentId);
 
-          // horizontal
-          for (int index = 0; index < styleHorizontalItem.ItemsCollection.Count; index++) {
-            var itemModel = styleHorizontalItem.ItemsCollection [index];
+        if (item.Id.NotEmpty ()) {
+          var styleHorizontal = TContentStyle.TryToParse (item.StyleHorizontal);
+          var styleVertical = TContentStyle.TryToParse (item.StyleVertical);
 
-            if (itemModel.Id.Equals (m_Current)) {
-              //TODO: Review
-              //StyleSelectorSelect = itemModel.Style;
-              //SelectedIndex = index;
+          SelectStyleHorizontal (styleHorizontal);
+          SelectStyleVertical (styleVertical);
 
-              break;
-            }
-          }
-
-          // vertical
-          for (int index = 0; index < styleVerticalItem.ItemsCollection.Count; index++) {
-            var itemModel = styleVerticalItem.ItemsCollection [index];
-
-            if (itemModel.Id.Equals (m_Current)) {
-              //TODO: Review
-              //StyleSelectorSelect = itemModel.Style;
-              //SelectedIndex = index;
-
-              break;
-            }
-          }
+          SelectedIndex = StyleComponentModel.RequestIndex (m_CurrentId);
         }
       }
 
@@ -214,6 +194,8 @@ namespace Gadget.Collection.Pattern.Models
       StyleHorizontalSelectorModel.Select (selectedStyleHorizontal);
       StyleHorizontalSelectorSelect = selectedStyleHorizontal.ToString ();
       m_SelectedStyleHorizontal = selectedStyleHorizontal;
+
+      Populate ();
     }
 
     internal void SelectStyleVertical (TContentStyle.Style selectedStyleVertical)
@@ -221,20 +203,19 @@ namespace Gadget.Collection.Pattern.Models
       StyleVerticalSelectorModel.Select (selectedStyleVertical);
       StyleVerticalSelectorSelect = selectedStyleVertical.ToString ();
       m_SelectedStyleVertical = selectedStyleVertical;
+
+      Populate ();
     }
 
-    internal void SelectStyle (TContentStyle.Style selectedStyleHorizontal, TContentStyle.Style selectedStyleVertical)
+    internal void SelectStyle (TContentStyle.Style selectedStyleHorizontal, TContentStyle.Style selectedStyleVertical, Server.Models.Component.TEntityAction action)
     {
+      // DATA IN:
+      // action.CollectionAction.ModelCollection
+
+      StyleComponentModel.Select (action);
+
       SelectStyleHorizontal (selectedStyleHorizontal);
       SelectStyleVertical (selectedStyleVertical);
-
-      //TODO: Review
-      var horizontalList = StyleHorizontalSelectorModel.Request (selectedStyleHorizontal).ItemsCollection;
-      var verticalList = StyleVerticalSelectorModel.Request (selectedStyleVertical).ItemsCollection;
-
-      //ItemsCollection = new ObservableCollection<TComponentModelItem> (StyleHorizontalSelectorModel.Request (selectedStyleHorizontal).ItemsCollection);
-
-      IsEnabledFilter = (ItemsCollection.Count > 0);
     }
 
     internal void Cleanup ()
@@ -248,15 +229,24 @@ namespace Gadget.Collection.Pattern.Models
     {
       get
       {
-        return ($"{StyleHorizontalSelectorModel.Current.StyleInfo.StyleString}, {StyleVerticalSelectorModel.Current.StyleInfo.StyleString}");
+        return ($"{StyleHorizontalSelectorModel.Current.StyleInfo.StyleFullString}, {StyleVerticalSelectorModel.Current.StyleInfo.StyleFullString}");
       }
-    } 
+    }
     #endregion
 
     #region Fields
-    TContentStyle.Style                                         m_SelectedStyleHorizontal;
-    TContentStyle.Style                                         m_SelectedStyleVertical;
-    Guid                                                        m_Current;
+    TContentStyle.Style                                                   m_SelectedStyleHorizontal;
+    TContentStyle.Style                                                   m_SelectedStyleVertical;
+    Guid                                                                  m_CurrentId;
+    #endregion
+
+    #region Support
+    void Populate ()
+    {
+      StyleComponentModel.Select (m_SelectedStyleHorizontal, m_SelectedStyleVertical);
+
+      IsEnabledFilter = StyleComponentModel.HasItems;
+    } 
     #endregion
   };
   //---------------------------//

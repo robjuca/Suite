@@ -86,16 +86,22 @@ namespace Gadget.Collection.Pattern.ViewModels
     #endregion
 
     #region View Event
-    public void OnStyleSelected (string style)
+    public void OnStyleHorizontalSelected (string style)
     {
       Enum.TryParse (style, out TContentStyle.Style selectedStyle);
 
-      Model.SelectStyle (selectedStyle);
-      RaiseChanged ();
+      Model.SelectStyleHorizontal (selectedStyle);
 
-      // to sibiling display
-      var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Cleanup, TChild.List, TypeInfo);
-      DelegateCommand.PublishInternalMessage.Execute (message);
+      TDispatcher.Invoke (RefreshAllDispatcher);
+    }
+
+    public void OnStyleVerticalSelected (string style)
+    {
+      Enum.TryParse (style, out TContentStyle.Style selectedStyle);
+
+      Model.SelectStyleVertical (selectedStyle);
+
+      TDispatcher.Invoke (RefreshAllDispatcher);
     }
 
     public void OnSelectionChanged (TComponentModelItem item)
@@ -107,6 +113,13 @@ namespace Gadget.Collection.Pattern.ViewModels
     #endregion
 
     #region Dispatcher
+    void RefreshAllDispatcher ()
+    {
+      RaiseChanged ();
+
+      RefreshCollection ("ModelItemsViewSource");
+    }
+
     void RequestDataDispatcher ()
     {
       // to parent

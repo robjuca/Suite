@@ -18,14 +18,22 @@
                                     SelectedObject="{Binding Model.ComponentModelProperty.ComponentModel}"
                                     caliburn:Message.Attach="[Event Loaded] = [OnPropertyGridComponentLoaded ($source)]" />
 
-            <!--message, progress, busy, apply, cancel-->
-            <resources:TApplyCommand ShowPanel="{Binding Model.ComponentModelProperty.ShowPanel}"
-                                     ProgressBarActive="{Binding Model.ComponentModelProperty.IsActiveProgress}"
-                                     MessageText="{Binding Model.ComponentModelProperty.MessagePanel}"
-                                     ContentBusyVisibility="{Binding Model.ComponentModelProperty.BusyVisibility}"
-                                     ApplyEnabled="{Binding Model.ComponentModelProperty.IsEnabledApply}"
-                                     CancelEnabled="{Binding Model.ComponentModelProperty.IsEnabledCancel}"
-                                     caliburn:Message.Attach="[Event Apply] = [OnApplyCommadClicked ()]; [Event Cancel] = [OnCancelCommadClicked ()]" />
+            <StackPanel Orientation="Horizontal">
+                <!--distorted-->
+                <Border Margin="5 0 5 0">
+                    <ContentControl Visibility="{Binding Model.ComponentModelProperty.DistortedVisibility}"
+                                    Style="{StaticResource DistortedPictureIcon}" />
+                </Border>
+                
+                <!--message, progress, busy, apply, cancel-->
+                <resources:TApplyCommand ShowPanel="{Binding Model.ComponentModelProperty.ShowPanel}"
+                                         ProgressBarActive="{Binding Model.ComponentModelProperty.IsActiveProgress}"
+                                         MessageText="{Binding Model.ComponentModelProperty.MessagePanel}"
+                                         ContentBusyVisibility="{Binding Model.ComponentModelProperty.BusyVisibility}"
+                                         ApplyEnabled="{Binding Model.ComponentModelProperty.IsEnabledApply}"
+                                         CancelEnabled="{Binding Model.ComponentModelProperty.IsEnabledCancel}"
+                                         caliburn:Message.Attach="[Event Apply] = [OnApplyCommadClicked ()]; [Event Cancel] = [OnCancelCommadClicked ()]" />
+            </StackPanel>
 
             <!--extension-->
             <controls:TPropertyGrid ToolbarVisible="False"
@@ -34,11 +42,5 @@
                                     caliburn:Message.Attach="[Event Loaded] = [OnPropertyGridExtensionLoaded ($source)]" />
         </StackPanel>
     </Border>
-
-    <!--distorted-->
-    <!--<Border Grid.Column="1">
-                                    <ContentControl Visibility="{Binding Model.PropertyModel.DistortedVisibility}"
-                                                    Style="{StaticResource DistortedPictureIcon}" />
-                                </Border>-->
 
 </base:ViewChildBase>

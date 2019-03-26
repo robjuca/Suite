@@ -40,6 +40,18 @@ namespace Shared.Types
       }
     }
 
+    public string StyleFullString
+    {
+      get
+      {
+        var contentStyle = TContentStyle.CreateDefault;
+
+        return (
+          $"{StyleString} ({contentStyle.RequestStyleSizeString (StyleMode, Style)})"
+        );
+      }
+    }
+
     public bool IsValidated
     {
       get

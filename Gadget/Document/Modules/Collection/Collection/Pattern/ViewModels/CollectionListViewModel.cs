@@ -48,7 +48,7 @@ namespace Gadget.Collection.Pattern.ViewModels
 
           // Response
           if (message.IsAction (TInternalMessageAction.Response)) {
-            // Collection Minimum
+            // Collection - Minimum
             if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Collection, Server.Models.Infrastructure.TExtension.Minimum)) {
               if (message.Result.IsValid) {
                 // Document
@@ -193,36 +193,26 @@ namespace Gadget.Collection.Pattern.ViewModels
 
       RefreshCollection ("ModelItemsViewSource");
     }
+
     void RequestDataDispatcher ()
     {
       // to parent
+      // Collection - Minimum
+      var action = Server.Models.Component.TEntityAction.Create (
+        Server.Models.Infrastructure.TCategory.Document, 
+        Server.Models.Infrastructure.TOperation.Collection, 
+        Server.Models.Infrastructure.TExtension.Minimum
+      );
+
       var message = new TCollectionMessageInternal (TInternalMessageAction.Request, TChild.List, TypeInfo);
-      message.Support.Argument.Types.Select (Server.Models.Component.TEntityAction.Create (Server.Models.Infrastructure.TCategory.Document, Server.Models.Infrastructure.TOperation.Collection, Server.Models.Infrastructure.TExtension.Minimum));
+      message.Support.Argument.Types.Select (action);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
     }
 
-    void RequestDataContentDispatcher ()
-    {
-      // to parent
-      //var contentAction = Server.Models.Component.TEntityAction.Create (Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Many);
-      //contentAction.Select (Server.Models.Component.TContentOperation.TInternalOperation.Type);
-      //contentAction.SelectType (Server.Models.Infrastructure.TCategory.Document);
-
-      //var message = new TCollectionMessageInternal (TInternalMessageAction.Request, TChild.List, TypeInfo);
-      //message.Support.Argument.Types.Select (contentAction);
-
-      //DelegateCommand.PublishInternalMessage.Execute (message);
-    }
-
     void ResponseDataDispatcher (Server.Models.Component.TEntityAction action)
     {
-      //Model.Preserve (action);
-
-      //TDispatcher.Invoke (RequestDataContentDispatcher);
-
-      //RaiseChanged ();
-
+      Model.PreserveCurrent ();
       Model.Select (action);
 
       TDispatcher.Invoke (RefreshAllDispatcher);
@@ -231,14 +221,21 @@ namespace Gadget.Collection.Pattern.ViewModels
 
     void RequestModelDispatcher ()
     {
-      var action = Server.Models.Component.TEntityAction.Create (Server.Models.Infrastructure.TCategory.Document, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.ById);
-      action.Id = Model.Id;
+      if (Model.Id.NotEmpty ()) {
+        // Select - ById
+        var action = Server.Models.Component.TEntityAction.Create (
+          Server.Models.Infrastructure.TCategory.Document,
+          Server.Models.Infrastructure.TOperation.Select,
+          Server.Models.Infrastructure.TExtension.ById);
 
-      // to parent
-      var message = new TCollectionMessageInternal (TInternalMessageAction.Request, TChild.List, TypeInfo);
-      message.Support.Argument.Types.Select (action);
+        action.Id = Model.Id;
 
-      DelegateCommand.PublishInternalMessage.Execute (message);
+        // to parent
+        var message = new TCollectionMessageInternal (TInternalMessageAction.Request, TChild.List, TypeInfo);
+        message.Support.Argument.Types.Select (action);
+
+        DelegateCommand.PublishInternalMessage.Execute (message);
+      }
     }
 
     void ResponseModelDispatcher (Server.Models.Component.TEntityAction action)

@@ -167,7 +167,7 @@ namespace Shared.Gadget.Document
         ImageGeometry.Position.Position = item.GeometryModel.PositionImage;
         ImageGeometry.Size.Width = item.ImageModel.Width;
         ImageGeometry.Size.Height = item.ImageModel.Height;
-
+        ImageDistorted = item.ImageModel.Distorted;
         Image = item.ImageModel.Image;
 
         HeaderVisibility = item.DocumentModel.HeaderVisibility;

@@ -11,8 +11,6 @@ using System.Windows;
 using rr.Library.Types;
 
 using Server.Models.Component;
-
-using Shared.Types;
 //---------------------------//
 
 namespace Shared.ViewModel
