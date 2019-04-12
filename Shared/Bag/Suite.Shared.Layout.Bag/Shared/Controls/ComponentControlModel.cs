@@ -7,6 +7,7 @@
 using System;
 using System.Windows;
 
+using Shared.Types;
 using Shared.ViewModel;
 //---------------------------//
 
@@ -67,10 +68,14 @@ namespace Shared.Layout.Bag
       private set;
     }
 
-    public string Style
+    public TStyleInfo HorizontalStyle
     {
       get;
-      private set;
+    }
+
+    public TStyleInfo VerticalStyle
+    {
+      get;
     }
     #endregion
 
@@ -83,7 +88,8 @@ namespace Shared.Layout.Bag
       Id = Guid.Empty;
       ChildId = Guid.Empty;
 
-      Style = string.Empty;
+      HorizontalStyle = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
+      VerticalStyle = TStyleInfo.Create (TContentStyle.Mode.Vertical);
 
       Category = Server.Models.Infrastructure.TCategory.None;
       ChildCategory = Server.Models.Infrastructure.TCategory.None;
@@ -93,16 +99,19 @@ namespace Shared.Layout.Bag
     #region Members
     public void SelectModel (Guid id, Server.Models.Infrastructure.TCategory category)
     {
-      Cleanup ();
+      if (Id.NotEquals (id)) {
+        Cleanup ();
 
-      Id = id;
-      Category = category;
+        Id = id;
+        Category = category;
+      }
     }
 
-    public void SelectChildModel (Guid childId, Server.Models.Infrastructure.TCategory childCategory, string childStyle, TComponentModelItem childModel)
+    public void SelectChildModel (Guid childId, Server.Models.Infrastructure.TCategory childCategory, TStyleInfo horizontalStyle, TStyleInfo verticalStyle, TComponentModelItem childModel)
     {
       ChildId = childId;
-      Style = childStyle;
+      HorizontalStyle.Select (horizontalStyle.Style);
+      VerticalStyle.Select (verticalStyle.Style);
       ChildCategory = childCategory;
 
       switch (ChildCategory) {
@@ -122,7 +131,8 @@ namespace Shared.Layout.Bag
         Id = alias.Id;
         ChildId = alias.ChildId;
 
-        Style = alias.Style;
+        HorizontalStyle.Select (alias.HorizontalStyle.Style);
+        VerticalStyle.Select (alias.VerticalStyle.Style);
 
         Category = alias.Category;
         ChildCategory = alias.ChildCategory;
@@ -136,8 +146,6 @@ namespace Shared.Layout.Bag
     {
       Id = Guid.Empty;
       ChildId = Guid.Empty;
-
-      Style = string.Empty;
 
       Category = Server.Models.Infrastructure.TCategory.None;
       ChildCategory = Server.Models.Infrastructure.TCategory.None;

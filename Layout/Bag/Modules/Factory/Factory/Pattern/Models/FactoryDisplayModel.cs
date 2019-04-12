@@ -10,9 +10,8 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Linq;
 
-using Server.Models.Component;
-
 using Shared.ViewModel;
+using Shared.Types;
 //---------------------------//
 
 namespace Layout.Factory.Pattern.Models
@@ -93,11 +92,17 @@ namespace Layout.Factory.Pattern.Models
       Category = Server.Models.Infrastructure.TCategory.None;
 
       m_Count = 0;
+
+      m_HorizontalStyleInfo = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
+      m_HorizontalStyleInfo.Select (TContentStyle.Style.mini);
+
+      m_VerticalStyleInfo = TStyleInfo.Create (TContentStyle.Mode.Vertical);
+      m_VerticalStyleInfo.Select (TContentStyle.Style.mini);
     }
     #endregion
 
     #region Members
-    internal void StyleChanged (TEntityAction action)
+    internal void StyleChanged (Server.Models.Component.TEntityAction action)
     {
       SelectStyle (action);
     }
@@ -157,7 +162,7 @@ namespace Layout.Factory.Pattern.Models
       }
     }
 
-    internal void RequestModel (TEntityAction action)
+    internal void RequestModel (Server.Models.Component.TEntityAction action)
     {
       action.ThrowNull ();
 
@@ -167,7 +172,7 @@ namespace Layout.Factory.Pattern.Models
               ComponentDocumentControlModel.RequestNodeModel (action);
 
               // status
-              var statusModel = ComponentStatus.CreateDefault;
+              var statusModel = Server.Models.Component.ComponentStatus.CreateDefault;
               statusModel.Id = ComponentDocumentControlModel.Id;
               statusModel.Busy = true;
 
@@ -196,7 +201,7 @@ namespace Layout.Factory.Pattern.Models
 
             // status
             foreach (var item in action.CollectionAction.ExtensionNodeCollection) {
-              var statusModel = ComponentStatus.CreateDefault;
+              var statusModel = Server.Models.Component.ComponentStatus.CreateDefault;
               statusModel.Id = item.ChildId;
               statusModel.Busy = true;
 
@@ -256,17 +261,18 @@ namespace Layout.Factory.Pattern.Models
     #endregion
 
     #region Fields
-    int                                     m_Count; 
+    readonly TStyleInfo                                                   m_HorizontalStyleInfo;
+    readonly TStyleInfo                                                   m_VerticalStyleInfo;
+    int                                                                   m_Count; 
     #endregion
 
     #region Support
-    void SelectStyle (TEntityAction action)
+    void SelectStyle (Server.Models.Component.TEntityAction action)
     {
-      var width = action.ModelAction.ExtensionLayoutModel.Width;
-      var height = action.ModelAction.ExtensionLayoutModel.Height;
+      m_HorizontalStyleInfo.Select (action.ModelAction.ExtensionLayoutModel.StyleHorizontal);
+      m_VerticalStyleInfo.Select (action.ModelAction.ExtensionLayoutModel.StyleVertical);
 
-      //TODO: review
-      //Style = $"[ style: {width} x {height} - {action.ModelAction.ExtensionLayoutModel.Style} ]";
+      Style = $"[ style: {m_HorizontalStyleInfo.StyleFullString}, {m_VerticalStyleInfo.StyleFullString}]";
 
       ComponentImageControlModel.Cleanup ();
 
@@ -275,27 +281,7 @@ namespace Layout.Factory.Pattern.Models
 
     void SelectDocumentModel (TComponentModelItem model)
     {
-      ComponentDocumentControlModel.Id = model.Id;
-
-      ComponentDocumentControlModel.RtfHeader = model.DocumentModel.Header;
-      ComponentDocumentControlModel.RtfFooter = model.DocumentModel.Footer;
-      ComponentDocumentControlModel.RtfParagraph = model.DocumentModel.Paragraph;
-
-      ComponentDocumentControlModel.ExternalLink = model.TextModel.ExternalLink;
-      //TODO: review
-      //ComponentDocumentControlModel.Style = model.LayoutModel.Style;
-      ComponentDocumentControlModel.Width = model.LayoutModel.Width;
-      ComponentDocumentControlModel.Height = model.LayoutModel.Height;
-
-      ComponentDocumentControlModel.HeaderVisibility = model.DocumentModel.HeaderVisibility;
-      ComponentDocumentControlModel.FooterVisibility = model.DocumentModel.FooterVisibility;
-
-      ComponentDocumentControlModel.ImageGeometry.Position.Position = model.GeometryModel.PositionImage;
-      ComponentDocumentControlModel.ImageGeometry.Size.Width = model.ImageModel.Width;
-      ComponentDocumentControlModel.ImageGeometry.Size.Height = model.ImageModel.Height;
-      ComponentDocumentControlModel.ImageDistorted = model.ImageModel.Distorted;
-      ComponentDocumentControlModel.Image = model.ImageModel.Image;
-
+      ComponentDocumentControlModel.SelectModel (model);
       ComponentDocumentControlModel.PropertyName = "all";
 
       m_Count = 1;

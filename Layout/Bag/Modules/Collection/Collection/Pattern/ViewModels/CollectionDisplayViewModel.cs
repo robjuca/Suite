@@ -47,7 +47,7 @@ namespace Layout.Collection.Pattern.ViewModels
         if (message.Node.IsParentToMe (TChild.Display)) {
           // Response
           if (message.IsAction (TInternalMessageAction.Response)) {
-            // Select Node
+            // Select - Node
             if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Node)) {
               if (message.Result.IsValid) {
                 // Bag
@@ -76,7 +76,7 @@ namespace Layout.Collection.Pattern.ViewModels
           if (message.IsAction (TInternalMessageAction.PropertySelect)) {
             var propertyName = message.Support.Argument.Args.PropertyName;
 
-            if (propertyName.Equals ("StyleProperty")) {
+            if (propertyName.Equals ("StyleHorizontalProperty") || propertyName.Equals ("StyleVerticalProperty")) {
               Model.StyleChanged (message.Support.Argument.Types.Item);
             }
 
@@ -180,12 +180,6 @@ namespace Layout.Collection.Pattern.ViewModels
       // to sibiling
       var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Reload, TChild.Display, TypeInfo);
       DelegateCommand.PublishInternalMessage.Execute (message);
-    }
-
-    void CleanupDispatcher ()
-    {
-      Model.Cleanup ();
-      RaiseChanged ();
     }
     #endregion
 

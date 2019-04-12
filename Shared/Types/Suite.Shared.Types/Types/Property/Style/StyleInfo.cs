@@ -88,6 +88,7 @@ namespace Shared.Types
       : this ()
     {
       StyleMode = styleMode;
+      Style = TContentStyle.Style.mini;
     }
     #endregion
 

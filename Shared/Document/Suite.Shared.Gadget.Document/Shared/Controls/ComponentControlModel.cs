@@ -132,6 +132,8 @@ namespace Shared.Gadget.Document
       if (action.NotNull ()) {
         PropertyName = propertyName;
 
+        Id = action.ModelAction.ComponentInfoModel.Id;
+
         HorizontalStyleString = action.ModelAction.ExtensionLayoutModel.StyleHorizontal;
         VerticalStyleString = action.ModelAction.ExtensionLayoutModel.StyleVertical;
         Width = action.ModelAction.ExtensionLayoutModel.Width;
@@ -158,6 +160,8 @@ namespace Shared.Gadget.Document
     public void SelectModel (TComponentModelItem item)
     {
       if (item.NotNull ()) {
+        Id = item.Id;
+
         HorizontalStyleString = item.LayoutModel.StyleHorizontal;
         VerticalStyleString = item.LayoutModel.StyleVertical;
 

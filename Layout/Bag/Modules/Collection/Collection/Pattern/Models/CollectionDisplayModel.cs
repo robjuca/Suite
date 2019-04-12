@@ -11,6 +11,7 @@ using System.Windows;
 using Server.Models.Component;
 
 using Shared.ViewModel;
+using Shared.Types;
 
 using Shared.Layout.Bag;
 //---------------------------//
@@ -32,10 +33,28 @@ namespace Layout.Collection.Pattern.Models
       set;
     }
 
-    public string ChildStyle
+    public TStyleInfo HorizontalStyle
     {
       get;
-      set;
+      private set;
+    }
+
+    public TStyleInfo VerticalStyle
+    {
+      get;
+      private set;
+    }
+
+    public TStyleInfo ChildHorizontalStyle
+    {
+      get;
+      private set;
+    }
+
+    public TStyleInfo ChildVerticalStyle
+    {
+      get;
+      private set;
     }
 
     public string Name
@@ -132,6 +151,12 @@ namespace Layout.Collection.Pattern.Models
     #region Constructor
     public TCollectionDisplayModel ()
     {
+      HorizontalStyle = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
+      VerticalStyle = TStyleInfo.Create (TContentStyle.Mode.Vertical);
+
+      ChildHorizontalStyle = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
+      ChildVerticalStyle = TStyleInfo.Create (TContentStyle.Mode.Vertical);
+
       ComponentControlModel = TComponentControlModel.CreateDefault;
 
       ComponentModelItem = TComponentModelItem.CreateDefault;
@@ -176,8 +201,8 @@ namespace Layout.Collection.Pattern.Models
 
         ChildId = models.Key;
         ChildCategory = Server.Models.Infrastructure.TCategoryType.FromValue (modelAction.ExtensionNodeModel.ChildCategory);
-        //TODO: review
-        //ChildStyle = modelAction.ExtensionLayoutModel.Style;
+        ChildHorizontalStyle.Select (modelAction.ExtensionLayoutModel.StyleHorizontal);
+        ChildVerticalStyle.Select (modelAction.ExtensionLayoutModel.StyleVertical);
 
         var modelBase = TComponentModel.Create (modelAction);
 
@@ -231,33 +256,32 @@ namespace Layout.Collection.Pattern.Models
       {
         return (m_Count.Equals (0));
       }
-    } 
+    }
     #endregion
 
     #region Fields
-    Dictionary<Guid, TComponentModelItem>             m_ModelItems;
-    int                                               m_Count;
+    readonly Dictionary<Guid, TComponentModelItem>              m_ModelItems;
+    int                                                         m_Count;
     #endregion
 
     #region Support
     void SelectStyle (TComponentModelItem model)
     {
-      //TODO: review
-      //if (string.IsNullOrEmpty (model.LayoutModel.Style)) {
-      //  Cleanup ();
-      //}
+      // Bag
+      if (model.ValidateId.IsFalse ()) {
+        Cleanup ();
+      }
 
-      //else {
-      //  ComponentControlModel.Cleanup ();
+      else {
+        ComponentControlModel.Cleanup ();
 
-      //  var width = model.LayoutModel.Width;
-      //  var height = model.LayoutModel.Height;
+        HorizontalStyle.Select (model.LayoutModel.StyleHorizontal);
+        VerticalStyle.Select (model.LayoutModel.StyleVertical);
 
-      //  //TODO: review
-      //  //Style = $"[ style: {width} x {height} - {model.LayoutModel.Style} ]";
+        Style = $"[ style: {HorizontalStyle.StyleFullString}, {VerticalStyle.StyleFullString} ]";
 
-      //  m_Count = 0;
-      //}
+        m_Count = 0;
+      }
     }
 
     void Select (TComponentModelItem childModel)
@@ -265,7 +289,7 @@ namespace Layout.Collection.Pattern.Models
       childModel.ThrowNull ();
 
       ComponentControlModel.SelectModel (Id, Category);
-      ComponentControlModel.SelectChildModel (ChildId, ChildCategory, ChildStyle, childModel);
+      ComponentControlModel.SelectChildModel (ChildId, ChildCategory, ChildHorizontalStyle, ChildVerticalStyle, childModel);
 
       switch (ChildCategory) {
         case Server.Models.Infrastructure.TCategory.Document:

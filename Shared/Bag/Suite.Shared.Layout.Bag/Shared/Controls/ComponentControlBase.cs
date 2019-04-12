@@ -177,8 +177,8 @@ namespace Shared.Layout.Bag
     #endregion
 
     #region Fields
-    Shared.Gadget.Document.TComponentDisplayControl             m_DocumentControl;
-    Shared.Gadget.Image.TComponentControl                       m_ImageControl; 
+    readonly Shared.Gadget.Document.TComponentDisplayControl              m_DocumentControl;
+    readonly Shared.Gadget.Image.TComponentControl                        m_ImageControl; 
     #endregion
   };
   //---------------------------//

@@ -47,13 +47,14 @@ namespace Shared.Gadget.Image
       Padding = new Thickness (0);
       BorderThickness = new Thickness (0);
 
-      HorizontalContentAlignment = HorizontalAlignment.Center;
+      HorizontalAlignment = HorizontalAlignment.Stretch;
+      VerticalAlignment = VerticalAlignment.Stretch;
 
       string normalTemplate = @"
         <DataTemplate
             xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
             xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>
-            <Image HorizontalAlignment='Center' VerticalAlignment='Top' MaxWidth='600' MaxHeight='348' Stretch='None' Source='{Binding}'/>
+            <Image Stretch='None' Source='{Binding}'/>
         </DataTemplate>"
       ;
 

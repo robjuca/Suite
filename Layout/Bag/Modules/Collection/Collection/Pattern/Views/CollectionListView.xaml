@@ -10,9 +10,9 @@
 
     <UserControl.Resources>
         <CollectionViewSource x:Key="ModelItemsViewSource"
-                              Source="{Binding Model.ItemsCollection}">
+                              Source="{Binding Model.StyleComponentModel.ItemsCollection}" >
             <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Category" />
+                <PropertyGroupDescription PropertyName="NodeCategory" />
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
 
@@ -30,7 +30,7 @@
                         <!--disable-->
                         <Border Grid.Row="0">
                             <ContentControl Margin="0 0 5 0"
-                                            Visibility="{Binding Model.DisableVisibility}"
+                                            Visibility="{Binding DisableVisibility}"
                                             Style="{StaticResource DisableIcon}" />
                         </Border>
 
@@ -46,14 +46,14 @@
                                 <Border Grid.Column="0">
                                     <StackPanel Orientation="Horizontal">
                                         <ContentControl Style="{StaticResource ContentDocumentIcon}"
-                                                        Visibility="{Binding DocumentVisibility}" />
+                                                        Visibility="{Binding NodeDocumentVisibility}" />
 
                                         <ContentControl Style="{StaticResource ContentImageIcon}"
-                                                        Visibility="{Binding ImageVisibility}" />
+                                                        Visibility="{Binding NodeImageVisibility}" />
 
                                         <TextBlock Margin="5 0 0 0"
                                                    VerticalAlignment="Center"
-                                                   Text="{Binding Model.Name}"
+                                                   Text="{Binding Name}"
                                                    FontWeight="Bold" />
                                     </StackPanel>
                                 </Border>
@@ -61,7 +61,7 @@
                                 <!--busy-->
                                 <Border Grid.Column="1"
                                         Padding="0 0 3 0">
-                                    <ContentControl Visibility="{Binding Model.BusyVisibility}"
+                                    <ContentControl Visibility="{Binding BusyVisibility}"
                                                     Style="{StaticResource ContentBusyIcon}" />
                                 </Border>
                             </Grid>
@@ -72,7 +72,8 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <Border Padding="2">
+    <Border Padding="2"
+            Width="240">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -108,8 +109,9 @@
             <Border Grid.Row="1"
                     Padding="2">
                 <controls:TStyleSelector x:Name="StyleSelector"
-                                         SelectStyle="{Binding Model.StyleSelectorSelect}"
-                                         caliburn:Message.Attach="[Event StyleSelected] = [OnStyleSelected (StyleSelector.StyleName)]" />
+                                         SelectStyleHorizontal="{Binding Model.StyleHorizontalSelectorSelect}"
+                                         SelectStyleVertical="{Binding Model.StyleVerticalSelectorSelect}"
+                                         caliburn:Message.Attach="[Event StyleHorizontalSelected] = [OnStyleHorizontalSelected (StyleSelector.StyleHorizontalName)]; [Event StyleVerticalSelected] = [OnStyleVerticalSelected (StyleSelector.StyleVerticalName)]" />
             </Border>
 
             <!--title-->

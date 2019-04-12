@@ -18,7 +18,7 @@
                               Source="{Binding Model.OrderFrameItemsSource}" />
     </UserControl.Resources>
 
-    <Border Padding="3">
+    <Border Margin="3">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -26,8 +26,7 @@
             </Grid.RowDefinitions>
 
             <!--component, style, count-->
-            <Border Grid.Row="0"
-                    Padding="5">
+            <Border Grid.Row="0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -40,10 +39,10 @@
                             Width="60">
                         <StackPanel Orientation="Horizontal">
                             <ContentControl Visibility="{Binding Model.DocumentVisibility}"
-                                            Style="{StaticResource ContentDocumentIcon}" />
+                                            Style="{DynamicResource ContentDocumentIcon}" />
 
                             <ContentControl Visibility="{Binding Model.ImageVisibility}"
-                                            Style="{StaticResource ContentImageIcon}" />
+                                            Style="{DynamicResource ContentImageIcon}" />
                         </StackPanel>
                     </Border>
 
@@ -62,27 +61,31 @@
             </Border>
 
             <!--content-->
-            <Border Grid.Row="1">
-                <materialDesign:Card Padding="1"
-                                     HorizontalAlignment="Stretch"
+            <Border Grid.Row="1"
+                    Margin="0 5 0 0">
+                <materialDesign:Card HorizontalAlignment="Stretch"
                                      VerticalAlignment="Stretch">
-                    <Grid>
+                    <Grid Margin="3">
                         <!--document-->
                         <Border Visibility="{Binding Model.DocumentVisibility}">
-                            <document:TComponentDisplayControl x:Name="DocumentControl"
-                                                               Model="{Binding Model.ComponentDocumentControlModel}" />
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                          VerticalScrollBarVisibility="Auto">
+                                <document:TComponentDisplayControl x:Name="DocumentControl"
+                                                                   Margin="3"
+                                                                   Model="{Binding Model.ComponentDocumentControlModel}" />
+                            </ScrollViewer>
                         </Border>
 
                         <!--image-->
-                        <Border Visibility="{Binding Model.ImageVisibility}"
-                                Padding="3">
-                            <materialDesign:Flipper HorizontalAlignment="Stretch"
+                        <Border Visibility="{Binding Model.ImageVisibility}">
+                            <materialDesign:Flipper Margin="3"
+                                                    HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Top"
                                                     Style="{StaticResource MaterialDesignCardFlipper}">
 
                                 <!--image list-->
                                 <materialDesign:Flipper.FrontContent>
-                                    <StackPanel Margin="3">
+                                    <StackPanel Height="570">
                                         <!--command-->
                                         <Border>
                                             <Button HorizontalAlignment="Right"
@@ -92,24 +95,24 @@
                                                     caliburn:Message.Attach="[Event Click] = [OnOrderClicked ()]">
                                                 <ContentControl Style="{StaticResource OrderIcon}" />
                                             </Button>
-
                                         </Border>
 
                                         <!--image control-->
-                                        <Border Padding="6">
-                                            <image:TComponentControl x:Name="ImageControl"
-                                                                     Height="520"
-                                                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                                                     Model="{Binding Model.ComponentImageControlModel}" />
+                                        <Border Margin="0 3 0 0">
+                                            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                          VerticalScrollBarVisibility="Auto">
+                                                <image:TComponentControl x:Name="ImageControl"
+                                                                         Margin="3"
+                                                                         Model="{Binding Model.ComponentImageControlModel}" />
+                                            </ScrollViewer>
                                         </Border>
                                     </StackPanel>
-
                                 </materialDesign:Flipper.FrontContent>
 
                                 <!--image order-->
                                 <materialDesign:Flipper.BackContent>
                                     <Border Padding="3"
-                                            Height="548">
+                                            Height="570">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />

@@ -12,8 +12,7 @@ using System.Windows;
 
 using rr.Library.Types;
 
-using Server.Models.Component;
-
+using Shared.Types;
 using Shared.ViewModel;
 //---------------------------//
 
@@ -93,24 +92,37 @@ namespace Layout.Factory.Pattern.Models
 
       ComponentModelCollection = new ObservableCollection<TComponentSourceInfo> ();
 
-      m_LayoutInfo = ExtensionLayout.CreateDefault;
-
       IsEnabledView = true;
       IsCategoryEnabled = true;
 
       m_ComponentModelItems = new Collection<TComponentModelItem> ();
+
+      m_HorizontalStyleInfo = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
+      m_HorizontalStyleInfo.Select (TContentStyle.Style.mini);
+
+      m_VerticalStyleInfo = TStyleInfo.Create (TContentStyle.Mode.Vertical);
+      m_VerticalStyleInfo.Select (TContentStyle.Style.mini);
     }
     #endregion
 
     #region Members
-    internal void StyleChanged (TEntityAction action)
+    internal void HorizontalStyleChanged (Server.Models.Component.TEntityAction action)
     {
       action.ThrowNull ();
 
-      SelectStyle (action);
+      m_HorizontalStyleInfo.Select (action.ModelAction.ExtensionLayoutModel.StyleHorizontal);
+      SelectStyle ();
     }
 
-    internal void SelectModel (TEntityAction action)
+    internal void VerticalStyleChanged (Server.Models.Component.TEntityAction action)
+    {
+      action.ThrowNull ();
+
+      m_VerticalStyleInfo.Select (action.ModelAction.ExtensionLayoutModel.StyleVertical);
+      SelectStyle ();
+    }
+
+    internal void SelectModel (Server.Models.Component.TEntityAction action)
     {
       // action.ModelAction {bag model}
       // action.CollectionAction.ExtensionNodeCollection {node info}
@@ -139,7 +151,7 @@ namespace Layout.Factory.Pattern.Models
         if (list.Count.Equals (1)) {
           var node = list [0];
           var category = Server.Models.Infrastructure.TCategoryType.FromValue (node.ChildCategory);
-          var componentModel = TComponentModel.Create (modelAction);
+          var componentModel = Server.Models.Component.TComponentModel.Create (modelAction);
           var model = TComponentModelItem.Create (componentModel);
 
           m_ComponentModelItems.Add (model);
@@ -200,7 +212,7 @@ namespace Layout.Factory.Pattern.Models
       return (ComponentSelectorSource [ComponentSelectorIndex].Category);
     }
 
-    internal void SelectComponentSelector (TEntityAction action)
+    internal void SelectComponentSelector (Server.Models.Component.TEntityAction action)
     {
       // action.CollectionAction.ModelCollection[id] {model}
 
@@ -216,18 +228,17 @@ namespace Layout.Factory.Pattern.Models
           var modelAction = item.Value;
 
           // same style only
-          //TODO: review
-          //if (modelAction.ExtensionLayoutModel.Style.Equals (m_LayoutInfo.Style)) {
-          //  // enabled only 
-          //  if (modelAction.ComponentInfoModel.Enabled) {
-          //    // can not be part of node
-          //    if (modelAction.ExtensionNodeModel.ChildId.Equals (id).IsFalse ()) {
-          //      var model = TComponentModel.Create (modelAction);
+          if (IsSameStyle (modelAction)) {
+            // enabled only 
+            if (modelAction.ComponentInfoModel.Enabled) {
+              // can not be part of node
+              if (modelAction.ExtensionNodeModel.ChildId.Equals (id).IsFalse ()) {
+                var model = Server.Models.Component.TComponentModel.Create (modelAction);
 
-          //      ComponentModelCollection.Add (new TComponentSourceInfo (category, TComponentModelItem.Create (model)));
-          //    }
-          //  }
-          //}
+                ComponentModelCollection.Add (new TComponentSourceInfo (category, TComponentModelItem.Create (model)));
+              }
+            }
+          }
         }
       }
 
@@ -299,23 +310,29 @@ namespace Layout.Factory.Pattern.Models
       {
         return (ComponentSelectorSource [ComponentSelectorIndex]);
       }
-    } 
+    }
     #endregion
 
     #region Fields
-    ExtensionLayout                                             m_LayoutInfo;
-    Collection<TComponentModelItem>                             m_ComponentModelItems;
+    readonly TStyleInfo                                                   m_HorizontalStyleInfo;
+    readonly TStyleInfo                                                   m_VerticalStyleInfo;
+    readonly Collection<TComponentModelItem>                              m_ComponentModelItems;
     #endregion
 
     #region Support
-    void SelectStyle (TEntityAction action)
+    void SelectStyle ()
     {
-      m_LayoutInfo.CopyFrom (action.ModelAction.ExtensionLayoutModel);
-
-      //TODO: review
-      //Style = $"[ style: {action.ModelAction.ExtensionLayoutModel.Width} x {action.ModelAction.ExtensionLayoutModel.Height} - {action.ModelAction.ExtensionLayoutModel.Style} ]";
+      Style = $"[ style: {m_HorizontalStyleInfo.StyleFullString}, {m_VerticalStyleInfo.StyleFullString}]";
 
       ComponentSelectorIndex = 0;
+    }
+
+    bool IsSameStyle (Server.Models.Component.TModelAction modelAction)
+    {
+      var hs = TContentStyle.TryToParse (modelAction.ExtensionLayoutModel.StyleHorizontal);
+      var vs = TContentStyle.TryToParse (modelAction.ExtensionLayoutModel.StyleVertical);
+
+      return (m_HorizontalStyleInfo.Style.Equals (hs) && m_VerticalStyleInfo.Style.Equals (vs));
     }
     #endregion
   };

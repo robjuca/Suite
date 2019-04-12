@@ -186,11 +186,20 @@ namespace Shared.Types
 
       set
       {
-        m_ImageModel.Width = value.PixelWidth;
-        m_ImageModel.Height = value.PixelHeight;
+        if (m_ImageCleanupCommit) {
+          m_ImageCleanupCommit = false;
+        }
 
-        m_ImageModel.Image = THelper.BitmapImageToByteArray (value);
-        RaisePropertyChanged ("ImageProperty");
+        else {
+          m_ImageModel.Width = value.PixelWidth;
+          m_ImageModel.Height = value.PixelHeight;
+
+          m_ImageModel.Image = THelper.BitmapImageToByteArray (value);
+
+          if (m_ImageModel.Image.NotNull ()) {
+            RaisePropertyChanged ("ImageProperty");
+          }
+        }
       }
     }
     #endregion
@@ -455,14 +464,9 @@ namespace Shared.Types
     void OnPictureEditorCleanup (object sender, EventArgs e)
     {
       if (m_ImageModel.Image.NotNull ()) {
+        m_ImageCleanupCommit = true;
         RaisePropertyChanged ("FrameImageCleanup");
       }
-    }
-
-    void OnImageCleanup (object sender, EventArgs e)
-    {
-      m_ImageModel.Image = null;
-      RaisePropertyChanged ("ImageProperty");
     }
 
     void Int4PropertyChanged (object sender, PropertyChangedEventArgs e)
@@ -492,6 +496,7 @@ namespace Shared.Types
     ExtensionDocument                                 m_DocumentModel;
     ExtensionGeometry                                 m_GeometryModel;
     readonly Collection<string>                       m_Names;
+    bool                                              m_ImageCleanupCommit;
     int                                               m_ModelCategory;
     #endregion
 

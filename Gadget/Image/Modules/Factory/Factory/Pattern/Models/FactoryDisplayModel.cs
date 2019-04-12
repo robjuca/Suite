@@ -121,9 +121,16 @@ namespace Gadget.Factory.Pattern.Models
     #region Support
     void CleanupImage ()
     {
+      ImageWidth = 0;
+      ImageHeight = 0;
+
+      CurrentWidth = 0;
+      CurrentHeight = 0;
+
       Image = null;
       Distorted = false;
       CurrentSize = string.Empty;
+
       DistortedPictureVisibility = Visibility.Collapsed;
     }
 
@@ -164,6 +171,9 @@ namespace Gadget.Factory.Pattern.Models
     {
       CurrentWidth = action.ModelAction.ExtensionImageModel.Width;
       CurrentHeight = action.ModelAction.ExtensionImageModel.Height;
+
+      ImageWidth = CurrentWidth;
+      ImageHeight = CurrentHeight;
       Image = action.ModelAction.ExtensionImageModel.Image;
 
       CurrentSize = $"current: {CurrentWidth} x {CurrentHeight}";

@@ -67,12 +67,17 @@ namespace Layout.Factory.Pattern.ViewModels
             var propertyName = message.Support.Argument.Args.PropertyName;
             var action = TEntityAction.Request (message.Support.Argument.Types.EntityAction);
 
-            if (propertyName.Equals ("StyleProperty")) {
-              Model.StyleChanged (action);
+            if (propertyName.Equals ("StyleHorizontalProperty")) {
+              Model.HorizontalStyleChanged (action);
+            }
+
+            if (propertyName.Equals ("StyleVerticalProperty")) {
+              Model.VerticalStyleChanged (action);
             }
 
             if (propertyName.Equals ("all")) {
-              Model.StyleChanged (action);
+              Model.HorizontalStyleChanged (action);
+              Model.VerticalStyleChanged (action);
               Model.SelectModel (action);
             }
 

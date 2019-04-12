@@ -50,7 +50,7 @@ namespace Layout.Collection.Pattern.ViewModels
 
           // Response
           if (message.IsAction (TInternalMessageAction.Response)) {
-            // Collection Full
+            // Collection - Full
             if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Collection, Server.Models.Infrastructure.TExtension.Full)) {
               if (message.Result.IsValid) {
                 // Bag
@@ -80,44 +80,42 @@ namespace Layout.Collection.Pattern.ViewModels
     #endregion
 
     #region View Event
-    public void OnStyleSelected (string style)
+    public void OnStyleHorizontalSelected (string style)
     {
       Enum.TryParse (style, out TContentStyle.Style selectedStyle);
+      Model.SelectStyleHorizontal (selectedStyle);
 
-      Model.SelectStyle (selectedStyle);
-      RefreshCollection ();
+      NotifyStyleChanged (TContentStyle.Mode.Horizontal);
 
-      var modelItem = TComponentModelItem.CreateDefault;
-      //TODO: review
-      //modelItem.LayoutModel.Style = style;
+      TDispatcher.Invoke (RefreshAllDispatcher);
+    }
 
-      if (Model.Current.NotNull ()) {
-        modelItem.CopyFrom (Model.Current);
-      }
+    public void OnStyleVerticalSelected (string style)
+    {
+      Enum.TryParse (style, out TContentStyle.Style selectedStyle);
+      Model.SelectStyleVertical (selectedStyle);
 
-      // to sibiling display
-      var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.PropertySelect, TChild.List, TypeInfo);
-      message.Support.Argument.Args.Select ("StyleProperty");
-      message.Support.Argument.Types.Item.CopyFrom (modelItem);
+      NotifyStyleChanged (TContentStyle.Mode.Vertical);
 
-      DelegateCommand.PublishInternalMessage.Execute (message);
-
-      if (Model.IsEmpty) {
-        // to sibiling display
-        message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Cleanup, TChild.List, TypeInfo);
-        DelegateCommand.PublishInternalMessage.Execute (message);
-      }
+      TDispatcher.Invoke (RefreshAllDispatcher);
     }
 
     public void OnSelectionChanged (object item)
     {
-      if (item is TItemInfo info) {
-        TDispatcher.BeginInvoke (ItemSelectedDispatcher, info.Model);
+      if (item is TComponentModelItem modelItem) {
+        TDispatcher.BeginInvoke (ItemSelectedDispatcher, modelItem);
       }
     }
     #endregion
 
     #region Dispatcher
+    void RefreshAllDispatcher ()
+    {
+      RefreshCollection ("ModelItemsViewSource");
+
+      RaiseChanged ();
+    }
+
     void ReloadDispatcher ()
     {
       // to sibiling display
@@ -125,14 +123,13 @@ namespace Layout.Collection.Pattern.ViewModels
       DelegateCommand.PublishInternalMessage.Execute (message);
 
       Model.Cleanup ();
-      RefreshCollection ();
 
       TDispatcher.Invoke (RequestDataDispatcher);
     }
 
     void RequestDataDispatcher ()
     {
-      // to parent
+      // to parent (Collection - Full)
       var message = new TCollectionMessageInternal (TInternalMessageAction.Request, TChild.List, TypeInfo);
       message.Support.Argument.Types.Select (TEntityAction.Create (Server.Models.Infrastructure.TCategory.Bag, Server.Models.Infrastructure.TOperation.Collection, Server.Models.Infrastructure.TExtension.Full));
 
@@ -142,7 +139,8 @@ namespace Layout.Collection.Pattern.ViewModels
     void ResponseDataDispatcher (TEntityAction action)
     {
       Model.Select (action);
-      RefreshCollection ();
+
+      TDispatcher.Invoke (RefreshAllDispatcher);
     }
 
     void ItemSelectedDispatcher (TComponentModelItem item)
@@ -152,6 +150,8 @@ namespace Layout.Collection.Pattern.ViewModels
       message.Support.Argument.Types.Item.CopyFrom (item);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
+
+      TDispatcher.Invoke (RefreshAllDispatcher);
     }
     #endregion
 
@@ -166,11 +166,26 @@ namespace Layout.Collection.Pattern.ViewModels
     #endregion
 
     #region Support
-    void RefreshCollection ()
+    void NotifyStyleChanged (TContentStyle.Mode styleMode)
     {
-      RefreshCollection ("ModelItemsViewSource");
-      RaiseChanged ();
-    } 
+      var propertyName = styleMode.Equals (TContentStyle.Mode.Horizontal) ? "StyleHorizontalProperty" : styleMode.Equals (TContentStyle.Mode.Vertical) ? "StyleVerticalProperty" : string.Empty;
+
+      var modelItem = TComponentModelItem.CreateDefault;
+      modelItem.CopyFrom (Model.Current);
+
+      // to sibiling display
+      var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.PropertySelect, TChild.List, TypeInfo);
+      message.Support.Argument.Args.Select (propertyName);
+      message.Support.Argument.Types.Item.CopyFrom (modelItem);
+
+      DelegateCommand.PublishInternalMessage.Execute (message);
+
+      if (Model.IsEmpty) {
+        // to sibiling display
+        message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Cleanup, TChild.List, TypeInfo);
+        DelegateCommand.PublishInternalMessage.Execute (message);
+      }
+    }
     #endregion
   };
   //---------------------------//

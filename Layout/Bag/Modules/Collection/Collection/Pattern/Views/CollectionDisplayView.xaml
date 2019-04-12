@@ -57,14 +57,19 @@
             </Border>
 
             <!--content-->
-            <Border Grid.Row="1">
-                <materialDesign:Card Padding="1"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalAlignment="Stretch">
-                    <control:TComponentDisplayControl x:Name="DisplayControl"
-                                                      Model="{Binding Model.ComponentControlModel}"
-                                                      caliburn:Message.Attach="[Event Loaded] = [OnComponentControlLoaded ($source)]" />
-                </materialDesign:Card>
+            <Border Grid.Row="1"
+                    Padding="5">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
+                              Padding="5">
+                    <materialDesign:Card Padding="1"
+                                         HorizontalAlignment="Stretch"
+                                         VerticalAlignment="Stretch">
+                        <control:TComponentDisplayControl x:Name="DisplayControl"
+                                                          Model="{Binding Model.ComponentControlModel}"
+                                                          caliburn:Message.Attach="[Event Loaded] = [OnComponentControlLoaded ($source)]" />
+                    </materialDesign:Card>
+                </ScrollViewer>
             </Border>
 
             <!--busy, edit, remove-->

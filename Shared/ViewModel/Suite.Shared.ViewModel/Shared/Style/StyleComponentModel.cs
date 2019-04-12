@@ -66,6 +66,7 @@ namespace Shared.ViewModel
     {
       // DATA IN:
       // action.CollectionAction.ModelCollection
+      // action.CollectionAction.ExtensionNodeCollection
 
       if (action.NotNull ()) {
         ComponentModelCollection.Clear ();
@@ -78,6 +79,10 @@ namespace Shared.ViewModel
           componentModelItem.Select (action.CategoryType.Category); 
 
           ComponentModelCollection.Add (componentModelItem);
+        }
+
+        foreach (var item in ComponentModelCollection) {
+          item.PopulateNode (action);
         }
       }
     }

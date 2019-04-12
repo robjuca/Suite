@@ -5,9 +5,7 @@
 
 //----- Include
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 
 using Server.Models.Component;
@@ -21,13 +19,18 @@ namespace Layout.Collection.Pattern.Models
   public class TCollectionListModel
   {
     #region Property
-    public ObservableCollection<TItemInfo> ItemsCollection
+    public TStyleComponentModel StyleComponentModel
+    {
+      get;
+    }
+
+    public TStyleSelectorModel StyleHorizontalSelectorModel
     {
       get;
       private set;
     }
 
-    public TStyleSelectorModel StyleSelectorModel
+    public TStyleSelectorModel StyleVerticalSelectorModel
     {
       get;
       private set;
@@ -38,7 +41,7 @@ namespace Layout.Collection.Pattern.Models
     {
       get
       {
-        return ($"{StyleSelectorModel.Current.Style} [ {StyleSelectorModel.Current.ItemsCollection.Count} ]");
+        return ($"{CurrentStyleString}  [ {StyleComponentModel.ItemsCount} ]");
       }
     }
 
@@ -48,7 +51,13 @@ namespace Layout.Collection.Pattern.Models
       set;
     }
 
-    public string StyleSelectorSelect
+    public string StyleHorizontalSelectorSelect
+    {
+      get;
+      set;
+    }
+
+    public string StyleVerticalSelectorSelect
     {
       get;
       set;
@@ -64,7 +73,15 @@ namespace Layout.Collection.Pattern.Models
     {
       get
       {
-        return (ItemsCollection.Count.Equals (0));
+        return (StyleComponentModel.IsEmpty);
+      }
+    }
+
+    public Guid Id
+    {
+      get
+      {
+        return (Current.Id);
       }
     }
 
@@ -72,7 +89,7 @@ namespace Layout.Collection.Pattern.Models
     {
       get
       {
-        return (SelectedIndex.Equals (-1) ? null : ItemsCollection [SelectedIndex].Model);
+        return (StyleComponentModel.RequestItem (SelectedIndex));
       }
     }
     #endregion
@@ -80,9 +97,13 @@ namespace Layout.Collection.Pattern.Models
     #region Constructor
     public TCollectionListModel ()
     {
-      ItemsCollection = new ObservableCollection<TItemInfo> ();
+      StyleComponentModel = TStyleComponentModel.CreateDefault;
 
-      StyleSelectorModel = TStyleSelectorModel.CreateDefault;
+      StyleHorizontalSelectorModel = TStyleSelectorModel.Create (TContentStyle.Mode.Horizontal);
+      StyleHorizontalSelectorSelect = string.Empty;
+
+      StyleVerticalSelectorModel = TStyleSelectorModel.Create (TContentStyle.Mode.Vertical);
+      StyleVerticalSelectorSelect = string.Empty;
 
       SelectedIndex = -1;
 
@@ -91,47 +112,48 @@ namespace Layout.Collection.Pattern.Models
     #endregion
 
     #region Members
-    internal void Select (TEntityAction action)
+    internal void Select (Server.Models.Component.TEntityAction action)
     {
-      /*
-       - action.CollectionAction.ModelCollection {Id, Model}
-       - action.CollectionAction.ExtensionNodeCollection
-      */
+      // DATA IN:
+      // action.CollectionAction.ModelCollection
 
       action.ThrowNull ();
 
+      StyleHorizontalSelectorSelect = string.IsNullOrEmpty (StyleHorizontalSelectorSelect) ? TContentStyle.MINI : StyleHorizontalSelectorSelect;
+      StyleVerticalSelectorSelect = string.IsNullOrEmpty (StyleVerticalSelectorSelect) ? TContentStyle.MINI : StyleVerticalSelectorSelect;
+
+      SelectStyle (m_SelectedStyleHorizontal, m_SelectedStyleVertical, action);
+
       m_NodeCollection = new Collection<ExtensionNode> (action.CollectionAction.ExtensionNodeCollection);
-
-      StyleSelectorModel.SelectItem (action);
-
-      StyleSelectorSelect = string.IsNullOrEmpty (StyleSelectorSelect) ? TContentStyle.MINI : StyleSelectorSelect;
-
-      SelectStyle (m_SelectedStyle);
     }
 
-    internal void SelectStyle (TContentStyle.Style selectedStyle)
+    internal void SelectStyleHorizontal (TContentStyle.Style selectedStyleHorizontal)
     {
-      StyleSelectorModel.Select (selectedStyle);
+      StyleHorizontalSelectorModel.Select (selectedStyleHorizontal);
+      StyleHorizontalSelectorSelect = selectedStyleHorizontal.ToString ();
+      m_SelectedStyleHorizontal = selectedStyleHorizontal;
 
-      ItemsCollection.Clear ();
+      Populate ();
+    }
 
-      var models = StyleSelectorModel.Request (selectedStyle).ItemsCollection;
+    internal void SelectStyleVertical (TContentStyle.Style selectedStyleVertical)
+    {
+      StyleVerticalSelectorModel.Select (selectedStyleVertical);
+      StyleVerticalSelectorSelect = selectedStyleVertical.ToString ();
+      m_SelectedStyleVertical = selectedStyleVertical;
 
-      foreach (var componentModelItem in models) {
-        IList<ExtensionNode> list = m_NodeCollection
-          .Where (p => p.ParentId.Equals (componentModelItem.Id))
-          .ToList ()
-        ;
+      Populate ();
+    }
 
-        componentModelItem.Select (list);
+    internal void SelectStyle (TContentStyle.Style selectedStyleHorizontal, TContentStyle.Style selectedStyleVertical, Server.Models.Component.TEntityAction action)
+    {
+      // DATA IN:
+      // action.CollectionAction.ModelCollection
 
-        ItemsCollection.Add (new TItemInfo (componentModelItem));
-      }
+      StyleComponentModel.Select (action);
 
-      IsEnabledFilter = (ItemsCollection.Count > 0);
-      SelectedIndex = ItemsCollection.Count.Equals (0) ?-1 : 0;
-
-      m_SelectedStyle = selectedStyle;
+      SelectStyleHorizontal (selectedStyleHorizontal);
+      SelectStyleVertical (selectedStyleVertical);
     }
 
     internal void Cleanup ()
@@ -141,9 +163,30 @@ namespace Layout.Collection.Pattern.Models
     }
     #endregion
 
+    #region Property
+    string CurrentStyleString
+    {
+      get
+      {
+        return ($"{StyleHorizontalSelectorModel.Current.StyleInfo.StyleFullString}, {StyleVerticalSelectorModel.Current.StyleInfo.StyleFullString}");
+      }
+    }
+    #endregion
+
     #region Fields
-    TContentStyle.Style                                         m_SelectedStyle;
+    TContentStyle.Style                                         m_SelectedStyleHorizontal;
+    TContentStyle.Style                                         m_SelectedStyleVertical;
+    Guid                                                        m_CurrentId;
     Collection<ExtensionNode>                                   m_NodeCollection;
+    #endregion
+
+    #region Support
+    void Populate ()
+    {
+      StyleComponentModel.Select (m_SelectedStyleHorizontal, m_SelectedStyleVertical);
+
+      IsEnabledFilter = StyleComponentModel.HasItems;
+    }
     #endregion
   };
   //---------------------------//
