@@ -18,41 +18,33 @@
                     BorderThickness="0 .1 0 .1"
                     BorderBrush="LightGray"
                     Width="210">
-                <!--name, disable, busy-->
+
+                <!-- busy, name, disable-->
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-
-                    <!-- name, disable-->
-                    <Border Grid.Row="0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <!--name-->
-                            <Border Grid.Column="0">
-                                <TextBlock Text="{Binding Name}"
-                                           FontWeight="Bold" />
-                            </Border>
-
-                            <!--disable-->
-                            <Border Grid.Column="1"
-                                    HorizontalAlignment="Right">
-                                <ContentControl Visibility="{Binding DisableVisibility}"
-                                                Style="{StaticResource DisableIcon}" />
-                            </Border>
-                        </Grid>
-                    </Border>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
                     <!--busy-->
-                    <Border Grid.Row="1"
-                            Padding="0 3 0 0">
+                    <Border Grid.Column="0"
+                            Padding="0 0 3 0">
                         <ContentControl Visibility="{Binding BusyVisibility}"
                                         Style="{StaticResource ContentBusyIcon}" />
+                    </Border>
+
+                    <!--name-->
+                    <Border Grid.Column="1">
+                        <TextBlock Text="{Binding Name}"
+                                   FontWeight="Bold" />
+                    </Border>
+
+                    <!--disable-->
+                    <Border Grid.Column="2"
+                            Padding="3 0 0 0">
+                        <ContentControl Visibility="{Binding DisableVisibility}"
+                                        Style="{StaticResource DisableIcon}" />
                     </Border>
                 </Grid>
             </Border>

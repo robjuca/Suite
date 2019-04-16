@@ -85,7 +85,7 @@
 
                                 <!--image list-->
                                 <materialDesign:Flipper.FrontContent>
-                                    <StackPanel Height="570">
+                                    <StackPanel>
                                         <!--command-->
                                         <Border>
                                             <Button HorizontalAlignment="Right"
@@ -100,9 +100,11 @@
                                         <!--image control-->
                                         <Border Margin="0 3 0 0">
                                             <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                                                          VerticalScrollBarVisibility="Auto">
+                                                          VerticalScrollBarVisibility="Auto"
+                                                          Height="530">
                                                 <image:TComponentControl x:Name="ImageControl"
                                                                          Margin="3"
+                                                                         HorizontalAlignment="Center"
                                                                          Model="{Binding Model.ComponentImageControlModel}" />
                                             </ScrollViewer>
                                         </Border>

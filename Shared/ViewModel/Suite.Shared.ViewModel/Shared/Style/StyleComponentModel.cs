@@ -81,6 +81,18 @@ namespace Shared.ViewModel
           ComponentModelCollection.Add (componentModelItem);
         }
 
+        // sort collection by Name
+        var sortedList = ComponentModelCollection
+          .OrderBy (p => p.Name)
+          .ToList ()
+        ;
+
+        ComponentModelCollection.Clear ();
+
+        foreach (var item in sortedList) {
+          ComponentModelCollection.Add (item);
+        }
+
         foreach (var item in ComponentModelCollection) {
           item.PopulateNode (action);
         }

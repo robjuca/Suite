@@ -48,8 +48,8 @@ namespace Layout.Factory.Pattern.ViewModels
         if (message.Node.IsParentToMe (TChild.List)) {
           // Response
           if (message.IsAction (TInternalMessageAction.Response)) {
-            // Collection
-            if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Collection)) {
+            // Collection - Full
+            if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Collection, Server.Models.Infrastructure.TExtension.Full)) {
               if (message.Result.IsValid) {
                 var action = TEntityAction.Request (message.Support.Argument.Types.EntityAction);
                 Model.SelectComponentSelector (action);
@@ -208,6 +208,7 @@ namespace Layout.Factory.Pattern.ViewModels
 
       // request collection
       else {
+        // Collection - Full
         var action = TEntityAction.Create (category, Server.Models.Infrastructure.TOperation.Collection, Server.Models.Infrastructure.TExtension.Full);
 
         // to parent

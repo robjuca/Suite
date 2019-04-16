@@ -51,7 +51,7 @@ namespace Gadget.Collection.Pattern.ViewModels
           // Response
           if (message.IsAction (TInternalMessageAction.Response)) {
             if (message.Result.IsValid) {
-              // Collection Full
+              // Collection - Full
               if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Collection, Server.Models.Infrastructure.TExtension.Full)) {
                 // Image
                 if (message.Support.Argument.Types.IsOperationCategory (Server.Models.Infrastructure.TCategory.Image)) {
@@ -122,7 +122,7 @@ namespace Gadget.Collection.Pattern.ViewModels
 
     void RequestDataDispatcher ()
     {
-      // to parent
+      // to parent (Collection - Full)
       var message = new TCollectionMessageInternal (TInternalMessageAction.Request, TChild.List, TypeInfo);
       message.Support.Argument.Types.Select (TEntityAction.Create (Server.Models.Infrastructure.TCategory.Image, Server.Models.Infrastructure.TOperation.Collection, Server.Models.Infrastructure.TExtension.Full));
 
@@ -132,9 +132,8 @@ namespace Gadget.Collection.Pattern.ViewModels
     void ResponseDataDispatcher (TEntityAction action)
     {
       Model.Select (action);
-      RaiseChanged ();
 
-      RefreshCollection ("ModelItemsViewSource");
+      TDispatcher.Invoke (RefreshAllDispatcher);
     }
 
     void ItemSelectedDispatcher (TComponentModelItem item)

@@ -252,6 +252,18 @@ namespace Layout.Factory.Pattern.Models
 
         m_ComponentModelItems.Clear ();
 
+        // sort collection by Name
+        var sortedList = ComponentModelCollection
+          .OrderBy (p => p.Name)
+          .ToList ()
+        ;
+
+        ComponentModelCollection.Clear ();
+
+        foreach (var item in sortedList) {
+          ComponentModelCollection.Add (item);
+        }
+
         RaisePropertyChanged ("CategoryChanged");
       }
     }
