@@ -1,4 +1,4 @@
-﻿/*----------------------------------------------------------------
+﻿  /*----------------------------------------------------------------
   Copyright (C) 2001 R&R Soft - All rights reserved.
   author: Roberto Oliveira Jucá    
 ----------------------------------------------------------------*/
@@ -20,29 +20,48 @@ namespace Layout.Factory.Pattern.Models
   public class TFactoryComponentListModel
   {
     #region Property
-    public ObservableCollection<TComponentItemInfo> ComponentSourceCollection
+    public TStyleComponentModel StyleComponentModel
+    {
+      get;
+    }
+
+    public TStyleSelectorModel StyleHorizontalSelectorModel
     {
       get;
       private set;
     }
 
-    public TStyleSelectorModel StyleSelectorModel
+    public TStyleSelectorModel StyleVerticalSelectorModel
     {
       get;
       private set;
     }
 
-    public string StyleSelectorSelect
+    public string StyleHorizontalSelectorSelect
     {
       get;
       set;
+    }
+
+    public string StyleVerticalSelectorSelect
+    {
+      get;
+      set;
+    }
+
+    public string StyleSelectorString
+    {
+      get
+      {
+        return ($"{StyleHorizontalSelectorSelect}, {StyleVerticalSelectorSelect}");
+      }
     }
 
     public int ComponentCount
     {
       get
       {
-        return (ComponentSourceCollection.Count);
+        return (StyleComponentModel.ItemsCount);
       }
     }
     #endregion
@@ -50,16 +69,20 @@ namespace Layout.Factory.Pattern.Models
     #region Constructor
     public TFactoryComponentListModel ()
     {
-      ComponentSourceCollection = new ObservableCollection<TComponentItemInfo> ();
+      StyleComponentModel = TStyleComponentModel.CreateDefault;
 
-      StyleSelectorModel = TStyleSelectorModel.CreateDefault;
+      StyleHorizontalSelectorModel = TStyleSelectorModel.Create (TContentStyle.Mode.Horizontal);
+      StyleHorizontalSelectorSelect = string.Empty;
 
-      m_ComponentRemovedItems = new Dictionary<Guid, TComponentItemInfo> ();
-      m_ComponentTryToInsertItems = new Dictionary<Guid, TComponentItemInfo> ();
+      StyleVerticalSelectorModel = TStyleSelectorModel.Create (TContentStyle.Mode.Vertical);
+      StyleVerticalSelectorSelect = string.Empty;
 
       m_ComponentItems = new Collection<Guid> ();
 
       m_NodeCollection = new Collection<ExtensionNode> ();
+
+      m_SelectedStyleHorizontal = TContentStyle.Style.mini;
+      m_SelectedStyleVertical = TContentStyle.Style.mini;
     }
     #endregion
 
@@ -93,42 +116,72 @@ namespace Layout.Factory.Pattern.Models
 
       m_NodeCollection = new Collection<ExtensionNode> (action.CollectionAction.ExtensionNodeCollection);
 
-      StyleSelectorModel.SelectItem (action);
+      StyleHorizontalSelectorSelect = string.IsNullOrEmpty (StyleHorizontalSelectorSelect) ? TContentStyle.MINI : StyleHorizontalSelectorSelect;
+      StyleVerticalSelectorSelect = string.IsNullOrEmpty (StyleVerticalSelectorSelect) ? TContentStyle.MINI : StyleVerticalSelectorSelect;
 
-      StyleSelectorSelect = string.IsNullOrEmpty (StyleSelectorSelect) ? TContentStyle.MINI : StyleSelectorSelect;
+      SelectStyle (m_SelectedStyleHorizontal, m_SelectedStyleVertical, action);
+    }
 
-      SelectStyle (m_SelectedStyle);
+    internal void SelectStyleHorizontal (TContentStyle.Style selectedStyleHorizontal)
+    {
+      StyleHorizontalSelectorModel.Select (selectedStyleHorizontal);
+      StyleHorizontalSelectorSelect = selectedStyleHorizontal.ToString ();
+      m_SelectedStyleHorizontal = selectedStyleHorizontal;
+
+      Populate ();
+    }
+
+    internal void SelectStyleVertical (TContentStyle.Style selectedStyleVertical)
+    {
+      StyleVerticalSelectorModel.Select (selectedStyleVertical);
+      StyleVerticalSelectorSelect = selectedStyleVertical.ToString ();
+      m_SelectedStyleVertical = selectedStyleVertical;
+
+      Populate ();
+    }
+
+    internal void SelectStyle (TContentStyle.Style selectedStyleHorizontal, TContentStyle.Style selectedStyleVertical, Server.Models.Component.TEntityAction action)
+    {
+      // DATA IN:
+      // action.CollectionAction.ModelCollection
+
+      StyleComponentModel.Select (action);
+
+      SelectStyleHorizontal (selectedStyleHorizontal);
+      SelectStyleVertical (selectedStyleVertical);
     }
 
     internal void SelectStyle (TContentStyle.Style selectedStyle)
     {
-      StyleSelectorModel.Select (selectedStyle);
+      //TODO:review
+      //StyleSelectorModel.Select (selectedStyle);
 
-      ComponentSourceCollection.Clear ();
+      //ComponentSourceCollection.Clear ();
 
-      var models = StyleSelectorModel.Request (selectedStyle).ItemsCollection;
+      
+      //var models = StyleSelectorModel.Request (selectedStyle).ItemsCollection;
 
-      foreach (var componentModelItem in models) {
-        IList<ExtensionNode> list = m_NodeCollection
-          .Where (p => p.ParentId.Equals (componentModelItem.Id))
-          .ToList ()
-        ;
+      //foreach (var componentModelItem in models) {
+      //  IList<ExtensionNode> list = m_NodeCollection
+      //    .Where (p => p.ParentId.Equals (componentModelItem.Id))
+      //    .ToList ()
+      //  ;
 
-        componentModelItem.Select (list);
+      //  componentModelItem.Select (list);
 
-        var itemInfo = TComponentItemInfo.Create (componentModelItem);
+      //  var itemInfo = TComponentItemInfo.Create (componentModelItem);
 
-        if (m_ComponentRemovedItems.ContainsKey (itemInfo.Id).IsFalse ()) {
-          ComponentSourceCollection.Add (itemInfo);
-        }
-      }
+      //  if (m_ComponentRemovedItems.ContainsKey (itemInfo.Id).IsFalse ()) {
+      //    ComponentSourceCollection.Add (itemInfo);
+      //  }
+      //}
 
-      m_SelectedStyle = selectedStyle;
-      StyleSelectorSelect = selectedStyle.ToString ();
+      //m_SelectedStyle = selectedStyle;
+      //StyleSelectorSelect = selectedStyle.ToString ();
 
       // try to insert
-      foreach (var component in m_ComponentTryToInsertItems) {
-        var itemInfo = component.Value;
+      //foreach (var component in m_ComponentTryToInsertItems) {
+        //var itemInfo = component.Value;
 
         //TODO: review
         //if (itemInfo.Style.Equals (StyleSelectorSelect)) {
@@ -136,14 +189,11 @@ namespace Layout.Factory.Pattern.Models
         //    ComponentSourceCollection.Add (itemInfo);
         //  }
         //}
-      }
+      //}
     }
 
     internal void SelectDefault ()
     {
-      m_ComponentRemovedItems.Clear ();
-      m_ComponentTryToInsertItems.Clear ();
-
       SelectStyle (TContentStyle.Style.mini);
     }
 
@@ -411,52 +461,22 @@ namespace Layout.Factory.Pattern.Models
     #endregion
 
     #region Misc
-    internal void Drop (Guid id)
+    internal bool DropComponentModel (Guid id)
     {
-      foreach (var item in ComponentSourceCollection) {
-        if (item.Id.Equals (id)) {
-          m_ComponentRemovedItems.Add (id, item);
-          break;
-        }
-      }
+      var res = StyleComponentModel.DropComponentModel (id);
 
-      var list = m_ComponentTryToInsertItems
-        .Where (p => p.Key.Equals (id))
-        .ToList ()
-      ;
+      Populate ();
 
-      if (list.Count.Equals (1)) {
-        //m_ComponentTryToInsertItems.Remove (list [0].Key);
-      }
-
-      SelectStyle (m_SelectedStyle);
+      return (res);
     }
 
-    internal bool Restore (Guid id)
+    internal bool RestoreComponentModel (Guid id)
     {
-      Guid idToRemove = Guid.Empty;
-      string style=string.Empty;
+      var res = StyleComponentModel.RestoreComponentModel (id);
 
-      foreach (var item in m_ComponentRemovedItems) {
-        if (item.Key.Equals (id)) {
-          var model = item.Value;
+      Populate ();
 
-          idToRemove = model.Id;
-          //TODO: review
-          //style = model.Style;
-
-          break;
-        }
-      }
-
-      if (idToRemove.NotEmpty ()) {
-        m_ComponentRemovedItems.Remove (idToRemove);
-
-        SelectStyle (TContentStyle.TryToParse (style));
-        return (true);
-      }
-
-      return (false);
+      return (res);
     }
 
     internal Guid TryToInsert (TEntityAction action)
@@ -475,46 +495,25 @@ namespace Layout.Factory.Pattern.Models
       componentModelItem.Select (action.CollectionAction.ExtensionNodeCollection);
       componentModelItem.Select (action.CategoryType.Category);
 
-      var itemInfo = TComponentItemInfo.Create (componentModelItem);
 
-      m_ComponentTryToInsertItems.Add (itemInfo.Id, itemInfo);
+      //SelectStyle (m_SelectedStyle);
 
-      SelectStyle (m_SelectedStyle);
-
-      return (itemInfo.Id);
+      return (componentModelItem.Id);
     }
     #endregion
     #endregion
 
     #region Fields
-    readonly Dictionary<Guid, TComponentItemInfo>                         m_ComponentRemovedItems;
-    readonly Dictionary<Guid, TComponentItemInfo>                         m_ComponentTryToInsertItems;
     readonly Collection<Guid>                                             m_ComponentItems;
     Collection<ExtensionNode>                                             m_NodeCollection;
-    TContentStyle.Style                                                   m_SelectedStyle;
+    TContentStyle.Style m_SelectedStyleHorizontal;
+    TContentStyle.Style m_SelectedStyleVertical;
     #endregion
 
     #region Support
-    bool IsRemovedItem (Guid id)
+    void Populate ()
     {
-      foreach (var item in m_ComponentRemovedItems) {
-        if (item.Key.Equals (id)) {
-          return (true);
-        }
-      }
-
-      return (false);
-    }
-
-    bool IsContentItem (Guid id)
-    {
-      foreach (var item in m_ComponentItems) {
-        if (item.Equals (id)) {
-          return (true);
-        }
-      }
-
-      return (false);
+      StyleComponentModel.Select (m_SelectedStyleHorizontal, m_SelectedStyleVertical);
     }
     #endregion
   };

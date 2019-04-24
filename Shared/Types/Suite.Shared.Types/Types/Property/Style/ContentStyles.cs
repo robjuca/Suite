@@ -133,6 +133,14 @@ namespace Shared.Types
         {TContentStyle.Style.large, (MiniSize.Height * 3)},
         {TContentStyle.Style.big, (MiniSize.Height * 4)},
       };
+
+      m_BoardStyleSize = new Dictionary<TContentStyle.Style, int>
+      {
+        { TContentStyle.Style.mini, 1 },
+        { TContentStyle.Style.small, 2 },
+        { TContentStyle.Style.large, 3 },
+        { TContentStyle.Style.big, 4 },
+      };
     }
     #endregion
 
@@ -157,6 +165,11 @@ namespace Shared.Types
       }
 
       return (size);
+    }
+
+    public int RequestBoardStyleSize (TContentStyle.Style style)
+    {
+      return (m_BoardStyleSize.ContainsKey (style) ? m_BoardStyleSize [style] : 0);
     }
 
     public string RequestStyleSizeString (TContentStyle.Mode mode, TContentStyle.Style style)
@@ -199,6 +212,7 @@ namespace Shared.Types
     static int                                                            m_ColumnWidth = 0;
     static readonly Dictionary<TContentStyle.Style, int>                  m_HorizontalSizeStyles;
     static readonly Dictionary<TContentStyle.Style, int>                  m_VerticalSizeStyles;
+    static readonly Dictionary<TContentStyle.Style, int>                  m_BoardStyleSize;
     #endregion
 
     #region Static

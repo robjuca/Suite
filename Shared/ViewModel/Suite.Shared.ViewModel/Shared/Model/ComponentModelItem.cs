@@ -11,6 +11,7 @@ using System.Windows;
 using rr.Library.Types;
 
 using Server.Models.Component;
+using Shared.Types;
 //---------------------------//
 
 namespace Shared.ViewModel
@@ -386,6 +387,17 @@ namespace Shared.ViewModel
           }
         }
       }
+    }
+
+    public void RequestSize ()
+    {
+      var styleHorizontal = TContentStyle.TryToParse (LayoutModel.StyleHorizontal);
+      var styleVertical = TContentStyle.TryToParse (LayoutModel.StyleVertical);
+
+      var contentStyle = TContentStyle.CreateDefault;
+
+      GeometryModel.SizeCols = contentStyle.RequestBoardStyleSize (styleHorizontal);
+      GeometryModel.SizeRows = contentStyle.RequestBoardStyleSize (styleVertical);
     }
 
     public void PopulateNode (TEntityAction action)

@@ -26,25 +26,54 @@ namespace Shared.Types
       private set;
     }
 
-    public string Style
+    public Server.Models.Infrastructure.TCategory Category
     {
       get;
       private set;
     }
+
+    public TSize Size
+    {
+      get;
+      private set;
+    }
+
+    public TStyleInfo StyleHorizontal
+    {
+      get;
+      private set;
+    }
+
+    public TStyleInfo StyleVertical
+    {
+      get;
+      private set;
+    }
+
+    public string StyleString
+    {
+      get
+      {
+        return ($"{StyleHorizontal.StyleFullString}, {StyleVertical.StyleFullString}");
+      }
+    }
     #endregion
 
     #region Constructor
-    public TContentInfo (Guid contentId, TPosition contentPosition)
-      : this ()
-    {
-      Select (contentId, contentPosition);
-    }
+    //public TContentInfo (Guid contentId, TPosition contentPosition, Server.Models.Infrastructure.TCategory category)
+    //  : this ()
+    //{
+    //  Select (contentId, contentPosition, category);
+    //}
 
     TContentInfo ()
     {
       Id = Guid.Empty;
-      Style = string.Empty;
+      StyleHorizontal = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
+      StyleVertical = TStyleInfo.Create (TContentStyle.Mode.Vertical);
       Position = TPosition.CreateDefault;
+      Size = TSize.CreateDefault;
+      Category = Server.Models.Infrastructure.TCategory.None;
     }
     #endregion
 
@@ -52,21 +81,41 @@ namespace Shared.Types
     public void Select (Guid contentId, TPosition contentPosition)
     {
       Id = contentId;
-
       Position.CopyFrom (contentPosition);
     }
 
-    public void Select (string style)
+    public void Select (Server.Models.Infrastructure.TCategory category)
     {
-      Style = style;
+      Category = category;
+    }
+
+    public void Select (TContentStyle.Mode styleMode, string styleString)
+    {
+      switch (styleMode) {
+        case TContentStyle.Mode.Horizontal:
+          StyleHorizontal.Select (styleString);
+          break;
+
+        case TContentStyle.Mode.Vertical:
+          StyleVertical.Select (styleString);
+          break;
+      }
+
+      var contentStyle = TContentStyle.CreateDefault;
+
+      Size.SelectColumns (contentStyle.RequestBoardStyleSize (StyleHorizontal.Style));
+      Size.SelectRows (contentStyle.RequestBoardStyleSize (StyleVertical.Style));
     }
 
     public void CopyFrom (TContentInfo alias)
     {
       if (alias.NotNull ()) {
         Id = alias.Id;
-        Style = alias.Style;
+        StyleHorizontal = alias.StyleHorizontal;
+        StyleVertical = alias.StyleVertical;
         Position.CopyFrom (alias.Position);
+        Size = alias.Size;
+        Category = alias.Category;
       }
     }
     #endregion

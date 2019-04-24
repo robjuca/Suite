@@ -29,10 +29,10 @@
                                      caliburn:Message.Attach="[Event Apply] = [OnApplyCommadClicked ()]; [Event Cancel] = [OnCancelCommadClicked ()]" />
 
             <!--extension-->
-            <controls:TPropertyGrid ToolbarVisible="False"
+            <!--<controls:TPropertyGrid ToolbarVisible="False"
                                     VerticalAlignment="Stretch"
                                     SelectedObject="{Binding Model.ComponentModelProperty.ExtensionModel}"
-                                    caliburn:Message.Attach="[Event Loaded] = [OnPropertyGridExtensionLoaded ($source)]" />
+                                    caliburn:Message.Attach="[Event Loaded] = [OnPropertyGridExtensionLoaded ($source)]" />-->
         </StackPanel>
     </Border>
 

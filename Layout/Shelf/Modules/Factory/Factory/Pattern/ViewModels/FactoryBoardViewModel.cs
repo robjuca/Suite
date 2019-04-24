@@ -137,6 +137,11 @@ namespace Layout.Factory.Pattern.ViewModels
       TDispatcher.BeginInvoke (ReportDispatcher, args.ReportData);
     }
 
+    public void OnDashBoardSizeChanged (TDashBoardEventArgs args)
+    {
+      TDispatcher.BeginInvoke (SizeChangedDispatcher, args.BoardSize);
+    }
+
     public void OnDashBoardControlLoaded (object control)
     {
       if (control is TDashBoardControl dashControl) {
@@ -191,6 +196,15 @@ namespace Layout.Factory.Pattern.ViewModels
       DelegateCommand.PublishInternalMessage.Execute (message);
     }
 
+    void SizeChangedDispatcher (TSize size)
+    {
+      // to sibiling
+      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Size, TChild.Board, TypeInfo);
+      message.Support.Argument.Args.Select (size, null);
+
+      DelegateCommand.PublishInternalMessage.Execute (message);
+    }
+
     #region Content
     void ContentInsertDispatcher (TContentInfo contentInfo)
     {
@@ -217,7 +231,7 @@ namespace Layout.Factory.Pattern.ViewModels
       message.Support.Argument.Args.Select (tuple.Item1, tuple.Item2);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
-    } 
+    }
     #endregion
 
     #region Request

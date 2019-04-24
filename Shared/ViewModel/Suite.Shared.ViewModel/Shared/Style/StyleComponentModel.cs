@@ -5,6 +5,7 @@
 
 //----- Include
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -58,6 +59,8 @@ namespace Shared.ViewModel
     {
       ComponentModelCollection = new Collection<TComponentModelItem> ();
       ItemsCollection = new ObservableCollection<TComponentModelItem> ();
+
+      m_ComponentModelDrop = new Dictionary<Guid, TComponentModelItem> ();
     }
     #endregion
 
@@ -67,6 +70,8 @@ namespace Shared.ViewModel
       // DATA IN:
       // action.CollectionAction.ModelCollection
       // action.CollectionAction.ExtensionNodeCollection
+
+      m_ComponentModelDrop.Clear ();
 
       if (action.NotNull ()) {
         ComponentModelCollection.Clear ();
@@ -107,6 +112,19 @@ namespace Shared.ViewModel
           .Where (p => p.StyleVertical.Equals (selectedStyleVertical.ToString ()))
           .ToList ()
         ;
+
+        // zap drop model
+        foreach (var item in m_ComponentModelDrop) {
+          var dropList = list
+            .Where (p => p.Id.Equals (item.Key))
+            .ToList ()
+          ;
+
+          if (dropList.Count.Equals (1)) {
+            var model = dropList [0];
+            list.Remove (model);
+          }
+        }
 
         ItemsCollection = new ObservableCollection<TComponentModelItem> (list);
       }
@@ -150,6 +168,40 @@ namespace Shared.ViewModel
 
       return (TComponentModelItem.CreateDefault);
     }
+
+    public bool DropComponentModel (Guid id)
+    {
+      var res = false;
+
+      var list = ComponentModelCollection
+        .Where (p => p.Id.Equals (id))
+        .ToList ()
+      ;
+
+      if (list.Count.Equals (1)) {
+        var model = list [0];
+        m_ComponentModelDrop.Add (model.Id, model);
+        res = true;
+      }
+
+      return (res);
+    }
+
+    public bool RestoreComponentModel (Guid id)
+    {
+      var res = false;
+
+      if (m_ComponentModelDrop.ContainsKey (id)) {
+        m_ComponentModelDrop.Remove (id);
+        res = true;
+      }
+
+      return (res);
+    }
+    #endregion
+
+    #region Fields
+    readonly Dictionary<Guid, TComponentModelItem>                        m_ComponentModelDrop; 
     #endregion
 
     #region Static

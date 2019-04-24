@@ -12,31 +12,48 @@ using System.Windows.Controls;
 
 namespace Shared.Resources
 {
-  [TemplatePart (Name = PART_HORIZONTAL_LAYOUT, Type = typeof (Border))]
-  [TemplatePart (Name = PART_VERTICAL_LAYOUT, Type = typeof (Border))]
+  // Orientation
+  [TemplatePart (Name = PART_ORIENTATION_HORIZONTAL, Type = typeof (Border))]
+  [TemplatePart (Name = PART_ORIENTATION_VERTICAL, Type = typeof (Border))]
 
-  [TemplatePart (Name = PART_HORIZONTAL_C0, Type = typeof (Border))]
-  [TemplatePart (Name = PART_HORIZONTAL_C1, Type = typeof (Border))]
-  [TemplatePart (Name = PART_HORIZONTAL_C2, Type = typeof (Border))]
-  [TemplatePart (Name = PART_HORIZONTAL_C3, Type = typeof (Border))]
+  // Orientation Horizontal
+  // Style Horizontal
+  [TemplatePart (Name = PART_ORIENTATION_HORIZONTAL_STYLE_HORIZONTAL_C0, Type = typeof (Border))]
+  [TemplatePart (Name = PART_ORIENTATION_HORIZONTAL_STYLE_HORIZONTAL_C1, Type = typeof (Border))]
+  [TemplatePart (Name = PART_ORIENTATION_HORIZONTAL_STYLE_HORIZONTAL_C2, Type = typeof (Border))]
+  [TemplatePart (Name = PART_ORIENTATION_HORIZONTAL_STYLE_HORIZONTAL_C3, Type = typeof (Border))]
 
-  [TemplatePart (Name = PART_VERTICAL_R0, Type = typeof (Border))]
-  [TemplatePart (Name = PART_VERTICAL_R1, Type = typeof (Border))]
-  [TemplatePart (Name = PART_VERTICAL_R2, Type = typeof (Border))]
-  [TemplatePart (Name = PART_VERTICAL_R3, Type = typeof (Border))]
+  // Style Vertical
+  [TemplatePart (Name = PART_ORIENTATION_HORIZONTAL_STYLE_VERTICAL_R0, Type = typeof (Border))]
+  [TemplatePart (Name = PART_ORIENTATION_HORIZONTAL_STYLE_VERTICAL_R1, Type = typeof (Border))]
+  [TemplatePart (Name = PART_ORIENTATION_HORIZONTAL_STYLE_VERTICAL_R2, Type = typeof (Border))]
+  [TemplatePart (Name = PART_ORIENTATION_HORIZONTAL_STYLE_VERTICAL_R3, Type = typeof (Border))]
+
+  // Orientation Vertical
+  // Style Horizontal
+  [TemplatePart (Name = PART_ORIENTATION_VERTICAL_STYLE_HORIZONTAL_C0, Type = typeof (Border))]
+  [TemplatePart (Name = PART_ORIENTATION_VERTICAL_STYLE_HORIZONTAL_C1, Type = typeof (Border))]
+  [TemplatePart (Name = PART_ORIENTATION_VERTICAL_STYLE_HORIZONTAL_C2, Type = typeof (Border))]
+  [TemplatePart (Name = PART_ORIENTATION_VERTICAL_STYLE_HORIZONTAL_C3, Type = typeof (Border))]
+
+  // Style Vertical
+  [TemplatePart (Name = PART_ORIENTATION_VERTICAL_STYLE_VERTICAL_R0, Type = typeof (Border))]
+  [TemplatePart (Name = PART_ORIENTATION_VERTICAL_STYLE_VERTICAL_R1, Type = typeof (Border))]
+  [TemplatePart (Name = PART_ORIENTATION_VERTICAL_STYLE_VERTICAL_R2, Type = typeof (Border))]
+  [TemplatePart (Name = PART_ORIENTATION_VERTICAL_STYLE_VERTICAL_R3, Type = typeof (Border))]
   public sealed class TStyleSelector : Control
   {
     #region Property
-    public string Layout
+    public Orientation Orientation
     {
       get
       {
-        return (string) GetValue (LayoutProperty);
+        return ((Orientation) GetValue (OrientationProperty));
       }
 
       set
       {
-        SetValue (LayoutProperty, value);
+        SetValue (OrientationProperty, value);
       }
     }
 
@@ -94,12 +111,12 @@ namespace Shared.Resources
     #endregion
 
     #region Dependency Property
-    public static readonly DependencyProperty LayoutProperty =
-        DependencyProperty.Register ("Layout", typeof (string), typeof (TStyleSelector),
-        new PropertyMetadata (string.Empty));
+    public static readonly DependencyProperty OrientationProperty =
+        DependencyProperty.Register ("Orientation", typeof (Orientation), typeof (TStyleSelector),
+        new PropertyMetadata (Orientation.Horizontal));
 
     public static readonly DependencyProperty StyleHorizontalNameProperty =
-        DependencyProperty.Register ("StyleHorizontalName", typeof (string), typeof (TStyleSelector), 
+        DependencyProperty.Register ("StyleHorizontalName", typeof (string), typeof (TStyleSelector),
         new PropertyMetadata (string.Empty));
 
     public static readonly DependencyProperty StyleVerticalNameProperty =
@@ -107,7 +124,7 @@ namespace Shared.Resources
         new PropertyMetadata (string.Empty));
 
     public static readonly DependencyProperty SelectStyleHorizontalProperty =
-        DependencyProperty.Register ("SelectStyleHorizontal", typeof (string), typeof (TStyleSelector), 
+        DependencyProperty.Register ("SelectStyleHorizontal", typeof (string), typeof (TStyleSelector),
         new FrameworkPropertyMetadata (string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, SelectStyleHorizontalPropertyChanged));
 
     public static readonly DependencyProperty SelectStyleVerticalProperty =
@@ -128,7 +145,7 @@ namespace Shared.Resources
     #region Constructor
     public TStyleSelector ()
     {
-      Layout = "horizontal"; // can be: 'horizontal' or 'vertical'
+      Orientation = Orientation.Horizontal; // can be: 'horizontal' or 'vertical'
 
       // radio buttons horizontal
       m_PartsHorizontal = new Dictionary<string, RadioButton> ();
@@ -137,7 +154,7 @@ namespace Shared.Resources
         var rb = new RadioButton
         {
           Margin = new Thickness (2),
-          HorizontalAlignment=HorizontalAlignment.Center,
+          HorizontalAlignment = HorizontalAlignment.Center,
           VerticalAlignment = VerticalAlignment.Center,
           GroupName = "StyleHorizontalSelector",
           Tag = m_Styles [i]
@@ -175,20 +192,69 @@ namespace Shared.Resources
     {
       base.OnApplyTemplate ();
 
-      // horizontal
-      var layoutH = new string [] { PART_HORIZONTAL_C0, PART_HORIZONTAL_C1, PART_HORIZONTAL_C2, PART_HORIZONTAL_C3 };
+      var styleHorizontal = new string [4];
+      var styleVertical = new string [4];
 
-      for (int i = 0; i < layoutH.Length; i++) {
-        if (GetTemplateChild (layoutH [i]) is Border border) {
+      // Orientation
+      if ((GetTemplateChild (PART_ORIENTATION_HORIZONTAL) is Border borderOrientationHorizontal) && (GetTemplateChild (PART_ORIENTATION_VERTICAL) is Border borderOrientationVertical)) {
+        borderOrientationVertical.Visibility = Visibility.Hidden;
+        borderOrientationHorizontal.Visibility = Visibility.Hidden;
+
+        switch (Orientation) {
+          case Orientation.Horizontal: {
+              borderOrientationHorizontal.Visibility = Visibility.Visible;
+
+              // style horizontal
+              styleHorizontal = new string [] {
+                PART_ORIENTATION_HORIZONTAL_STYLE_HORIZONTAL_C0,
+                PART_ORIENTATION_HORIZONTAL_STYLE_HORIZONTAL_C1,
+                PART_ORIENTATION_HORIZONTAL_STYLE_HORIZONTAL_C2,
+                PART_ORIENTATION_HORIZONTAL_STYLE_HORIZONTAL_C3
+              };
+
+              // style vertical
+              styleVertical = new string [] {
+                PART_ORIENTATION_HORIZONTAL_STYLE_VERTICAL_R0,
+                PART_ORIENTATION_HORIZONTAL_STYLE_VERTICAL_R1,
+                PART_ORIENTATION_HORIZONTAL_STYLE_VERTICAL_R2,
+                PART_ORIENTATION_HORIZONTAL_STYLE_VERTICAL_R3
+              };
+            }
+            break;
+
+          case Orientation.Vertical: {
+              borderOrientationVertical.Visibility = Visibility.Visible;
+
+              // style horizontal
+              styleHorizontal = new string [] {
+                PART_ORIENTATION_VERTICAL_STYLE_HORIZONTAL_C0,
+                PART_ORIENTATION_VERTICAL_STYLE_HORIZONTAL_C1,
+                PART_ORIENTATION_VERTICAL_STYLE_HORIZONTAL_C2,
+                PART_ORIENTATION_VERTICAL_STYLE_HORIZONTAL_C3
+              };
+
+              // style vertical
+              styleVertical = new string [] {
+                PART_ORIENTATION_VERTICAL_STYLE_VERTICAL_R0,
+                PART_ORIENTATION_VERTICAL_STYLE_VERTICAL_R1,
+                PART_ORIENTATION_VERTICAL_STYLE_VERTICAL_R2,
+                PART_ORIENTATION_VERTICAL_STYLE_VERTICAL_R3
+              };
+            }
+            break;
+        }
+      }
+
+      // style horizontal
+      for (int i = 0; i < styleHorizontal.Length; i++) {
+        if (GetTemplateChild (styleHorizontal [i]) is Border border) {
           border.Child = m_PartsHorizontal [m_Styles [i]];
         }
       }
 
-      // vertical
-      var layoutV = new string [] { PART_VERTICAL_R0, PART_VERTICAL_R1, PART_VERTICAL_R2, PART_VERTICAL_R3 };
-
-      for (int i = 0; i < layoutV.Length; i++) {
-        if (GetTemplateChild (layoutV [i]) is Border border) {
+      // style vertical
+      for (int i = 0; i < styleVertical.Length; i++) {
+        if (GetTemplateChild (styleVertical [i]) is Border border) {
           border.Child = m_PartsVertical [m_Styles [i]];
         }
       }
@@ -234,29 +300,46 @@ namespace Shared.Resources
     #endregion
 
     #region Constants
-    const string PART_HORIZONTAL_LAYOUT               = "PART_HorizontalLayout";
-    const string PART_VERTICAL_LAYOUT                 = "PART_VerticalLayout";
+    // Orientation
+    const string PART_ORIENTATION_HORIZONTAL                                        = "PART_OrientationHorizontal";
+    const string PART_ORIENTATION_VERTICAL                                          = "PART_OrientationVertical";
 
-    const string PART_HORIZONTAL_C0                   = "PART_HorizontalC0";
-    const string PART_HORIZONTAL_C1                   = "PART_HorizontalC1";
-    const string PART_HORIZONTAL_C2                   = "PART_HorizontalC2";
-    const string PART_HORIZONTAL_C3                   = "PART_HorizontalC3";
+    // Orientation Horizontal 
+    // Style Horizontal
+    const string PART_ORIENTATION_HORIZONTAL_STYLE_HORIZONTAL_C0                    = "PART_OrientationHorizontalStyleHorizontalC0";
+    const string PART_ORIENTATION_HORIZONTAL_STYLE_HORIZONTAL_C1                    = "PART_OrientationHorizontalStyleHorizontalC1";
+    const string PART_ORIENTATION_HORIZONTAL_STYLE_HORIZONTAL_C2                    = "PART_OrientationHorizontalStyleHorizontalC2";
+    const string PART_ORIENTATION_HORIZONTAL_STYLE_HORIZONTAL_C3                    = "PART_OrientationHorizontalStyleHorizontalC3";
 
-    const string PART_VERTICAL_R0                     = "PART_VerticalR0";
-    const string PART_VERTICAL_R1                     = "PART_VerticalR1";
-    const string PART_VERTICAL_R2                     = "PART_VerticalR2";
-    const string PART_VERTICAL_R3                     = "PART_VerticalR3";
+    // Style Vertical
+    const string PART_ORIENTATION_HORIZONTAL_STYLE_VERTICAL_R0                      = "PART_OrientationHorizontalStyleVerticalR0";
+    const string PART_ORIENTATION_HORIZONTAL_STYLE_VERTICAL_R1                      = "PART_OrientationHorizontalStyleVerticalR1";
+    const string PART_ORIENTATION_HORIZONTAL_STYLE_VERTICAL_R2                      = "PART_OrientationHorizontalStyleVerticalR2";
+    const string PART_ORIENTATION_HORIZONTAL_STYLE_VERTICAL_R3                      = "PART_OrientationHorizontalStyleVerticalR3";
 
-    const string MINI                                 = "mini";
-    const string SMALL                                = "small";
-    const string LARGE                                = "large";
-    const string BIG                                  = "big";
+    // Orientation Vertical 
+    // Style Horizontal
+    const string PART_ORIENTATION_VERTICAL_STYLE_HORIZONTAL_C0                      = "PART_OrientationVerticalStyleHorizontalC0";
+    const string PART_ORIENTATION_VERTICAL_STYLE_HORIZONTAL_C1                      = "PART_OrientationVerticalStyleHorizontalC1";
+    const string PART_ORIENTATION_VERTICAL_STYLE_HORIZONTAL_C2                      = "PART_OrientationVerticalStyleHorizontalC2";
+    const string PART_ORIENTATION_VERTICAL_STYLE_HORIZONTAL_C3                      = "PART_OrientationVerticalStyleHorizontalC3";
+
+    // Style Vertical
+    const string PART_ORIENTATION_VERTICAL_STYLE_VERTICAL_R0                        = "PART_OrientationVerticalStyleVerticalR0";
+    const string PART_ORIENTATION_VERTICAL_STYLE_VERTICAL_R1                        = "PART_OrientationVerticalStyleVerticalR1";
+    const string PART_ORIENTATION_VERTICAL_STYLE_VERTICAL_R2                        = "PART_OrientationVerticalStyleVerticalR2";
+    const string PART_ORIENTATION_VERTICAL_STYLE_VERTICAL_R3                        = "PART_OrientationVerticalStyleVerticalR3";
+
+    const string MINI                                                               = "mini";
+    const string SMALL                                                              = "small";
+    const string LARGE                                                              = "large";
+    const string BIG                                                                = "big";
     #endregion
 
     #region Fields
-    readonly Dictionary<string, RadioButton>                              m_PartsHorizontal;
-    readonly Dictionary<string, RadioButton>                              m_PartsVertical;
-    readonly string []                                                    m_Styles = new string [] { MINI, SMALL, LARGE, BIG };
+    readonly Dictionary<string, RadioButton>                                        m_PartsHorizontal;
+    readonly Dictionary<string, RadioButton>                                        m_PartsVertical;
+    readonly string []                                                              m_Styles = new string [] { MINI, SMALL, LARGE, BIG };
     #endregion
 
     #region Support
@@ -275,7 +358,7 @@ namespace Shared.Resources
           }
           break;
       }
-    } 
+    }
     #endregion
   };
   //---------------------------//

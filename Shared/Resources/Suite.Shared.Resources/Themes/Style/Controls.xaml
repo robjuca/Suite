@@ -155,7 +155,9 @@
                                 </Border>
 
                                 <!--style-->
-                                <Border Grid.Row="1">
+                                <!--orientation horizontal-->
+                                <Border x:Name="PART_OrientationHorizontal"
+                                        Grid.Row="1">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
@@ -163,10 +165,9 @@
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
 
-                                        <!--horizontal-->
+                                        <!--style horizontal-->
                                         <Border Grid.Row="0">
-                                            <!--horizontal layout-->
-                                            <Border x:Name="PART_HorizontalLayout">
+                                            <Border>
                                                 <StackPanel>
                                                     <TextBlock Text="horizontal"
                                                                FontSize="9px"
@@ -180,16 +181,16 @@
                                                             <ColumnDefinition />
                                                         </Grid.ColumnDefinitions>
 
-                                                        <Border x:Name="PART_HorizontalC0"
+                                                        <Border x:Name="PART_OrientationHorizontalStyleHorizontalC0"
                                                                 Grid.Column="0" />
 
-                                                        <Border x:Name="PART_HorizontalC1"
+                                                        <Border x:Name="PART_OrientationHorizontalStyleHorizontalC1"
                                                                 Grid.Column="1" />
 
-                                                        <Border x:Name="PART_HorizontalC2"
+                                                        <Border x:Name="PART_OrientationHorizontalStyleHorizontalC2"
                                                                 Grid.Column="2" />
 
-                                                        <Border x:Name="PART_HorizontalC3"
+                                                        <Border x:Name="PART_OrientationHorizontalStyleHorizontalC3"
                                                                 Grid.Column="3" />
                                                     </Grid>
                                                 </StackPanel>
@@ -197,7 +198,9 @@
                                         </Border>
 
                                         <!--style name-->
-                                        <Border Grid.Row="1" BorderThickness="0 .8 0 .8" BorderBrush="LightGray">
+                                        <Border Grid.Row="1"
+                                                BorderThickness="0 .8 0 .8"
+                                                BorderBrush="LightGray">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition />
@@ -228,10 +231,9 @@
                                             </Grid>
                                         </Border>
 
-                                        <!--vertical-->
+                                        <!--style vertical-->
                                         <Border Grid.Row="2">
-                                            <!--vertical layout-->
-                                            <Border x:Name="PART_VerticalLayout">
+                                            <Border>
                                                 <StackPanel>
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
@@ -241,16 +243,16 @@
                                                             <ColumnDefinition />
                                                         </Grid.ColumnDefinitions>
 
-                                                        <Border x:Name="PART_VerticalR0"
+                                                        <Border x:Name="PART_OrientationHorizontalStyleVerticalR0"
                                                                 Grid.Column="0" />
 
-                                                        <Border x:Name="PART_VerticalR1"
+                                                        <Border x:Name="PART_OrientationHorizontalStyleVerticalR1"
                                                                 Grid.Column="1" />
 
-                                                        <Border x:Name="PART_VerticalR2"
+                                                        <Border x:Name="PART_OrientationHorizontalStyleVerticalR2"
                                                                 Grid.Column="2" />
 
-                                                        <Border x:Name="PART_VerticalR3"
+                                                        <Border x:Name="PART_OrientationHorizontalStyleVerticalR3"
                                                                 Grid.Column="3" />
                                                     </Grid>
 
@@ -259,6 +261,161 @@
                                                                FontWeight="DemiBold"
                                                                HorizontalAlignment="Right" />
                                                 </StackPanel>
+                                            </Border>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+
+                                <!--orientation vertical-->
+                                <Border x:Name="PART_OrientationVertical"
+                                        Grid.Row="1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--style horizontal-->
+                                        <Border Grid.Column="0">
+                                            <Border>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition Height="Auto" />
+                                                    </Grid.RowDefinitions>
+
+                                                    <!--style-->
+                                                    <Border Grid.Row="0">
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition />
+                                                                <RowDefinition />
+                                                                <RowDefinition />
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+
+                                                            <Border x:Name="PART_OrientationVerticalStyleHorizontalC0"
+                                                                    Grid.Row="0" />
+
+                                                            <Border x:Name="PART_OrientationVerticalStyleHorizontalC1"
+                                                                    Grid.Row="1" />
+
+                                                            <Border x:Name="PART_OrientationVerticalStyleHorizontalC2"
+                                                                    Grid.Row="2" />
+
+                                                            <Border x:Name="PART_OrientationVerticalStyleHorizontalC3"
+                                                                    Grid.Row="3" />
+                                                        </Grid>
+                                                    </Border>
+
+                                                    <!--text-->
+                                                    <Border Grid.Row="1">
+                                                        <TextBlock Text="horizontal"
+                                                                   FontSize="9px"
+                                                                   FontWeight="DemiBold" />
+                                                    </Border>
+                                                </Grid>
+                                            </Border>
+                                        </Border>
+
+                                        <!--style name-->
+                                        <Border Grid.Column="1"
+                                                BorderThickness="0 .8 0 .8"
+                                                BorderBrush="LightGray">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+
+                                                <!--style text-->
+                                                <Border Grid.Row="0">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition />
+                                                            <RowDefinition />
+                                                            <RowDefinition />
+                                                            <RowDefinition />
+                                                        </Grid.RowDefinitions>
+
+                                                        <Border Grid.Row="0">
+                                                            <TextBlock HorizontalAlignment="Center"
+                                                                       VerticalAlignment="Center"
+                                                                       Text="mini" />
+                                                        </Border>
+
+                                                        <Border Grid.Row="1">
+                                                            <TextBlock HorizontalAlignment="Center"
+                                                                       VerticalAlignment="Center"
+                                                                       Text="small" />
+                                                        </Border>
+
+                                                        <Border Grid.Row="2">
+                                                            <TextBlock HorizontalAlignment="Center"
+                                                                       VerticalAlignment="Center"
+                                                                       Text="large" />
+                                                        </Border>
+
+                                                        <Border Grid.Row="3">
+                                                            <TextBlock HorizontalAlignment="Center"
+                                                                       VerticalAlignment="Center"
+                                                                       Text="big" />
+                                                        </Border>
+                                                    </Grid>
+                                                </Border>
+
+                                                <!--dummy-->
+                                                <Border Grid.Row="1">
+                                                    <TextBlock Text=" "
+                                                               FontSize="9px"
+                                                               FontWeight="DemiBold"
+                                                               />
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+
+                                        <!--style vertical-->
+                                        <Border Grid.Column="2">
+                                            <Border x:Name="PART_VerticalLayout">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition Height="Auto" />
+                                                    </Grid.RowDefinitions>
+
+                                                    <!--style-->
+                                                    <Border Grid.Row="0">
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition />
+                                                                <RowDefinition />
+                                                                <RowDefinition />
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+
+                                                            <Border x:Name="PART_OrientationVerticalStyleVerticalR0"
+                                                                    Grid.Row="0" />
+
+                                                            <Border x:Name="PART_OrientationVerticalStyleVerticalR1"
+                                                                    Grid.Row="1" />
+
+                                                            <Border x:Name="PART_OrientationVerticalStyleVerticalR2"
+                                                                    Grid.Row="2" />
+
+                                                            <Border x:Name="PART_OrientationVerticalStyleVerticalR3"
+                                                                    Grid.Row="3" />
+                                                        </Grid>
+                                                    </Border>
+
+                                                    <!--text-->
+                                                    <Border Grid.Row="1">
+                                                        <TextBlock Text="vertical"
+                                                                   FontSize="9px"
+                                                                   FontWeight="DemiBold"
+                                                                   HorizontalAlignment="Right" />
+                                                    </Border>
+                                                </Grid>
                                             </Border>
                                         </Border>
                                     </Grid>

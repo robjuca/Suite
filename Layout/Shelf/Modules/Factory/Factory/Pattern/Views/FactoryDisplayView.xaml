@@ -8,13 +8,15 @@
                     DataContext="{x:Null}"
                     x:Name="ModuleFactoryDisplayViewModel">
 
-    <Border Height="360"
-            Padding="2">
+    <Border Padding="2">
         <materialDesign:Card  Padding="2"
                               HorizontalAlignment="Stretch"
                               VerticalAlignment="Stretch">
-            <control:TComponentDisplayControl Model="{Binding Model.ComponentControlModel}"
-                                              caliburn:Message.Attach="[Event Loaded] = [OnComponentControlLoaded ($source)]" />
+            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <control:TComponentDisplayControl Model="{Binding Model.ComponentControlModel}"
+                                                  caliburn:Message.Attach="[Event Loaded] = [OnComponentControlLoaded ($source)]" />
+            </ScrollViewer>
         </materialDesign:Card>
     </Border>
 

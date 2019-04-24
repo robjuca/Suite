@@ -74,6 +74,7 @@ namespace Shared.Types
     SettingsClosed,
     SettingsValidated,
     SettingsValidating,
+    Size,
     ShutDown,
     Unlocked,
   };
@@ -122,6 +123,7 @@ namespace Shared.Types
     Select,
     SettingsValidated,
     SettingsValidating,
+    Size,
   };
   //---------------------------// 
 

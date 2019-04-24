@@ -36,8 +36,8 @@
                     Padding="2">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <!--display-->
@@ -50,12 +50,13 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
                             <!--ComponentList-->
-                            <Border Grid.Column="0">
+                            <Border Grid.Column="0"
+                                    Margin="0 0 3 0">
                                 <views:TFactoryComponentListView />
                             </Border>
 
@@ -65,7 +66,8 @@
                             </Border>
 
                             <!--property-->
-                            <Border Grid.Column="2">
+                            <Border Grid.Column="2"
+                                    Margin="3 0 0 0">
                                 <views:TFactoryPropertyView />
                             </Border>
                         </Grid>

@@ -18,7 +18,9 @@ using Shared.ViewModel;
 
 namespace Shared.DashBoard
 {
-  [TemplatePart (Name = PART_DASHBOARD, Type = typeof (ListBox))]
+  [TemplatePart (Name = PART_DASHBOARD, Type = typeof (ItemsControl))]
+  [TemplatePart (Name = PART_COLUMNSLIDE, Type = typeof (Slider))]
+  [TemplatePart (Name = PART_ROWSLIDE, Type = typeof (Slider))]
   public class TDashBoardControl : Control, GongSolutions.Wpf.DragDrop.IDropTarget
   {
     #region Property
@@ -45,18 +47,21 @@ namespace Shared.DashBoard
     {
       DashBoardItemSource = new ObservableCollection<TDashBoardItem> ();
 
-      for (int row = 1; row <= 3; row++) {
-        for (int col = 1; col <= 4; col++) {
+      // 4x4 matrix
+      for (int row = 1; row <= m_MaxRow; row++) {
+        for (int col = 1; col <= m_MaxColumn; col++) {
           DashBoardItemSource.Add (new TDashBoardItem (TPosition.Create (col, row)));
         }
       }
 
-      Size = TSize.Create (4, 3); // cols = 4, rows = 3 max
+      Size = TSize.Create (m_MaxColumn, m_MaxRow); // cols = 4, rows = 4 max
 
       m_DashboardCollectionViewSource = new CollectionViewSource
       {
         Source = DashBoardItemSource
       };
+
+      m_SlideSize = TSize.Create (4, 4);
     }
     #endregion
 
@@ -65,11 +70,13 @@ namespace Shared.DashBoard
     public delegate void    DropFromSourceEventHandler (object sender, TDashBoardEventArgs e);
     public delegate void    ContentMovedEventHandler (object sender, TDashBoardEventArgs e);
     public delegate void    ContentRemovedEventHandler (object sender, TDashBoardEventArgs e);
+    public delegate void    BoardSizeChangedEventHandler (object sender, TDashBoardEventArgs e);
 
     // Declare the event.
     public event DropFromSourceEventHandler           DropFromSource;
     public event ContentMovedEventHandler             ContentMoved;
     public event ContentMovedEventHandler             ContentRemoved;
+    public event BoardSizeChangedEventHandler         BoardSizeChanged;
     #endregion
 
     #region IDragDrop
@@ -81,8 +88,8 @@ namespace Shared.DashBoard
 
       if (dropInfo.TargetItem is TDashBoardItem targetItem) {
         // external source
-        if (dropInfo.Data is TComponentItemInfo externalData) {
-          canDrop = CanDragOver (externalData.Model.Size, targetItem);
+        if (dropInfo.Data is TComponentModelItem externalData) {
+          canDrop = CanDragOver (externalData, targetItem);
         }
 
         // myself source (Board)
@@ -101,8 +108,8 @@ namespace Shared.DashBoard
     {
       if (dropInfo.TargetItem is TDashBoardItem targetItem) {
         // external source 
-        if (dropInfo.Data is TComponentItemInfo externalData) {
-          DoDrop (externalData.Model, targetItem);
+        if (dropInfo.Data is TComponentModelItem externalData) {
+          DoDrop (externalData, targetItem);
 
           // remove drop from source 
           var args = TDashBoardEventArgs.CreateDefault;
@@ -127,7 +134,7 @@ namespace Shared.DashBoard
           ContentMoved?.Invoke (this, args);
         }
 
-        RefreshCollection ();
+        TDispatcher.Invoke (RefreshCollectionDispatcher);
       }
     }
     #endregion
@@ -136,10 +143,10 @@ namespace Shared.DashBoard
     public void ChangeStatus (TPosition position, TSize size, TDashBoardItem.TDashBoardStatus status)
     {
       var col = position.Column; // 1, 2, 3, 4
-      var row = position.Row;    // 1, 2, 3
+      var row = position.Row;    // 1, 2, 3, 4
 
-      var sizeColumns = (size.Columns <= 4) ? size.Columns : 4; // max 4
-      var sizeRows = (size.Rows <= 3) ? size.Rows : 3; // max 3
+      var sizeColumns = (size.Columns <= m_MaxColumn) ? size.Columns : m_MaxColumn; // max 4
+      var sizeRows = (size.Rows <= m_MaxRow) ? size.Rows : m_MaxRow; // max 4
 
       string background = RequestBackground (position, status);
 
@@ -158,21 +165,26 @@ namespace Shared.DashBoard
         if (IsDashBoardEmpty ()) {
           CleanupDashBoard ();
 
-          for (int col = 4; col > size.Columns; col--) {
+          for (int col = m_MaxColumn; col > size.Columns; col--) {
             foreach (var item in DashBoardItemSource) {
               item.DisableByColumn (col);
             }
           }
 
-          for (int row = 3; row > size.Rows; row--) {
+          for (int row = m_MaxRow; row > size.Rows; row--) {
             foreach (var item in DashBoardItemSource) {
               item.DisableByRow (row);
             }
           }
         }
+
+        var args = TDashBoardEventArgs.CreateDefault;
+        args.BoardSize.CopyFrom (Size);
+
+        BoardSizeChanged?.Invoke (this, args);
       }
 
-      RefreshCollection ();
+      TDispatcher.Invoke (RefreshCollectionDispatcher);
     }
 
     public bool RemoveContent (Guid id)
@@ -195,7 +207,7 @@ namespace Shared.DashBoard
         ContentRemoved?.Invoke (this, args);
       }
 
-      RefreshCollection ();
+      TDispatcher.Invoke (RefreshCollectionDispatcher);
 
       return (res);
     }
@@ -220,7 +232,7 @@ namespace Shared.DashBoard
         }
       }
 
-      TDispatcher.Invoke (RefreshCollection);
+      TDispatcher.Invoke (RefreshCollectionDispatcher);
     }
 
     public void RequestModel (Server.Models.Component.TEntityAction action)
@@ -255,19 +267,24 @@ namespace Shared.DashBoard
     public void Cleanup ()
     {
       CleanupDashBoard ();
+
+      m_ColumnSlide.IsEnabled = true;
+      m_RowSlide.IsEnabled = true;
     }
     #endregion
 
     #region Drag Operation
-    public bool CanDragOver (TSize sourceItemSize, TDashBoardItem targetItem)
+    public bool CanDragOver (TComponentModelItem sourceItem, TDashBoardItem targetItem)
     {
       bool canDrop = false;
 
       var col = targetItem.Position.Column; // 1, 2, 3, 4
-      var row = targetItem.Position.Row;    // 1, 2, 3
+      var row = targetItem.Position.Row;    // 1, 2, 3, 4
 
-      var sizeColumns = sourceItemSize.Columns <= 4 ? sourceItemSize.Columns : 4; // max 4
-      var sizeRows = sourceItemSize.Rows <= 3 ? sourceItemSize.Rows : 3; // max 3
+      sourceItem.RequestSize ();
+
+      var sizeColumns = sourceItem.GeometryModel.SizeCols <= m_MaxColumn ? sourceItem.GeometryModel.SizeCols : m_MaxColumn; // max 4
+      var sizeRows = sourceItem.GeometryModel.SizeRows <= m_MaxRow ? sourceItem.GeometryModel.SizeRows : m_MaxRow; // max 4
 
       if (((col - 1) + sizeColumns) <= Size.Columns && ((row - 1) + sizeRows) <= Size.Rows) { // zero index
         for (int positionColumn = 0; positionColumn < sizeColumns; positionColumn++) {
@@ -372,7 +389,6 @@ namespace Shared.DashBoard
     #region Overrides
     public override void OnApplyTemplate ()
     {
-
       /*
        dragdrop:DragDrop.IsDragSource="True"
        dragdrop:DragDrop.IsDropTarget="True"
@@ -383,26 +399,80 @@ namespace Shared.DashBoard
 
       base.OnApplyTemplate ();
 
-      if (GetTemplateChild (PART_DASHBOARD) is ListBox list) {
+      if (GetTemplateChild (PART_DASHBOARD) is ItemsControl list) {
         list.ItemsSource = m_DashboardCollectionViewSource.View;
 
         list.SetValue (GongSolutions.Wpf.DragDrop.DragDrop.DropHandlerProperty, this);
       }
+
+      // slide
+      if (GetTemplateChild (PART_COLUMNSLIDE) is Slider columnSlide) {
+        m_ColumnSlide = columnSlide;
+        m_ColumnSlide.Value = 4;
+        m_ColumnSlide.ValueChanged += OnColumnSlideValueChanged;
+      }
+
+      if (GetTemplateChild (PART_ROWSLIDE) is Slider rowSlide) {
+        m_RowSlide = rowSlide;
+        m_RowSlide.Value = 4;
+        m_RowSlide.ValueChanged += OnRowSlideValueChanged;
+      }
+    }
+    #endregion
+
+    #region Event
+    void OnColumnSlideValueChanged (object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+      m_SlideSize.SelectColumns ((int) e.NewValue);
+
+      if (e.NewValue.Equals (0)) {
+        m_SlideSize.SelectColumns (1);
+        m_ColumnSlide.Value = 1;
+      }
+
+      LayoutChanged (m_SlideSize);
+    }
+
+    void OnRowSlideValueChanged (object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+      m_SlideSize.SelectRows ((int) e.NewValue);
+
+      if (e.NewValue.Equals (0)) {
+        m_SlideSize.SelectRows (1);
+        m_RowSlide.Value = 1;
+      }
+
+      LayoutChanged (m_SlideSize);
     }
     #endregion
 
     #region Fields
-    CollectionViewSource                              m_DashboardCollectionViewSource; 
+    Slider                                                      m_ColumnSlide;
+    Slider                                                      m_RowSlide;
+    readonly TSize                                              m_SlideSize;
+    readonly CollectionViewSource                               m_DashboardCollectionViewSource;
+    const int                                                   m_MaxColumn = 4;
+    const int                                                   m_MaxRow = 4;
     #endregion
 
     #region Static
     const string PART_DASHBOARD                       = "PART_DashBoard";
+    const string PART_COLUMNSLIDE                     = "PART_ColumnSlide";
+    const string PART_ROWSLIDE                        = "PART_RowSlide";
     #endregion
 
     #region Support
     void RefreshCollection ()
     {
       m_DashboardCollectionViewSource.View.Refresh ();
+
+      if (m_ColumnSlide.NotNull ()) {
+        m_ColumnSlide.IsEnabled = IsDashBoardEmpty ();
+      }
+
+      if (m_RowSlide.NotNull ()) {
+        m_RowSlide.IsEnabled = IsDashBoardEmpty ();
+      }
     }
 
     void CleanupDashBoard ()
@@ -586,12 +656,12 @@ namespace Shared.DashBoard
     bool RequestStandbyRoom (TDashBoardItem sourceItem, TDashBoardItem targetItem)
     {
       var cols = sourceItem.Size.Columns; // (1,2,3,4)
-      var rows = sourceItem.Size.Rows;    // (1,2,3)
+      var rows = sourceItem.Size.Rows;    // (1,2,3,4)
 
       var targetPositionCol = targetItem.Position.Column;
       var targetPositionRow = targetItem.Position.Row;
 
-      if ((cols <= 4) && (rows <= 3)) {
+      if ((cols <= 4) && (rows <= 4)) {
         for (int col = 0; col < cols; col++) {
           for (int row = 0; row < rows; row++) {
             var position = TPosition.Create ((col + targetPositionCol), (row + targetPositionRow));

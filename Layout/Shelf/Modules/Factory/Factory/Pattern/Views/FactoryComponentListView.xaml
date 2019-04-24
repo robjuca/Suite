@@ -12,9 +12,9 @@
     <UserControl.Resources>
         <!--Component-->
         <CollectionViewSource x:Key="ComponentCollectionViewSource"
-                              Source="{Binding Model.ComponentSourceCollection}">
+                              Source="{Binding Model.StyleComponentModel.ItemsCollection}">
             <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Category" />
+                <PropertyGroupDescription PropertyName="NodeCategory" />
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>
@@ -34,20 +34,29 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
+                    <!--icon, name-->
                     <Border Grid.Column="0">
-                        <ContentControl Style="{DynamicResource ContentBagIcon}" />
+                        <StackPanel Orientation="Horizontal">
+                            <ContentControl Style="{DynamicResource ContentBagIcon}" />
+
+                            <TextBlock Margin="3 0 0 0"
+                                       VerticalAlignment="Center"
+                                       Text="bag" />
+                        </StackPanel>
+
                     </Border>
 
+                    <!--StyleSelectorString-->
                     <Border Grid.Column="1"
-                            Margin="2 0 0 0">
-                        <TextBlock VerticalAlignment="Center"
-                                   Text="bag" />
+                            HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding Model.StyleSelectorString}" />
                     </Border>
 
+                    <!--count-->
                     <Border Grid.Column="2"
                             Margin="0 0 2 0"
                             HorizontalAlignment="Right">
@@ -65,11 +74,13 @@
                     </Grid.ColumnDefinitions>
 
                     <!--style-->
-                    <Border Grid.Column="0">
+                    <Border Grid.Column="0"
+                            Margin="3 0 3 0">
                         <controls:TStyleSelector x:Name="StyleSelector"
-                                                 Layout="vertical"
-                                                 SelectStyle="{Binding Model.StyleSelectorSelect}"
-                                                 caliburn:Message.Attach="[Event StyleSelected] = [OnStyleSelected (StyleSelector.StyleName)]" />
+                                                 Orientation="Vertical"
+                                                 SelectStyleHorizontal="{Binding Model.StyleHorizontalSelectorSelect}"
+                                                 SelectStyleVertical="{Binding Model.StyleVerticalSelectorSelect}"
+                                                 caliburn:Message.Attach="[Event StyleHorizontalSelected] = [OnStyleHorizontalSelected (StyleSelector.StyleHorizontalName)]; [Event StyleVerticalSelected] = [OnStyleVerticalSelected (StyleSelector.StyleVerticalName)]" />
                     </Border>
 
                     <!--list-->
@@ -89,13 +100,16 @@
                                     <DataTemplate>
                                         <Border Width="120">
                                             <StackPanel Orientation="Horizontal">
-                                                <ContentControl ContentTemplate="{Binding ChildIconTemplate}" />
+                                                <ContentControl Style="{StaticResource ContentDocumentIcon}"
+                                                                Visibility="{Binding NodeDocumentVisibility}" />
+
+                                                <ContentControl Style="{StaticResource ContentImageIcon}"
+                                                                Visibility="{Binding NodeImageVisibility}" />
 
                                                 <TextBlock Margin="5 0 0 0"
                                                            VerticalAlignment="Center"
                                                            Text="{Binding Name}"
-                                                           FontWeight="Bold"
-                                                           TextWrapping="WrapWithOverflow" />
+                                                           FontWeight="Bold" />
                                             </StackPanel>
                                         </Border>
                                     </DataTemplate>
@@ -103,8 +117,7 @@
 
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <WrapPanel HorizontalAlignment="Left"
-                                                   />
+                                        <WrapPanel HorizontalAlignment="Left" />
                                     </ItemsPanelTemplate>
                                 </ListView.ItemsPanel>
                             </ListView>

@@ -53,7 +53,7 @@ namespace Layout.Factory.Pattern.ViewModels
 
           // Response
           if (message.IsAction (TInternalMessageAction.Response)) {
-            // Select Relation
+            // Select - Relation
             if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Relation)) {
               if (message.Result.IsValid) {
                 // shelf
@@ -63,7 +63,7 @@ namespace Layout.Factory.Pattern.ViewModels
               }
             }
 
-            // Select Zap
+            // Select - Zap
             if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Zap)) {
               if (message.Result.IsValid) {
                 // bag
@@ -73,7 +73,7 @@ namespace Layout.Factory.Pattern.ViewModels
               }
             }
 
-            // Select ById
+            // Select - ById
             if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.ById)) {
               if (message.Result.IsValid) {
                 TDispatcher.BeginInvoke (ResponseComponentDispatcher, Server.Models.Component.TEntityAction.Request (message.Support.Argument.Types.EntityAction));
@@ -104,18 +104,36 @@ namespace Layout.Factory.Pattern.ViewModels
     #endregion
 
     #region View Event
+    public void OnStyleHorizontalSelected (string style)
+    {
+      Enum.TryParse (style, out TContentStyle.Style selectedStyle);
+
+      Model.SelectStyleHorizontal (selectedStyle);
+
+      TDispatcher.Invoke (RefreshAllDispatcher);
+    }
+
+    public void OnStyleVerticalSelected (string style)
+    {
+      Enum.TryParse (style, out TContentStyle.Style selectedStyle);
+
+      Model.SelectStyleVertical (selectedStyle);
+
+      TDispatcher.Invoke (RefreshAllDispatcher);
+    }
+
     public void OnStyleSelected (string style)
     {
       Enum.TryParse (style, out TContentStyle.Style selectedStyle);
 
       Model.SelectStyle (selectedStyle);
 
-      TDispatcher.Invoke (RefreshAllCollectionDispatcher);
+      TDispatcher.Invoke (RefreshAllDispatcher);
     }
     #endregion
 
     #region Dispatcher
-    void RefreshAllCollectionDispatcher ()
+    void RefreshAllDispatcher ()
     {
       RaiseChanged ();
 
@@ -126,12 +144,12 @@ namespace Layout.Factory.Pattern.ViewModels
     {
       Model.SelectDefault ();
 
-      TDispatcher.Invoke (RefreshAllCollectionDispatcher);
+      TDispatcher.Invoke (RefreshAllDispatcher);
     }
 
     void RequestComponentRelationDispatcher ()
     {
-      // to parent
+      // to parent (Select - Relation)
       var action = Server.Models.Component.TEntityAction.Create (Server.Models.Infrastructure.TCategory.Shelf, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Relation);
       action.CollectionAction.SelectComponentOperation (Server.Models.Component.TComponentOperation.TInternalOperation.Category);
       action.ComponentOperation.SelectByCategory (Server.Models.Infrastructure.TCategoryType.ToValue (Server.Models.Infrastructure.TCategory.Shelf));
@@ -144,7 +162,7 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void RequestDataDispatcher ()
     {
-      // to parent
+      // to parent (Select - Zap)
       //bag
       var action = Server.Models.Component.TEntityAction.Create (Server.Models.Infrastructure.TCategory.Bag, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Zap);
       Model.RequestRelations (action);
@@ -166,7 +184,7 @@ namespace Layout.Factory.Pattern.ViewModels
     {
       Model.Select (action);
 
-      TDispatcher.Invoke (RefreshAllCollectionDispatcher);
+      TDispatcher.Invoke (RefreshAllDispatcher);
     }
 
     void ResponseComponentDispatcher (Server.Models.Component.TEntityAction action)
@@ -178,14 +196,14 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void DropDispatcher (Guid id)
     {
-      Model.Drop (id);
+      Model.DropComponentModel (id);
 
-      TDispatcher.Invoke (RefreshAllCollectionDispatcher);
+      TDispatcher.Invoke (RefreshAllDispatcher);
     }
 
     void RestoreDispatcher (TComponentModelItem modelItem)
     {
-      if (Model.Restore (modelItem.Id)) {
+      if (Model.RestoreComponentModel (modelItem.Id)) {
         TDispatcher.BeginInvoke (DropRestoreDispatcher, modelItem.Id);
       }
 
@@ -210,7 +228,7 @@ namespace Layout.Factory.Pattern.ViewModels
 
       DelegateCommand.PublishInternalMessage.Execute (message);
 
-      TDispatcher.Invoke (RefreshAllCollectionDispatcher);
+      TDispatcher.Invoke (RefreshAllDispatcher);
     }
     #endregion
 
@@ -267,7 +285,7 @@ namespace Layout.Factory.Pattern.ViewModels
       #endregion
 
       #region Fields
-      TFactoryComponentListViewModel m_Parent;
+      readonly TFactoryComponentListViewModel                             m_Parent;
       #endregion
 
       #region Support

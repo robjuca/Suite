@@ -28,6 +28,11 @@ namespace Shared.DashBoard
       private set;
     }
 
+    public TSize BoardSize
+    {
+      get; 
+    }
+
     public Guid Id
     {
       get;
@@ -45,6 +50,8 @@ namespace Shared.DashBoard
     {
       SourcePosition = TPosition.CreateDefault;
       TargetPosition = TPosition.CreateDefault;
+
+      BoardSize = TSize.CreateDefault;
 
       Id = Guid.Empty;
 

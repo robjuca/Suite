@@ -128,7 +128,8 @@ namespace Layout.Collection.Pattern.Models
           item.Select (entityAction.ModelAction.ComponentInfoModel);
           item.Select (entityAction.ModelAction.ExtensionLayoutModel);
           item.Select (entityAction.CollectionAction.ExtensionNodeCollection);
-          item.AdjustSize ();
+          //TODO: review
+          //item.AdjustSize ();
 
           // only one child (Document or Video)
           if (entityAction.CollectionAction.ModelCollection.Count.Equals (1)) {

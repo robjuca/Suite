@@ -79,6 +79,8 @@ namespace Shared.Layout.Shelf
     public void Select (TComponentModelItem item)
     {
       if (item.NotNull ()) {
+        item.RequestSize ();
+
         ComponentModelItem.CopyFrom (item);
 
         Width = item.LayoutModel.Width;

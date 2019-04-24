@@ -9,8 +9,7 @@
 
     <Border Padding="2">
         <!--dashboard-->
-        <dashboard:TDashBoardControl 
-            caliburn:Message.Attach="[Event Loaded] = [OnDashBoardControlLoaded ($source)]; [Event DropFromSource] = [OnDashBoardDropFromSource ($eventArgs)]; [Event ContentMoved] = [OnDashBoardContentMoved ($eventArgs)]; [Event ContentRemoved] = [OnDashBoardContentRemoved ($eventArgs)]" />
+        <dashboard:TDashBoardControl caliburn:Message.Attach="[Event Loaded] = [OnDashBoardControlLoaded ($source)]; [Event DropFromSource] = [OnDashBoardDropFromSource ($eventArgs)]; [Event ContentMoved] = [OnDashBoardContentMoved ($eventArgs)]; [Event ContentRemoved] = [OnDashBoardContentRemoved ($eventArgs)]; [Event BoardSizeChanged] = [OnDashBoardSizeChanged ($eventArgs)]" />
     </Border>
 
 </base:ViewChildBase>

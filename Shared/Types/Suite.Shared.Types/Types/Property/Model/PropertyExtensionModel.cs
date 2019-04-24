@@ -229,7 +229,7 @@ namespace Shared.Types
       TPictureEditor.Cleanup += OnPictureEditorCleanup;
 
       ColumnsProperty = TInt4PropertyInfo.Create (4);
-      RowsProperty = TInt4PropertyInfo.Create (3);
+      RowsProperty = TInt4PropertyInfo.Create (4);
 
       m_Names = new Collection<string> ();
       m_ModelCategory = Server.Models.Infrastructure.TCategoryType.ToValue (Server.Models.Infrastructure.TCategory.None);

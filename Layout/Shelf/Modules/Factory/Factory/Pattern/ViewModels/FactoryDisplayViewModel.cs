@@ -62,15 +62,23 @@ namespace Layout.Factory.Pattern.ViewModels
                 }
               }
             }
+
+            // Select - Many
+            if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Many)) {
+              if (message.Result.IsValid) {
+                var action = Server.Models.Component.TEntityAction.Request (message.Support.Argument.Types.EntityAction);
+                TDispatcher.BeginInvoke (ResponseSelectManyDispatcher, action);
+              }
+            }
           }
         }
 
         // from sibiling
         if (message.Node.IsSibilingToMe (TChild.Display)) {
-          // PropertySelect
-          if (message.IsAction (TInternalMessageAction.PropertySelect)) {
-            if (message.Support.Argument.Args.PropertyName.Equals ("Int4Property")) {
-              TDispatcher.BeginInvoke (PropertySelectDispatcher, Server.Models.Component.TEntityAction.Request (message.Support.Argument.Types.EntityAction));
+          // Size
+          if (message.IsAction (TInternalMessageAction.Size)) {
+            if (message.Support.Argument.Args.Param1 is TSize size) {
+              TDispatcher.BeginInvoke (SizeChangedDispatcher, size);
             }
           }
 
@@ -125,27 +133,11 @@ namespace Layout.Factory.Pattern.ViewModels
       RaiseChanged ();
     }
 
-    void PropertySelectDispatcher (Server.Models.Component.TEntityAction action)
-    {
-      // PropertyName = Int4Property (Column or Rows property changed)
-
-      action.ThrowNull ();
-
-      int cols = action.ModelAction.ExtensionGeometryModel.SizeCols;
-      int rows = action.ModelAction.ExtensionGeometryModel.SizeRows;
-
-      if ((cols > 0) && (rows > 0)) {
-        var size = TSize.Create (cols, rows);
-
-        Model.ChangeSize (size);
-        m_ComponentControl.ChangeSize (size);
-      }
-
-      RaiseChanged ();
-    }
-
     void ContentSelectedDispatcher (TContentInfo contentInfo)
     {
+      contentInfo.Select (Server.Models.Infrastructure.TCategory.Bag);
+
+      // to parent (Bag - Select - ById)
       var action = Server.Models.Component.TEntityAction.Create (Server.Models.Infrastructure.TCategory.Bag, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.ById);
       action.Id = contentInfo.Id;
       action.Param2 = contentInfo; // preserve
@@ -166,6 +158,16 @@ namespace Layout.Factory.Pattern.ViewModels
       RaiseChanged ();
     }
 
+    void SizeChangedDispatcher (TSize size)
+    {
+      if ((size.Columns > 0) && (size.Rows > 0)) {
+        Model.ChangeSize (size);
+        m_ComponentControl.ChangeSize (size);
+      }
+
+      RaiseChanged ();
+    }
+
     void RequestDataDispatcher (Server.Models.Infrastructure.IEntityAction action)
     {
       // to parent
@@ -178,25 +180,49 @@ namespace Layout.Factory.Pattern.ViewModels
     void ResponseDataDispatcher (Server.Models.Component.TEntityAction action)
     {
       if (action.Param2 is TContentInfo contentInfo) {
-        //TODO: review
-        //contentInfo.Select (action.ModelAction.ExtensionLayoutModel.Style);
+        contentInfo.Select (TContentStyle.Mode.Horizontal, action.ModelAction.ExtensionLayoutModel.StyleHorizontal);
+        contentInfo.Select (TContentStyle.Mode.Vertical, action.ModelAction.ExtensionLayoutModel.StyleVertical);
 
         Model.Select (contentInfo);
 
-        // request node model
-        if (action.CollectionAction.ExtensionNodeCollection.Count.Equals (1)) {
+        // request node model 
+        if (action.CollectionAction.ExtensionNodeCollection.Count > 0) {
           var node = action.CollectionAction.ExtensionNodeCollection [0];
           var childCategory = Server.Models.Infrastructure.TCategoryType.FromValue (node.ChildCategory);
-          var childId = node.ChildId;
 
-          var entityAction = Server.Models.Component.TEntityAction.Create (childCategory, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.ById);
-          entityAction.Id = childId;
+          switch (childCategory) {
+            case Server.Models.Infrastructure.TCategory.Document: {
+                // (Select - ById)
+                var entityAction = Server.Models.Component.TEntityAction.Create (childCategory, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.ById);
+                entityAction.Id = node.ChildId;
 
-          // to parent
-          var message = new TFactoryMessageInternal (TInternalMessageAction.Request, TChild.Display, TypeInfo);
-          message.Support.Argument.Types.Select (entityAction);
+                // to parent
+                var message = new TFactoryMessageInternal (TInternalMessageAction.Request, TChild.Display, TypeInfo);
+                message.Support.Argument.Types.Select (entityAction);
 
-          DelegateCommand.PublishInternalMessage.Execute (message);
+                DelegateCommand.PublishInternalMessage.Execute (message);
+              }
+              break;
+
+            case Server.Models.Infrastructure.TCategory.Image: {
+                // (Select - Many)
+                var entityAction = Server.Models.Component.TEntityAction.Create (childCategory, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Many);
+
+                foreach (var nodeItem in action.CollectionAction.ExtensionNodeCollection) {
+                  entityAction.IdCollection.Add (nodeItem.ChildId);
+                }
+
+                // to parent
+                var message = new TFactoryMessageInternal (TInternalMessageAction.Request, TChild.Display, TypeInfo);
+                message.Support.Argument.Types.Select (entityAction);
+
+                DelegateCommand.PublishInternalMessage.Execute (message);
+              }
+              break;
+
+            case Server.Models.Infrastructure.TCategory.Video:
+              break;
+          }
         }
       }
     }
@@ -204,7 +230,8 @@ namespace Layout.Factory.Pattern.ViewModels
     void ResponseSelectByIdDispatcher (Server.Models.Component.TEntityAction action)
     {
       /*
-       - action.ModelAction {child model (document or image or video)}
+       - action.ModelAction {child model (Document}
+       - action.ModelAction.ExtensionNodeModel;
       */
 
       var node = action.ModelAction.ExtensionNodeModel;
@@ -214,13 +241,51 @@ namespace Layout.Factory.Pattern.ViewModels
       childModelItem.Select (action.CategoryType.Category);
 
       var childId = Model.ContentInfo.Id;
-      var childStyle = Model.ContentInfo.Style;
+      var childStyleHorizontal = Model.ContentInfo.StyleHorizontal;
+      var childStyleVertical = Model.ContentInfo.StyleVertical;
       var position = Model.ContentInfo.Position;
       var childCategory = childModelItem.Category;
 
       var controlModel = Shared.Layout.Bag.TComponentControlModel.CreateDefault;
       controlModel.SelectModel (node.ParentId, Server.Models.Infrastructure.TCategoryType.FromValue (node.ParentCategory));
-      controlModel.SelectChildModel (childId, childCategory, childStyle, childModelItem);
+      controlModel.SelectChildModel (childId, childCategory, childStyleHorizontal, childStyleVertical, childModelItem);
+
+      m_ComponentControl.InsertContent (position, controlModel);
+
+      RaiseChanged ();
+    }
+
+    void ResponseSelectManyDispatcher (Server.Models.Component.TEntityAction action)
+    {
+      // - action.CollectionAction.EntityCollection {id, entityAction} (child Model - Image)
+
+      var id = Model.ContentInfo.Id;
+      var position = Model.ContentInfo.Position;
+      var category = Model.ContentInfo.Category;
+
+      var controlModel = Shared.Layout.Bag.TComponentControlModel.CreateDefault;
+      controlModel.SelectModel (id, category);
+      
+      foreach (var item in action.CollectionAction.EntityCollection) {
+        var modelAction = item.Value.ModelAction;
+
+        var node = modelAction.ExtensionNodeModel;
+        var childCategory = Server.Models.Infrastructure.TCategoryType.FromValue (node.ChildCategory);
+        var childId = node.ChildId;
+
+        var childStyleHorizontal = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
+        childStyleHorizontal.Select (modelAction.ExtensionLayoutModel.StyleHorizontal);
+
+        var childStyleVertical = TStyleInfo.Create (TContentStyle.Mode.Vertical);
+        childStyleHorizontal.Select (modelAction.ExtensionLayoutModel.StyleVertical);
+
+        var model = Server.Models.Component.TComponentModel.Create (modelAction);
+        var childModelItem = TComponentModelItem.Create (model);
+        childModelItem.Select (childCategory);
+        childModelItem.GeometryModel.PositionIndex = int.Parse (node.Position);
+        
+        controlModel.SelectChildModel (childId, childCategory, childStyleHorizontal, childStyleVertical, childModelItem);
+      }
 
       m_ComponentControl.InsertContent (position, controlModel);
 

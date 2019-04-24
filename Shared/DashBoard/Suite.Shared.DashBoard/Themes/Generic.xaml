@@ -11,84 +11,126 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
 
-                        <ListBox x:Name="PART_DashBoard"
-                                 Width="380"
-                                 VerticalAlignment="Center"
-                                 dragdrop:DragDrop.IsDragSource="True"
-                                 dragdrop:DragDrop.IsDropTarget="True"
-                                 dragdrop:DragDrop.DropHandler="{Binding}"
-                                 dragdrop:DragDrop.UseDefaultEffectDataTemplate="True"
-                                 dragdrop:DragDrop.UseDefaultDragAdorner="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Margin="1"
-                                            Width="76"
-                                            Height="48"
-                                            BorderBrush="LightGray"
-                                            BorderThickness=".8"
-                                            Background="{Binding Background}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
+                            <!--dashboard-->
+                            <Border Grid.Column="0"
+                                    Grid.Row="0">
+                                <ItemsControl x:Name="PART_DashBoard"
+                                              VerticalAlignment="Center"
+                                              dragdrop:DragDrop.IsDragSource="True"
+                                              dragdrop:DragDrop.IsDropTarget="True"
+                                              dragdrop:DragDrop.DropHandler="{Binding}"
+                                              dragdrop:DragDrop.UseDefaultEffectDataTemplate="True"
+                                              dragdrop:DragDrop.UseDefaultDragAdorner="True">
 
-                                            <!--name, style-->
-                                            <Border Grid.Row="0">
-                                                <StackPanel HorizontalAlignment="Center">
-                                                    <!--name-->
-                                                    <TextBlock FontSize="10px"
-                                                               FontWeight="DemiBold"
-                                                               Text="{Binding Name}" />
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Margin="2"
+                                                    Width="70"
+                                                    Height="42"
+                                                    BorderBrush="LightGray"
+                                                    BorderThickness=".8"
+                                                    Background="{Binding Background}">
 
-                                                    <!--style-->
-                                                    <TextBlock FontSize="10px"
-                                                               Text="{Binding StringStyle}"
-                                                               HorizontalAlignment="Center"
-                                                               FontWeight="Light" />
-                                                </StackPanel>
-                                            </Border>
-
-                                            <!--icon, position-->
-                                            <Border Grid.Row="1"
-                                                    Padding="2">
                                                 <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto" />
-                                                        <ColumnDefinition />
-                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition Height="Auto" />
+                                                    </Grid.RowDefinitions>
 
-                                                    <!--icon-->
-                                                    <Border Grid.Column="0"
-                                                            Padding="3 0 0 0">
-                                                        <StackPanel>
-                                                            <ContentControl ContentTemplate="{Binding IconTemplate}" />
+                                                    <!--name, style-->
+                                                    <Border Grid.Row="0">
+                                                        <StackPanel HorizontalAlignment="Center">
+                                                            <!--name-->
+                                                            <TextBlock FontSize="10px"
+                                                                       FontWeight="DemiBold"
+                                                                       Text="{Binding Name}" />
+
+                                                            <!--style-->
+                                                            <TextBlock FontSize="10px"
+                                                                       Text="{Binding StringStyle}"
+                                                                       HorizontalAlignment="Center"
+                                                                       FontWeight="Light" />
                                                         </StackPanel>
                                                     </Border>
 
-                                                    <!--position-->
-                                                    <Border Grid.Column="1">
-                                                        <TextBlock FontSize="10px"
-                                                                   HorizontalAlignment="Right"
-                                                                   VerticalAlignment="Center"
-                                                                   Text="{Binding StringPosition}" />
+                                                    <!--icon, position-->
+                                                    <Border Grid.Row="1"
+                                                            Padding="2">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <!--icon-->
+                                                            <Border Grid.Column="0"
+                                                                    Padding="3 0 0 0">
+                                                                <StackPanel>
+                                                                    <ContentControl ContentTemplate="{Binding IconTemplate}" />
+                                                                </StackPanel>
+                                                            </Border>
+
+                                                            <!--position-->
+                                                            <Border Grid.Column="1">
+                                                                <TextBlock FontSize="10px"
+                                                                           HorizontalAlignment="Right"
+                                                                           VerticalAlignment="Center"
+                                                                           Text="{Binding StringPosition}" />
+                                                            </Border>
+                                                        </Grid>
                                                     </Border>
                                                 </Grid>
                                             </Border>
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
 
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel />
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                        </ListBox>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Width="298" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </Border>
 
+                            <!--row slide-->
+                            <Border Grid.Column="1"
+                                    Grid.Row="0">
+                                <Slider x:Name="PART_RowSlide"
+                                        Orientation="Vertical"
+                                        Maximum="4"
+                                        TickPlacement="BottomRight"
+                                        TickFrequency="1"
+                                        IsDirectionReversed="True"
+                                        IsSnapToTickEnabled="True"
+                                        AutoToolTipPlacement="TopLeft" />
+                            </Border>
+
+                            <!--column slide-->
+                            <Border Grid.Column="0"
+                                    Grid.Row="1">
+                                <Slider x:Name="PART_ColumnSlide"
+                                        Maximum="4"
+                                        TickPlacement="BottomRight"
+                                        TickFrequency="1"
+                                        IsSnapToTickEnabled="True"
+                                        AutoToolTipPlacement="BottomRight" />
+                            </Border>
+
+                            <!--dummy-->
+                            <Border Grid.Column="1"
+                                    Grid.Row="1" />
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

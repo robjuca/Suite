@@ -56,12 +56,18 @@ namespace Shared.Layout.Shelf
       HorizontalAlignment = HorizontalAlignment.Left;
       VerticalAlignment = VerticalAlignment.Top;
 
+      // default 4x4 matrix
+      SizeCols = 4;
+      SizeRows = 4;
+
       m_ContentItems = new Collection<TContentItemModel> ();
 
       ControlMode = TControlMode.None;
       ControlModelMode = TControlModelMode.None;
 
       ModelLocal = TComponentControlModel.CreateDefault;
+
+      Loaded += OnLoaded;
     }
 
     protected TComponentControlBase (TControlMode mode)
@@ -86,12 +92,12 @@ namespace Shared.Layout.Shelf
     {
       SizeCols = size.Columns;
       SizeRows = size.Rows;
+
+      CreateContentContainer ();
     }
 
     public void InsertContent (IList<TComponentModelItem> contentCollection)
     {
-      RefreshDesign (); // create container
-
       // contentCollection contains only Bag
       if (contentCollection.NotNull ()) {
         foreach (var content in contentCollection) {
@@ -195,16 +201,13 @@ namespace Shared.Layout.Shelf
         RemoveContent (id);
       }
     }
+    #endregion
 
-    public void RefreshDesign ()
+    #region Event
+    void OnLoaded (object sender, RoutedEventArgs e)
     {
-      SizeCols = Model.EntityAction.ModelAction.ExtensionGeometryModel.SizeCols;
-      SizeRows = Model.EntityAction.ModelAction.ExtensionGeometryModel.SizeRows;
-
       CreateContentContainer ();
-
-      Child = m_ContentContainer;
-    }
+    } 
     #endregion
 
     #region Callback
@@ -212,7 +215,7 @@ namespace Shared.Layout.Shelf
     {
       if (source is TComponentControlBase control) {
         if (e.NewValue is TComponentControlModel) {
-          control.RefreshDesign ();
+          // do nothing
         }
       }
     }
@@ -255,17 +258,32 @@ namespace Shared.Layout.Shelf
     public Collection<TContentItemModel>              m_ContentItems;
     #endregion
 
-    #region Virtual
-    public virtual void CreateContentContainer ()
-    {
-    }
-
-    public virtual void RequestBorder (Border border)
-    {
-    }
-    #endregion
-
     #region Support
+    void CreateContentContainer ()
+    {
+      var contentStyle = TContentStyle.CreateDefault;
+
+      var columnWidth = contentStyle.RequestStyleSize (TContentStyle.Mode.Horizontal, TContentStyle.Style.mini);
+      var rowHeight = contentStyle.RequestStyleSize (TContentStyle.Mode.Vertical, TContentStyle.Style.mini);
+
+      m_ContentContainer = new Grid ()
+      {
+        Background = new SolidColorBrush (Color.FromRgb (252, 252, 252))
+      };
+
+      // columns (max 4)
+      for (int col = 0; col <= SizeCols; col++) {
+        m_ContentContainer.ColumnDefinitions.Add (new ColumnDefinition () { Width = new GridLength (columnWidth, GridUnitType.Pixel) }); 
+      }
+
+      // rows (max 4)
+      for (int row = 0; row <= SizeRows; row++) {
+        m_ContentContainer.RowDefinitions.Add (new RowDefinition () { Height = new GridLength (rowHeight, GridUnitType.Pixel) }); 
+      }
+
+      Child = m_ContentContainer;
+    }
+
     void InsertChild (TPosition position, Shared.Layout.Bag.TComponentControlModel model)
     {
       var displayControl = new Shared.Layout.Bag.TComponentDisplayControl (model);
@@ -276,39 +294,26 @@ namespace Shared.Layout.Shelf
         Child = displayControl,
       };
 
-      RequestBorder (border);
+      var positionCol = position.Column;
+      var positionRow = position.Row;
 
-      var col = position.Column;
-      var row = position.Row;
+      var contentSizeCols = model.Size.Columns;
+      var contentSizeRows = model.Size.Rows;
 
-      switch (model.Style) {
-        case "mini":
-          border.SetValue (Grid.ColumnProperty, (col - 1));
-          border.SetValue (Grid.RowProperty, (row - 1));
-          break;
+      var maxSizeCols = (positionCol - 1) + contentSizeCols; //zero base index
+      var maxSizeRows = (positionRow - 1) + contentSizeRows;
 
-        case "small":
-          border.SetValue (Grid.ColumnProperty, (col - 1));
-          border.SetValue (Grid.RowProperty, (row - 1));
-          border.SetValue (Grid.RowSpanProperty, 2);
-          break;
+      // validate board position
+      if ((maxSizeCols <= SizeCols) && (maxSizeRows <= SizeRows)) {
+        border.SetValue (Grid.ColumnProperty, (positionCol - 1));
+        border.SetValue (Grid.RowProperty, (positionRow - 1));
+        border.SetValue (Grid.ColumnSpanProperty, contentSizeCols);
+        border.SetValue (Grid.RowSpanProperty, contentSizeRows);
 
-        case "large":
-          border.SetValue (Grid.ColumnProperty, (col - 1));
-          border.SetValue (Grid.RowProperty, (row - 1));
-          border.SetValue (Grid.RowSpanProperty, 3);
-          break;
+        m_ContentContainer.Children.Add (border);
 
-        case "big":
-          border.SetValue (Grid.ColumnProperty, (col - 1));
-          border.SetValue (Grid.ColumnSpanProperty, 2);
-          border.SetValue (Grid.RowSpanProperty, 3);
-          break;
+        displayControl.Refresh ();
       }
-
-      m_ContentContainer.Children.Add (border);
-
-      displayControl.Refresh ();
     }
 
     void InsertChild (TContentItemModel item)

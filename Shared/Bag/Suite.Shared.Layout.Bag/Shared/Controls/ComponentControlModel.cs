@@ -7,6 +7,8 @@
 using System;
 using System.Windows;
 
+using rr.Library.Types;
+
 using Shared.Types;
 using Shared.ViewModel;
 //---------------------------//
@@ -77,6 +79,11 @@ namespace Shared.Layout.Bag
     {
       get;
     }
+
+    public TSize Size
+    {
+      get; 
+    }
     #endregion
 
     #region Constructor
@@ -93,6 +100,8 @@ namespace Shared.Layout.Bag
 
       Category = Server.Models.Infrastructure.TCategory.None;
       ChildCategory = Server.Models.Infrastructure.TCategory.None;
+
+      Size = TSize.CreateDefault;
     }
     #endregion
 
@@ -123,6 +132,14 @@ namespace Shared.Layout.Bag
           ComponentImageControlModel.SelectModel (childModel);
           break;
       }
+
+      var contentStyle = TContentStyle.CreateDefault;
+
+      var colSize = contentStyle.RequestBoardStyleSize (HorizontalStyle.Style);
+      var rowSize = contentStyle.RequestBoardStyleSize (VerticalStyle.Style);
+
+      Size.SelectColumns (colSize);
+      Size.SelectRows (rowSize);
     }
 
     public void CopyFrom (TComponentControlModel alias)
@@ -136,6 +153,8 @@ namespace Shared.Layout.Bag
 
         Category = alias.Category;
         ChildCategory = alias.ChildCategory;
+
+        Size.CopyFrom (alias.Size);
 
         ComponentDocumentControlModel.CopyFrom (alias.ComponentDocumentControlModel);
         ComponentImageControlModel.CopyFrom (alias.ComponentImageControlModel);
