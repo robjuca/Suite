@@ -150,6 +150,14 @@ namespace Shared.Types
       m_ColumnWidth = columnWidth;
     }
 
+    public void RequestSize (TSize size)
+    {
+      if (size.NotNull ()) {
+        size.Width = (size.Columns * MiniSize.Width);
+        size.Height = (size.Rows * MiniSize.Height);
+      }
+    }
+
     public int RequestStyleSize (TContentStyle.Mode mode, TContentStyle.Style style)
     {
       int size = 0;

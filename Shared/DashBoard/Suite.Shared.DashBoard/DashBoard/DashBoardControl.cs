@@ -13,6 +13,7 @@ using System.Windows.Data;
 using rr.Library.Helper;
 using rr.Library.Types;
 
+using Shared.Types;
 using Shared.ViewModel;
 //---------------------------//
 
@@ -33,7 +34,6 @@ namespace Shared.DashBoard
     public TSize Size
     {
       get;
-      private set;
     }
     #endregion
 
@@ -61,7 +61,7 @@ namespace Shared.DashBoard
         Source = DashBoardItemSource
       };
 
-      m_SlideSize = TSize.Create (4, 4);
+      m_SlideSize = TSize.Create (m_MaxColumn, m_MaxRow);
     }
     #endregion
 
@@ -160,28 +160,32 @@ namespace Shared.DashBoard
     public void LayoutChanged (TSize size)
     {
       if (size.IsEmpty.IsFalse ()) {
-        Size.CopyFrom (size);
+        if (Size.IsSize (size).IsFalse ()) {
+          Size.CopyFrom (size);
 
-        if (IsDashBoardEmpty ()) {
-          CleanupDashBoard ();
+          if (IsDashBoardEmpty ()) {
+            CleanupDashBoard ();
 
-          for (int col = m_MaxColumn; col > size.Columns; col--) {
-            foreach (var item in DashBoardItemSource) {
-              item.DisableByColumn (col);
+            for (int col = m_MaxColumn; col > Size.Columns; col--) {
+              foreach (var item in DashBoardItemSource) {
+                item.DisableByColumn (col);
+              }
+            }
+
+            for (int row = m_MaxRow; row > size.Rows; row--) {
+              foreach (var item in DashBoardItemSource) {
+                item.DisableByRow (row);
+              }
             }
           }
 
-          for (int row = m_MaxRow; row > size.Rows; row--) {
-            foreach (var item in DashBoardItemSource) {
-              item.DisableByRow (row);
-            }
-          }
+          var args = TDashBoardEventArgs.CreateDefault;
+          args.BoardSize.CopyFrom (Size);
+
+          BoardSizeChanged?.Invoke (this, args);
+
+          SlideSetup ();
         }
-
-        var args = TDashBoardEventArgs.CreateDefault;
-        args.BoardSize.CopyFrom (Size);
-
-        BoardSizeChanged?.Invoke (this, args);
       }
 
       TDispatcher.Invoke (RefreshCollectionDispatcher);
@@ -233,18 +237,26 @@ namespace Shared.DashBoard
       }
 
       TDispatcher.Invoke (RefreshCollectionDispatcher);
+
+      m_SlideStatusDisable = true;
+
+      SlideSetup ();
     }
 
     public void RequestModel (Server.Models.Component.TEntityAction action)
     {
-      // action.CategoryType.Category ParentCategory
-
       action.ThrowNull ();
 
-      //TODO refazer review
       // size 
-      action.ModelAction.ExtensionLayoutModel.Width = (Size.Columns * 300); // minimal (mini style)
-      action.ModelAction.ExtensionLayoutModel.Height = (Size.Rows * 116); // minimal (mini style)
+      var contentStyle = TContentStyle.CreateDefault;
+      contentStyle.RequestSize (Size);
+
+      action.ModelAction.ExtensionGeometryModel.SizeCols = Size.Columns;
+      action.ModelAction.ExtensionGeometryModel.SizeRows = Size.Rows;
+
+      action.ModelAction.ExtensionLayoutModel.Width = Size.Width;
+      action.ModelAction.ExtensionLayoutModel.Height = Size.Height;
+
       action.ModelAction.ExtensionLayoutModel.StyleHorizontal = string.Empty;
       action.ModelAction.ExtensionLayoutModel.StyleVertical = string.Empty;
 
@@ -268,8 +280,7 @@ namespace Shared.DashBoard
     {
       CleanupDashBoard ();
 
-      m_ColumnSlide.IsEnabled = true;
-      m_RowSlide.IsEnabled = true;
+      LayoutChanged (TSize.Create (m_MaxColumn, m_MaxRow));
     }
     #endregion
 
@@ -408,15 +419,15 @@ namespace Shared.DashBoard
       // slide
       if (GetTemplateChild (PART_COLUMNSLIDE) is Slider columnSlide) {
         m_ColumnSlide = columnSlide;
-        m_ColumnSlide.Value = 4;
         m_ColumnSlide.ValueChanged += OnColumnSlideValueChanged;
       }
 
       if (GetTemplateChild (PART_ROWSLIDE) is Slider rowSlide) {
         m_RowSlide = rowSlide;
-        m_RowSlide.Value = 4;
         m_RowSlide.ValueChanged += OnRowSlideValueChanged;
       }
+
+      SlideSetup ();
     }
     #endregion
 
@@ -453,6 +464,7 @@ namespace Shared.DashBoard
     readonly CollectionViewSource                               m_DashboardCollectionViewSource;
     const int                                                   m_MaxColumn = 4;
     const int                                                   m_MaxRow = 4;
+    bool                                                        m_SlideStatusDisable;
     #endregion
 
     #region Static
@@ -465,14 +477,6 @@ namespace Shared.DashBoard
     void RefreshCollection ()
     {
       m_DashboardCollectionViewSource.View.Refresh ();
-
-      if (m_ColumnSlide.NotNull ()) {
-        m_ColumnSlide.IsEnabled = IsDashBoardEmpty ();
-      }
-
-      if (m_RowSlide.NotNull ()) {
-        m_RowSlide.IsEnabled = IsDashBoardEmpty ();
-      }
     }
 
     void CleanupDashBoard ()
@@ -590,6 +594,8 @@ namespace Shared.DashBoard
 
     void ChangeStatusToBusy (TDashBoardItem alias)
     {
+      m_SlideStatusDisable = true;
+
       ChangeStatus (alias.Position, alias.Size, TDashBoardItem.TDashBoardStatus.Busy);
     }
 
@@ -771,6 +777,25 @@ namespace Shared.DashBoard
     bool IsInbound (TDashBoardItem item)
     {
       return ((item.Position.Column <= Size.Columns) && (item.Position.Row <= Size.Rows));
+    }
+
+    void SlideSetup ()
+    {
+      m_SlideSize.CopyFrom (Size);
+
+      if (m_ColumnSlide.NotNull () && m_RowSlide.NotNull ()) {
+        m_ColumnSlide.IsEnabled = IsDashBoardEmpty ();
+        m_ColumnSlide.Value = Size.Columns;
+
+        m_RowSlide.IsEnabled = IsDashBoardEmpty ();
+        m_RowSlide.Value = Size.Rows;
+
+        if (m_SlideStatusDisable) {
+          m_SlideStatusDisable = false;
+          m_ColumnSlide.IsEnabled = false;
+          m_RowSlide.IsEnabled = false;
+        }
+      }
     }
     #endregion
   }

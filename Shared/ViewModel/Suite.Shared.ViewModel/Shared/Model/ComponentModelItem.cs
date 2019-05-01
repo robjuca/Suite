@@ -394,10 +394,12 @@ namespace Shared.ViewModel
       var styleHorizontal = TContentStyle.TryToParse (LayoutModel.StyleHorizontal);
       var styleVertical = TContentStyle.TryToParse (LayoutModel.StyleVertical);
 
-      var contentStyle = TContentStyle.CreateDefault;
+      if (styleHorizontal.NotEquals (TContentStyle.Style.None) && styleVertical.NotEquals (TContentStyle.Style.None)) {
+        var contentStyle = TContentStyle.CreateDefault;
 
-      GeometryModel.SizeCols = contentStyle.RequestBoardStyleSize (styleHorizontal);
-      GeometryModel.SizeRows = contentStyle.RequestBoardStyleSize (styleVertical);
+        GeometryModel.SizeCols = contentStyle.RequestBoardStyleSize (styleHorizontal);
+        GeometryModel.SizeRows = contentStyle.RequestBoardStyleSize (styleVertical);
+      }
     }
 
     public void PopulateNode (TEntityAction action)

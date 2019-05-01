@@ -18,21 +18,7 @@ namespace Shared.Layout.Shelf
       : base (TControlMode.Design)
     {
       VerticalAlignment = VerticalAlignment.Center;
-
-      //Child = m_ContentContainer;
     }
-    #endregion
-
-    #region Overrides
-    
-
-    //public override void RequestBorder (Border border)
-    //{
-    //  border.Margin = new Thickness (2);
-    //  border.Padding = new Thickness (1);
-    //  border.BorderThickness = new Thickness (.5);
-    //  border.BorderBrush = Brushes.DarkGray;
-    //}
     #endregion
   };
   //---------------------------//

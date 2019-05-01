@@ -66,8 +66,11 @@ namespace Layout.Factory.Pattern.ViewModels
             // Select - Many
             if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Many)) {
               if (message.Result.IsValid) {
-                var action = Server.Models.Component.TEntityAction.Request (message.Support.Argument.Types.EntityAction);
-                TDispatcher.BeginInvoke (ResponseSelectManyDispatcher, action);
+                // Image
+                if (message.Support.Argument.Types.IsOperationCategory (Server.Models.Infrastructure.TCategory.Image)) {
+                  var action = Server.Models.Component.TEntityAction.Request (message.Support.Argument.Types.EntityAction);
+                  TDispatcher.BeginInvoke (ResponseSelectManyDispatcher, action);
+                }
               }
             }
           }
@@ -205,7 +208,7 @@ namespace Layout.Factory.Pattern.ViewModels
               break;
 
             case Server.Models.Infrastructure.TCategory.Image: {
-                // (Select - Many)
+                // (Select - Many) (Image)
                 var entityAction = Server.Models.Component.TEntityAction.Create (childCategory, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Many);
 
                 foreach (var nodeItem in action.CollectionAction.ExtensionNodeCollection) {

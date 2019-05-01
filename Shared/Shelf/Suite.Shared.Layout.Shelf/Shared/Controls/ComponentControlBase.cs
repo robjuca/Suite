@@ -113,10 +113,14 @@ namespace Shared.Layout.Shelf
             var childModel = content.ChildCollection [0];
             var childId = childModel.Id;
             var childCategory = childModel.Category;
-            //TODO: review
-            //var childStyle = childModel.Style;
+            
+            var childHorizontalStyle = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
+            childHorizontalStyle.Select (childModel.StyleHorizontal);
 
-            //controlModel.SelectChildModel (childId, childCategory, childStyle, childModel);
+            var childVerticalStyle = TStyleInfo.Create (TContentStyle.Mode.Vertical);
+            childVerticalStyle.Select (childModel.StyleVertical);
+
+            controlModel.SelectChildModel (childId, childCategory, childHorizontalStyle, childVerticalStyle, childModel);
           }
 
           InsertContent (position, controlModel);
@@ -126,12 +130,18 @@ namespace Shared.Layout.Shelf
 
     public void InsertContent (TPosition position, Shared.Layout.Bag.TComponentControlModel model)
     {
-      m_ContentItems.Add (new TContentItemModel (position, model));
+      if (position.NotNull ()) {
+        if (position.IsPosition (0, 0).IsFalse ()) {
+          if (model.NotNull ()) {
+            m_ContentItems.Add (new TContentItemModel (position, model));
 
-      InsertChild (position, model);
+            InsertChild (position, model);
 
-      if (ControlMode.Equals (TControlMode.Display)) {
-        UpdateLayout (position);
+            if (ControlMode.Equals (TControlMode.Display)) {
+              UpdateLayout (position);
+            }
+          }
+        }
       }
     }
 
@@ -286,33 +296,35 @@ namespace Shared.Layout.Shelf
 
     void InsertChild (TPosition position, Shared.Layout.Bag.TComponentControlModel model)
     {
-      var displayControl = new Shared.Layout.Bag.TComponentDisplayControl (model);
+      if (model.Size.IsEmpty.IsFalse ()) {
+        var displayControl = new Shared.Layout.Bag.TComponentDisplayControl (model);
 
-      var border = new Border ()
-      {
-        Background = Brushes.White,
-        Child = displayControl,
-      };
+        var border = new Border ()
+        {
+          Background = Brushes.White,
+          Child = displayControl,
+        };
 
-      var positionCol = position.Column;
-      var positionRow = position.Row;
+        var positionCol = position.Column;
+        var positionRow = position.Row;
 
-      var contentSizeCols = model.Size.Columns;
-      var contentSizeRows = model.Size.Rows;
+        var contentSizeCols = model.Size.Columns;
+        var contentSizeRows = model.Size.Rows;
 
-      var maxSizeCols = (positionCol - 1) + contentSizeCols; //zero base index
-      var maxSizeRows = (positionRow - 1) + contentSizeRows;
+        var maxSizeCols = (positionCol - 1) + contentSizeCols; //zero base index
+        var maxSizeRows = (positionRow - 1) + contentSizeRows;
 
-      // validate board position
-      if ((maxSizeCols <= SizeCols) && (maxSizeRows <= SizeRows)) {
-        border.SetValue (Grid.ColumnProperty, (positionCol - 1));
-        border.SetValue (Grid.RowProperty, (positionRow - 1));
-        border.SetValue (Grid.ColumnSpanProperty, contentSizeCols);
-        border.SetValue (Grid.RowSpanProperty, contentSizeRows);
+        // validate board position
+        if ((maxSizeCols <= SizeCols) && (maxSizeRows <= SizeRows)) {
+          border.SetValue (Grid.ColumnProperty, (positionCol - 1));
+          border.SetValue (Grid.RowProperty, (positionRow - 1));
+          border.SetValue (Grid.ColumnSpanProperty, contentSizeCols);
+          border.SetValue (Grid.RowSpanProperty, contentSizeRows);
 
-        m_ContentContainer.Children.Add (border);
+          m_ContentContainer.Children.Add (border);
 
-        displayControl.Refresh ();
+          displayControl.Refresh ();
+        }
       }
     }
 
@@ -406,40 +418,41 @@ namespace Shared.Layout.Shelf
 
     void UpdateLayout (int col, int row)
     {
+      //TODO: what for?
       // rows 
-      if (SizeRows.Equals (3)) {
-        if (row.Equals (2)) {
-          // Fill row 1
-          m_ContentContainer.RowDefinitions [0].Height = new GridLength (116, GridUnitType.Pixel);
-        }
+      //if (SizeRows.Equals (3)) {
+      //  if (row.Equals (2)) {
+      //    // Fill row 1
+      //    m_ContentContainer.RowDefinitions [0].Height = new GridLength (116, GridUnitType.Pixel);
+      //  }
 
-        if (row.Equals (3)) {
-          // Fill row 1, 2
-          m_ContentContainer.RowDefinitions [0].Height = new GridLength (116, GridUnitType.Pixel);
-          m_ContentContainer.RowDefinitions [1].Height = new GridLength (116, GridUnitType.Pixel);
-        }
-      }
+      //  if (row.Equals (3)) {
+      //    // Fill row 1, 2
+      //    m_ContentContainer.RowDefinitions [0].Height = new GridLength (116, GridUnitType.Pixel);
+      //    m_ContentContainer.RowDefinitions [1].Height = new GridLength (116, GridUnitType.Pixel);
+      //  }
+      //}
 
       // cols
-      if (SizeCols.Equals (4)) {
-        if (col.Equals (2)) {
-          // Fill col 1
-          m_ContentContainer.ColumnDefinitions [0].Width = new GridLength (300, GridUnitType.Pixel);
-        }
+      //if (SizeCols.Equals (4)) {
+      //  if (col.Equals (2)) {
+      //    // Fill col 1
+      //    m_ContentContainer.ColumnDefinitions [0].Width = new GridLength (300, GridUnitType.Pixel);
+      //  }
 
-        if (col.Equals (3)) {
-          // Fill col 1,2
-          m_ContentContainer.ColumnDefinitions [0].Width = new GridLength (300, GridUnitType.Pixel);
-          m_ContentContainer.ColumnDefinitions [1].Width = new GridLength (300, GridUnitType.Pixel);
-        }
+      //  if (col.Equals (3)) {
+      //    // Fill col 1,2
+      //    m_ContentContainer.ColumnDefinitions [0].Width = new GridLength (300, GridUnitType.Pixel);
+      //    m_ContentContainer.ColumnDefinitions [1].Width = new GridLength (300, GridUnitType.Pixel);
+      //  }
 
-        if (col.Equals (4)) {
-          // Fill col 1,2,3
-          m_ContentContainer.ColumnDefinitions [0].Width = new GridLength (300, GridUnitType.Pixel);
-          m_ContentContainer.ColumnDefinitions [1].Width = new GridLength (300, GridUnitType.Pixel);
-          m_ContentContainer.ColumnDefinitions [2].Width = new GridLength (300, GridUnitType.Pixel);
-        }
-      }
+      //  if (col.Equals (4)) {
+      //    // Fill col 1,2,3
+      //    m_ContentContainer.ColumnDefinitions [0].Width = new GridLength (300, GridUnitType.Pixel);
+      //    m_ContentContainer.ColumnDefinitions [1].Width = new GridLength (300, GridUnitType.Pixel);
+      //    m_ContentContainer.ColumnDefinitions [2].Width = new GridLength (300, GridUnitType.Pixel);
+      //  }
+      //}
     }
     #endregion
   };
