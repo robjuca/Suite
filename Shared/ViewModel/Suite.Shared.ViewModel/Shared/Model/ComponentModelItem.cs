@@ -424,6 +424,11 @@ namespace Shared.ViewModel
     {
       StatusModel.Active = active;
     }
+
+    public bool ContainsStyle (TContentStyle.Style styleHorizontal, TContentStyle.Style styleVertical)
+    {
+      return (StyleHorizontal.Equals (styleHorizontal.ToString ()) && StyleVertical.Equals (styleVertical.ToString ()));
+    }
     #endregion
 
     #region Static

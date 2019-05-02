@@ -14,7 +14,6 @@ using Shared.Types;
 
 namespace Shared.ViewModel
 {
-  
   public sealed class TStyleComponentModel
   {
     #region Property
@@ -61,6 +60,7 @@ namespace Shared.ViewModel
       ItemsCollection = new ObservableCollection<TComponentModelItem> ();
 
       m_ComponentModelDrop = new Dictionary<Guid, TComponentModelItem> ();
+      m_ComponentModelTryToInsert = new Dictionary<Guid, TComponentModelItem> ();
     }
     #endregion
 
@@ -123,6 +123,15 @@ namespace Shared.ViewModel
           if (dropList.Count.Equals (1)) {
             var model = dropList [0];
             list.Remove (model);
+          }
+        }
+
+        // try to insert
+        foreach (var tryToInsertModel in m_ComponentModelTryToInsert) {
+          var itemModel = tryToInsertModel.Value;
+
+          if (itemModel.ContainsStyle (selectedStyleHorizontal, selectedStyleVertical)) {
+            list.Add (itemModel);
           }
         }
 
@@ -198,10 +207,42 @@ namespace Shared.ViewModel
 
       return (res);
     }
+
+    public bool TryToInsert (TComponentModelItem componentModelItem)
+    {
+      var res = false;
+
+      if (componentModelItem.NotNull ()) {
+        if (componentModelItem.Id.NotEmpty ()) {
+          var id = componentModelItem.Id;
+
+          var list = ComponentModelCollection
+            .Where (p => p.Id.Equals (id))
+            .ToList ()
+          ;
+
+          if (list.Count.Equals (0)) {
+            if (m_ComponentModelTryToInsert.ContainsKey (id).IsFalse ()) {
+              m_ComponentModelTryToInsert.Add (id, componentModelItem);
+              res = true;
+            }
+          }
+        }
+      }
+
+      return (res);
+    }
+
+    public void Cleanup ()
+    {
+      m_ComponentModelDrop.Clear ();
+      m_ComponentModelTryToInsert.Clear ();
+    }
     #endregion
 
     #region Fields
-    readonly Dictionary<Guid, TComponentModelItem>                        m_ComponentModelDrop; 
+    readonly Dictionary<Guid, TComponentModelItem>                        m_ComponentModelDrop;
+    readonly Dictionary<Guid, TComponentModelItem>                        m_ComponentModelTryToInsert;
     #endregion
 
     #region Static

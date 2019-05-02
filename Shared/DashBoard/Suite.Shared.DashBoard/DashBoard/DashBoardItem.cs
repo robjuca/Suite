@@ -98,17 +98,21 @@ namespace Shared.DashBoard
       private set;
     }
 
-    public string ContextStyleString
+    public TStyleInfo HorizontalStyleInfo
     {
       get;
-      set;
+    }
+
+    public TStyleInfo VerticalStyleInfo
+    {
+      get;
     }
 
     public string StyleString
     {
       get
       {
-        return (string.IsNullOrEmpty (ContextStyleString) ? string.Empty : $"({ContextStyleString})");
+        return ($"({HorizontalStyleInfo.StyleFullString}, {VerticalStyleInfo.StyleFullString})");
       }
     }
 
@@ -170,6 +174,8 @@ namespace Shared.DashBoard
 
     TDashBoardItem ()
     {
+      HorizontalStyleInfo = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
+      VerticalStyleInfo = TStyleInfo.Create (TContentStyle.Mode.Vertical);
       Position = TPosition.CreateDefault;
 
       Cleanup ();
@@ -246,9 +252,9 @@ namespace Shared.DashBoard
         ComponentItemInfo.Model.CopyFrom (modelItem);
 
         Name = ComponentItemInfo.Model.Name;
-        //TODO: review
-        //ContextStyleString = ComponentItemInfo.Model.Style;
         Id = ComponentItemInfo.Model.Id;
+        HorizontalStyleInfo.Select (modelItem.LayoutModel.StyleHorizontal);
+        VerticalStyleInfo.Select (modelItem.LayoutModel.StyleVertical);
 
         if (modelItem.NodeModelCollection.Count.Equals (1)) {
           var node = modelItem.NodeModelCollection [0];
@@ -297,8 +303,10 @@ namespace Shared.DashBoard
         }
 
         Name = alias.Name;
-        ContextStyleString = alias.ContextStyleString;
         Id = alias.Id;
+
+        HorizontalStyleInfo.CopyFrom (alias.HorizontalStyleInfo);
+        VerticalStyleInfo.CopyFrom (alias.VerticalStyleInfo);
 
         ComponentItemInfo.Model.CopyFrom (alias.ComponentItemInfo.Model);
         ChildCategory = alias.ChildCategory;
@@ -346,6 +354,22 @@ namespace Shared.DashBoard
       IconXmlTemplate += "}' />";
     }
 
+    public bool IsSameStyle (TDashBoardItem alias)
+    {
+      bool res = false;
+
+      if (alias.NotNull ()) {
+        res = HorizontalStyleInfo.Contains (alias.HorizontalStyleInfo) && VerticalStyleInfo.Contains (alias.VerticalStyleInfo);
+      }
+
+      return (res);
+    }
+
+    public bool ContainsStyle (TContentStyle.Style horizontalStyle, TContentStyle.Style verticalStyle)
+    {
+      return (HorizontalStyleInfo.Style.Equals (horizontalStyle) && VerticalStyleInfo.Style.Equals (verticalStyle));
+    }
+
     public void Cleanup ()
     {
       ComponentItemInfo = TComponentItemInfo.CreateDefault;
@@ -356,7 +380,6 @@ namespace Shared.DashBoard
 
       Name = string.Empty;
       Id = Guid.Empty;
-      ContextStyleString = string.Empty;
       Background = "#ffffff";
 
       // bag style mini (300 x 116) (margin 2)

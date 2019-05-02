@@ -227,6 +227,15 @@ namespace Shared.DashBoard
       }
 
       foreach (var item in componentModelItemCollection) {
+        var horizontalStyle = TContentStyle.TryToParse (item.LayoutModel.StyleHorizontal);
+        var verticalStyle = TContentStyle.TryToParse (item.LayoutModel.StyleVertical);
+
+        // update size
+        var contentStyle = TContentStyle.CreateDefault;
+
+        item.GeometryModel.SizeCols = contentStyle.RequestBoardStyleSize (horizontalStyle);
+        item.GeometryModel.SizeRows = contentStyle.RequestBoardStyleSize (verticalStyle);
+
         var dashBoardItem = Select (item.Position);
 
         if (dashBoardItem.NotNull ()) {
@@ -667,7 +676,7 @@ namespace Shared.DashBoard
       var targetPositionCol = targetItem.Position.Column;
       var targetPositionRow = targetItem.Position.Row;
 
-      if ((cols <= 4) && (rows <= 4)) {
+      if ((cols <= m_MaxColumn) && (rows <= m_MaxRow)) {
         for (int col = 0; col < cols; col++) {
           for (int row = 0; row < rows; row++) {
             var position = TPosition.Create ((col + targetPositionCol), (row + targetPositionRow));
@@ -750,13 +759,13 @@ namespace Shared.DashBoard
     {
       if (targetItem.Position.Column.NotEquals (sourceItem.Position.Column) && targetItem.Position.Row.NotEquals (sourceItem.Position.Row)) {
         // same style
-        if (targetItem.ContextStyleString.Equals (sourceItem.ContextStyleString)) {
+        if (targetItem.IsSameStyle (sourceItem)) {
           return (true);
         }
 
         // target standby (source small only)
         if (targetItem.IsStandby) {
-          if (sourceItem.ContextStyleString.Equals ("small")) {
+          if (sourceItem.ContainsStyle (TContentStyle.Style.small, TContentStyle.Style.small)) {
             // check for room
             var targetCol = targetItem.Position.Column;
             var targetRow = targetItem.Position.Row;

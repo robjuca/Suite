@@ -109,6 +109,14 @@ namespace Shared.Types
     {
       return (Style.Equals (styleInfo.Style));
     }
+
+    public void CopyFrom (TStyleInfo alias)
+    {
+      if (alias.NotNull ()) {
+        StyleMode = alias.StyleMode;
+        Style = alias.Style;
+      }
+    }
     #endregion
 
     #region Static

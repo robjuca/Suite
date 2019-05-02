@@ -1,13 +1,11 @@
-﻿  /*----------------------------------------------------------------
-  Copyright (C) 2001 R&R Soft - All rights reserved.
-  author: Roberto Oliveira Jucá    
+﻿/*----------------------------------------------------------------
+Copyright (C) 2001 R&R Soft - All rights reserved.
+author: Roberto Oliveira Jucá    
 ----------------------------------------------------------------*/
 
 //----- Include
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 using Server.Models.Component;
 
@@ -194,7 +192,8 @@ namespace Layout.Factory.Pattern.Models
 
     internal void SelectDefault ()
     {
-      SelectStyle (TContentStyle.Style.mini);
+      StyleComponentModel.Cleanup ();
+      Populate ();
     }
 
     //internal void SelectById (Server.Models.Content.TEntityAction action)
@@ -495,8 +494,9 @@ namespace Layout.Factory.Pattern.Models
       componentModelItem.Select (action.CollectionAction.ExtensionNodeCollection);
       componentModelItem.Select (action.CategoryType.Category);
 
+      StyleComponentModel.TryToInsert (componentModelItem);
 
-      //SelectStyle (m_SelectedStyle);
+      Populate ();
 
       return (componentModelItem.Id);
     }

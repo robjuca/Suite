@@ -126,7 +126,8 @@ namespace Layout.Factory.Pattern.ViewModels
     {
       Enum.TryParse (style, out TContentStyle.Style selectedStyle);
 
-      Model.SelectStyle (selectedStyle);
+      //TODO: ????
+      //Model.SelectStyle (selectedStyle);
 
       TDispatcher.Invoke (RefreshAllDispatcher);
     }
@@ -208,7 +209,7 @@ namespace Layout.Factory.Pattern.ViewModels
       }
 
       else {
-        // request component by Id
+        // request component by Id (Select - ById)
         var action = Server.Models.Component.TEntityAction.Create (modelItem.Category, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.ById);
         action.Id = modelItem.Id;
 
