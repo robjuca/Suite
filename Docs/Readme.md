@@ -64,3 +64,4 @@ usa-se “style”.
 
 ![](media/SuiteGadgetDocument.jpg)
 ![](media/SuiteGadgetImage.jpg)
+![](media/SuiteLayoutBag.jpg)
