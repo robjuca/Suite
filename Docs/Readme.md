@@ -63,3 +63,4 @@ usa-se “style”.
 |                    |                   | rrLibrary                                                                                               |                                               |
 
 ![](media/SuiteGadgetDocument.jpg)
+![](media/SuiteGadgetImage.jpg)
