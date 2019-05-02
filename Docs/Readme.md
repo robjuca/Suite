@@ -61,3 +61,5 @@ usa-se “style”.
 |                    | .Net 4.7.2        | XDMessaging.Lite 5                                                                                      | gong-wpf-dragdrop 1.1                         |
 |                    |                   | Microsoft.EntityFrameworkCore.SqlServer 2.2                                                             |                                               |
 |                    |                   | rrLibrary                                                                                               |                                               |
+
+![](media/SuiteGadgetDocument.jpg)
