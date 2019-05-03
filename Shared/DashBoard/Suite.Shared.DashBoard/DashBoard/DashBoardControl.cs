@@ -155,6 +155,8 @@ namespace Shared.DashBoard
           ChangeStatus (TPosition.Create ((positionColumn + col), (positionRow + row)), status, background);
         }
       }
+
+      SlideSetup ();
     }
 
     public void LayoutChanged (TSize size)
@@ -209,6 +211,8 @@ namespace Shared.DashBoard
         RequestReport (args);
 
         ContentRemoved?.Invoke (this, args);
+
+        SlideSetup ();
       }
 
       TDispatcher.Invoke (RefreshCollectionDispatcher);

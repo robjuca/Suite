@@ -193,6 +193,17 @@ namespace Shared.ViewModel
         res = true;
       }
 
+      // try
+      else {
+        if (m_ComponentModelTryToInsert.ContainsKey (id)) {
+          var model = m_ComponentModelTryToInsert [id];
+          m_ComponentModelDrop.Add (model.Id, model);
+
+          m_ComponentModelTryToInsert.Remove (id);
+          res = true;
+        }
+      }
+
       return (res);
     }
 
@@ -201,7 +212,18 @@ namespace Shared.ViewModel
       var res = false;
 
       if (m_ComponentModelDrop.ContainsKey (id)) {
+        var list = ComponentModelCollection
+          .Where (p => p.Id.Equals (id))
+          .ToList ()
+        ;
+
+        if (list.Count.Equals (0)) {
+          var model = m_ComponentModelDrop [id];
+          ComponentModelCollection.Add (model);
+        }
+
         m_ComponentModelDrop.Remove (id);
+
         res = true;
       }
 
