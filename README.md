@@ -51,8 +51,8 @@ usa-se “style”.
 
 | IDE                | Language   | Tools                                       | UI                       |
 |--------------------|------------|---------------------------------------------|--------------------------|
-| Visual Studio 2019 | C\# 7.3    | Caliburn.Micro 3.2 (MVVM pattern)           | MaterialDesignThemes 2.5 |
-|                    | .Net 4.7.2 | XDMessaging.Lite 5                          | gong-wpf-dragdrop 1.1    |
+| Visual Studio 2019 | C\# 8      | Caliburn.Micro 3.2 (MVVM pattern)           | MaterialDesignThemes 2.5 |
+|                    | .Net 4.8   | XDMessaging.Lite 5                          | gong-wpf-dragdrop 1.1    |
 |                    |            | Microsoft.EntityFrameworkCore.SqlServer 2.2 |                          |
 |                    |            | rrLibrary                                   |                          |
 
