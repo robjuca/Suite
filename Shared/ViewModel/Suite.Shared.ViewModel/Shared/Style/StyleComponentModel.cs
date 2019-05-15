@@ -106,8 +106,10 @@ namespace Shared.ViewModel
 
     public void Select (TContentStyle.Style selectedStyleHorizontal, TContentStyle.Style selectedStyleVertical)
     {
+      var list = new List<TComponentModelItem> ();
+
       if (ComponentModelCollection.Count > 0) {
-        var list = ComponentModelCollection
+        list = ComponentModelCollection
           .Where (p => p.StyleHorizontal.Equals (selectedStyleHorizontal.ToString ()))
           .Where (p => p.StyleVertical.Equals (selectedStyleVertical.ToString ()))
           .ToList ()
@@ -125,18 +127,18 @@ namespace Shared.ViewModel
             list.Remove (model);
           }
         }
-
-        // try to insert
-        foreach (var tryToInsertModel in m_ComponentModelTryToInsert) {
-          var itemModel = tryToInsertModel.Value;
-
-          if (itemModel.ContainsStyle (selectedStyleHorizontal, selectedStyleVertical)) {
-            list.Add (itemModel);
-          }
-        }
-
-        ItemsCollection = new ObservableCollection<TComponentModelItem> (list);
       }
+
+      // try to insert
+      foreach (var tryToInsertModel in m_ComponentModelTryToInsert) {
+        var itemModel = tryToInsertModel.Value;
+
+        if (itemModel.ContainsStyle (selectedStyleHorizontal, selectedStyleVertical)) {
+          list.Add (itemModel);
+        }
+      }
+
+      ItemsCollection = new ObservableCollection<TComponentModelItem> (list);
     }
 
     public TComponentModelItem RequestItem (int index)

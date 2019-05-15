@@ -14,6 +14,7 @@ using rr.Library.Types;
 using Shared.ViewModel;
 
 using Shared.Layout.Shelf;
+using Shared.Types;
 //---------------------------//
 
 namespace Layout.Collection.Pattern.Models
@@ -128,8 +129,7 @@ namespace Layout.Collection.Pattern.Models
           item.Select (entityAction.ModelAction.ComponentInfoModel);
           item.Select (entityAction.ModelAction.ExtensionLayoutModel);
           item.Select (entityAction.CollectionAction.ExtensionNodeCollection);
-          //TODO: review
-          //item.AdjustSize ();
+          item.RequestSize ();
 
           // only one child (Document or Video)
           if (entityAction.CollectionAction.ModelCollection.Count.Equals (1)) {
@@ -188,13 +188,15 @@ namespace Layout.Collection.Pattern.Models
         var childComponentModelItem = TComponentModelItem.Create (childModelItem);
         childComponentModelItem.Select (childCategory);
 
-        //TODO: review
-        //var childStyle = childComponentModelItem.Style;
+        var childStyleHorizontal = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
+        childStyleHorizontal.Select (childComponentModelItem.StyleHorizontal);
+
+        var childStyleVertical = TStyleInfo.Create (TContentStyle.Mode.Vertical);
+        childStyleVertical.Select (childComponentModelItem.StyleVertical);
 
         var controlModel = Shared.Layout.Bag.TComponentControlModel.CreateDefault;
         controlModel.SelectModel (id, category);
-        //TODO: review
-        //controlModel.SelectChildModel (childId, childCategory, childStyle, childComponentModelItem);
+        controlModel.SelectChildModel (childId, childCategory, childStyleHorizontal, childStyleVertical, childComponentModelItem);
 
         ControlModelCollection.Add (position, controlModel);
       }
@@ -226,10 +228,13 @@ namespace Layout.Collection.Pattern.Models
         var childComponentModelItem = TComponentModelItem.Create (childModelItem);
         childComponentModelItem.Select (childCategory);
 
-        //TODO: review
-        //var childStyle = childComponentModelItem.Style;
-        //TODO: review
-        //controlModel.SelectChildModel (childId, childCategory, childStyle, childComponentModelItem);
+        var childStyleHorizontal = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
+        childStyleHorizontal.Select (childComponentModelItem.StyleHorizontal);
+
+        var childStyleVertical = TStyleInfo.Create (TContentStyle.Mode.Vertical);
+        childStyleVertical.Select (childComponentModelItem.StyleVertical);
+        
+        controlModel.SelectChildModel (childId, childCategory, childStyleHorizontal, childStyleVertical, childComponentModelItem);
       }
 
       ControlModelCollection.Add (position, controlModel);

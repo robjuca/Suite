@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using rr.Library.Types;
 
 using Shared.ViewModel;
+using Shared.Types;
 //---------------------------//
 
 namespace Shared.Layout.Drawer
@@ -44,22 +46,45 @@ namespace Shared.Layout.Drawer
     {
       get
       {
-        return (Model.Id);
+        return (ControlModelMode.Equals (TControlModelMode.Default) ? Model.Id : ControlModelMode.Equals (TControlModelMode.Local) ? ModelLocal.Id : Guid.Empty);
       }
     }
     #endregion
 
     #region Constructor
-    public TComponentControlBase ()
+    TComponentControlBase ()
     {
-      MyType = TType.None;
-
       HorizontalAlignment = HorizontalAlignment.Left;
       VerticalAlignment = VerticalAlignment.Top;
 
-      ModelValidated = false;
+      // default 4x4 matrix
+      SizeCols = 4;
+      SizeRows = 4;
 
       m_ContentItems = new Collection<TContentItemModel> ();
+
+      ControlMode = TControlMode.None;
+      ControlModelMode = TControlModelMode.None;
+
+      ModelLocal = TComponentControlModel.CreateDefault;
+
+      Loaded += OnLoaded;
+    }
+
+    protected TComponentControlBase (TControlMode mode)
+      : this ()
+    {
+      ControlMode = mode;
+      ControlModelMode = TControlModelMode.Default;
+    }
+
+    protected TComponentControlBase (TControlMode mode, TComponentControlModel model)
+      : this ()
+    {
+      ControlMode = mode;
+      ControlModelMode = TControlModelMode.Local;
+
+      ModelLocal.CopyFrom (model);
     }
     #endregion
 
@@ -68,6 +93,8 @@ namespace Shared.Layout.Drawer
     {
       SizeCols = size.Columns;
       SizeRows = size.Rows;
+
+      CreateContentContainer ();
     }
 
     public void InsertContent (Server.Models.Component.TEntityAction action)
@@ -194,8 +221,8 @@ namespace Shared.Layout.Drawer
       InsertChild (source);
       InsertChild (target);
 
-      UpdateLayout (source);
-      UpdateLayout (target);
+      //UpdateLayout (source);
+      //UpdateLayout (target);
     }
 
     public void Cleanup ()
@@ -222,35 +249,38 @@ namespace Shared.Layout.Drawer
     }
     #endregion
 
+    #region Event
+    void OnLoaded (object sender, RoutedEventArgs e)
+    {
+      CreateContentContainer ();
+    }
+    #endregion
+
     #region Callback
     static void ModelPropertyChanged (DependencyObject source, DependencyPropertyChangedEventArgs e)
     {
       if (source is TComponentControlBase control) {
         if (e.NewValue is TComponentControlModel) {
-          control.ModelValidated = true; // first time
-          control.RefreshDesign ();
+          // do nothing
         }
       }
     }
     #endregion
 
-    #region Data
-    public enum TType
-    {
-      None,
-      Design,
-      Display,
-    };
-    #endregion
-
     #region Property
-    public TType MyType
+    TControlMode ControlMode
     {
       get;
       set;
     }
 
-    public bool ModelValidated
+    TControlModelMode ControlModelMode
+    {
+      get;
+      set;
+    }
+
+    TComponentControlModel ModelLocal
     {
       get;
       set;
@@ -274,17 +304,64 @@ namespace Shared.Layout.Drawer
     public Collection<TContentItemModel>                        m_ContentItems;
     #endregion
 
-    #region Virtual
-    public virtual void CreateContentContainer ()
-    {
-    }
-
-    public virtual void RequestBorder (Border border)
-    {
-    }
-    #endregion
-
     #region Support
+    public void CreateContentContainer ()
+    {
+      var contentStyle = TContentStyle.CreateDefault;
+
+      var columnWidth = contentStyle.RequestStyleSize (TContentStyle.Mode.Horizontal, TContentStyle.Style.mini);
+      var rowHeight = contentStyle.RequestStyleSize (TContentStyle.Mode.Vertical, TContentStyle.Style.mini);
+
+      m_ContentContainer = new Grid ()
+      {
+        Background = new SolidColorBrush (Color.FromRgb (252, 252, 252))
+      };
+
+      // columns (max 4)
+      for (int col = 0; col <= SizeCols; col++) {
+        m_ContentContainer.ColumnDefinitions.Add (new ColumnDefinition () { Width = new GridLength (columnWidth, GridUnitType.Pixel) });
+      }
+
+      // rows (max 4)
+      for (int row = 0; row <= SizeRows; row++) {
+        m_ContentContainer.RowDefinitions.Add (new RowDefinition () { Height = new GridLength (rowHeight, GridUnitType.Pixel) });
+      }
+
+      Child = m_ContentContainer;
+    }
+
+    void InsertChild (TPosition position, Shared.Layout.Shelf.TComponentControlModel model)
+    {
+      if (model.Size.IsEmpty.IsFalse ()) {
+        var displayControl = new Shared.Layout.Shelf.TComponentDisplayControl (model);
+
+        var border = new Border ()
+        {
+          Background = Brushes.White,
+          Child = displayControl,
+        };
+
+        var positionCol = position.Column;
+        var positionRow = position.Row;
+
+        var contentSizeCols = model.Size.Columns;
+        var contentSizeRows = model.Size.Rows;
+
+        var maxSizeCols = (positionCol - 1) + contentSizeCols; //zero base index
+        var maxSizeRows = (positionRow - 1) + contentSizeRows;
+
+        // validate board position
+        if ((maxSizeCols <= SizeCols) && (maxSizeRows <= SizeRows)) {
+          border.SetValue (Grid.ColumnProperty, (positionCol - 1));
+          border.SetValue (Grid.RowProperty, (positionRow - 1));
+          border.SetValue (Grid.ColumnSpanProperty, contentSizeCols);
+          border.SetValue (Grid.RowSpanProperty, contentSizeRows);
+
+          m_ContentContainer.Children.Add (border);
+        }
+      }
+    }
+
     void InsertChild (TComponentModelItem modelItem)
     {
       if (modelItem.NotNull ()) {
@@ -294,9 +371,12 @@ namespace Shared.Layout.Drawer
         var controlModel = Shared.Layout.Shelf.TComponentControlModel.CreateDefault;
         controlModel.Select (modelItem);
 
-        m_ContentItems.Add (new TContentItemModel (position, controlModel));
+        if (ContainsContent(modelItem.Id).IsFalse ()) {
+          m_ContentItems.Add (new TContentItemModel (position, controlModel));
+        }
 
         var displayControl = new Shared.Layout.Shelf.TComponentDisplayControl (controlModel);
+        displayControl.ChangeSize (size);
 
         var border = new Border ()
         {
@@ -304,7 +384,6 @@ namespace Shared.Layout.Drawer
           Child = displayControl,
         };
 
-        RequestBorder (border);
         RequestRoom (position, size, border);
 
         m_ContentContainer.Children.Add (border);
@@ -320,9 +399,12 @@ namespace Shared.Layout.Drawer
         var size = item.ComponentControlModel.Size;
         var controlModel = item.ComponentControlModel;
 
-        m_ContentItems.Add (new TContentItemModel (position, controlModel));
+        if (ContainsContent (item.Id).IsFalse ()) {
+          m_ContentItems.Add (new TContentItemModel (position, controlModel));
+        }
 
         var displayControl = new Shared.Layout.Shelf.TComponentDisplayControl (controlModel);
+        displayControl.ChangeSize (size);
 
         var border = new Border ()
         {
@@ -330,7 +412,6 @@ namespace Shared.Layout.Drawer
           Child = displayControl,
         };
 
-        RequestBorder (border);
         RequestRoom (position, size, border);
 
         m_ContentContainer.Children.Add (border);
@@ -338,54 +419,6 @@ namespace Shared.Layout.Drawer
         displayControl.InsertContent (controlModel.ComponentModelItem.ChildCollection);
       }
     }
-
-    //void InsertChild (TPosition position, Shared.Module.Shelf.TComponentControlModel model)
-    //{
-    //  var displayControl = new Shared.Module.Shelf.TComponentDisplayControl (model);
-
-    //  var border = new Border ()
-    //  {
-    //    Background = Brushes.White,
-    //    Child = displayControl,
-    //  };
-
-    //  RequestBorder (border);
-
-    //  var col = position.Column;
-    //  var row = position.Row;
-
-
-    //  //switch (model.Style) {
-    //  //  case "mini":
-    //  //    border.SetValue (Grid.ColumnProperty, (col - 1));
-    //  //    border.SetValue (Grid.RowProperty, (row - 1));
-    //  //    break;
-
-    //  //  case "small":
-    //  //    border.SetValue (Grid.ColumnProperty, (col - 1));
-    //  //    border.SetValue (Grid.RowProperty, (row - 1));
-    //  //    border.SetValue (Grid.RowSpanProperty, 2);
-    //  //    break;
-
-    //  //  case "large":
-    //  //    border.SetValue (Grid.ColumnProperty, (col - 1));
-    //  //    border.SetValue (Grid.RowProperty, (row - 1));
-    //  //    border.SetValue (Grid.RowSpanProperty, 3);
-    //  //    break;
-
-    //  //  case "big":
-    //  //    border.SetValue (Grid.ColumnProperty, (col - 1));
-    //  //    border.SetValue (Grid.ColumnSpanProperty, 2);
-    //  //    border.SetValue (Grid.RowSpanProperty, 3);
-    //  //    break;
-    //  //}
-
-    //  m_ContentContainer.Children.Add (border);
-
-    //  //displayControl.Refresh ();
-    //}
-
-
 
     void RemoveChild (Guid contentId)
     {
@@ -463,56 +496,56 @@ namespace Shared.Layout.Drawer
       }
     }
 
-    void UpdateLayout (TContentItemModel item)
-    {
-      if (item.NotNull ()) {
-        UpdateLayout (item.Position);
-      }
-    }
+    //void UpdateLayout (TContentItemModel item)
+    //{
+    //  if (item.NotNull ()) {
+    //    UpdateLayout (item.Position);
+    //  }
+    //}
 
-    void UpdateLayout (TPosition position)
-    {
-      UpdateLayout (position.Column, position.Row);
-    }
+    //void UpdateLayout (TPosition position)
+    //{
+    //  UpdateLayout (position.Column, position.Row);
+    //}
 
-    void UpdateLayout (int col, int row)
-    {
-      // rows 
-      if (SizeRows.Equals (3)) {
-        if (row.Equals (2)) {
-          // Fill row 1, 3
-          m_ContentContainer.RowDefinitions [0].Height = new GridLength (116, GridUnitType.Pixel);
-          m_ContentContainer.RowDefinitions [2].Height = new GridLength (116, GridUnitType.Pixel);
-        }
+    //void UpdateLayout (int col, int row)
+    //{
+    //  // rows 
+    //  if (SizeRows.Equals (3)) {
+    //    if (row.Equals (2)) {
+    //      // Fill row 1, 3
+    //      m_ContentContainer.RowDefinitions [0].Height = new GridLength (116, GridUnitType.Pixel);
+    //      m_ContentContainer.RowDefinitions [2].Height = new GridLength (116, GridUnitType.Pixel);
+    //    }
 
-        if (row.Equals (3)) {
-          // Fill row 1, 2
-          m_ContentContainer.RowDefinitions [0].Height = new GridLength (116, GridUnitType.Pixel);
-          m_ContentContainer.RowDefinitions [1].Height = new GridLength (116, GridUnitType.Pixel);
-        }
-      }
+    //    if (row.Equals (3)) {
+    //      // Fill row 1, 2
+    //      m_ContentContainer.RowDefinitions [0].Height = new GridLength (116, GridUnitType.Pixel);
+    //      m_ContentContainer.RowDefinitions [1].Height = new GridLength (116, GridUnitType.Pixel);
+    //    }
+    //  }
 
-      // cols
-      if (SizeCols.Equals (4)) {
-        if (col.Equals (2)) {
-          // Fill col 1
-          m_ContentContainer.ColumnDefinitions [0].Width = new GridLength (300, GridUnitType.Pixel);
-        }
+    //  // cols
+    //  if (SizeCols.Equals (4)) {
+    //    if (col.Equals (2)) {
+    //      // Fill col 1
+    //      m_ContentContainer.ColumnDefinitions [0].Width = new GridLength (300, GridUnitType.Pixel);
+    //    }
 
-        if (col.Equals (3)) {
-          // Fill col 1,2
-          m_ContentContainer.ColumnDefinitions [0].Width = new GridLength (300, GridUnitType.Pixel);
-          m_ContentContainer.ColumnDefinitions [1].Width = new GridLength (300, GridUnitType.Pixel);
-        }
+    //    if (col.Equals (3)) {
+    //      // Fill col 1,2
+    //      m_ContentContainer.ColumnDefinitions [0].Width = new GridLength (300, GridUnitType.Pixel);
+    //      m_ContentContainer.ColumnDefinitions [1].Width = new GridLength (300, GridUnitType.Pixel);
+    //    }
 
-        if (col.Equals (4)) {
-          // Fill col 1,2,3
-          m_ContentContainer.ColumnDefinitions [0].Width = new GridLength (300, GridUnitType.Pixel);
-          m_ContentContainer.ColumnDefinitions [1].Width = new GridLength (300, GridUnitType.Pixel);
-          m_ContentContainer.ColumnDefinitions [2].Width = new GridLength (300, GridUnitType.Pixel);
-        }
-      }
-    }
+    //    if (col.Equals (4)) {
+    //      // Fill col 1,2,3
+    //      m_ContentContainer.ColumnDefinitions [0].Width = new GridLength (300, GridUnitType.Pixel);
+    //      m_ContentContainer.ColumnDefinitions [1].Width = new GridLength (300, GridUnitType.Pixel);
+    //      m_ContentContainer.ColumnDefinitions [2].Width = new GridLength (300, GridUnitType.Pixel);
+    //    }
+    //  }
+    //}
 
     void RequestRoom (TPosition position, TSize size, Border border)
     {
@@ -529,7 +562,17 @@ namespace Shared.Layout.Drawer
         border.SetValue (Grid.RowSpanProperty, rowSize);
       }
 
-      UpdateLayout (position);
+      //UpdateLayout (position);
+    }
+
+    bool ContainsContent (Guid contentId)
+    {
+      var list = m_ContentItems
+        .Where (p => p.Id.Equals (contentId))
+        .ToList ()
+      ;
+
+      return (list.Count > 0);
     }
     #endregion
   };

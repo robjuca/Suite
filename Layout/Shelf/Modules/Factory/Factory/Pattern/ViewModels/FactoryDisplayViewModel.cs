@@ -307,10 +307,14 @@ namespace Layout.Factory.Pattern.ViewModels
         var position = item.Key;
         var controlModel = item.Value;
 
-        m_ComponentControl.InsertContent (position, controlModel);
-      }
+        var contentInfo = TContentInfo.CreateDefault;
+        contentInfo.Select (controlModel.Id, position);
+        contentInfo.Select (controlModel.Category);
+        contentInfo.Select (TContentStyle.Mode.Horizontal, controlModel.HorizontalStyle.Style.ToString ());
+        contentInfo.Select (TContentStyle.Mode.Vertical, controlModel.VerticalStyle.Style.ToString ());
 
-      RaiseChanged ();
+        TDispatcher.BeginInvoke (ContentSelectedDispatcher, contentInfo);
+      }
     }
     #endregion
 

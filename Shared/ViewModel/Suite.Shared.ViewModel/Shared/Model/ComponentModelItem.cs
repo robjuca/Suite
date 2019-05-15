@@ -429,6 +429,14 @@ namespace Shared.ViewModel
     {
       return (StyleHorizontal.Equals (styleHorizontal.ToString ()) && StyleVertical.Equals (styleVertical.ToString ()));
     }
+
+    public TComponentModelItem Clone ()
+    {
+      var alias = TComponentModelItem.CreateDefault;
+      alias.CopyFrom (this);
+
+      return (alias);
+    }
     #endregion
 
     #region Static

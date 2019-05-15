@@ -21,8 +21,12 @@
                 <!--display-->
                 <Border Grid.Row="0"
                         Padding="2">
-                    <control:TComponentDisplayControl Model="{Binding Model.ComponentControlModel}"
-                                                      caliburn:Message.Attach="[Event Loaded] = [OnComponentControlLoaded ($source)]" />
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto"
+                                  Padding="5">
+                        <control:TComponentDisplayControl Model="{Binding Model.ComponentControlModel}"
+                                                          caliburn:Message.Attach="[Event Loaded] = [OnComponentControlLoaded ($source)]" />
+                    </ScrollViewer>
                 </Border>
 
                 <!--edit, name-->
@@ -53,7 +57,7 @@
                                             Background="Transparent"
                                             ToolTip="edit"
                                             caliburn:Message.Attach="[Event Click] = [OnEditCommadClicked ()]">
-                                        <ContentControl Style="{StaticResource EditIcon}" />
+                                        <ContentControl Style="{DynamicResource EditIcon}" />
                                     </Button>
 
                                     <!--remove-->

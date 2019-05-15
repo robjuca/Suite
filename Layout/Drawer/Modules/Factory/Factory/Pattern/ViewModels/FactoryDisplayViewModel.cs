@@ -6,7 +6,6 @@
 //----- Include
 using System;
 using System.ComponentModel.Composition;
-using System.Collections.Generic;
 
 using rr.Library.Infrastructure;
 using rr.Library.Helper;
@@ -153,6 +152,7 @@ namespace Layout.Factory.Pattern.ViewModels
     {
       contentInfo.ThrowNull ();
 
+      // Select - ById
       var action = Server.Models.Component.TEntityAction.Create (Server.Models.Infrastructure.TCategory.Shelf, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.ById);
       action.Id = contentInfo.Id;
       action.Param2 = contentInfo;  // preserve

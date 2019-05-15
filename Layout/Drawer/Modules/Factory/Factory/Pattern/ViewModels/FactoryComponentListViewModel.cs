@@ -119,7 +119,7 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void RequestComponentRelationDispatcher ()
     {
-      // to parent
+      // to parent (Select - Relation)
       var action = Server.Models.Component.TEntityAction.Create (Server.Models.Infrastructure.TCategory.Drawer, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Relation);
       action.CollectionAction.SelectComponentOperation (Server.Models.Component.TComponentOperation.TInternalOperation.Category);
       action.ComponentOperation.SelectByCategory (Server.Models.Infrastructure.TCategoryType.ToValue (Server.Models.Infrastructure.TCategory.Drawer));
@@ -133,7 +133,7 @@ namespace Layout.Factory.Pattern.ViewModels
     void RequestDataDispatcher ()
     {
       // to parent
-      //shelf
+      //shelf (Select - Zap)
       var action = Server.Models.Component.TEntityAction.Create (Server.Models.Infrastructure.TCategory.Shelf, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Zap);
       Model.RequestRelations (action);
 
@@ -178,7 +178,7 @@ namespace Layout.Factory.Pattern.ViewModels
       }
 
       else {
-        // request component by Id
+        // request component by Id (Select - ById)
         var action = Server.Models.Component.TEntityAction.Create (modelItem.Category, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.ById);
         action.Id = modelItem.Id;
 

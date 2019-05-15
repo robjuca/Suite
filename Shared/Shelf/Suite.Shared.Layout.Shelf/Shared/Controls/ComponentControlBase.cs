@@ -128,14 +128,14 @@ namespace Shared.Layout.Shelf
       }
     }
 
-    public void InsertContent (TPosition position, Shared.Layout.Bag.TComponentControlModel model)
+    public void InsertContent (TPosition position, Shared.Layout.Bag.TComponentControlModel controlModel)
     {
       if (position.NotNull ()) {
         if (position.IsPosition (0, 0).IsFalse ()) {
-          if (model.NotNull ()) {
-            m_ContentItems.Add (new TContentItemModel (position, model));
+          if (controlModel.NotNull ()) {
+            m_ContentItems.Add (new TContentItemModel (position, controlModel));
 
-            InsertChild (position, model);
+            InsertChild (position, controlModel);
 
             if (ControlMode.Equals (TControlMode.Display)) {
               UpdateLayout (position);

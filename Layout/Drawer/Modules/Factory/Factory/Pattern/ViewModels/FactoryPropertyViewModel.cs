@@ -149,10 +149,6 @@ namespace Layout.Factory.Pattern.ViewModels
       if (m_PropertyGridComponent.NotNull ()) {
         m_PropertyGridComponent.RefreshPropertyList ();
       }
-
-      if (m_PropertyGridExtension.NotNull ()) {
-        m_PropertyGridExtension.RefreshPropertyList ();
-      }
     }
 
     void CleanupDispatcher ()
@@ -326,10 +322,6 @@ namespace Layout.Factory.Pattern.ViewModels
     {
       if (m_PropertyGridComponent.NotNull ()) {
         m_PropertyGridComponent.Cleanup ();
-      }
-
-      if (m_PropertyGridExtension.NotNull ()) {
-        m_PropertyGridExtension.Cleanup ();
       }
     }
 

@@ -121,6 +121,7 @@ namespace Layout.Factory.Pattern.ViewModels
 
       var contentInfo = TContentInfo.CreateDefault;
       contentInfo.Select (args.Id, args.TargetPosition);
+      contentInfo.Select (args.Category);
 
       TDispatcher.BeginInvoke (ContentInsertDispatcher, contentInfo);
 

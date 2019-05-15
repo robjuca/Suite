@@ -34,10 +34,26 @@ namespace Shared.Layout.Drawer
       set;
     }
 
+    public TSize Size
+    {
+      get
+      {
+        var cols = EntityAction.ModelAction.ExtensionGeometryModel.SizeCols;
+        var rows = EntityAction.ModelAction.ExtensionGeometryModel.SizeRows;
+
+        return (TSize.Create (cols, rows));
+      }
+    }
+
     public Guid Id
     {
       get;
       set;
+    }
+
+    public TComponentModelItem ComponentModelItem
+    {
+      get;
     }
 
     public Server.Models.Component.TEntityAction EntityAction
@@ -50,9 +66,13 @@ namespace Shared.Layout.Drawer
     TComponentControlModel ()
     {
       Caption = string.Empty;
+
       Width = 0;
       Height = 0;
+
       Id = Guid.Empty;
+
+      ComponentModelItem = TComponentModelItem.CreateDefault;
       EntityAction = Server.Models.Component.TEntityAction.CreateDefault;
     }
 
@@ -67,9 +87,15 @@ namespace Shared.Layout.Drawer
     public void Select (TComponentModelItem item)
     {
       if (item.NotNull ()) {
+        item.RequestSize ();
+
+        ComponentModelItem.CopyFrom (item);
+
         Caption = item.TextModel.Caption;
+
         Width = item.LayoutModel.Width;
         Height = item.LayoutModel.Height;
+
         Id = item.Id;
 
         EntityAction.ModelAction.ExtensionGeometryModel.SizeCols = item.GeometryModel.SizeCols;
@@ -90,6 +116,8 @@ namespace Shared.Layout.Drawer
 
         Width = alias.Width;
         Height = alias.Height;
+
+        ComponentModelItem.CopyFrom (alias.ComponentModelItem);
 
         EntityAction.ModelAction.ExtensionGeometryModel.SizeCols = alias.EntityAction.ModelAction.ExtensionGeometryModel.SizeCols;
         EntityAction.ModelAction.ExtensionGeometryModel.SizeRows = alias.EntityAction.ModelAction.ExtensionGeometryModel.SizeRows;

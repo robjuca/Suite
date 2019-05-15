@@ -26,7 +26,7 @@
                                    VerticalAlignment="Center" />
 
                         <ContentControl Margin="5 0 0 0"
-                                        Style="{StaticResource ModuleCollectionIcon}" />
+                                        Style="{DynamicResource ModuleCollectionIcon}" />
                     </StackPanel>
                 </materialDesign:Card>
             </Border>

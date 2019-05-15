@@ -19,7 +19,7 @@ namespace Layout.Factory.Pattern.Models
   public class TFactoryComponentListModel
   {
     #region Property
-    public ObservableCollection<TComponentItemInfo> ComponentSourceCollection
+    public ObservableCollection<TComponentModelItem> ComponentSourceCollection
     {
       get;
       private set;
@@ -37,10 +37,10 @@ namespace Layout.Factory.Pattern.Models
     #region Constructor
     public TFactoryComponentListModel ()
     {
-      ComponentSourceCollection = new ObservableCollection<TComponentItemInfo> ();
+      ComponentSourceCollection = new ObservableCollection<TComponentModelItem> ();
 
-      m_ComponentRemovedItems = new Dictionary<Guid, TComponentItemInfo> ();
-      m_ComponentTryToInsertItems = new Dictionary<Guid, TComponentItemInfo> ();
+      m_ComponentRemovedItems = new Dictionary<Guid, TComponentModelItem> ();
+      m_ComponentTryToInsertItems = new Dictionary<Guid, TComponentModelItem> ();
 
       m_ComponentItems = new Collection<Guid> ();
 
@@ -94,10 +94,8 @@ namespace Layout.Factory.Pattern.Models
         componentModelItem.Select (list);
         componentModelItem.Select (action.CategoryType.Category);
 
-        var itemInfo = TComponentItemInfo.Create (componentModelItem);
-
-        if (m_ComponentRemovedItems.ContainsKey (itemInfo.Id).IsFalse ()) {
-          ComponentSourceCollection.Add (itemInfo);
+        if (m_ComponentRemovedItems.ContainsKey (componentModelItem.Id).IsFalse ()) {
+          ComponentSourceCollection.Add (componentModelItem);
         }
       }
 
@@ -411,17 +409,12 @@ namespace Layout.Factory.Pattern.Models
 
     internal bool Restore (Guid id)
     {
-      Guid idToRemove = Guid.Empty;
-      string style=string.Empty;
+      var idToRemove = Guid.Empty;
 
       foreach (var item in m_ComponentRemovedItems) {
         if (item.Key.Equals (id)) {
           var model = item.Value;
-
           idToRemove = model.Id;
-          //TODO: review
-          //style = model.Style;
-
           break;
         }
       }
@@ -458,22 +451,20 @@ namespace Layout.Factory.Pattern.Models
         componentModelItem.Select (item.Value.CollectionAction.ExtensionNodeCollection);
       }
 
-      var itemInfo = TComponentItemInfo.Create (componentModelItem);
-
-      m_ComponentTryToInsertItems.Add (itemInfo.Id, itemInfo);
+      m_ComponentTryToInsertItems.Add (componentModelItem.Id, componentModelItem);
 
       // try to insert
-      ComponentSourceCollection.Add (itemInfo);
+      ComponentSourceCollection.Add (componentModelItem);
       SortCollection ();
 
-      return (itemInfo.Id);
+      return (componentModelItem.Id);
     }
     #endregion
     #endregion
 
     #region Fields
-    readonly Dictionary<Guid, TComponentItemInfo>                         m_ComponentRemovedItems;
-    readonly Dictionary<Guid, TComponentItemInfo>                         m_ComponentTryToInsertItems;
+    readonly Dictionary<Guid, TComponentModelItem>                        m_ComponentRemovedItems;
+    readonly Dictionary<Guid, TComponentModelItem>                        m_ComponentTryToInsertItems;
     readonly Collection<Guid>                                             m_ComponentItems;
     Collection<ExtensionNode>                                             m_NodeCollection;
     #endregion
@@ -503,10 +494,10 @@ namespace Layout.Factory.Pattern.Models
 
     void SortCollection ()
     {
-      var list = new List<TComponentItemInfo> (ComponentSourceCollection);
+      var list = new List<TComponentModelItem> (ComponentSourceCollection);
 
       ComponentSourceCollection.Clear ();
-      ComponentSourceCollection = new ObservableCollection<TComponentItemInfo> (list.OrderBy (p => p.Name).ToList ());
+      ComponentSourceCollection = new ObservableCollection<TComponentModelItem> (list.OrderBy (p => p.Name).ToList ());
     }
     #endregion
   };

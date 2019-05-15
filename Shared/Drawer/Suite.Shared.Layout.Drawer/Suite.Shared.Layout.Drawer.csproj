@@ -53,6 +53,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Bin\Suite.Shared.Layout.Shelf.dll</HintPath>
     </Reference>
+    <Reference Include="Suite.Shared.Types, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bin\Suite.Shared.Types.dll</HintPath>
+    </Reference>
     <Reference Include="Suite.Shared.ViewModel, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Bin\Suite.Shared.ViewModel.dll</HintPath>

@@ -298,6 +298,8 @@ namespace Shared.Types
               m_Names.Add ("ImageProperty");
               m_Names.Add ("StyleHorizontalProperty");
               m_Names.Add ("StyleVerticalProperty");
+              m_Names.Add ("ColumnsProperty");
+              m_Names.Add ("RowsProperty");
             }
             break;
 

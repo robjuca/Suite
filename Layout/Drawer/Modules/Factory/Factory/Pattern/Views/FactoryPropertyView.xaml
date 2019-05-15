@@ -30,7 +30,6 @@
 
             <!--extension-->
             <controls:TPropertyGrid ToolbarVisible="False"
-                                    HelpVisible="False"
                                     VerticalAlignment="Stretch"
                                     SelectedObject="{Binding Model.ComponentModelProperty.ExtensionModel}"
                                     caliburn:Message.Attach="[Event Loaded] = [OnPropertyGridExtensionLoaded ($source)]" />

@@ -33,6 +33,12 @@ namespace Shared.DashBoard
       get; 
     }
 
+    public Server.Models.Infrastructure.TCategory Category
+    {
+      get;
+      private set;
+    }
+
     public Guid Id
     {
       get;
@@ -53,10 +59,18 @@ namespace Shared.DashBoard
 
       BoardSize = TSize.CreateDefault;
 
+      Category = Server.Models.Infrastructure.TCategory.None;
       Id = Guid.Empty;
 
       ReportData = TReportData.CreateDefault;
     }
+    #endregion
+
+    #region Members
+    public void Select (Server.Models.Infrastructure.TCategory category)
+    {
+      Category = category;
+    } 
     #endregion
 
     #region Static

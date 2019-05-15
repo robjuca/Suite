@@ -48,7 +48,6 @@
                             HorizontalAlignment="Right">
                         <TextBlock Text="{Binding Model.ComponentCount}" />
                     </Border>
-
                 </Grid>
             </Border>
 
@@ -72,13 +71,13 @@
                                     <StackPanel>
                                         <!--name-->
                                         <TextBlock VerticalAlignment="Center"
-                                                   Text="{Binding Model.Name}"
+                                                   Text="{Binding Name}"
                                                    FontWeight="Bold"
                                                    TextWrapping="WrapWithOverflow" />
 
                                         <!--size-->
                                         <TextBlock VerticalAlignment="Center"
-                                                   Text="{Binding Model.SizeString}" />
+                                                   Text="{Binding SizeString}" />
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>

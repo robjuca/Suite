@@ -115,6 +115,7 @@ namespace Shared.DashBoard
           var args = TDashBoardEventArgs.CreateDefault;
           args.Id = externalData.Id;
           args.TargetPosition.CopyFrom (targetItem.Position);
+          args.Select (externalData.Category);
 
           RequestReport (args);
 
@@ -130,6 +131,7 @@ namespace Shared.DashBoard
           var args = TDashBoardEventArgs.CreateDefault;
           args.SourcePosition.CopyFrom (internalData.Position);
           args.TargetPosition.CopyFrom (targetItem.Position);
+          args.Select (internalData.Category);
 
           ContentMoved?.Invoke (this, args);
         }
@@ -155,8 +157,6 @@ namespace Shared.DashBoard
           ChangeStatus (TPosition.Create ((positionColumn + col), (positionRow + row)), status, background);
         }
       }
-
-      SlideSetup ();
     }
 
     public void LayoutChanged (TSize size)
@@ -204,6 +204,7 @@ namespace Shared.DashBoard
         args.Id = id;
         args.SourcePosition.CopyFrom (dashboardItem.Position);
         args.TargetPosition.CopyFrom (dashboardItem.Position);
+        args.Select (dashboardItem.Category);
 
         ChangeStatusToStandby (dashboardItem);
         res = true;
@@ -234,11 +235,13 @@ namespace Shared.DashBoard
         var horizontalStyle = TContentStyle.TryToParse (item.LayoutModel.StyleHorizontal);
         var verticalStyle = TContentStyle.TryToParse (item.LayoutModel.StyleVertical);
 
-        // update size
-        var contentStyle = TContentStyle.CreateDefault;
+        if (horizontalStyle.Equals (TContentStyle.Style.None).IsFalse () && verticalStyle.Equals (TContentStyle.Style.None).IsFalse ()) {
+          // update size
+          var contentStyle = TContentStyle.CreateDefault;
 
-        item.GeometryModel.SizeCols = contentStyle.RequestBoardStyleSize (horizontalStyle);
-        item.GeometryModel.SizeRows = contentStyle.RequestBoardStyleSize (verticalStyle);
+          item.GeometryModel.SizeCols = contentStyle.RequestBoardStyleSize (horizontalStyle);
+          item.GeometryModel.SizeRows = contentStyle.RequestBoardStyleSize (verticalStyle);
+        }
 
         var dashBoardItem = Select (item.Position);
 
@@ -365,6 +368,8 @@ namespace Shared.DashBoard
       targetItem.SelectModel (sourceItemModel);
 
       ChangeStatus (targetItem.Position, sourceItemModel.Size, TDashBoardItem.TDashBoardStatus.Busy);
+
+      SlideSetup ();
     }
 
     public void DoMove (TDashBoardItem sourceItem, TDashBoardItem targetItem)

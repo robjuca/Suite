@@ -30,12 +30,6 @@ namespace Layout.Collection.Pattern.Models
       private set;
     }
 
-    public Collection<TComponentModelItem> ComponentModelItemCollection
-    {
-      get;
-      private set;
-    }
-
     public bool IsEditCommandEnabled
     {
       get
@@ -114,7 +108,7 @@ namespace Layout.Collection.Pattern.Models
         }
       }
 
-      IsRemoveCommandEnabled = (ComponentModelItem.CanRemove);
+      IsRemoveCommandEnabled = ComponentModelItem.CanRemove;
     }
 
     internal void RequestComponentId (Server.Models.Component.TEntityAction action)
@@ -133,12 +127,19 @@ namespace Layout.Collection.Pattern.Models
       action.Id = ComponentModelItem.Id; // Id
       action.CategoryType.Select (ComponentModelItem.Category);
       action.ModelAction.CopyFrom (ComponentModelItem.RequestModel ()); // model
-      action.Param1 = new Collection<TComponentModelItem> (ComponentModelItemCollection.ToList()); // child collection
+
+      action.Param1 = RequestChildCollection (); // child collection
     }
 
     internal Collection<TComponentModelItem> RequestChildCollection ()
     {
-      return (new Collection<TComponentModelItem> (ComponentModelItemCollection.ToList ())); // child collection
+      var list = new Collection<TComponentModelItem> ();
+
+      foreach (var item in ComponentModelItemCollection) {
+        list.Add (item.Clone ());
+      }
+
+      return (list); // child collection
     }
 
     internal void Cleanup ()
@@ -151,12 +152,18 @@ namespace Layout.Collection.Pattern.Models
     }
     #endregion
 
+    #region Property
+    Collection<TComponentModelItem> ComponentModelItemCollection
+    {
+      get;
+      set;
+    } 
+    #endregion
+
     #region Support
     void RequestRelations (TComponentModelItem item, Server.Models.Component.TEntityAction action)
     {
       var id = item.Id;
-      var position = item.Position;
-      var category = item.Category;
 
       // child node {- action.CollectionAction.EntityColletion {id}.ComponentOperation {ParentIdCollection}} {bag}
       if (action.ComponentOperation.ParentIdCollection.ContainsKey (id)) {
