@@ -384,25 +384,25 @@ namespace Layout.Factory.Pattern.ViewModels
       TDispatcher.BeginInvoke (ContentInsertDispatcher, contentInfo);
     }
 
-    void ContentRemoved (TDashBoardItem item)
-    {
-      //?????????????????????????????
-      //TODO: review
-      //var style = item.ContextStyle;
-      var contentItem = new TDashBoardItem (item); // preserve
+    //void ContentRemoved (TDashBoardItem item)
+    //{
+    //  //?????????????????????????????
+    //  //TODO: review
+    //  //var style = item.ContextStyle;
+    //  var contentItem = new TDashBoardItem (item); // preserve
 
-      //if (Model.RemoveContent (item.Id, out TPosition position)) {
-        //Model.ChangeStatus (position, style, TDashBoardItem.TDashBoardStatus.Standby);
+    //  //if (Model.RemoveContent (item.Id, out TPosition position)) {
+    //    //Model.ChangeStatus (position, style, TDashBoardItem.TDashBoardStatus.Standby);
 
 
-        //TDispatcher.BeginInvoke (ContentRemovedDispatcher, contentItem);
-      //}
-    }
+    //    //TDispatcher.BeginInvoke (ContentRemovedDispatcher, contentItem);
+    //  //}
+    //}
 
-    void ContentMoved (TDashBoardItem sourceItem, TDashBoardItem targetItem)
-    {
-      TDispatcher.BeginInvoke (ContentMovedDispatcher, new Tuple<TPosition, TPosition> (sourceItem.Position, targetItem.Position));
-    }
+    //void ContentMoved (TDashBoardItem sourceItem, TDashBoardItem targetItem)
+    //{
+    //  TDispatcher.BeginInvoke (ContentMovedDispatcher, new Tuple<TPosition, TPosition> (sourceItem.Position, targetItem.Position));
+    //}
     #endregion
   };
   //---------------------------//

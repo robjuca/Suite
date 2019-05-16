@@ -361,22 +361,22 @@ namespace Layout.Factory.Pattern.ViewModels
     #endregion
 
     #region Support
-    void ContentRemoved (Shared.DashBoard.TDashBoardItem item)
-    {
-      //?????????????????????????????
-      //TODO: review
-      //var style = item.ContextStyle;
-      var contentItem = new Shared.DashBoard.TDashBoardItem (item); // preserve
+    //void ContentRemoved (Shared.DashBoard.TDashBoardItem item)
+    //{
+    //  //?????????????????????????????
+    //  //TODO: review
+    //  //var style = item.ContextStyle;
+    //  var contentItem = new Shared.DashBoard.TDashBoardItem (item); // preserve
 
-      //if (Model.RemoveContent (item.Id, out TPosition position)) {
-        //Model.ChangeStatus (position, style, Shared.DashBoard.TDashBoardItem.TDashBoardStatus.Standby);
+    //  //if (Model.RemoveContent (item.Id, out TPosition position)) {
+    //    //Model.ChangeStatus (position, style, Shared.DashBoard.TDashBoardItem.TDashBoardStatus.Standby);
 
         
-        //TDispatcher.Invoke (ReportDispatcher);
+    //    //TDispatcher.Invoke (ReportDispatcher);
 
-        //TDispatcher.BeginInvoke (ContentRemovedDispatcher, contentItem);
-      //}
-    }
+    //    //TDispatcher.BeginInvoke (ContentRemovedDispatcher, contentItem);
+    //  //}
+    //}
     #endregion
   };
   //---------------------------//
