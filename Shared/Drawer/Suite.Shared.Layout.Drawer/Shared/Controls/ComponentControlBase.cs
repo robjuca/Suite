@@ -318,12 +318,12 @@ namespace Shared.Layout.Drawer
       };
 
       // columns (max 4)
-      for (int col = 0; col <= SizeCols; col++) {
+      for (int col = 0; col < SizeCols; col++) {
         m_ContentContainer.ColumnDefinitions.Add (new ColumnDefinition () { Width = new GridLength (columnWidth, GridUnitType.Pixel) });
       }
 
       // rows (max 4)
-      for (int row = 0; row <= SizeRows; row++) {
+      for (int row = 0; row < SizeRows; row++) {
         m_ContentContainer.RowDefinitions.Add (new RowDefinition () { Height = new GridLength (rowHeight, GridUnitType.Pixel) });
       }
 

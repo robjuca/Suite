@@ -67,6 +67,8 @@ namespace Shared.Layout.Shelf
 
       ModelLocal = TComponentControlModel.CreateDefault;
 
+      m_ContainerCreated = false;
+
       Loaded += OnLoaded;
     }
 
@@ -93,6 +95,7 @@ namespace Shared.Layout.Shelf
       SizeCols = size.Columns;
       SizeRows = size.Rows;
 
+      m_ContainerCreated = false;
       CreateContentContainer ();
     }
 
@@ -264,34 +267,39 @@ namespace Shared.Layout.Shelf
     #endregion
 
     #region Fields
-    public Grid                                       m_ContentContainer;
-    public Collection<TContentItemModel>              m_ContentItems;
+    Grid                                              m_ContentContainer;
+    Collection<TContentItemModel>                     m_ContentItems;
+    bool                                              m_ContainerCreated;
     #endregion
 
     #region Support
     void CreateContentContainer ()
     {
-      var contentStyle = TContentStyle.CreateDefault;
+      if (m_ContainerCreated.IsFalse ()) {
+        m_ContainerCreated = true;
 
-      var columnWidth = contentStyle.RequestStyleSize (TContentStyle.Mode.Horizontal, TContentStyle.Style.mini);
-      var rowHeight = contentStyle.RequestStyleSize (TContentStyle.Mode.Vertical, TContentStyle.Style.mini);
+        var contentStyle = TContentStyle.CreateDefault;
 
-      m_ContentContainer = new Grid ()
-      {
-        Background = new SolidColorBrush (Color.FromRgb (252, 252, 252))
-      };
+        var columnWidth = contentStyle.RequestStyleSize (TContentStyle.Mode.Horizontal, TContentStyle.Style.mini);
+        var rowHeight = contentStyle.RequestStyleSize (TContentStyle.Mode.Vertical, TContentStyle.Style.mini);
 
-      // columns (max 4)
-      for (int col = 0; col <= SizeCols; col++) {
-        m_ContentContainer.ColumnDefinitions.Add (new ColumnDefinition () { Width = new GridLength (columnWidth, GridUnitType.Pixel) }); 
+        m_ContentContainer = new Grid ()
+        {
+          Background = new SolidColorBrush (Color.FromRgb (252, 252, 252))
+        };
+
+        // columns (max 4)
+        for (int col = 0; col < SizeCols; col++) {
+          m_ContentContainer.ColumnDefinitions.Add (new ColumnDefinition () { Width = new GridLength (columnWidth, GridUnitType.Pixel) });
+        }
+
+        // rows (max 4)
+        for (int row = 0; row < SizeRows; row++) {
+          m_ContentContainer.RowDefinitions.Add (new RowDefinition () { Height = new GridLength (rowHeight, GridUnitType.Pixel) });
+        }
+
+        Child = m_ContentContainer;
       }
-
-      // rows (max 4)
-      for (int row = 0; row <= SizeRows; row++) {
-        m_ContentContainer.RowDefinitions.Add (new RowDefinition () { Height = new GridLength (rowHeight, GridUnitType.Pixel) }); 
-      }
-
-      Child = m_ContentContainer;
     }
 
     void InsertChild (TPosition position, Shared.Layout.Bag.TComponentControlModel model)

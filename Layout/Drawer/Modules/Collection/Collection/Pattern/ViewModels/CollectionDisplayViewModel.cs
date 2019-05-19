@@ -135,7 +135,7 @@ namespace Layout.Collection.Pattern.ViewModels
       RaiseChanged ();
 
       // to parent
-      // request component relation (using ComponentOperation support)
+      // request component relation (using ComponentOperation support) (Select - Relation)
       var action = Server.Models.Component.TEntityAction.Create (Server.Models.Infrastructure.TCategory.Drawer, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Relation);
       action.CollectionAction.SelectComponentOperation (Server.Models.Component.TComponentOperation.TInternalOperation.Id);
       action.ComponentOperation.SelectById (item.Id);
@@ -150,7 +150,7 @@ namespace Layout.Collection.Pattern.ViewModels
     {
       // to parent
       // request component
-      // drawer contains shelf
+      // drawer contains shelf (Select - Many)
       var action = Server.Models.Component.TEntityAction.Create (Server.Models.Infrastructure.TCategory.Shelf, Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Many);
       Model.RequestComponentId (action);
 
