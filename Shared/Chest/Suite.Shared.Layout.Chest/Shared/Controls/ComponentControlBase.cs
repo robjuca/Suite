@@ -56,7 +56,7 @@ namespace Shared.Layout.Chest
       HorizontalAlignment = HorizontalAlignment.Stretch;
       VerticalAlignment = VerticalAlignment.Stretch;
       BorderThickness = new Thickness (0);
-
+      
       ModelValidated = false;
     }
     #endregion
@@ -64,7 +64,7 @@ namespace Shared.Layout.Chest
     #region Members
     public void InsertContent (IList<TComponentModelItem> contentCollection)
     {
-      // contentCollection contains only Shelf
+      // contentCollection contains only Drawer
       if (contentCollection.NotNull ()) {
         Cleanup ();
 
@@ -82,7 +82,7 @@ namespace Shared.Layout.Chest
 
     public void InsertContent (TComponentModelItem item)
     {
-      // contains only Shelf
+      // contains only Drawer
       if (item.NotNull ()) {
         var control = CreateControl (item);
 
@@ -195,6 +195,7 @@ namespace Shared.Layout.Chest
           Model = controlModel
         };
 
+        displayControl.ChangeSize (modelItem.Size);
         displayControl.InsertContent (modelItem.ChildCollection);
 
         return (displayControl);

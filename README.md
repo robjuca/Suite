@@ -61,3 +61,4 @@ usa-se “style”.
 ![](Docs/media/SuiteLayoutBag.jpg)
 ![](Docs/media/SuiteLayoutShelf.jpg)
 ![](Docs/media/SuiteLayoutDrawer.jpg)
+![](Docs/media/SuiteLayoutChest.jpg)

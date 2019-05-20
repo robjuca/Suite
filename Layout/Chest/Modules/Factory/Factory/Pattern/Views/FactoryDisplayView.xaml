@@ -13,8 +13,12 @@
         <materialDesign:Card  Padding="2"
                               HorizontalAlignment="Stretch"
                               VerticalAlignment="Stretch">
-            <control:TComponentDesignControl Model="{Binding Model.ComponentControlModel}"
-                                              caliburn:Message.Attach="[Event Loaded] = [OnComponentControlLoaded ($source)]" />
+            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto"
+                          Padding="5">
+                <control:TComponentDesignControl Model="{Binding Model.ComponentControlModel}"
+                                                 caliburn:Message.Attach="[Event Loaded] = [OnComponentControlLoaded ($source)]" />
+            </ScrollViewer>
         </materialDesign:Card>
     </Border>
 

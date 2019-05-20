@@ -37,6 +37,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Bin\rr.Library.Helper.dll</HintPath>
     </Reference>
+    <Reference Include="rr.Library.Types, Version=1.0.2014.11, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Suite.Server.Models.Component, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Bin\Suite.Server.Models.Component.dll</HintPath>
