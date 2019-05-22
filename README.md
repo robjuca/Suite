@@ -67,9 +67,7 @@ usa-se “style”.
 
 -> Model Component
 ![](Docs/media/ModelComponent.jpg)
-
 -> Model Extension
 ![](Docs/media/ModelExtension.jpg)
-
 -> Model Settings
 ![](Docs/media/ModelSettings.jpg)
