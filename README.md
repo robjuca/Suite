@@ -65,11 +65,11 @@ usa-se “style”.
 
 *Database* (table models):
 
--Model Component
+-> Model Component
 ![](Docs/media/ModelComponent.jpg)
 
--Model Extension
+-> Model Extension
 ![](Docs/media/ModelExtension.jpg)
 
--Model Settings
+-> Model Settings
 ![](Docs/media/ModelSettings.jpg)
