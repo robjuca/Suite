@@ -62,3 +62,14 @@ usa-se “style”.
 ![](Docs/media/SuiteLayoutShelf.jpg)
 ![](Docs/media/SuiteLayoutDrawer.jpg)
 ![](Docs/media/SuiteLayoutChest.jpg)
+
+*Database* (table models):
+
+-Model Component
+![](Docs/media/ModelComponent.jpg)
+
+-Model Extension
+![](Docs/media/ModelExtension.jpg)
+
+-Model Settings
+![](Docs/media/ModelSettings.jpg)
