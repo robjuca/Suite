@@ -44,10 +44,12 @@ namespace Server.Models.Infrastructure
   {
     None        = 0,
 
+    // gadget
     Document    = 200,
     Image       = 210,
     Video       = 220,
 
+    // layout
     Bag         = 10,
     Shelf       = 20,
     Drawer      = 30,
