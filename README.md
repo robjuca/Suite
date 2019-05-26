@@ -68,3 +68,7 @@ usa-se “style”.
 ![](Docs/media/ModelComponent.jpg)
 ![](Docs/media/ModelExtension.jpg)
 ![](Docs/media/ModelSettings.jpg)
+
+*SQL Database* (Server Context Engine):
+
+![](Docs/media/ServerContextEngine.jpg)

@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Server.Context.Component.TEntityDataContext" Collapsed="true">
+    <Position X="3.75" Y="2" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="Server.Models.Infrastructure.TEntityDataContextBase" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3" Y="2.25" />
+        <Point X="3.75" Y="2.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Context\EntityDataContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Models.Infrastructure.TEntityDataContextBase" Collapsed="true">
+    <Position X="1" Y="2" Width="2" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Operations" Type="Server.Models.Infrastructure.IOperation">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.127" Y="0.102" Height="0.182" Width="1.21" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsCollectionAssociation>
+      <Property Name="Operations" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Server.Context.Component.TOperationChange" Collapsed="true">
+    <Position X="3" Y="6" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>CAAAEAAAAAAIAAAAAAAAAAAAAggAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Operations\Change.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Server.Context.Component.TOperationCollection" Collapsed="true">
+    <Position X="3" Y="3" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAQAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Operations\Collection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Server.Context.Component.TOperationInsert" Collapsed="true">
+    <Position X="3" Y="4" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAEEAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Operations\Insert.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Server.Context.Component.TOperationRemove" Collapsed="true">
+    <Position X="3" Y="5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Operations\Remove.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Server.Context.Component.TOperationSelect" Collapsed="true">
+    <Position X="3" Y="7" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AIAYAAAAAIAIAAAAAAAAAAAAAAAAAAAAAAAAAAACAAg=</HashCode>
+      <FileName>Operations\Select.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Server.Context.Component.TOperationSupport" Collapsed="true">
+    <Position X="1" Y="7" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAACQABAAAAAAAAAAABAAAAAAAAAAg=</HashCode>
+      <FileName>Operations\Support.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Context.Component.TModelContext" Collapsed="true">
+    <Position X="6.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAQAAQQAAAAAAACABAAACAgAIgwAgCCAAAAAAAQ=</HashCode>
+      <FileName>ModelContext.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Server.Models.Infrastructure.IEntityDataContext">
+    <Position X="1" Y="0.5" Width="2.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Server.Models.Infrastructure.IOperation">
+    <Position X="1.25" Y="3" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="Server.Models.Infrastructure.IModelContext">
+    <Position X="6.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
