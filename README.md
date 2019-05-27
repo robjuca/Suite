@@ -72,3 +72,7 @@ usa-se “style”.
 *SQL Database* (Server Context Engine):
 
 ![](Docs/media/ServerContextEngine.jpg)
+
+*SQL Database* (Server Services):
+
+![](Docs/media/ServerServicesComponent.jpg)

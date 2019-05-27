@@ -62,7 +62,9 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\EntityService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
