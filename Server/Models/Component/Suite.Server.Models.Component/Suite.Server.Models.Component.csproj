@@ -58,6 +58,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="EntityAction.cd" />
     <None Include="Settings.cd" />
     <None Include="Extension.cd" />
     <None Include="Component.cd" />

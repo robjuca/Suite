@@ -76,3 +76,7 @@ usa-se “style”.
 *SQL Database* (Server Services):
 
 ![](Docs/media/ServerServicesComponent.jpg)
+
+*Entity Action* (Model Engine):
+
+![](Docs/media/EntityAction.jpg)

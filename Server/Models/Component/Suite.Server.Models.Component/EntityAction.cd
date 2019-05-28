@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Server.Models.Component.TEntityAction">
+    <Position X="7.25" Y="0.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="Server.Models.Infrastructure.TEntityAction&lt;M, C&gt;" FixedToPoint="true">
+      <Path>
+        <Point X="6.75" Y="1.187" />
+        <Point X="7.25" Y="1.187" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="ComponentOperation" Type="Server.Models.Component.TComponentOperation">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.607" Y="0.468" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="ComponentModel" Type="Server.Models.Component.TComponentModel">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.423" Y="0.277" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AIAAACAAAQAAAAAAAAAAAAAIAAAAgEAAAAAAIAAAAAg=</HashCode>
+      <FileName>Infrastructure\EntityAction.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ComponentOperation" />
+      <Property Name="ComponentModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Server.Models.Component.TComponentModel">
+    <Position X="6.25" Y="3" Width="2" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAgAAQACAACABAAAQAEgAAEEABACAIQBAIQAA=</HashCode>
+      <FileName>Infrastructure\Model\ComponentModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Models.Component.TComponentOperation">
+    <Position X="8.75" Y="3" Width="2" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Server.Models.Component.TComponentOperation.TInternalOperation">
+        <TypeIdentifier>
+          <NewMemberFileName>Infrastructure\ComponentOperation.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAQgAIAAAAEAAQAAAAAJEAAAgEQEAAEAAgBCEAA=</HashCode>
+      <FileName>Infrastructure\ComponentOperation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Models.Infrastructure.TEntityAction&lt;M, C&gt;">
+    <Position X="4.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Server.Models.Component.TCollectionAction">
+    <Position X="1" Y="0.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IAABAAAAAQAEAAAAAAAACAAIAQAAAAQBAAAEAgEQAwk=</HashCode>
+      <FileName>Infrastructure\CollectionAction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Models.Component.TModelAction">
+    <Position X="1.25" Y="4.75" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>FAAAAAgAAAAAwCAAAAAAAAAMAAAABAAAAAIEABAAAAA=</HashCode>
+      <FileName>Infrastructure\ModelAction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
