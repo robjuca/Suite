@@ -5,7 +5,6 @@
 
 //----- Include
 using System;
-using System.Collections.Generic;
 
 using rr.Library.Services;
 using rr.Library.Types;
@@ -23,8 +22,6 @@ namespace Shared.Services
       m_EntityService = Shared.ViewModel.TEntityService.CreateDefault;
       m_EntityService.ShowError += ServiceShowError;
       m_EntityService.SelectService (new Server.Services.Component.TEntityServiceAsync ());
-
-      //m_Services = new Dictionary<Server.Models.Infrastructure.TCategory, Shared.ViewModel.TEntityService> ();
     }
     #endregion
 
@@ -54,31 +51,8 @@ namespace Shared.Services
     }
     #endregion
 
-    #region Overrides
-    //protected override void Initialize ()
-    //{
-    //  if (m_Services.Count.Equals (0)) {
-    //    foreach (int item in Enum.GetValues (typeof (Server.Models.Infrastructure.TCategory))) {
-    //      var category = Server.Models.Infrastructure.TCategoryType.FromValue (item);
-
-    //      if (category.Equals (Server.Models.Infrastructure.TCategory.None)) {
-    //        continue;
-    //      }
-
-    //      else {
-    //        var service = Shared.ViewModel.TEntityService.CreateDefault;
-    //        service.ShowError += ServiceShowError;
-    //        service.SelectService (new Server.Services.Component.TEntityServiceAsync ());
-    //        m_Services.Add (category, service);
-    //      }
-    //    }
-    //  }
-    //}
-    #endregion
-
     #region Fields
-    //readonly Dictionary<Server.Models.Infrastructure.TCategory, Shared.ViewModel.TEntityService>                  m_Services;
-    Shared.ViewModel.TEntityService                       m_EntityService;
+    Shared.ViewModel.TEntityService                             m_EntityService;
     #endregion
 
     #region Support
