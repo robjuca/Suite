@@ -63,6 +63,10 @@ usa-se “style”.
 ![](Docs/media/SuiteLayoutDrawer.jpg)
 ![](Docs/media/SuiteLayoutChest.jpg)
 
+*Database access* (flowchart):
+
+![](Docs/media/DBFlowchart.jpg)
+
 *SQL Database* (table models):
 
 ![](Docs/media/ModelComponent.jpg)
