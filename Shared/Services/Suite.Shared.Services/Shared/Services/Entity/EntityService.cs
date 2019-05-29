@@ -20,14 +20,20 @@ namespace Shared.Services
     {
       presentation.RequestPresentationCommand (this);
 
-      m_Services = new Dictionary<Server.Models.Infrastructure.TCategory, Shared.ViewModel.TEntityService> ();
+      m_EntityService = Shared.ViewModel.TEntityService.CreateDefault;
+      m_EntityService.ShowError += ServiceShowError;
+      m_EntityService.SelectService (new Server.Services.Component.TEntityServiceAsync ());
+
+      //m_Services = new Dictionary<Server.Models.Infrastructure.TCategory, Shared.ViewModel.TEntityService> ();
     }
     #endregion
 
     #region Members
     internal void Operation (Server.Models.Infrastructure.TCategory category, TServiceAction<Server.Models.Infrastructure.IEntityAction> serviceAction)
     {
-      m_Services [category].Operation (serviceAction);
+      if (category.Equals (Server.Models.Infrastructure.TCategory.None).IsFalse ()) {
+        m_EntityService.Operation (serviceAction);
+      }
     } 
     #endregion
 
@@ -49,29 +55,30 @@ namespace Shared.Services
     #endregion
 
     #region Overrides
-    protected override void Initialize ()
-    {
-      if (m_Services.Count.Equals (0)) {
-        foreach (int item in Enum.GetValues (typeof (Server.Models.Infrastructure.TCategory))) {
-          var category = Server.Models.Infrastructure.TCategoryType.FromValue (item);
+    //protected override void Initialize ()
+    //{
+    //  if (m_Services.Count.Equals (0)) {
+    //    foreach (int item in Enum.GetValues (typeof (Server.Models.Infrastructure.TCategory))) {
+    //      var category = Server.Models.Infrastructure.TCategoryType.FromValue (item);
 
-          if (category.Equals (Server.Models.Infrastructure.TCategory.None)) {
-            continue;
-          }
+    //      if (category.Equals (Server.Models.Infrastructure.TCategory.None)) {
+    //        continue;
+    //      }
 
-          else {
-            var service = Shared.ViewModel.TEntityService.CreateDefault;
-            service.ShowError += ServiceShowError;
-            service.SelectService (new Server.Services.Component.TEntityServiceAsync ());
-            m_Services.Add (category, service);
-          }
-        }
-      }
-    }
+    //      else {
+    //        var service = Shared.ViewModel.TEntityService.CreateDefault;
+    //        service.ShowError += ServiceShowError;
+    //        service.SelectService (new Server.Services.Component.TEntityServiceAsync ());
+    //        m_Services.Add (category, service);
+    //      }
+    //    }
+    //  }
+    //}
     #endregion
 
     #region Fields
-    readonly Dictionary<Server.Models.Infrastructure.TCategory, Shared.ViewModel.TEntityService>                  m_Services;
+    //readonly Dictionary<Server.Models.Infrastructure.TCategory, Shared.ViewModel.TEntityService>                  m_Services;
+    Shared.ViewModel.TEntityService                       m_EntityService;
     #endregion
 
     #region Support
