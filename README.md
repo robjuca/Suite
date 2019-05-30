@@ -84,3 +84,12 @@ usa-se “style”.
 *Entity Action* (Model Engine):
 
 ![](Docs/media/EntityAction.jpg)
+
+*Suite Shared* :
+
+![](Docs/media/SuiteSharedResources.jpg)
+![](Docs/media/SuiteSharedTypes.jpg)
+![](Docs/media/SuiteSharedServices.jpg)
+![](Docs/media/SuiteSharedMessage.jpg)
+![](Docs/media/SuiteSharedDashboard.jpg)
+![](Docs/media/SuiteSharedViewModel.jpg)

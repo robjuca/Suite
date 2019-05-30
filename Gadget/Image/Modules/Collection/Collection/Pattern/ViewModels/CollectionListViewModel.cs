@@ -106,9 +106,7 @@ namespace Gadget.Collection.Pattern.ViewModels
 
     public void OnSelectionChanged (TComponentModelItem item)
     {
-      if (item.NotNull ()) {
-        TDispatcher.BeginInvoke (ItemSelectedDispatcher, item);
-      }
+      TDispatcher.BeginInvoke (ItemSelectedDispatcher, item);
     }
     #endregion
 
@@ -138,11 +136,19 @@ namespace Gadget.Collection.Pattern.ViewModels
 
     void ItemSelectedDispatcher (TComponentModelItem item)
     {
-      // to sibiling display
-      var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Select, TChild.List, TypeInfo);
-      message.Support.Argument.Types.Item.CopyFrom (item);
+      if (item.IsNull ()) {
+        // to sibiling
+        var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Cleanup, TChild.List, TypeInfo);
+        DelegateCommand.PublishInternalMessage.Execute (message);
+      }
 
-      DelegateCommand.PublishInternalMessage.Execute (message);
+      else {
+        // to sibiling display
+        var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Select, TChild.List, TypeInfo);
+        message.Support.Argument.Types.Item.CopyFrom (item);
+
+        DelegateCommand.PublishInternalMessage.Execute (message);
+      }
     }
     #endregion
 
