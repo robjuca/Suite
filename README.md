@@ -93,3 +93,9 @@ usa-se “style”.
 ![](Docs/media/SuiteSharedMessage.jpg)
 ![](Docs/media/SuiteSharedDashboard.jpg)
 ![](Docs/media/SuiteSharedViewModel.jpg)
+
+*Suite Shared Gadget* :
+![](Docs/media/SuiteSharedGadget.jpg)
+
+*Suite Shared Layout* :
+![](Docs/media/SuiteSharedLayout.jpg)
