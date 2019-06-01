@@ -111,7 +111,7 @@ usa-se “style”.
 ![](Docs/media/SuiteGadgetImageApp.jpg)
 
 *Suite Layout* : (application)
-![](Docs/media/SuiteGadgetBagApp.jpg)
-![](Docs/media/SuiteGadgetShelfApp.jpg)
-![](Docs/media/SuiteGadgetDrawerApp.jpg)
-![](Docs/media/SuiteGadgetChestApp.jpg)
+![](Docs/media/SuiteLayoutBagApp.jpg)
+![](Docs/media/SuiteLayoutShelfApp.jpg)
+![](Docs/media/SuiteLayoutDrawerApp.jpg)
+![](Docs/media/SuiteLayoutChestApp.jpg)
