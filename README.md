@@ -103,5 +103,15 @@ usa-se “style”.
 *Suite Module Settings* :
 ![](Docs/media/SuiteModuleSettings.jpg)
 
-*Suite Launcher* : (application entry poit)
+*Suite Launcher* : (application entry point)
 ![](Docs/media/SuiteLauncherApplication.jpg)
+
+*Suite Gadget* : (application)
+![](Docs/media/SuiteGadgetDocumentApp.jpg)
+![](Docs/media/SuiteGadgetImageApp.jpg)
+
+*Suite Layout* : (application)
+![](Docs/media/SuiteGadgetBagApp.jpg)
+![](Docs/media/SuiteGadgetShelfApp.jpg)
+![](Docs/media/SuiteGadgetDrawerApp.jpg)
+![](Docs/media/SuiteGadgetChestApp.jpg)
