@@ -99,3 +99,9 @@ usa-se “style”.
 
 *Suite Shared Layout* :
 ![](Docs/media/SuiteSharedLayout.jpg)
+
+*Suite Module Settings* :
+![](Docs/media/SuiteModuleSettings.jpg)
+
+*Suite Launcher* : (application entry poit)
+![](Docs/media/SuiteLauncherApplication.jpg)
