@@ -118,3 +118,6 @@ usa-se “style”.
 
 *Suite Solution* : (application)
 ![](Docs/media/SuiteApplicationSolution.jpg)
+
+*Suite Server Solution* : (library)
+![](Docs/media/SuiteServerSolution.jpg)
