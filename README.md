@@ -115,3 +115,6 @@ usa-se “style”.
 ![](Docs/media/SuiteLayoutShelfApp.jpg)
 ![](Docs/media/SuiteLayoutDrawerApp.jpg)
 ![](Docs/media/SuiteLayoutChestApp.jpg)
+
+*Suite Solution* : (application)
+![](Docs/media/SuiteApplicationSolution.jpg)
