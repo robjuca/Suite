@@ -121,3 +121,6 @@ usa-se “style”.
 
 *Suite Server Solution* : (library)
 ![](Docs/media/SuiteServerSolution.jpg)
+
+*Suite Shared Solution* : (library)
+![](Docs/media/SuiteSharedSolution.jpg)
