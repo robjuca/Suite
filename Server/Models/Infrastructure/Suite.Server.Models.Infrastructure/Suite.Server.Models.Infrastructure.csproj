@@ -62,7 +62,6 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Compile Include="Infrastructure\EntityAction.cs" />
     <Compile Include="Infrastructure\EntityActionBase.cs" />

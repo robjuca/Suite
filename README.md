@@ -127,3 +127,9 @@ usa-se “style”.
 
 *rr Library Solution* : (library)
 ![](Docs/media/rrLibrarySolution.jpg)
+
+*Model Infrastructure* : (Operation)
+![](Docs/media/ModelInfrastructureOperation.jpg)
+
+*Model Infrastructure* : (Entity Action)
+![](Docs/media/ModelInfrastructureEntityAction.jpg)
