@@ -124,3 +124,6 @@ usa-se “style”.
 
 *Suite Shared Solution* : (library)
 ![](Docs/media/SuiteSharedSolution.jpg)
+
+*rr Library Solution* : (library)
+![](Docs/media/rrLibrarySolution.jpg)
