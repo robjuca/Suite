@@ -64,7 +64,7 @@ namespace Server.Models.Infrastructure
 
     public static TCategory FromValue (int category)
     {
-      return ((TCategory) category);
+      return (Enum.IsDefined (typeof (TCategory), category)  ? (TCategory) category : TCategory.None);
     }
     #endregion
 

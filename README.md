@@ -133,3 +133,7 @@ usa-se “style”.
 
 *Model Infrastructure* : (Entity Action)
 ![](Docs/media/ModelInfrastructureEntityAction.jpg)
+
+*Message* : (Engine)
+![](Docs/media/MessageEngine.jpg)
+![](Docs/media/MessageSupportProperty.jpg)
