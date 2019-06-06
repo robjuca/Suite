@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Shared.Message.TDefault">
+    <Position X="22" Y="3.5" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Message\Argument\Argument.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TArgumentModule">
+    <Position X="3.25" Y="10.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Message\Argument\Argument.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Authentication" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Shared.Message.TArgumentTypesDefault">
+    <Position X="4.5" Y="6.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAEAAAAAACAAAAgAAAAAAECCAAAAAAAAQAAACAA=</HashCode>
+      <FileName>Message\Argument\Argument.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TModuleArgument&lt;B&gt;">
+    <Position X="18.25" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Message\Argument\Argument.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Args" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Shared.Message.TModuleArgs">
+    <Position X="16" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Message\Argument\Argument.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Where" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Shared.Message.TInternalArgument&lt;B&gt;">
+    <Position X="9" Y="6.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Message\Argument\Argument.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Args" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Shared.Message.TInternalArgs">
+    <Position X="9" Y="9" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAIAAAABAAAAAAAAAAAAAAEIEAAAAAAAQABAAAA=</HashCode>
+      <FileName>Message\Argument\Argument.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TArgumentInternal&lt;I&gt;">
+    <Position X="6.75" Y="10.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Argument\InternalArgument.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TShellMessage" Collapsed="true">
+    <Position X="6.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Message\ModuleMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TCollectionMessage" Collapsed="true">
+    <Position X="0.75" Y="5.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Message\ModuleMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TFactoryMessage" Collapsed="true">
+    <Position X="3.75" Y="5.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Message\ModuleMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TServicesMessage" Collapsed="true">
+    <Position X="8.75" Y="5.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Message\ModuleMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TMessageModule" Collapsed="true">
+    <Position X="3.25" Y="3.5" Width="5.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Message\ModuleMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TNavigateRequestMessage" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Navigate\NavigateMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TNavigateResponseMessage" Collapsed="true">
+    <Position X="10.75" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Navigate\NavigateMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TModuleNavigateRequestMessage" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Navigate\NavigateMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TModuleNavigateResponseMessage" Collapsed="true">
+    <Position X="4.5" Y="1.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Navigate\NavigateMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TNavigateMessage" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="2.5" />
+    <NestedTypes>
+      <Enum Name="Shared.Message.TNavigateMessage.TAction" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Message\Navigate\NavigateMessageBase.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Shared.Message.TNavigateMessage.TWhere" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Message\Navigate\NavigateMessageBase.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Shared.Message.TNavigateMessage.TSender" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Message\Navigate\NavigateMessageBase.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAFAAAAAAAAAAACAAEAAAQAAAAAAAAIAAQ=</HashCode>
+      <FileName>Message\Navigate\NavigateMessageBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TNode">
+    <Position X="16.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAIAAAAAgAACAAIAAAAAAACAIACAAAAACA=</HashCode>
+      <FileName>Message\Node\Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Message.TServiceRequest">
+    <Position X="22.25" Y="5.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAEAAgAAAIAAAAAAAAgIAEAAgEACgAAQQAAACAA=</HashCode>
+      <FileName>Message\Request\ServiceRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Shared.Message.IHandleMessageModule">
+    <Position X="23.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Handle\IHandle.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Shared.Message.IHandleNavigateRequest">
+    <Position X="26" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Interfaces\IHandler.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Shared.Message.IHandleNavigateResponse">
+    <Position X="23.25" Y="1.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Interfaces\IHandler.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Shared.Message.IHandleModuleNavigateRequest">
+    <Position X="20" Y="1.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Interfaces\IHandler.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Shared.Message.IHandleModuleNavigateResponse">
+    <Position X="20" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Message\Interfaces\IHandler.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Shared.Types.TWhere">
+    <Position X="13.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Enum Name="rr.Library.Types.TAuthentication">
+    <Position X="3.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier />
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
