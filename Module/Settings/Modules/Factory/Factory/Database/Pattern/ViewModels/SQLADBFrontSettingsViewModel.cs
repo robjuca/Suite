@@ -46,7 +46,7 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
       }
 
       // from sibiling
-      if (message.Node.IsSibilingToMe (TChild.Front)) {
+      if (message.Node.IsSiblingToMe (TChild.Front)) {
         if (message.Support.Argument.Types.Authentication.Equals (TAuthentication.SQL)) {
           if (message.IsAction (TInternalMessageAction.Request)) {
             TDispatcher.Invoke (ResponseDataDispatcher);
@@ -76,7 +76,7 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
     {
       // to sibiling (Windows)
       var message = new TFactoryMessageInternal (TInternalMessageAction.EditEnter, TAuthentication.Windows, TypeInfo);
-      message.Node.SelectRelationSibiling (TChild.None);
+      message.Node.SelectRelationSibling (TChild.None);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
     } 
@@ -87,7 +87,7 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
     {
       // to sibiling back
       var message = new TFactoryMessageInternal (TInternalMessageAction.Select, TAuthentication.SQL, TypeInfo);
-      message.Node.SelectRelationSibiling (TChild.Front);
+      message.Node.SelectRelationSibling (TChild.Front);
       message.Support.Argument.Types.ConnectionData.CopyFrom (Model.DatabaseAuthentication);
 
       DelegateCommand.PublishInternalMessage.Execute (message);

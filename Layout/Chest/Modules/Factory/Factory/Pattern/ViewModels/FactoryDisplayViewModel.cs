@@ -57,8 +57,8 @@ namespace Layout.Factory.Pattern.ViewModels
           }
         }
 
-        // from sibiling
-        if (message.Node.IsSibilingToMe (TChild.Display)) {
+        // from Sibling
+        if (message.Node.IsSiblingToMe (TChild.Display)) {
           // Insert
           if (message.IsAction (TInternalMessageAction.Insert)) {
             if (message.Support.Argument.Args.Param1 is TComponentItemInfo item) {

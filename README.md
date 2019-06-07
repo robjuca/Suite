@@ -138,3 +138,6 @@ usa-se “style”.
 ![](Docs/media/MessageEngine.jpg)
 ![](Docs/media/MessageSupportProperty.jpg)
 ![](Docs/media/MessageSupportArgumentProperty.jpg)
+
+*Message* : (Dispatcher)
+![](Docs/media/MessageDispatcher.jpg)

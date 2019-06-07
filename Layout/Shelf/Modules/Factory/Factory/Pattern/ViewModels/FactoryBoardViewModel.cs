@@ -77,8 +77,8 @@ namespace Layout.Factory.Pattern.ViewModels
           }
         }
 
-        // from sibiling
-        if (message.Node.IsSibilingToMe (TChild.Board)) {
+        // from Sibling
+        if (message.Node.IsSiblingToMe (TChild.Board)) {
           // PropertySelect
           if (message.IsAction (TInternalMessageAction.PropertySelect)) {
             var propertyName = message.Support.Argument.Args.PropertyName;
@@ -173,8 +173,8 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void ReportDispatcher (TReportData report)
     {
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Report, TChild.Board, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Report, TChild.Board, TypeInfo);
       message.Support.Argument.Types.Select (report);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -189,8 +189,8 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void DropFromSourceDispatcher (TDashBoardEventArgs args)
     {
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Drop, TChild.Board, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Drop, TChild.Board, TypeInfo);
       message.Support.Argument.Args.Select (args.Id);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -198,8 +198,8 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void SizeChangedDispatcher (TSize size)
     {
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Size, TChild.Board, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Size, TChild.Board, TypeInfo);
       message.Support.Argument.Args.Select (size, null);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -208,8 +208,8 @@ namespace Layout.Factory.Pattern.ViewModels
     #region Content
     void ContentInsertDispatcher (TContentInfo contentInfo)
     {
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Select, TChild.Board, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Select, TChild.Board, TypeInfo);
       message.Support.Argument.Args.Select (contentInfo, null);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -217,8 +217,8 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void ContentRemovedDispatcher (Guid id)
     {
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Remove, TChild.Board, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Remove, TChild.Board, TypeInfo);
       message.Support.Argument.Args.Select (id);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -226,8 +226,8 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void ContentMovedDispatcher (Tuple<TPosition, TPosition> tuple)
     {
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Move, TChild.Board, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Move, TChild.Board, TypeInfo);
       message.Support.Argument.Args.Select (tuple.Item1, tuple.Item2);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -239,8 +239,8 @@ namespace Layout.Factory.Pattern.ViewModels
     {
       m_DashBoardControl.RequestModel (action);
 
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Response, TChild.Board, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Response, TChild.Board, TypeInfo);
       message.Support.Argument.Types.Select (action);
 
       DelegateCommand.PublishInternalMessage.Execute (message);

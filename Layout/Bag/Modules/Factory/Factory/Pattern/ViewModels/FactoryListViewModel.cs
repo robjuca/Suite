@@ -60,8 +60,8 @@ namespace Layout.Factory.Pattern.ViewModels
           }
         }
 
-        // from sibiling
-        if (message.Node.IsSibilingToMe (TChild.List)) {
+        // from Sibling
+        if (message.Node.IsSiblingToMe (TChild.List)) {
           // PropertySelect
           if (message.IsAction (TInternalMessageAction.PropertySelect)) {
             var propertyName = message.Support.Argument.Args.PropertyName;
@@ -121,8 +121,8 @@ namespace Layout.Factory.Pattern.ViewModels
         Model.RequestSelectedComponents (list);
 
         foreach (var info in list) {
-          // to sibiling
-          var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Select, TChild.List, TypeInfo);
+          // to Sibling
+          var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Select, TChild.List, TypeInfo);
           message.Support.Argument.Types.Select (category);
           message.Support.Argument.Args.Select (info.Model, null);
 
@@ -142,8 +142,8 @@ namespace Layout.Factory.Pattern.ViewModels
         Model.ComponentSelected (info);
         RefreshCollection ();
 
-        // to sibiling
-        var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Select, TChild.List, TypeInfo);
+        // to Sibling
+        var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Select, TChild.List, TypeInfo);
         message.Support.Argument.Types.Select (Server.Models.Infrastructure.TCategory.Document);
         message.Support.Argument.Args.Select (info.Model, null);
 
@@ -154,8 +154,8 @@ namespace Layout.Factory.Pattern.ViewModels
     public void OnComponentImageChecked (object obj)
     {
       if (obj is TComponentSourceInfo info) {
-        // to sibiling
-        var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Select, TChild.List, TypeInfo);
+        // to Sibling
+        var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Select, TChild.List, TypeInfo);
         message.Support.Argument.Types.Select (Server.Models.Infrastructure.TCategory.Image);
         message.Support.Argument.Args.Select (info.Model, null);
 
@@ -166,8 +166,8 @@ namespace Layout.Factory.Pattern.ViewModels
     public void OnComponentImageUnchecked (object obj)
     {
       if (obj is TComponentSourceInfo info) {
-        // to sibiling
-        var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Remove, TChild.List, TypeInfo);
+        // to Sibling
+        var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Remove, TChild.List, TypeInfo);
         message.Support.Argument.Types.Select (Server.Models.Infrastructure.TCategory.Image);
         message.Support.Argument.Args.Select (info.Model, null);
 
@@ -181,8 +181,8 @@ namespace Layout.Factory.Pattern.ViewModels
         Model.CanRemove (info);
         RefreshCollection ();
 
-        // to sibiling
-        var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Modify, TChild.List, TypeInfo);
+        // to Sibling
+        var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Modify, TChild.List, TypeInfo);
         message.Support.Argument.Types.Select (Server.Models.Infrastructure.TCategory.Document);
 
         DelegateCommand.PublishInternalMessage.Execute (message);
@@ -195,8 +195,8 @@ namespace Layout.Factory.Pattern.ViewModels
     {
       Server.Models.Infrastructure.TCategory category = Model.RequestComponentSelector ();
 
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Modify, TChild.List, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Modify, TChild.List, TypeInfo);
       message.Support.Argument.Types.Select (category);
 
       DelegateCommand.PublishInternalMessage.Execute (message);

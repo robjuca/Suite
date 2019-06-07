@@ -71,8 +71,8 @@ namespace Gadget.Collection.Pattern.ViewModels
           }
         }
 
-        // from sibiling
-        if (message.Node.IsSibilingToMe (TChild.List)) {
+        // from Sibling
+        if (message.Node.IsSiblingToMe (TChild.List)) {
           // Reload
           if (message.IsAction (TInternalMessageAction.Reload)) {
             Model.Cleanup ();
@@ -137,14 +137,14 @@ namespace Gadget.Collection.Pattern.ViewModels
     void ItemSelectedDispatcher (TComponentModelItem item)
     {
       if (item.IsNull ()) {
-        // to sibiling
-        var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Cleanup, TChild.List, TypeInfo);
+        // to Sibling
+        var message = new TCollectionSiblingMessageInternal (TInternalMessageAction.Cleanup, TChild.List, TypeInfo);
         DelegateCommand.PublishInternalMessage.Execute (message);
       }
 
       else {
-        // to sibiling display
-        var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Select, TChild.List, TypeInfo);
+        // to Sibling display
+        var message = new TCollectionSiblingMessageInternal (TInternalMessageAction.Select, TChild.List, TypeInfo);
         message.Support.Argument.Types.Item.CopyFrom (item);
 
         DelegateCommand.PublishInternalMessage.Execute (message);

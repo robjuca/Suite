@@ -40,16 +40,16 @@ namespace Gadget.Factory.Pattern.ViewModels
     public void Handle (TMessageInternal message)
     {
       if (message.IsModule (TResource.TModule.Factory)) {
-        // only from sibiling
-        if (message.Node.IsSibilingToMe (TChild.Display)) {
+        // only from Sibling
+        if (message.Node.IsSiblingToMe (TChild.Display)) {
           // PropertySelect
           if (message.IsAction (TInternalMessageAction.PropertySelect)) {
             Model.PropertySelect (message.Support.Argument.Args.PropertyName, TEntityAction.Request (message.Support.Argument.Types.EntityAction));
 
             RaiseChanged ();
 
-            //to sibiling (send Report)
-            var messageInternal = new TFactorySibilingMessageInternal (TInternalMessageAction.Report, TChild.Display, TypeInfo);
+            //to Sibling (send Report)
+            var messageInternal = new TFactorySiblingMessageInternal (TInternalMessageAction.Report, TChild.Display, TypeInfo);
             Model.RequestReport (messageInternal.Support.Argument.Types.ReportData);
 
             DelegateCommand.PublishInternalMessage.Execute (messageInternal);
@@ -86,8 +86,8 @@ namespace Gadget.Factory.Pattern.ViewModels
     {
       Model.RequestModel (action);
 
-      //to sibiling (send Response)
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Response, TChild.Display, TypeInfo);
+      //to Sibling (send Response)
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Response, TChild.Display, TypeInfo);
       message.Support.Argument.Types.Select (action);
 
       DelegateCommand.PublishInternalMessage.Execute (message);

@@ -39,14 +39,14 @@ namespace Shared.ViewModel
   };
   //---------------------------//
 
-  //----- TCollectionSibilingMessageInternal
-  public class TCollectionSibilingMessageInternal : TMessageInternal
+  //----- TCollectionSiblingMessageInternal
+  public class TCollectionSiblingMessageInternal : TMessageInternal
   {
     #region Constructor
-    public TCollectionSibilingMessageInternal (TInternalMessageAction messageAction, TChild child, TTypeInfo typeInfo)
+    public TCollectionSiblingMessageInternal (TInternalMessageAction messageAction, TChild child, TTypeInfo typeInfo)
       : base (TResource.TModule.Collection, messageAction, TNode.CreateDefault, typeInfo)
     {
-      Node.SelectRelationSibiling (child);
+      Node.SelectRelationSibling (child);
     }
     #endregion
   };
@@ -82,14 +82,14 @@ namespace Shared.ViewModel
   };
   //---------------------------//
 
-  //----- TFactorySibilingMessageInternal
-  public class TFactorySibilingMessageInternal : TMessageInternal
+  //----- TFactorySiblingMessageInternal
+  public class TFactorySiblingMessageInternal : TMessageInternal
   {
     #region Constructor
-    public TFactorySibilingMessageInternal (TInternalMessageAction messageAction, TChild child, TTypeInfo typeInfo)
+    public TFactorySiblingMessageInternal (TInternalMessageAction messageAction, TChild child, TTypeInfo typeInfo)
       : base (TResource.TModule.Factory, messageAction, TNode.CreateDefault, typeInfo)
     {
-      Node.SelectRelationSibiling (child);
+      Node.SelectRelationSibling (child);
     }
     #endregion
   };

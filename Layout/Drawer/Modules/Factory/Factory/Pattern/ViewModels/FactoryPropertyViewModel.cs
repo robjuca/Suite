@@ -68,8 +68,8 @@ namespace Layout.Factory.Pattern.ViewModels
           }
         }
 
-        // from sibiling
-        if (message.Node.IsSibilingToMe (TChild.Property)) {
+        // from Sibling
+        if (message.Node.IsSiblingToMe (TChild.Property)) {
           // LockEnter
           if (message.IsAction (TInternalMessageAction.LockEnter)) {
             Model.LockEnter ();
@@ -163,8 +163,8 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void RequestModelDispatcher (TEntityAction action)
     {
-      //to sibiling 
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Request, TChild.Property, TypeInfo);
+      //to Sibling 
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Request, TChild.Property, TypeInfo);
       message.Support.Argument.Types.Select (action);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -211,8 +211,8 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void RefreshDispatcher ()
     {
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Refresh, TChild.Property, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Refresh, TChild.Property, TypeInfo);
       DelegateCommand.PublishInternalMessage.Execute (message);
     }
 
@@ -240,10 +240,10 @@ namespace Layout.Factory.Pattern.ViewModels
       DelegateCommand.PublishInternalMessage.Execute (msg);
     }
 
-    void EditSibilingDispatcher (TEntityAction action)
+    void EditSiblingDispatcher (TEntityAction action)
     {
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Edit, TChild.Property, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Edit, TChild.Property, TypeInfo);
       message.Support.Argument.Types.Select (action);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -265,7 +265,7 @@ namespace Layout.Factory.Pattern.ViewModels
 
         PropertySelect ("Int4Property");
 
-        TDispatcher.BeginInvoke (EditSibilingDispatcher, action);
+        TDispatcher.BeginInvoke (EditSiblingDispatcher, action);
       }
     }
     #endregion
@@ -301,8 +301,8 @@ namespace Layout.Factory.Pattern.ViewModels
       var action = TEntityAction.CreateDefault;
       Model.RequestModel (action);
 
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.PropertySelect, TChild.Property, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.PropertySelect, TChild.Property, TypeInfo);
       message.Support.Argument.Types.Select (action);
       message.Support.Argument.Args.Select (propertyName);
 
@@ -313,7 +313,7 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void Cleanup ()
     {
-      CleanupSibiling ();
+      CleanupSibling ();
 
       TDispatcher.Invoke (CleanupMySelfDispatcher);
     }
@@ -325,10 +325,10 @@ namespace Layout.Factory.Pattern.ViewModels
       }
     }
 
-    void CleanupSibiling ()
+    void CleanupSibling ()
     {
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Cleanup, TChild.Property, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Cleanup, TChild.Property, TypeInfo);
       DelegateCommand.PublishInternalMessage.Execute (message);
 
       PropertySelect ("all");

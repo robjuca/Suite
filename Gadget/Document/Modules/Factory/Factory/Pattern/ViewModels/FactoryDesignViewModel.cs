@@ -41,8 +41,8 @@ namespace Gadget.Factory.Pattern.ViewModels
     public void Handle (TMessageInternal message)
     {
       if (message.IsModule (TResource.TModule.Factory)) {
-        // from sibiling
-        if (message.Node.IsSibilingToMe (TChild.Design)) {
+        // from Sibling
+        if (message.Node.IsSiblingToMe (TChild.Design)) {
           // PropertySelect
           if (message.IsAction (TInternalMessageAction.PropertySelect)) {
             Model.SelectModel (message.Support.Argument.Args.PropertyName, message.Support.Argument.Types.EntityAction);
@@ -105,8 +105,8 @@ namespace Gadget.Factory.Pattern.ViewModels
       // Problem : font-size attribute must be in pixel like fonte-size:12px
       CorrectFontSize (action);
 
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Response, TChild.Design, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Response, TChild.Design, TypeInfo);
       message.Support.Argument.Types.Select (action);
 
       DelegateCommand.PublishInternalMessage.Execute (message);

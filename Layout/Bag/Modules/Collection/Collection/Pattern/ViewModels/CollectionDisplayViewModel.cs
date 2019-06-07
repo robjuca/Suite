@@ -70,8 +70,8 @@ namespace Layout.Collection.Pattern.ViewModels
           }
         }
 
-        // from sibiling
-        if (message.Node.IsSibilingToMe (TChild.Display)) {
+        // from Sibling
+        if (message.Node.IsSiblingToMe (TChild.Display)) {
           // PropertySelect
           if (message.IsAction (TInternalMessageAction.PropertySelect)) {
             var propertyName = message.Support.Argument.Args.PropertyName;
@@ -177,8 +177,8 @@ namespace Layout.Collection.Pattern.ViewModels
 
     void ReloadDispatcher ()
     {
-      // to sibiling
-      var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Reload, TChild.Display, TypeInfo);
+      // to Sibling
+      var message = new TCollectionSiblingMessageInternal (TInternalMessageAction.Reload, TChild.Display, TypeInfo);
       DelegateCommand.PublishInternalMessage.Execute (message);
     }
     #endregion

@@ -40,8 +40,8 @@ namespace Layout.Factory.Pattern.ViewModels
     public void Handle (TMessageInternal message)
     {
       if (message.IsModule (TResource.TModule.Factory)) {
-        // only from sibiling
-        if (message.Node.IsSibilingToMe (TChild.Display)) {
+        // only from Sibling
+        if (message.Node.IsSiblingToMe (TChild.Display)) {
           // PropertySelect
           if (message.IsAction (TInternalMessageAction.PropertySelect)) {
             var propertyName = message.Support.Argument.Args.PropertyName;
@@ -101,8 +101,8 @@ namespace Layout.Factory.Pattern.ViewModels
       Model.RequestOrder ();
       RefreshAll ();
 
-      //to sibiling 
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.LockEnter, TChild.Display, TypeInfo);
+      //to Sibling 
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.LockEnter, TChild.Display, TypeInfo);
       DelegateCommand.PublishInternalMessage.Execute (message);
     }
 
@@ -111,8 +111,8 @@ namespace Layout.Factory.Pattern.ViewModels
       Model.ReOrder ();
       RefreshAll ();
 
-      //to sibiling 
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.LockLeave, TChild.Display, TypeInfo);
+      //to Sibling 
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.LockLeave, TChild.Display, TypeInfo);
       DelegateCommand.PublishInternalMessage.Execute (message);
     }
     #endregion
@@ -122,8 +122,8 @@ namespace Layout.Factory.Pattern.ViewModels
     {
       Model.RequestModel (action);
 
-      //to sibiling 
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Response, TChild.Display, TypeInfo);
+      //to Sibling 
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Response, TChild.Display, TypeInfo);
       message.Support.Argument.Types.Select (action);
       
       DelegateCommand.PublishInternalMessage.Execute (message);

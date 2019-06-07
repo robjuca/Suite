@@ -75,8 +75,8 @@ namespace Layout.Factory.Pattern.ViewModels
           }
         }
 
-        // from sibiling
-        if (message.Node.IsSibilingToMe (TChild.List)) {
+        // from Sibling
+        if (message.Node.IsSiblingToMe (TChild.List)) {
           // Edit
           if (message.IsAction (TInternalMessageAction.Edit)) {
             TDispatcher.BeginInvoke (EditDispatcher, Server.Models.Component.TEntityAction.Request (message.Support.Argument.Types.EntityAction));
@@ -142,8 +142,8 @@ namespace Layout.Factory.Pattern.ViewModels
     {
       Model.RequestModel (action);
 
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Response, TChild.List, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Response, TChild.List, TypeInfo);
       message.Support.Argument.Types.Select (action);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -316,8 +316,8 @@ namespace Layout.Factory.Pattern.ViewModels
 
       TDispatcher.Invoke (RefreshAllCollectionDispatcher);
 
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Remove, TChild.List, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Remove, TChild.List, TypeInfo);
       message.Support.Argument.Args.Select (item, null);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -329,8 +329,8 @@ namespace Layout.Factory.Pattern.ViewModels
 
       TDispatcher.Invoke (RefreshAllCollectionDispatcher);
 
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Insert, TChild.List, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Insert, TChild.List, TypeInfo);
       message.Support.Argument.Args.Select (item, null);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -338,8 +338,8 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void DropMove (TComponentItemInfo item)
     {
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Move, TChild.List, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Move, TChild.List, TypeInfo);
       message.Support.Argument.Args.Select (Model.RequestOutputPosition (item.Id), null); // use param1
 
       DelegateCommand.PublishInternalMessage.Execute (message);

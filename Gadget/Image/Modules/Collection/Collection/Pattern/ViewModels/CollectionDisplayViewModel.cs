@@ -56,8 +56,8 @@ namespace Gadget.Collection.Pattern.ViewModels
           }
         }
 
-        // from sibiling
-        if (message.Node.IsSibilingToMe (TChild.Display)) {
+        // from Sibling
+        if (message.Node.IsSiblingToMe (TChild.Display)) {
           // Select
           if (message.IsAction (TInternalMessageAction.Select)) {
             TDispatcher.BeginInvoke (SelectDispatcher, message.Support.Argument.Types.Item);
@@ -117,8 +117,8 @@ namespace Gadget.Collection.Pattern.ViewModels
 
     void ReloadDispatcher ()
     {
-      // to sibiling
-      var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Reload, TChild.Display, TypeInfo);
+      // to Sibling
+      var message = new TCollectionSiblingMessageInternal (TInternalMessageAction.Reload, TChild.Display, TypeInfo);
       DelegateCommand.PublishInternalMessage.Execute (message);
     }
 

@@ -36,7 +36,7 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
     public void Handle (TMessageInternal message)
     {
       // from sibiling
-      if (message.Node.IsSibilingToMe (TChild.Back)) {
+      if (message.Node.IsSiblingToMe (TChild.Back)) {
         if (message.Support.Argument.Types.Authentication.Equals (TAuthentication.SQL)) {
           if (message.IsAction (TInternalMessageAction.Select)) {
             Model.ClearCheck ();
@@ -56,7 +56,7 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
 
       // to sibiling front
       var message = new TFactoryMessageInternal (TInternalMessageAction.Change, TAuthentication.SQL, TypeInfo);
-      message.Node.SelectRelationSibiling (TChild.Back);
+      message.Node.SelectRelationSibling (TChild.Back);
       message.Support.Argument.Types.ConnectionData.CopyFrom (Model.DatabaseAuthentication);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -71,7 +71,7 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
 
       // to sibiling 
       var message = new TFactoryMessageInternal (TInternalMessageAction.EditLeave, TAuthentication.Windows, TypeInfo);
-      message.Node.SelectRelationSibiling (TChild.None);
+      message.Node.SelectRelationSibling (TChild.None);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
     }
@@ -94,7 +94,7 @@ namespace Module.Settings.Factory.Database.Pattern.ViewModels
     {
       // to sibiling
       var message = new TFactoryMessageInternal (TInternalMessageAction.Request, TAuthentication.SQL, TypeInfo);
-      message.Node.SelectRelationSibiling (TChild.Back);
+      message.Node.SelectRelationSibling (TChild.Back);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
     } 

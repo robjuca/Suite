@@ -68,7 +68,7 @@ namespace Gadget.Collection.Pattern.ViewModels
         }
 
         // from sibilig
-        if (message.Node.IsSibilingToMe (TChild.Filter)) {
+        if (message.Node.IsSiblingToMe (TChild.Filter)) {
           if (message.IsAction (TInternalMessageAction.Filter)) {
             TDispatcher.Invoke (FilterDispatcher);
           }
@@ -112,9 +112,9 @@ namespace Gadget.Collection.Pattern.ViewModels
     #region Dispatcher
     void BackDispatcher ()
     {
-      // to sibiling
+      // to Sibling
       var message = new TCollectionMessageInternal (TInternalMessageAction.Back, TypeInfo);
-      message.Node.SelectRelationSibiling (TChild.Filter);
+      message.Node.SelectRelationSibling (TChild.Filter);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
 
@@ -129,9 +129,9 @@ namespace Gadget.Collection.Pattern.ViewModels
 
       DelegateCommand.PublishInternalMessage.Execute (msg);
 
-      // to sibiling
+      // to Sibling
       var message = new TCollectionMessageInternal (TInternalMessageAction.FilterEnter, TypeInfo);
-      message.Node.SelectRelationSibiling (TChild.Filter);
+      message.Node.SelectRelationSibling (TChild.Filter);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
     }
@@ -144,9 +144,9 @@ namespace Gadget.Collection.Pattern.ViewModels
 
       DelegateCommand.PublishInternalMessage.Execute (msg);
 
-      // to sibiling
+      // to Sibling
       var message = new TCollectionMessageInternal (TInternalMessageAction.FilterLeave, TypeInfo);
-      message.Node.SelectRelationSibiling (TChild.Filter);
+      message.Node.SelectRelationSibling (TChild.Filter);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
     }

@@ -66,8 +66,8 @@ namespace Layout.Factory.Pattern.ViewModels
           }
         }
 
-        // from sibiling
-        if (message.Node.IsSibilingToMe (TChild.Property)) {
+        // from Sibling
+        if (message.Node.IsSiblingToMe (TChild.Property)) {
           // LockEnter
           if (message.IsAction (TInternalMessageAction.LockEnter)) {
             Model.LockEnter ();
@@ -150,8 +150,8 @@ namespace Layout.Factory.Pattern.ViewModels
     {
       Cleanup ();
 
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Cleanup, TChild.Property, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Cleanup, TChild.Property, TypeInfo);
       DelegateCommand.PublishInternalMessage.Execute (message);
 
       PropertySelect ("all");
@@ -159,8 +159,8 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void RequestModelDispatcher (TEntityAction action)
     {
-      //to sibiling 
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Request, TChild.Property, TypeInfo);
+      //to Sibling 
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Request, TChild.Property, TypeInfo);
       message.Support.Argument.Types.Select (action);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -246,8 +246,8 @@ namespace Layout.Factory.Pattern.ViewModels
         TDispatcher.Invoke (RefreshAllDispatcher);
         TDispatcher.Invoke (EditEnterDispatcher);
 
-        // to sibiling 
-        var message = new TFactorySibilingMessageInternal (TInternalMessageAction.PropertySelect, TChild.Property, TypeInfo);
+        // to Sibling 
+        var message = new TFactorySiblingMessageInternal (TInternalMessageAction.PropertySelect, TChild.Property, TypeInfo);
         message.Support.Argument.Types.Select (action);
         message.Support.Argument.Args.Select ("all");
 
@@ -285,8 +285,8 @@ namespace Layout.Factory.Pattern.ViewModels
       var action = Server.Models.Component.TEntityAction.CreateDefault;
       Model.ComponentModelProperty.RequestModel (action);
 
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.PropertySelect, TChild.Property, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.PropertySelect, TChild.Property, TypeInfo);
       message.Support.Argument.Types.Select (action);
       message.Support.Argument.Args.Select (propertyName);
 

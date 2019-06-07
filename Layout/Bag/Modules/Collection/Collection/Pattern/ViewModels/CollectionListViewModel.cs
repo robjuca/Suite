@@ -69,7 +69,7 @@ namespace Layout.Collection.Pattern.ViewModels
         }
 
         // from sibilig
-        if (message.Node.IsSibilingToMe (TChild.List)) {
+        if (message.Node.IsSiblingToMe (TChild.List)) {
           // Reload
           if (message.IsAction (TInternalMessageAction.Reload)) {
             TDispatcher.Invoke (ReloadDispatcher);
@@ -118,8 +118,8 @@ namespace Layout.Collection.Pattern.ViewModels
 
     void ReloadDispatcher ()
     {
-      // to sibiling display
-      var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Cleanup, TChild.List, TypeInfo);
+      // to Sibling display
+      var message = new TCollectionSiblingMessageInternal (TInternalMessageAction.Cleanup, TChild.List, TypeInfo);
       DelegateCommand.PublishInternalMessage.Execute (message);
 
       Model.Cleanup ();
@@ -145,8 +145,8 @@ namespace Layout.Collection.Pattern.ViewModels
 
     void ItemSelectedDispatcher (TComponentModelItem item)
     {
-      // to sibiling display
-      var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Select, TChild.List, TypeInfo);
+      // to Sibling display
+      var message = new TCollectionSiblingMessageInternal (TInternalMessageAction.Select, TChild.List, TypeInfo);
       message.Support.Argument.Types.Item.CopyFrom (item);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -173,16 +173,16 @@ namespace Layout.Collection.Pattern.ViewModels
       var modelItem = TComponentModelItem.CreateDefault;
       modelItem.CopyFrom (Model.Current);
 
-      // to sibiling display
-      var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.PropertySelect, TChild.List, TypeInfo);
+      // to Sibling display
+      var message = new TCollectionSiblingMessageInternal (TInternalMessageAction.PropertySelect, TChild.List, TypeInfo);
       message.Support.Argument.Args.Select (propertyName);
       message.Support.Argument.Types.Item.CopyFrom (modelItem);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
 
       if (Model.IsEmpty) {
-        // to sibiling display
-        message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Cleanup, TChild.List, TypeInfo);
+        // to Sibling display
+        message = new TCollectionSiblingMessageInternal (TInternalMessageAction.Cleanup, TChild.List, TypeInfo);
         DelegateCommand.PublishInternalMessage.Execute (message);
       }
     }

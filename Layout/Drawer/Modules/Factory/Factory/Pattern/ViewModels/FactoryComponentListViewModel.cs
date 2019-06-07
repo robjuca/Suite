@@ -81,8 +81,8 @@ namespace Layout.Factory.Pattern.ViewModels
           }
         }
 
-        // from sibiling
-        if (message.Node.IsSibilingToMe (TChild.List)) {
+        // from Sibling
+        if (message.Node.IsSiblingToMe (TChild.List)) {
           // Cleanup
           if (message.IsAction (TInternalMessageAction.Cleanup)) {
             TDispatcher.Invoke (CleanupDispatcher);
@@ -192,8 +192,8 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void DropRestoreDispatcher (Guid id)
     {
-      // to sibiling
-      var message = new TFactorySibilingMessageInternal (TInternalMessageAction.Drop, TChild.List, TypeInfo);
+      // to Sibling
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Drop, TChild.List, TypeInfo);
       message.Support.Argument.Args.Select (id);
 
       DelegateCommand.PublishInternalMessage.Execute (message);

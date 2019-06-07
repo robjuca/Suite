@@ -77,8 +77,8 @@ namespace Layout.Collection.Pattern.ViewModels
           }
         }
 
-        // from sibiling
-        if (message.Node.IsSibilingToMe (TChild.List)) {
+        // from Sibling
+        if (message.Node.IsSiblingToMe (TChild.List)) {
           // Reload
           if (message.IsAction (TInternalMessageAction.Reload)) {
             TDispatcher.Invoke (ReloadDispatcher);
@@ -134,8 +134,8 @@ namespace Layout.Collection.Pattern.ViewModels
 
     void ItemSelectedDispatcher (TComponentModelItem item)
     {
-      // to sibiling display
-      var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Select, TChild.List, TypeInfo);
+      // to Sibling display
+      var message = new TCollectionSiblingMessageInternal (TInternalMessageAction.Select, TChild.List, TypeInfo);
       message.Support.Argument.Types.Item.CopyFrom (item);
 
       DelegateCommand.PublishInternalMessage.Execute (message);
@@ -146,8 +146,8 @@ namespace Layout.Collection.Pattern.ViewModels
       Model.Cleanup ();
       RaiseChanged ();
 
-      // to sibiling display
-      var message = new TCollectionSibilingMessageInternal (TInternalMessageAction.Cleanup, TChild.List, TypeInfo);
+      // to Sibling display
+      var message = new TCollectionSiblingMessageInternal (TInternalMessageAction.Cleanup, TChild.List, TypeInfo);
       DelegateCommand.PublishInternalMessage.Execute (message);
 
       TDispatcher.Invoke (RequestDataDispatcher);

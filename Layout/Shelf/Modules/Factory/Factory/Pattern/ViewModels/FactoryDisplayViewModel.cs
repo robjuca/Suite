@@ -76,8 +76,8 @@ namespace Layout.Factory.Pattern.ViewModels
           }
         }
 
-        // from sibiling
-        if (message.Node.IsSibilingToMe (TChild.Display)) {
+        // from Sibling
+        if (message.Node.IsSiblingToMe (TChild.Display)) {
           // Size
           if (message.IsAction (TInternalMessageAction.Size)) {
             if (message.Support.Argument.Args.Param1 is TSize size) {

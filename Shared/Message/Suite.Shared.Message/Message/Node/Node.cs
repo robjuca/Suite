@@ -61,11 +61,11 @@ namespace Shared.Message
       return (res);
     }
 
-    public bool IsSibilingToMe (TChild child)
+    public bool IsSiblingToMe (TChild child)
     {
       bool res = false;
 
-      if (IsRelationSibiling) {
+      if (IsRelationSibling) {
         if (NotMe (child)) {
           res = true;
         }
