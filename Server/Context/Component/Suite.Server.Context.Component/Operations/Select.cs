@@ -60,6 +60,11 @@ namespace Server.Context.Component
             }
             break;
 
+          case Models.Infrastructure.TExtension.Summary: {
+              SelectSummary (context, action);
+            }
+            break;
+
           case Models.Infrastructure.TExtension.Idle: {
               //SelectIdle (context, action);
             }
@@ -526,6 +531,87 @@ namespace Server.Context.Component
 
       catch (Exception exception) {
         Server.Models.Infrastructure.THelper.FormatException ("Select Many", exception, action);
+      }
+    }
+
+    void SelectSummary (TModelContext context, Server.Models.Component.TEntityAction action)
+    {
+      /*
+       DATA IN
+      - action.Summary
+
+      DATA OUT
+      - action.Summary
+      */
+
+      try {
+        var categoryValue = TCategoryType.ToValue (action.Summary.Category);
+
+        // search Id by category
+        var descriptors = context.ComponentDescriptor
+          .Where (p => p.Category.Equals (categoryValue))
+          .ToList ()
+        ;
+
+        foreach (var descriptor in descriptors) {
+          // Info
+          var infoList = context.ComponentInfo
+            .Where (p => p.Id.Equals (descriptor.Id))
+            .ToList ()
+          ;
+
+          // info found
+          if (infoList.Count.Equals (1)) {
+            var infoModel = infoList [0];
+            action.CollectionAction.ComponentInfoCollection.Add (infoModel);
+          }
+        }
+
+        // Extension (CategoryRelationCollection)
+        var categoryRelationList = action.CollectionAction.CategoryRelationCollection
+          .Where (p => p.Category.Equals (categoryValue))
+          .ToList ()
+        ;
+
+        // found
+        if (categoryRelationList.Count.Equals (1)) {
+          var categoryRelation = categoryRelationList [0]; // get extension using TComponentExtension
+
+          var extension = TComponentExtension.Create (categoryRelation.Extension);
+          extension.Request ();
+
+          foreach (var item in action.CollectionAction.ComponentInfoCollection) {
+            var id = item.Id;
+            action.CollectionAction.ExtensionLayoutCollection.Clear ();
+
+            // check for style only
+            foreach (var extensionName in extension.ExtensionList) {
+              switch (extensionName) {
+                case TComponentExtensionName.Layout: {
+                    var list = context.ExtensionLayout
+                      .Where (p => p.Id.Equals (id))
+                      .ToList ()
+                    ;
+
+                    if (list.Count.Equals (1)) {
+                      action.CollectionAction.ExtensionLayoutCollection.Add (list [0]);
+                    }
+                  }
+                  break;
+              }
+            }
+
+            foreach (var layout in action.CollectionAction.ExtensionLayoutCollection) {
+              action.Summary.Select (layout.StyleHorizontal, layout.StyleVertical);
+            }
+          }
+        }
+
+        action.Result = TValidationResult.Success;
+      }
+
+      catch (Exception exception) {
+        Server.Models.Infrastructure.THelper.FormatException ("Select Summary", exception, action);
       }
     }
     #endregion

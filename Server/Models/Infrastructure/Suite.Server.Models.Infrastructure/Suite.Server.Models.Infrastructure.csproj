@@ -74,6 +74,7 @@
     <Compile Include="Infrastructure\Interfaces\IModelContext.cs" />
     <Compile Include="Infrastructure\Interfaces\IOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\Summary.cs" />
     <Compile Include="Types\CategoryType.cs" />
     <Compile Include="Types\ComponentExtension.cs" />
     <Compile Include="Types\Enums.cs" />

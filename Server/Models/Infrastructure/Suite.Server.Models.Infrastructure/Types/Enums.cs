@@ -35,6 +35,7 @@ namespace Server.Models.Infrastructure
     Node,
     Relation,
     Settings,
+    Summary,
     Zap,
   };
   //---------------------------//

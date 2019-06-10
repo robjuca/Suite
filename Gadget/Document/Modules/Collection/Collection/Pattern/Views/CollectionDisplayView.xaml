@@ -49,7 +49,7 @@
                                     <!--busy-->
                                     <ContentControl Margin="0 0 5 0"
                                                     Visibility="{Binding Model.BusyVisibility}"
-                                                    Style="{StaticResource ContentBusyIcon}" />
+                                                    Style="{DynamicResource ContentBusyIcon}" />
 
                                     <!--edit-->
                                     <Button BorderThickness="0"
@@ -59,7 +59,7 @@
                                             Background="Transparent"
                                             ToolTip="edit"
                                             caliburn:Message.Attach="[Event Click] = [OnEditCommadClicked ()]">
-                                        <ContentControl Style="{StaticResource EditIcon}" />
+                                        <ContentControl Style="{DynamicResource EditIcon}" />
                                     </Button>
 
                                     <!--remove-->
@@ -71,7 +71,7 @@
                                             Background="Transparent"
                                             ToolTip="remove"
                                             caliburn:Message.Attach="[Event Click] = [OnRemoveCommadClicked ()]">
-                                        <ContentControl Style="{StaticResource RemoveIcon}" />
+                                        <ContentControl Style="{DynamicResource RemoveIcon}" />
                                     </Button>
 
                                     <!--style-->
@@ -82,7 +82,7 @@
                                     <!--distorted-->
                                     <ContentControl Margin="5 0 0 0"
                                                     Visibility="{Binding Model.DistortedVisibility}"
-                                                    Style="{StaticResource DistortedPictureIcon}" />
+                                                    Style="{DynamicResource DistortedPictureIcon}" />
                                 </StackPanel>
                             </Border>
 

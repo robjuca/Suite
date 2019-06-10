@@ -66,6 +66,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <!--filter-->
@@ -216,10 +217,21 @@
                                  ItemTemplate="{StaticResource ListDataTemplate}"
                                  caliburn:Message.Attach="[Event SelectionChanged] = [OnSelectionChanged (List.SelectedItem)]" />
                     </Border>
+
+                    <!--dashboard-->
+                    <Border Grid.Row="4">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right">
+                            <ContentControl Margin="0 0 2 0"
+                                            Style="{StaticResource DashBoardIcon}" />
+
+                            <Button Content="dashboard"
+                                    caliburn:Message.Attach="[Event Click] = [OnDashBoardClicked ()]" />
+                        </StackPanel>
+                    </Border>
                 </Grid>
-
             </materialDesign:TransitionerSlide>
-
+            
             <!--can remove-->
             <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft}">
                 <materialDesign:TransitionerSlide.BackwardWipe>
@@ -227,6 +239,16 @@
                 </materialDesign:TransitionerSlide.BackwardWipe>
 
                 <views:TCollectionListCanRemoveView />
+
+            </materialDesign:TransitionerSlide>
+
+            <!--dashboard-->
+            <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect SlideInFromRight}">
+                <materialDesign:TransitionerSlide.BackwardWipe>
+                    <materialDesign:SlideOutWipe />
+                </materialDesign:TransitionerSlide.BackwardWipe>
+
+                <views:TCollectionListDashBoardView />
 
             </materialDesign:TransitionerSlide>
         </materialDesign:Transitioner>

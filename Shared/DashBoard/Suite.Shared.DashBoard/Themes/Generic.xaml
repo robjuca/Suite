@@ -3,6 +3,7 @@
                     xmlns:dragdrop="urn:gong-wpf-dragdrop"
                     xmlns:local="clr-namespace:Shared.DashBoard">
 
+    <!--TDashBoardControl-->
     <Style TargetType="{x:Type local:TDashBoardControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -130,6 +131,135 @@
                             <!--dummy-->
                             <Border Grid.Column="1"
                                     Grid.Row="1" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--TDashBoardSummaryControl-->
+    <Style TargetType="{x:Type local:TDashBoardSummaryControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:TDashBoardSummaryControl}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <!--dummy-->
+                            <Border Grid.Column="0"
+                                    Grid.Row="0" />
+
+                            <!--horizontal style-->
+                            <Border Grid.Column="1"
+                                    Grid.Row="0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0"
+                                               FontSize="9px"
+                                               HorizontalAlignment="Center"
+                                               Text="mini" />
+
+                                    <TextBlock Grid.Column="1"
+                                               HorizontalAlignment="Center"
+                                               FontSize="9px"
+                                               Text="small" />
+
+                                    <TextBlock Grid.Column="2"
+                                               HorizontalAlignment="Center"
+                                               FontSize="9px"
+                                               Text="large" />
+
+                                    <TextBlock Grid.Column="3"
+                                               HorizontalAlignment="Center"
+                                               FontSize="9px"
+                                               Text="big" />
+                                </Grid>
+                            </Border>
+
+                            <!--vertical style-->
+                            <Border Grid.Column="0"
+                                    Grid.Row="1"
+                                    VerticalAlignment="Top">
+                                <Grid Height="148">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0"
+                                               FontSize="9px"
+                                               VerticalAlignment="Center"
+                                               Text="mini" />
+
+                                    <TextBlock Grid.Row="1"
+                                               FontSize="9px"
+                                               VerticalAlignment="Center"
+                                               Text="small" />
+
+                                    <TextBlock Grid.Row="2"
+                                               FontSize="9px"
+                                               VerticalAlignment="Center"
+                                               Text="large" />
+
+                                    <TextBlock Grid.Row="3"
+                                               FontSize="9px"
+                                               VerticalAlignment="Center"
+                                               Text="big" />
+                                </Grid>
+                            </Border>
+
+                            <!--dashboard-->
+                            <Border Grid.Column="1"
+                                    Grid.Row="1">
+                                <ItemsControl x:Name="PART_DashBoardSummary">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Margin="2"
+                                                    Width="46"
+                                                    Height="32"
+                                                    BorderBrush="LightGray"
+                                                    BorderThickness=".8"
+                                                    Background="{Binding Background}">
+
+                                                <!--summary-->
+                                                <Button FontSize="10px"
+                                                        Content="{Binding SummaryString}"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontWeight="Light"
+                                                        Visibility="{Binding SummaryVisibility}" />
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </Border>
                         </Grid>
                     </Border>
                 </ControlTemplate>

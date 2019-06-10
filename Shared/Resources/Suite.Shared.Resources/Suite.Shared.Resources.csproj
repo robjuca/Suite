@@ -133,5 +133,8 @@
   <ItemGroup>
     <Resource Include="Images\ErrorMessage.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dashboard.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

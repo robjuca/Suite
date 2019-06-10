@@ -407,6 +407,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <!--ContentActiveIcon-->
     <Style x:Key="ContentActiveIcon"
            TargetType="{x:Type ContentControl}">
@@ -608,6 +609,29 @@
         </Setter>
     </Style>
 
+    <!--DashBoardIcon-->
+    <Style x:Key="DashBoardIcon"
+           TargetType="{x:Type ContentControl}">
+        <Setter Property="ToolTip"
+                Value="dashboard" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Image Source="pack://application:,,,/Suite.Shared.Resources;component/Images/DashBoard.ico"
+                               Width="16"
+                               Height="16" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <!-- ____________________ -->
 
 </ResourceDictionary>

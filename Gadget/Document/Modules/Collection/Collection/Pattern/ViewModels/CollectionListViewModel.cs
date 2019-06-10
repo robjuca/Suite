@@ -144,6 +144,21 @@ namespace Gadget.Collection.Pattern.ViewModels
       DelegateCommand.PublishInternalMessage.Execute (message);
     }
 
+    public void OnDashBoardClicked ()
+    {
+      Model.SlideIndex = 2;
+      TDispatcher.Invoke (RefreshAllDispatcher);
+
+      //to Sibling
+      var action = Server.Models.Component.TEntityAction.CreateDefault;
+      action.Summary.Select (Server.Models.Infrastructure.TCategory.Document);
+
+      var message = new TCollectionSiblingMessageInternal (TInternalMessageAction.Summary, TChild.List, TypeInfo);
+      message.Support.Argument.Types.Select (action);
+
+      DelegateCommand.PublishInternalMessage.Execute (message);
+    }
+
     public void OnFilterEnabledChanged (string filter)
     {
       //var message = new TDocumentModuleInternalMessage ();
