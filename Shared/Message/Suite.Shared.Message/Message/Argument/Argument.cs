@@ -87,6 +87,16 @@ namespace Shared.Message
       get;
       private set;
     }
+
+    public TStyleInfo HorizontalStyle
+    {
+      get;
+    }
+
+    public TStyleInfo VerticalStyle
+    {
+      get;
+    }
     #endregion
 
     #region Constructor
@@ -99,6 +109,9 @@ namespace Shared.Message
 
       EntityAction = null;
       Category = Server.Models.Infrastructure.TCategory.None;
+
+      HorizontalStyle = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
+      VerticalStyle = TStyleInfo.Create (TContentStyle.Mode.Vertical);
     }
     #endregion
 

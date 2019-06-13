@@ -56,12 +56,12 @@ namespace Shared.Types
     {
       ImagePositionItemsSource = new Collection<TImagePositionItem>
       {
+        new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.None),
         new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Left),
         new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Right),
         new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Top),
         new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Bottom),
         new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.Full),
-        new TImagePositionItem (styleHorizontalInfo, styleVerticalInfo, TImagePosition.None)
       };
 
       m_SelectedIndex = 0;
@@ -70,7 +70,7 @@ namespace Shared.Types
     public void Select (string imagePosition)
     {
       for (int index = 0; index < ImagePositionItemsSource.Count; index++) {
-        var position = ImagePositionItemsSource [index].Position;
+        var position = ImagePositionItemsSource [index].Position.ToString ();
 
         if (imagePosition.Equals (position)) {
           ImagePositionSelectedIndex = index;

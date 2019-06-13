@@ -248,7 +248,9 @@
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
                                                         FontWeight="Light"
-                                                        Visibility="{Binding SummaryVisibility}" />
+                                                        Visibility="{Binding SummaryVisibility}"
+                                                        Command="{Binding ItemClicked.Value}"
+                                                        CommandParameter="{Binding}" />
                                             </Border>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
@@ -261,6 +263,48 @@
                                 </ItemsControl>
                             </Border>
                         </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--TDashBoardSettingsControl-->
+    <Style TargetType="{x:Type local:TDashBoardSettingsControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:TDashBoardSettingsControl}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+
+                        <!--dashboard-->
+                        <ItemsControl x:Name="PART_DashBoardSummary">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="2"
+                                            Width="60"
+                                            Height="32"
+                                            BorderBrush="LightGray"
+                                            BorderThickness=".8"
+                                            Background="{Binding Background}">
+
+                                        <!--settings-->
+                                        <TextBlock FontSize="10px"
+                                                   Text="{Binding SettingsString}"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontWeight="Light" />
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Width="260" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

@@ -72,7 +72,7 @@ namespace Shared.ViewModel
         { TContentStyle.Style.None, StyleNone }
       };
 
-      m_SelectedStyle = TContentStyle.Style.mini;
+      m_SelectedStyle = TContentStyle.Style.None;
     }
     #endregion
     
@@ -92,9 +92,16 @@ namespace Shared.ViewModel
       return (m_Styles [style]);
     }
 
-    public void Select (TContentStyle.Style selectedStyle)
+    public bool Select (TContentStyle.Style selectedStyle)
     {
-      m_SelectedStyle = selectedStyle;
+      bool res = false;
+
+      if (m_SelectedStyle.Equals (selectedStyle).IsFalse ()) {
+        m_SelectedStyle = selectedStyle;
+        res = true;
+      }
+
+      return (res);
     }
 
     public void SelectItem (Server.Models.Component.TEntityAction action)

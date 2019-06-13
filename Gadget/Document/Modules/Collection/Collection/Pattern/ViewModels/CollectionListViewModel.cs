@@ -99,6 +99,12 @@ namespace Gadget.Collection.Pattern.ViewModels
             TDispatcher.Invoke (RequestDataDispatcher);
           }
 
+          // Select
+          if (message.IsAction (TInternalMessageAction.Style)) {
+            TDispatcher.BeginInvoke (StyleHorizontalChangedDispatcher, message.Support.Argument.Types.HorizontalStyle.StyleString);
+            TDispatcher.BeginInvoke (StyleVerticalChangedDispatcher, message.Support.Argument.Types.VerticalStyle.StyleString);
+          }
+
           // Back
           if (message.IsAction (TInternalMessageAction.Back)) {
             Model.SlideIndex = 0;
@@ -214,8 +220,8 @@ namespace Gadget.Collection.Pattern.ViewModels
       // to parent
       // Collection - Minimum
       var action = Server.Models.Component.TEntityAction.Create (
-        Server.Models.Infrastructure.TCategory.Document, 
-        Server.Models.Infrastructure.TOperation.Collection, 
+        Server.Models.Infrastructure.TCategory.Document,
+        Server.Models.Infrastructure.TOperation.Collection,
         Server.Models.Infrastructure.TExtension.Minimum
       );
 
@@ -284,6 +290,16 @@ namespace Gadget.Collection.Pattern.ViewModels
       Model.TryToSelect ();
 
       TDispatcher.Invoke (RefreshAllDispatcher);
+    }
+
+    void StyleHorizontalChangedDispatcher (string style)
+    {
+      OnStyleHorizontalSelected (style);
+    }
+
+    void StyleVerticalChangedDispatcher (string style)
+    {
+      OnStyleVerticalSelected (style);
     }
     #endregion
 

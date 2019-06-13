@@ -115,10 +115,10 @@ namespace Shared.Types
     TModelProperty ()
     {
       ComponentModel = TPropertyComponentModel.CreateDefault;
-      ComponentModel.PropertyChanged += OnModelPropertyChanged;
+      ComponentModel.PropertyChanged += OnPropertyChanged;
 
       ExtensionModel = TPropertyExtensionModel.CreateDefault;
-      ExtensionModel.PropertyChanged += OnModelPropertyChanged;
+      ExtensionModel.PropertyChanged += OnPropertyChanged;
 
       BusyVisibility = Visibility.Collapsed;
       DistortedVisibility = Visibility.Collapsed;
@@ -229,7 +229,7 @@ namespace Shared.Types
     #endregion
 
     #region Event
-    void OnModelPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    void OnPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
       if (e.PropertyName.Equals ("NameProperty")) {
         ValidateApplyCommand ();

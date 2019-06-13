@@ -4,23 +4,21 @@
 ----------------------------------------------------------------*/
 
 //----- Include
-using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
 using rr.Library.Types;
-using rr.Library.Helper;
 //---------------------------//
 
 namespace Shared.DashBoard
 {
   [TemplatePart (Name = PART_DASHBOARDSUMMARY, Type = typeof (ItemsControl))]
-  public class TDashBoardSummaryControl : Control
+  public class TDashBoardSettingsControl : Control
   {
     #region Property
-    public ObservableCollection<TDashBoardSummaryItem> DashBoardItemSource
+    public ObservableCollection<TDashBoardSettingsItem> DashBoardItemSource
     {
       get;
       private set;
@@ -33,20 +31,19 @@ namespace Shared.DashBoard
     #endregion
     
     #region Constructor
-    static TDashBoardSummaryControl ()
+    static TDashBoardSettingsControl ()
     {
-      DefaultStyleKeyProperty.OverrideMetadata (typeof (TDashBoardSummaryControl), new FrameworkPropertyMetadata (typeof (TDashBoardSummaryControl)));
+      DefaultStyleKeyProperty.OverrideMetadata (typeof (TDashBoardSettingsControl), new FrameworkPropertyMetadata (typeof (TDashBoardSettingsControl)));
     }
 
-    public TDashBoardSummaryControl ()
+    public TDashBoardSettingsControl ()
     {
-      DashBoardItemSource = new ObservableCollection<TDashBoardSummaryItem> ();
+      DashBoardItemSource = new ObservableCollection<TDashBoardSettingsItem> ();
 
       // 4x4 matrix
       for (int row = 1; row <= m_MaxRow; row++) {
         for (int col = 1; col <= m_MaxColumn; col++) {
-          var item = TDashBoardSummaryItem.Create (TPosition.Create (col, row));
-          item.CreateCommand (this);
+          var item = TDashBoardSettingsItem.Create (TPosition.Create (col, row));
 
           DashBoardItemSource.Add (item);
         }
@@ -58,52 +55,6 @@ namespace Shared.DashBoard
       {
         Source = DashBoardItemSource
       };
-    }
-    #endregion
-
-    #region Event
-    // Declare the delegate
-    public delegate void ItemClickedEventHandler (object sender, TDashBoardEventArgs e);
-
-    // Declare the event.
-    public event ItemClickedEventHandler ItemClicked;
-    #endregion
-
-    #region Members
-    public void SelectModel (Server.Models.Component.TEntityAction action)
-    {
-      action.ThrowNull ();
-
-      foreach (var item in DashBoardItemSource) {
-        item.SelectModel (action);
-      }
-
-      TDispatcher.Invoke (RefreshCollectionDispatcher);
-    }
-
-    public void Cleanup ()
-    {
-      CleanupDashBoard ();
-    }
-    #endregion
-
-    #region Command Handler
-    public void ItemClickedCommandHandler (object obj)
-    {
-      if (obj is TDashBoardSummaryItem item) {
-        var args = TDashBoardEventArgs.CreateDefault;
-        args.HorizontalStyleInfo.CopyFrom (item.HorizontalStyleInfo);
-        args.VerticalStyleInfo.CopyFrom (item.VerticalStyleInfo);
-
-        ItemClicked?.Invoke (this, args);
-      }
-    }
-    #endregion
-
-    #region Dispatcher
-    void RefreshCollectionDispatcher ()
-    {
-      RefreshCollection ();
     }
     #endregion
 
@@ -140,24 +91,6 @@ namespace Shared.DashBoard
     void RefreshCollection ()
     {
       m_DashboardCollectionViewSource.View.Refresh ();
-    }
-
-    void CleanupDashBoard ()
-    {
-      foreach (var item in DashBoardItemSource) {
-        item.Cleanup ();
-      }
-    }
-
-    TDashBoardSummaryItem Select (TPosition position)
-    {
-      foreach (var item in DashBoardItemSource) {
-        if (item.IsPosition (position)) {
-          return (item);
-        }
-      }
-
-      return (null);
     }
     #endregion
   }

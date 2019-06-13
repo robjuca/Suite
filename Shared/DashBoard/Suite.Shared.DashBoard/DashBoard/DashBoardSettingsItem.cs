@@ -14,7 +14,7 @@ using Shared.Types;
 
 namespace Shared.DashBoard
 {
-  public class TDashBoardSummaryItem
+  public class TDashBoardSettingsItem
   {
     #region Property
     public TPosition Position
@@ -33,6 +33,27 @@ namespace Shared.DashBoard
       get;
     }
 
+    public string SettingsString
+    {
+      get
+      {
+        var settings = string.Empty;
+        var contentStyle = TContentStyle.CreateDefault;
+
+        // mini, mini
+        if (ContainsColumnPosition (1) && ContainsRowPosition (1)) {
+          settings = $"{contentStyle.RequestStyleSizeString (TContentStyle.Mode.Horizontal, TContentStyle.Style.mini)} x {contentStyle.RequestStyleSizeString (TContentStyle.Mode.Vertical, TContentStyle.Style.mini)}";
+        }
+
+        // big, big
+        if (ContainsColumnPosition (4) && ContainsRowPosition (4)) {
+          settings = contentStyle.WindowSizeString;
+        }
+
+        return (settings);
+      }
+    }
+
     public string StyleString
     {
       get
@@ -48,38 +69,10 @@ namespace Shared.DashBoard
         return ($"c{Position.Column} r{Position.Row}");
       }
     }
-
-    public int Summary
-    {
-      get;
-      private set;
-    }
-
-    public string SummaryString
-    {
-      get
-      {
-        return (Summary.Equals (0) ? string.Empty : $"{Summary}");
-      }
-    }
-
-    public Visibility SummaryVisibility
-    {
-      get
-      {
-        return (Summary.Equals (0) ? Visibility.Hidden : Visibility.Visible);
-      }
-    }
-
-    public TObservableCommand ItemClicked
-    {
-      get;
-      private set;
-    }
     #endregion
 
     #region Constructor
-    TDashBoardSummaryItem (TPosition position)
+    TDashBoardSettingsItem (TPosition position)
       : this ()
     {
       Position.CopyFrom (position);
@@ -121,22 +114,15 @@ namespace Shared.DashBoard
       }
     }
 
-    TDashBoardSummaryItem ()
+    TDashBoardSettingsItem ()
     {
       HorizontalStyleInfo = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
       VerticalStyleInfo = TStyleInfo.Create (TContentStyle.Mode.Vertical);
       Position = TPosition.CreateDefault;
-
-      Cleanup ();
     }
     #endregion
 
     #region Members
-    internal void CreateCommand (TDashBoardSummaryControl control)
-    {
-      ItemClicked = new TObservableCommand (new DelegateCommand<object> (control.ItemClickedCommandHandler));
-    }
-
     public bool IsPosition (TPosition position)
     {
       return (Position.IsPosition (position));
@@ -152,67 +138,14 @@ namespace Shared.DashBoard
       return (Position.Row.Equals (col));
     }
 
-    public void SelectModel (Server.Models.Component.TEntityAction action)
-    {
-      if (action.NotNull ()) {
-        var key = HorizontalStyleInfo.StyleString + VerticalStyleInfo.StyleString;
-
-        if (action.Summary.GadgetCount.ContainsKey (key)) {
-          Summary = action.Summary.GadgetCount [key];
-        }
-      }
-    }
-
-    public void CopyFrom (TDashBoardSummaryItem alias, bool preservePosition = false)
-    {
-      if (alias.NotNull ()) {
-        
-      }
-    }
-
-    public bool IsSameStyle (TDashBoardSummaryItem alias)
-    {
-      bool res = false;
-
-      if (alias.NotNull ()) {
-        res = HorizontalStyleInfo.Contains (alias.HorizontalStyleInfo) && VerticalStyleInfo.Contains (alias.VerticalStyleInfo);
-      }
-
-      return (res);
-    }
-
     public bool ContainsStyle (TContentStyle.Style horizontalStyle, TContentStyle.Style verticalStyle)
     {
       return (HorizontalStyleInfo.Style.Equals (horizontalStyle) && VerticalStyleInfo.Style.Equals (verticalStyle));
     }
-
-    public void Cleanup ()
-    {
-      // style mini (300 x 116) (margin 2)
-      var width = 304;
-      var height = 120;
-
-      MyRectangle = new System.Drawing.Rectangle (
-        width * (Position.Column - 1),
-        height * (Position.Row - 1),
-        width,
-        height
-      );
-
-      Summary = 0;
-    }
-    #endregion
-
-    #region Property
-    System.Drawing.Rectangle MyRectangle
-    {
-      get;
-      set;
-    }
     #endregion
 
     #region Static
-    public static TDashBoardSummaryItem Create (TPosition position) => new TDashBoardSummaryItem (position); 
+    public static TDashBoardSettingsItem Create (TPosition position) => new TDashBoardSettingsItem (position); 
     #endregion
   }
   //---------------------------//

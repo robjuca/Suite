@@ -4,6 +4,7 @@
 ----------------------------------------------------------------*/
 
 //----- Include
+using System;
 using System.ComponentModel.Composition;
 
 using rr.Library.Infrastructure;
@@ -12,6 +13,7 @@ using rr.Library.Helper;
 using Shared.Types;
 using Shared.Resources;
 using Shared.ViewModel;
+using Shared.DashBoard;
 
 using Gadget.Collection.Presentation;
 using Gadget.Collection.Pattern.Models;
@@ -31,6 +33,8 @@ namespace Gadget.Collection.Pattern.ViewModels
 
       presentation.RequestPresentationCommand (this);
       presentation.EventSubscribe (this);
+
+      m_Commit = true;
     }
     #endregion
 
@@ -63,6 +67,11 @@ namespace Gadget.Collection.Pattern.ViewModels
               //}
             }
           }
+
+          // Reload
+          if (message.IsAction (TInternalMessageAction.Reload)) {
+            m_Commit = true;
+          }
         }
 
         // from sibilig
@@ -81,6 +90,14 @@ namespace Gadget.Collection.Pattern.ViewModels
     {
       TDispatcher.Invoke (BackDispatcher);
     }
+
+    public void OnItemClicked (TDashBoardEventArgs args)
+    {
+      if (args.NotNull ()) {
+        TDispatcher.Invoke (BackDispatcher);
+        TDispatcher.BeginInvoke (ItemClickedDispatcher, args);
+      }
+    }
     #endregion
 
     #region Dispatcher
@@ -95,19 +112,21 @@ namespace Gadget.Collection.Pattern.ViewModels
 
     void SummaryDispatcher (Server.Models.Infrastructure.TCategory category)
     {
-      // to parent (Select - Summary)
-      var action = Server.Models.Component.TEntityAction.Create (
-        category,
-        Server.Models.Infrastructure.TOperation.Select,
-        Server.Models.Infrastructure.TExtension.Summary
-      );
+      if (m_Commit) {
+        // to parent (Select - Summary)
+        var action = Server.Models.Component.TEntityAction.Create (
+          category,
+          Server.Models.Infrastructure.TOperation.Select,
+          Server.Models.Infrastructure.TExtension.Summary
+        );
 
-      action.Summary.Select (category);
+        action.Summary.Select (category);
 
-      var message = new TCollectionMessageInternal (TInternalMessageAction.Request, TChild.Board, TypeInfo);
-      message.Support.Argument.Types.Select (action);
+        var message = new TCollectionMessageInternal (TInternalMessageAction.Request, TChild.Board, TypeInfo);
+        message.Support.Argument.Types.Select (action);
 
-      DelegateCommand.PublishInternalMessage.Execute (message);
+        DelegateCommand.PublishInternalMessage.Execute (message);
+      }
     }
 
     void SummaryResultDispatcher (Server.Models.Component.TEntityAction action)
@@ -116,9 +135,22 @@ namespace Gadget.Collection.Pattern.ViewModels
 
       if (FrameworkElementView.FindName ("DashBoardSummaryControl") is Shared.DashBoard.TDashBoardSummaryControl control) {
         control.SelectModel (action);
+
+        m_Commit = false;
       }
 
       RaiseChanged ();
+    }
+
+    void ItemClickedDispatcher (TDashBoardEventArgs args)
+    {
+      // to Sibling
+      var message = new TCollectionMessageInternal (TInternalMessageAction.Style, TypeInfo);
+      message.Node.SelectRelationSibling (TChild.Board);
+      message.Support.Argument.Types.HorizontalStyle.CopyFrom (args.HorizontalStyleInfo);
+      message.Support.Argument.Types.VerticalStyle.CopyFrom (args.VerticalStyleInfo);
+
+      DelegateCommand.PublishInternalMessage.Execute (message);
     }
     #endregion
 
@@ -130,6 +162,10 @@ namespace Gadget.Collection.Pattern.ViewModels
         return (PresentationCommand as IDelegateCommand);
       }
     }
+    #endregion
+
+    #region Fields
+    bool                                    m_Commit; 
     #endregion
   };
   //---------------------------//

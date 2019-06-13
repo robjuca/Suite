@@ -32,11 +32,6 @@ namespace Gadget.Factory.Pattern.Models
     #endregion
 
     #region Members
-    internal void Initialize ()
-    {
-      ComponentModelProperty.Initialize ();
-    }
-
     internal void SelectModel (Server.Models.Component.TEntityAction action)
     {
       ComponentModelProperty.SelectModel (action);

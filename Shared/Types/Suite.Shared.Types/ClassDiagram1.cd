@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Shared.Types.TModelProperty">
+    <Position X="5.5" Y="2.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>IAACgCAQAAQAAQAAIAAAAARBBIAQBFAAACgAokBAAAA=</HashCode>
+      <FileName>Types\Property\Model\ModelProperty.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ComponentModel" />
+      <Property Name="ExtensionModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Shared.Types.TPropertyComponentModel">
+    <Position X="1" Y="2.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAACgAAAAAAAAAAAAAAAAIAAAAAAAEACAAAEAAgAA=</HashCode>
+      <FileName>Types\Property\Model\PropertyComponentModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared.Types.TPropertyExtensionModel">
+    <Position X="10.75" Y="2.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>GEAARCQAAAQBAQBAMEIAAAgYAAAAgAAgFCBAQEDgKAA=</HashCode>
+      <FileName>Types\Property\Model\PropertyExtensionModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ImagePositionProperty" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Shared.Types.TImagePositionInfo">
+    <Position X="16" Y="2.25" Width="2.5" />
+    <AssociationLine Name="ImagePositionItemsSource" Type="Shared.Types.TImagePositionItem">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.102" Y="0.143" Height="0.182" Width="2.035" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAQAAAAAEAACAAAAAAAAAAAAAAAAQQBAAAAA=</HashCode>
+      <FileName>Types\Property\Position\ImagePositionInfo.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Current" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ImagePositionItemsSource" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Shared.Types.TImagePositionItem">
+    <Position X="20.75" Y="2.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAgAAgAAAAAAQIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Types\Property\Position\TImagePositionItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

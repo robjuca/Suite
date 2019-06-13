@@ -76,6 +76,7 @@ namespace Shared.Types
     SettingsValidating,
     Size,
     ShutDown,
+    Style,
     Summary,
     Unlocked,
   };
@@ -125,6 +126,7 @@ namespace Shared.Types
     SettingsValidated,
     SettingsValidating,
     Size,
+    Style,
     Summary,
   };
   //---------------------------// 

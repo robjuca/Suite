@@ -77,6 +77,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DashBoard\DashBoardSettingsControl.cs" />
+    <Compile Include="DashBoard\DashBoardSettingsItem.cs" />
     <Compile Include="DashBoard\DashBoardSummaryItem.cs" />
     <Compile Include="DashBoard\DashBoardSummaryControl.cs" />
     <Compile Include="DashBoard\DashBoardControl.cs" />

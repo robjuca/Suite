@@ -82,6 +82,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Bin\Suite.Server.Models.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="Suite.Shared.DashBoard, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bin\Suite.Shared.DashBoard.dll</HintPath>
+    </Reference>
     <Reference Include="Suite.Shared.Message, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Bin\Suite.Shared.Message.dll</HintPath>

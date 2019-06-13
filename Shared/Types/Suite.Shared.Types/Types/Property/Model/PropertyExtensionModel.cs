@@ -339,24 +339,11 @@ namespace Shared.Types
     public void SelectModel (TEntityAction action)
     {
       if (action.NotNull ()) {
-        m_LayoutModel.CopyFrom (action.ModelAction.ExtensionLayoutModel);
-        m_ImageModel.CopyFrom (action.ModelAction.ExtensionImageModel);
-        m_DocumentModel.CopyFrom (action.ModelAction.ExtensionDocumentModel);
-        m_GeometryModel.CopyFrom (action.ModelAction.ExtensionGeometryModel);
-        m_TextModel.CopyFrom (action.ModelAction.ExtensionTextModel);
+        HeaderVisibilityProperty.Select (action.ModelAction.ExtensionDocumentModel.HeaderVisibility, action.ModelAction.ExtensionDocumentModel.FooterVisibility);
+        FooterVisibilityProperty.Select (action.ModelAction.ExtensionDocumentModel.HeaderVisibility, action.ModelAction.ExtensionDocumentModel.FooterVisibility);
 
-        HeaderVisibilityProperty.Select (m_DocumentModel.HeaderVisibility, m_DocumentModel.FooterVisibility);
-        FooterVisibilityProperty.Select (m_DocumentModel.HeaderVisibility, m_DocumentModel.FooterVisibility);
-
-        // preserve
-        var sizeCols = m_GeometryModel.SizeCols;
-        var sizeRows = m_GeometryModel.SizeRows;
-        var positionImage = m_GeometryModel.PositionImage;
-
-        ImagePositionProperty.Select (positionImage);
-
-        ColumnsProperty.Select (sizeCols);
-        RowsProperty.Select (sizeRows);
+        ColumnsProperty.Select (action.ModelAction.ExtensionGeometryModel.SizeCols);
+        RowsProperty.Select (action.ModelAction.ExtensionGeometryModel.SizeRows);
 
         if (action.Id.NotEmpty ()) {
           bool locked = (action.ModelAction.ComponentStatusModel.Locked || action.ModelAction.ComponentStatusModel.Busy);
@@ -378,6 +365,15 @@ namespace Shared.Types
             RowsProperty.Lock ();
           }
         }
+
+        // DO NOT CHANGE THIS ORDER
+        ImagePositionProperty.Select (action.ModelAction.ExtensionGeometryModel.PositionImage);
+
+        m_LayoutModel.CopyFrom (action.ModelAction.ExtensionLayoutModel);
+        m_ImageModel.CopyFrom (action.ModelAction.ExtensionImageModel);
+        m_DocumentModel.CopyFrom (action.ModelAction.ExtensionDocumentModel);
+        m_GeometryModel.CopyFrom (action.ModelAction.ExtensionGeometryModel);
+        m_TextModel.CopyFrom (action.ModelAction.ExtensionTextModel);
       }
     }
 
@@ -483,7 +479,7 @@ namespace Shared.Types
     {
       string propertyName = e.PropertyName;
 
-      if (propertyName.Equals ("StyleHorizontalProperty")|| propertyName.Equals ("StyleVerticalProperty")) {
+      if (propertyName.Equals ("StyleHorizontalProperty") || propertyName.Equals ("StyleVerticalProperty")) {
         ImagePositionProperty.SetupCollection (StyleHorizontalProperty.Current.StyleInfo, StyleVerticalProperty.Current.StyleInfo);
       }
 

@@ -49,6 +49,16 @@ namespace Shared.DashBoard
     {
       get;
     }
+
+    public TStyleInfo HorizontalStyleInfo
+    {
+      get;
+    }
+
+    public TStyleInfo VerticalStyleInfo
+    {
+      get;
+    }
     #endregion
 
     #region Constructor
@@ -63,6 +73,9 @@ namespace Shared.DashBoard
       Id = Guid.Empty;
 
       ReportData = TReportData.CreateDefault;
+
+      HorizontalStyleInfo = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
+      VerticalStyleInfo = TStyleInfo.Create (TContentStyle.Mode.Vertical);
     }
     #endregion
 

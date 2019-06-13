@@ -99,5 +99,8 @@
     <Compile Include="Types\Support\RandomColors.cs" />
     <Compile Include="Types\Support\SnackbarMessage.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

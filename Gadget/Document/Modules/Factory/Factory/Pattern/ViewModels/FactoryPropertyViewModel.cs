@@ -235,7 +235,6 @@ namespace Gadget.Factory.Pattern.ViewModels
     protected override void Initialize ()
     {
       Model.Cleanup ();
-      Model.Initialize ();
     } 
     #endregion
 
@@ -276,8 +275,6 @@ namespace Gadget.Factory.Pattern.ViewModels
       RaiseChanged ();
 
       CleanupPropertyControl ();
-
-      Model.Initialize ();
 
       ResetViewMode ();
 
