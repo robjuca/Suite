@@ -10,8 +10,6 @@ using System.ComponentModel.Composition;
 using rr.Library.Infrastructure;
 using rr.Library.Helper;
 
-using Server.Models.Component;
-
 using Shared.Types;
 using Shared.Resources;
 using Shared.ViewModel;
@@ -55,7 +53,7 @@ namespace Gadget.Collection.Pattern.ViewModels
               if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Collection, Server.Models.Infrastructure.TExtension.Full)) {
                 // Image
                 if (message.Support.Argument.Types.IsOperationCategory (Server.Models.Infrastructure.TCategory.Image)) {
-                  var entityAction = TEntityAction.Request (message.Support.Argument.Types.EntityAction);
+                  var entityAction = Server.Models.Component.TEntityAction.Request (message.Support.Argument.Types.EntityAction);
                   TDispatcher.BeginInvoke (ResponseDataDispatcher, entityAction);
                 }
               }
@@ -79,6 +77,19 @@ namespace Gadget.Collection.Pattern.ViewModels
             RaiseChanged ();
 
             TDispatcher.Invoke (RequestDataDispatcher);
+          }
+
+          // Style
+          if (message.IsAction (TInternalMessageAction.Style)) {
+            TDispatcher.BeginInvoke (StyleHorizontalChangedDispatcher, message.Support.Argument.Types.HorizontalStyle.StyleString);
+            TDispatcher.BeginInvoke (StyleVerticalChangedDispatcher, message.Support.Argument.Types.VerticalStyle.StyleString);
+          }
+
+          // Back
+          if (message.IsAction (TInternalMessageAction.Back)) {
+            Model.SlideIndex = 0;
+
+            TDispatcher.Invoke (RefreshAllDispatcher);
           }
         }
       }
@@ -108,6 +119,21 @@ namespace Gadget.Collection.Pattern.ViewModels
     {
       TDispatcher.BeginInvoke (ItemSelectedDispatcher, item);
     }
+
+    public void OnDashBoardClicked ()
+    {
+      Model.SlideIndex = 1;
+      TDispatcher.Invoke (RefreshAllDispatcher);
+
+      //to Sibling
+      var action = Server.Models.Component.TEntityAction.CreateDefault;
+      action.Summary.Select (Server.Models.Infrastructure.TCategory.Image);
+
+      var message = new TCollectionSiblingMessageInternal (TInternalMessageAction.Summary, TChild.List, TypeInfo);
+      message.Support.Argument.Types.Select (action);
+
+      DelegateCommand.PublishInternalMessage.Execute (message);
+    }
     #endregion
 
     #region Dispatcher
@@ -122,12 +148,12 @@ namespace Gadget.Collection.Pattern.ViewModels
     {
       // to parent (Collection - Full)
       var message = new TCollectionMessageInternal (TInternalMessageAction.Request, TChild.List, TypeInfo);
-      message.Support.Argument.Types.Select (TEntityAction.Create (Server.Models.Infrastructure.TCategory.Image, Server.Models.Infrastructure.TOperation.Collection, Server.Models.Infrastructure.TExtension.Full));
+      message.Support.Argument.Types.Select (Server.Models.Component.TEntityAction.Create (Server.Models.Infrastructure.TCategory.Image, Server.Models.Infrastructure.TOperation.Collection, Server.Models.Infrastructure.TExtension.Full));
 
       DelegateCommand.PublishInternalMessage.Execute (message);
     }
 
-    void ResponseDataDispatcher (TEntityAction action)
+    void ResponseDataDispatcher (Server.Models.Component.TEntityAction action)
     {
       Model.Select (action);
 
@@ -149,6 +175,16 @@ namespace Gadget.Collection.Pattern.ViewModels
 
         DelegateCommand.PublishInternalMessage.Execute (message);
       }
+    }
+
+    void StyleHorizontalChangedDispatcher (string style)
+    {
+      OnStyleHorizontalSelected (style);
+    }
+
+    void StyleVerticalChangedDispatcher (string style)
+    {
+      OnStyleVerticalSelected (style);
     }
     #endregion
 

@@ -78,7 +78,6 @@ namespace Gadget.Factory.Pattern.ViewModels
     #region Dispatcher
     void SelectDispatcher (TEntityAction action)
     {
-      //Model.Select (action);
       RaiseChanged ();
     }
 

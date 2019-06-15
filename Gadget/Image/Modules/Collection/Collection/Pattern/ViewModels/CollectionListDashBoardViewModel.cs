@@ -62,6 +62,7 @@ namespace Gadget.Collection.Pattern.ViewModels
 
         // from sibilig
         if (message.Node.IsSiblingToMe (TChild.Board)) {
+          // Summary
           if (message.IsAction (TInternalMessageAction.Summary)) {
             var entityAction = Server.Models.Component.TEntityAction.Request (message.Support.Argument.Types.EntityAction);
             TDispatcher.BeginInvoke (SummaryDispatcher, entityAction.Summary.Category);

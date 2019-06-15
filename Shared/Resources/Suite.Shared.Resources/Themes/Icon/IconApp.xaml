@@ -20,7 +20,26 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style x:Key="AppMiniIcon"
+           TargetType="{x:Type ContentControl}">
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Image Source="/Assets/Images/App.ico"
+                               Width="16"
+                               Height="16" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--menu-->
     <!--MenuDocumentIcon-->
     <Style x:Key="MenuDocumentIcon"

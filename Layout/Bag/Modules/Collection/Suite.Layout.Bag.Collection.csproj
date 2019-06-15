@@ -74,6 +74,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Bin\Suite.Server.Models.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="Suite.Shared.DashBoard, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Bin\Suite.Shared.DashBoard.dll</HintPath>
+    </Reference>
     <Reference Include="Suite.Shared.Gadget.Document, Version=1.0.2019.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Bin\Suite.Shared.Gadget.Document.dll</HintPath>
@@ -123,14 +127,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collection\Pattern\Models\CollectionDisplayModel.cs" />
+    <Compile Include="Collection\Pattern\Models\CollectionListCanRemoveModel.cs" />
+    <Compile Include="Collection\Pattern\Models\CollectionListDashBoardModel.cs" />
     <Compile Include="Collection\Pattern\Models\CollectionListModel.cs" />
     <Compile Include="Collection\Pattern\Models\CollectionModel.cs" />
+    <Compile Include="Collection\Pattern\ViewModels\CollectionListCanRemoveViewModel.cs" />
+    <Compile Include="Collection\Pattern\ViewModels\CollectionListDashBoardViewModel.cs" />
     <Compile Include="Collection\Pattern\ViewModels\CollectionListViewModel.cs" />
     <Compile Include="Collection\Pattern\ViewModels\CollectionDisplayViewModel.cs" />
     <Compile Include="Collection\Pattern\ViewModels\CollectionViewModel.cs" />
+    <Compile Include="Collection\Pattern\ViewModels\Interfaces\ICollectionListCanRemoveViewModel.cs" />
+    <Compile Include="Collection\Pattern\ViewModels\Interfaces\ICollectionListDashBoardViewModel.cs" />
     <Compile Include="Collection\Pattern\ViewModels\Interfaces\ICollectionListViewModel.cs" />
     <Compile Include="Collection\Pattern\ViewModels\Interfaces\ICollectionDisplayViewModel.cs" />
     <Compile Include="Collection\Pattern\ViewModels\Interfaces\ICollectionViewModel.cs" />
+    <Compile Include="Collection\Pattern\Views\CollectionListCanRemoveView.xaml.cs">
+      <DependentUpon>CollectionListCanRemoveView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Collection\Pattern\Views\CollectionListDashBoardView.xaml.cs">
+      <DependentUpon>CollectionListDashBoardView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Collection\Pattern\Views\CollectionView.xaml.cs">
       <DependentUpon>CollectionView.xaml</DependentUpon>
     </Compile>
@@ -150,6 +166,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Collection\Pattern\Views\CollectionListCanRemoveView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Collection\Pattern\Views\CollectionListDashBoardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Collection\Pattern\Views\CollectionView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

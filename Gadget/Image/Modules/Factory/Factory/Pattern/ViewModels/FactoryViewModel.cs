@@ -52,6 +52,7 @@ namespace Gadget.Factory.Pattern.ViewModels
 
       // collection
       if (message.IsModule (TResource.TModule.Collection)) {
+        // Edit
         if (message.IsAction (TMessageAction.Edit)) {
           // to child edit
           var messageInternal = new TFactoryMessageInternal (TInternalMessageAction.Edit, TypeInfo);

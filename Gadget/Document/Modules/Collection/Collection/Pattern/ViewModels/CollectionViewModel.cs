@@ -39,6 +39,7 @@ namespace Gadget.Collection.Pattern.ViewModels
     {
       // shell
       if (message.IsModule (TResource.TModule.Shell)) {
+        // DatabaseValidated
         if (message.IsAction (TMessageAction.DatabaseValidated)) {
           // to child list
           var messageInternal = new TCollectionMessageInternal (TInternalMessageAction.DatabaseValidated, TypeInfo);
@@ -50,6 +51,7 @@ namespace Gadget.Collection.Pattern.ViewModels
 
       // services
       if (message.IsModule (TResource.TModule.Services)) {
+        // Response
         if (message.IsAction (TMessageAction.Response)) {
           // to child
           var messageInternal = new TCollectionMessageInternal (message.Result, TInternalMessageAction.Response, TypeInfo);
@@ -62,6 +64,7 @@ namespace Gadget.Collection.Pattern.ViewModels
 
       // factory
       if (message.IsModule (TResource.TModule.Factory)) {
+        // Reload
         if (message.IsAction (TMessageAction.Reload)) {
           // to child list
           var messageInternal = new TCollectionMessageInternal (TInternalMessageAction.Reload, TypeInfo);
@@ -77,6 +80,7 @@ namespace Gadget.Collection.Pattern.ViewModels
       if (message.IsModule (TResource.TModule.Collection)) {
         // from child only
         if (message.Node.IsRelationChild) {
+          // Request
           if (message.IsAction (TInternalMessageAction.Request)) {
             // to module
             var messageModule = new TCollectionMessage (TMessageAction.Request, TypeInfo);
@@ -86,6 +90,7 @@ namespace Gadget.Collection.Pattern.ViewModels
             DelegateCommand.PublishMessage.Execute (messageModule);
           }
 
+          // Edit
           if (message.IsAction (TInternalMessageAction.Edit)) {
             // to module
             var messageModule = new TCollectionMessage (TMessageAction.Edit, TypeInfo);

@@ -15,11 +15,11 @@ using Shared.Resources;
 using Shared.ViewModel;
 using Shared.DashBoard;
 
-using Gadget.Collection.Presentation;
-using Gadget.Collection.Pattern.Models;
+using Layout.Collection.Presentation;
+using Layout.Collection.Pattern.Models;
 //---------------------------//
 
-namespace Gadget.Collection.Pattern.ViewModels
+namespace Layout.Collection.Pattern.ViewModels
 {
   [Export ("ModuleCollectionListDashBoardViewModel", typeof (ICollectionListDashBoardViewModel))]
   public class TCollectionListDashBoardViewModel : TViewModelAware<TCollectionListDashBoardModel>, IHandleMessageInternal, ICollectionListDashBoardViewModel

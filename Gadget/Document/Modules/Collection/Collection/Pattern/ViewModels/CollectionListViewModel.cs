@@ -66,17 +66,6 @@ namespace Gadget.Collection.Pattern.ViewModels
                 TDispatcher.BeginInvoke (ResponseModelDispatcher, action);
               }
             }
-
-            // Select Many
-            if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Many)) {
-              if (message.Result.IsValid) {
-                // content
-                //if (message.Support.Argument.Types.IsContextType (Server.Models.Infrastructure.TCategory.Content)) {
-                //  var entityAction = Server.Models.Component.TEntityAction.Request (message.Support.Argument.Types.EntityAction);
-                //  TDispatcher.BeginInvoke (ResponseDataDispatcher, entityAction);
-                //}
-              }
-            }
           }
 
           // Reload
@@ -167,6 +156,7 @@ namespace Gadget.Collection.Pattern.ViewModels
 
     public void OnFilterEnabledChanged (string filter)
     {
+      // TODO:filter
       //var message = new TDocumentModuleInternalMessage ();
       //message.SelectSender (new TTypeInfo (TypeName));
       //message.Action.Select (TMessageActionInternals.Cleanup);
@@ -178,6 +168,7 @@ namespace Gadget.Collection.Pattern.ViewModels
 
     public void OnFilterPictureChanged (string filter)
     {
+      // TODO:filter
       //var message = new TDocumentModuleInternalMessage ();
       //message.SelectSender (new TTypeInfo (TypeName));
       //message.Action.Select (TMessageActionInternals.Cleanup);
@@ -189,6 +180,7 @@ namespace Gadget.Collection.Pattern.ViewModels
 
     public void OnFilterSearchCommadClicked ()
     {
+      // TODO:filter
       //if (Model.DocumentFilter.ValidateSearch ()) {
       //  var message = new TDocumentModuleInternalMessage ();
       //  message.SelectSender (new TTypeInfo (TypeName));
@@ -201,6 +193,7 @@ namespace Gadget.Collection.Pattern.ViewModels
 
     public void OnFilterCleanCommadClicked ()
     {
+      // TODO:filter
       //Model.CleanSearch ();
 
       //THelper.DispatcherLater (PrepareToApplyFilterDispatcher);

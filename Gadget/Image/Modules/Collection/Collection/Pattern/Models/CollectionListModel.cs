@@ -46,6 +46,12 @@ namespace Gadget.Collection.Pattern.Models
       set;
     }
 
+    public int SlideIndex
+    {
+      get;
+      set;
+    }
+
     public string StyleHorizontalSelectorSelect
     {
       get;
@@ -93,6 +99,7 @@ namespace Gadget.Collection.Pattern.Models
       StyleVerticalSelectorSelect = string.Empty;
 
       SelectedIndex = -1;
+      SlideIndex = 0;
 
       m_SelectedStyleHorizontal = TContentStyle.Style.mini;
       m_SelectedStyleVertical = TContentStyle.Style.mini;
@@ -108,27 +115,34 @@ namespace Gadget.Collection.Pattern.Models
       action.ThrowNull ();
 
       StyleHorizontalSelectorSelect = string.IsNullOrEmpty (StyleHorizontalSelectorSelect) ? TContentStyle.MINI : StyleHorizontalSelectorSelect;
+      StyleHorizontalSelectorSelect = StyleHorizontalSelectorSelect.Equals (TContentStyle.NONE) ? TContentStyle.MINI : StyleHorizontalSelectorSelect;
+      m_SelectedStyleHorizontal = TContentStyle.TryToParse (StyleHorizontalSelectorSelect);
+
       StyleVerticalSelectorSelect = string.IsNullOrEmpty (StyleVerticalSelectorSelect) ? TContentStyle.MINI : StyleVerticalSelectorSelect;
+      StyleVerticalSelectorSelect = StyleVerticalSelectorSelect.Equals (TContentStyle.NONE) ? TContentStyle.MINI : StyleVerticalSelectorSelect;
+      m_SelectedStyleVertical = TContentStyle.TryToParse (StyleVerticalSelectorSelect);
 
       SelectStyle (m_SelectedStyleHorizontal, m_SelectedStyleVertical, action);
     }
 
     internal void SelectStyleHorizontal (TContentStyle.Style selectedStyleHorizontal)
     {
-      StyleHorizontalSelectorModel.Select (selectedStyleHorizontal);
-      StyleHorizontalSelectorSelect = selectedStyleHorizontal.ToString ();
-      m_SelectedStyleHorizontal = selectedStyleHorizontal;
+      if (StyleHorizontalSelectorModel.Select (selectedStyleHorizontal)) {
+        StyleHorizontalSelectorSelect = selectedStyleHorizontal.ToString ();
+        m_SelectedStyleHorizontal = selectedStyleHorizontal;
 
-      Populate ();
+        Populate ();
+      }
     }
 
     internal void SelectStyleVertical (TContentStyle.Style selectedStyleVertical)
     {
-      StyleVerticalSelectorModel.Select (selectedStyleVertical);
-      StyleVerticalSelectorSelect = selectedStyleVertical.ToString ();
-      m_SelectedStyleVertical = selectedStyleVertical;
+      if (StyleVerticalSelectorModel.Select (selectedStyleVertical)) {
+        StyleVerticalSelectorSelect = selectedStyleVertical.ToString ();
+        m_SelectedStyleVertical = selectedStyleVertical;
 
-      Populate ();
+        Populate ();
+      }
     }
 
     internal void SelectStyle (TContentStyle.Style selectedStyleHorizontal, TContentStyle.Style selectedStyleVertical, Server.Models.Component.TEntityAction action)
@@ -145,6 +159,9 @@ namespace Gadget.Collection.Pattern.Models
     internal void Cleanup ()
     {
       SelectedIndex = -1;
+
+      SelectStyleHorizontal (TContentStyle.Style.None);
+      SelectStyleVertical (TContentStyle.Style.None);
     }
     #endregion
 
@@ -161,7 +178,6 @@ namespace Gadget.Collection.Pattern.Models
     #region Fields
     TContentStyle.Style                                         m_SelectedStyleHorizontal;
     TContentStyle.Style                                         m_SelectedStyleVertical;
-    //Guid                                                        m_CurrentId;
     #endregion
 
     #region Support

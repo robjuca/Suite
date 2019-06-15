@@ -3,6 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
+                    xmlns:views="clr-namespace:Gadget.Collection.Pattern.Views"
                     xmlns:controls="clr-namespace:Shared.Resources;assembly=Suite.Shared.Resources"
                     xmlns:caliburn="http://www.caliburnproject.org"
                     DataContext="{x:Null}"
@@ -49,7 +50,7 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <Border Padding="2"
+    <!--<Border Padding="2"
             Width="240">
         <Grid>
             <Grid.RowDefinitions>
@@ -59,7 +60,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <!--filter-->
+            --><!--filter--><!--
             <Border Grid.Row="0">
                 <materialDesign:Flipper  VerticalAlignment="Top"
                                          HorizontalAlignment="Stretch"
@@ -82,7 +83,7 @@
                 </materialDesign:Flipper>
             </Border>
 
-            <!--style-->
+            --><!--style--><!--
             <Border Grid.Row="1"
                     Padding="2">
                 <controls:TStyleSelector x:Name="StyleSelector"
@@ -91,14 +92,14 @@
                                          caliburn:Message.Attach="[Event StyleHorizontalSelected] = [OnStyleHorizontalSelected (StyleSelector.StyleHorizontalName)]; [Event StyleVerticalSelected] = [OnStyleVerticalSelected (StyleSelector.StyleVerticalName)]" />
             </Border>
 
-            <!--title-->
+            --><!--title--><!--
             <Border Grid.Row="2"
                     Padding="2">
                 <TextBlock HorizontalAlignment="Center"
                            Text="{Binding Model.Title}" />
             </Border>
 
-            <!--list-->
+            --><!--list--><!--
             <Border Grid.Row="3"
                     Padding="2">
                 <ListBox x:Name="List"
@@ -108,6 +109,199 @@
                          caliburn:Message.Attach="[Event SelectionChanged] = [OnSelectionChanged (List.SelectedItem)]" />
             </Border>
         </Grid>
-    </Border>
+    </Border>-->
 
+    <Border Padding="2"
+            Width="240">
+        <materialDesign:Transitioner SelectedIndex="{Binding Model.SlideIndex}">
+            <!--filter, style, title, list-->
+            <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect FadeIn}">
+                <materialDesign:TransitionerSlide.BackwardWipe>
+                    <materialDesign:CircleWipe />
+                </materialDesign:TransitionerSlide.BackwardWipe>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--filter-->
+                    <Border Grid.Row="0">
+                        <materialDesign:Flipper  VerticalAlignment="Top"
+                                                 HorizontalAlignment="Stretch"
+                                                 Style="{StaticResource MaterialDesignCardFlipper}">
+
+                            <materialDesign:Flipper.FrontContent>
+                                <Border Height="35"
+                                        Padding="2">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--icon-->
+                                        <Border Grid.Column="0">
+                                            <ContentControl Style="{StaticResource FilterIcon}" />
+                                        </Border>
+
+                                        <!--command-->
+                                        <Border Grid.Column="1">
+                                            <Button Content="filter"
+                                                    HorizontalAlignment="Right"
+                                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                                    IsEnabled="{Binding Model.IsEnabledFilter}"
+                                                    Command="{x:Static materialDesign:Flipper.FlipCommand}" />
+                                        </Border>
+                                    </Grid>
+
+                                </Border>
+                            </materialDesign:Flipper.FrontContent>
+
+                            <materialDesign:Flipper.BackContent>
+                                <Border Padding="6">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+
+                                        <!--icon, back-->
+                                        <Border Grid.Row="0">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+
+                                                <!--icon-->
+                                                <Border Grid.Column="0">
+                                                    <ContentControl Style="{StaticResource FilterIcon}" />
+                                                </Border>
+
+                                                <!--CanRemove-->
+                                                <Border Grid.Column="1">
+                                                    <Button Content="CanRemove"
+                                                            caliburn:Message.Attach="[Event Click] = [OnFilterCanRemoveClicked ()]" />
+                                                </Border>
+
+                                                <!--back-->
+                                                <Border Grid.Column="2">
+                                                    <Button HorizontalAlignment="Right"
+                                                            Style="{StaticResource MaterialDesignToolForegroundButton}"
+                                                            Command="{x:Static materialDesign:Flipper.FlipCommand}">
+                                                        <ContentControl Style="{StaticResource BackIcon}" />
+                                                    </Button>
+                                                </Border>
+                                            </Grid>
+
+                                        </Border>
+
+                                        <!--filter content-->
+                                        <Border Grid.Row="1">
+                                            <StackPanel>
+                                                <!--status-->
+                                                <TextBlock Text="status"
+                                                           Margin="0 10 0 0" />
+                                                <ComboBox x:Name="FilterEnabled"
+                                                          SelectedIndex="0"
+                                                          ItemsSource="{Binding Model.FilterEnabledItemsSource}"
+                                                          caliburn:Message.Attach="[Event SelectionChanged] = [OnFilterEnabledChanged (FilterEnabled.SelectedValue)]" />
+
+                                                <!--picture-->
+                                                <TextBlock Text="picture"
+                                                           Margin="0 10 0 0" />
+                                                <ComboBox x:Name="FilterPicture"
+                                                          SelectedIndex="0"
+                                                          ItemsSource="{Binding Model.FilterPictureItemsSource}"
+                                                          caliburn:Message.Attach="[Event SelectionChanged] = [OnFilterPictureChanged (FilterPicture.SelectedValue)]" />
+
+                                                <!--search clean-->
+                                                <TextBlock Text="name"
+                                                           Margin="0 15 0 0" />
+                                                <TextBox Text="{Binding Model.FilterInfo.What}" />
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!--search-->
+                                                    <Border Grid.Column="0">
+                                                        <Button  Content="search"
+                                                                 caliburn:Message.Attach="[Event Click] = [OnFilterSearchCommadClicked ()]" />
+                                                    </Border>
+
+                                                    <!--clean-->
+                                                    <Border Grid.Column="1">
+                                                        <Button Content="clean"
+                                                                caliburn:Message.Attach="[Event Click] = [OnFilterCleanCommadClicked ()]" />
+                                                    </Border>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </materialDesign:Flipper.BackContent>
+                        </materialDesign:Flipper>
+                    </Border>
+
+                    <!--style-->
+                    <Border Grid.Row="1"
+                            Padding="2">
+                        <controls:TStyleSelector x:Name="StyleSelector"
+                                                 SelectStyleHorizontal="{Binding Model.StyleHorizontalSelectorSelect}"
+                                                 SelectStyleVertical="{Binding Model.StyleVerticalSelectorSelect}"
+                                                 caliburn:Message.Attach="[Event StyleHorizontalSelected] = [OnStyleHorizontalSelected (StyleSelector.StyleHorizontalName)]; [Event StyleVerticalSelected] = [OnStyleVerticalSelected (StyleSelector.StyleVerticalName)]" />
+                    </Border>
+
+                    <!--title-->
+                    <Border Grid.Row="2"
+                            Padding="2">
+                        <TextBlock HorizontalAlignment="Center"
+                                   Text="{Binding Model.Title}" />
+                    </Border>
+
+                    <!--list-->
+                    <Border Grid.Row="3"
+                            Padding="2">
+                        <ListBox x:Name="List"
+                                 SelectedIndex="{Binding Model.SelectedIndex}"
+                                 ItemsSource="{Binding Source={StaticResource ModelItemsViewSource}}"
+                                 ItemTemplate="{StaticResource ListDataTemplate}"
+                                 caliburn:Message.Attach="[Event SelectionChanged] = [OnSelectionChanged (List.SelectedItem)]" />
+                    </Border>
+
+                    <!--dashboard-->
+                    <Border Grid.Row="4">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right">
+                            <ContentControl Margin="0 0 2 0"
+                                            Style="{StaticResource DashBoardIcon}" />
+
+                            <Button Content="dashboard"
+                                    caliburn:Message.Attach="[Event Click] = [OnDashBoardClicked ()]" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </materialDesign:TransitionerSlide>
+
+            <!--dashboard-->
+            <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect SlideInFromRight}">
+                <materialDesign:TransitionerSlide.BackwardWipe>
+                    <materialDesign:SlideOutWipe />
+                </materialDesign:TransitionerSlide.BackwardWipe>
+
+                <views:TCollectionListDashBoardView />
+
+            </materialDesign:TransitionerSlide>
+        </materialDesign:Transitioner>
+    </Border>
+    
 </base:ViewChildBase>

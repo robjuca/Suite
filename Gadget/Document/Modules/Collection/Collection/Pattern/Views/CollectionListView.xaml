@@ -253,4 +253,5 @@
             </materialDesign:TransitionerSlide>
         </materialDesign:Transitioner>
     </Border>
+    
 </base:ViewChildBase>

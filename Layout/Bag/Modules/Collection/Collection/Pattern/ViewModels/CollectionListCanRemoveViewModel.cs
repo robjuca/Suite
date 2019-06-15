@@ -14,11 +14,11 @@ using Shared.Types;
 using Shared.Resources;
 using Shared.ViewModel;
 
-using Gadget.Collection.Presentation;
-using Gadget.Collection.Pattern.Models;
+using Layout.Collection.Presentation;
+using Layout.Collection.Pattern.Models;
 //---------------------------//
 
-namespace Gadget.Collection.Pattern.ViewModels
+namespace Layout.Collection.Pattern.ViewModels
 {
   [Export ("ModuleCollectionListCanRemoveViewModel", typeof (ICollectionListCanRemoveViewModel))]
   public class TCollectionListCanRemoveViewModel : TViewModelAware<TCollectionListCanRemoveModel>, IHandleMessageInternal, ICollectionListCanRemoveViewModel
