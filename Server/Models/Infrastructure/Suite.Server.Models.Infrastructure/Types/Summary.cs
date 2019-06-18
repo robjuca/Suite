@@ -30,6 +30,18 @@ namespace Server.Models.Infrastructure
       get;
       private set;
     }
+
+    public bool ZapDisable
+    {
+      get;
+      set;
+    }
+
+    public bool ZapBusy
+    {
+      get;
+      set;
+    }
     #endregion
 
     #region Constructor
@@ -59,6 +71,9 @@ namespace Server.Models.Infrastructure
       };
 
       TotalCount = 0;
+
+      ZapDisable = false;
+      ZapBusy = false;
     }
     #endregion
 
@@ -83,6 +98,8 @@ namespace Server.Models.Infrastructure
       if (alias.NotNull ()) {
         Category = alias.Category;
         TotalCount = alias.TotalCount;
+        ZapDisable = alias.ZapDisable;
+        ZapBusy = alias.ZapBusy;
 
         foreach (var item in alias.GadgetCount) {
           GadgetCount [item.Key] = item.Value;

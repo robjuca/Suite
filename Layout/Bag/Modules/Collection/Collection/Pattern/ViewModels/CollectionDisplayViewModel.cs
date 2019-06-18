@@ -85,15 +85,14 @@ namespace Layout.Collection.Pattern.ViewModels
 
           // Select
           if (message.IsAction (TInternalMessageAction.Select)) {
+            Cleanup ();
+
             TDispatcher.BeginInvoke (RequestModelDispatcher, message.Support.Argument.Types.Item);
           }
 
           // Cleanup
           if (message.IsAction (TInternalMessageAction.Cleanup)) {
-            Model.Cleanup ();
-            m_ComponentControl.Cleanup ();
-
-            RaiseChanged ();
+            Cleanup ();
           }
         }
       }
@@ -195,6 +194,16 @@ namespace Layout.Collection.Pattern.ViewModels
 
     #region Fields
     TComponentDisplayControl                          m_ComponentControl;
+    #endregion
+
+    #region Support
+    void Cleanup ()
+    {
+      Model.Cleanup ();
+      m_ComponentControl.Cleanup ();
+
+      RaiseChanged ();
+    } 
     #endregion
   };
   //---------------------------//

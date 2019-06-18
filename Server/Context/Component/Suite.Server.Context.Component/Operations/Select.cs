@@ -5,6 +5,7 @@
 
 //----- Include
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 using rr.Library.Helper;
@@ -542,9 +543,14 @@ namespace Server.Context.Component
 
       DATA OUT
       - action.Summary
+      - action.CollectionAction.ComponentInfoCollection
+      - action.CollectionAction.ComponentStatusCollection
       */
 
       try {
+        action.CollectionAction.ComponentInfoCollection.Clear ();
+        action.CollectionAction.ComponentStatusCollection.Clear ();
+
         var categoryValue = TCategoryType.ToValue (action.Summary.Category);
 
         // search Id by category
@@ -564,6 +570,64 @@ namespace Server.Context.Component
           if (infoList.Count.Equals (1)) {
             var infoModel = infoList [0];
             action.CollectionAction.ComponentInfoCollection.Add (infoModel);
+          }
+
+          // Status
+          var statusList = context.ComponentStatus
+            .Where (p => p.Id.Equals (descriptor.Id))
+            .ToList ()
+          ;
+
+          // status found
+          if (statusList.Count.Equals (1)) {
+            var statusModel = statusList [0];
+            action.CollectionAction.ComponentStatusCollection.Add (statusModel);
+          }
+        }
+
+        // apply zap
+        var enabledZap = new Collection<Guid> ();
+        var busyZap = new Collection<Guid> ();
+
+        // zap Enabled = false (disable)
+        if (action.Summary.ZapDisable) {
+          foreach (var itemInfo in action.CollectionAction.ComponentInfoCollection) {
+            // only Enabled
+            if (itemInfo.Enabled.IsFalse ()) {
+              enabledZap.Add (itemInfo.Id);
+            }
+          }
+        }
+
+        // zap Busy = true
+        if (action.Summary.ZapBusy) {
+          foreach (var itemStatus in action.CollectionAction.ComponentStatusCollection) {
+            // only not busy
+            if (itemStatus.Busy) {
+              busyZap.Add (itemStatus.Id);
+            }
+          }
+        }
+
+        foreach (var id in enabledZap) {
+          var list = action.CollectionAction.ComponentInfoCollection
+            .Where (p => p.Id.Equals (id))
+            .ToList ()
+          ;
+
+          if (list.Count.Equals (1)) {
+            action.CollectionAction.ComponentInfoCollection.Remove (list [0]);
+          }
+        }
+
+        foreach (var id in busyZap) {
+          var list = action.CollectionAction.ComponentInfoCollection
+            .Where (p => p.Id.Equals (id))
+            .ToList ()
+          ;
+
+          if (list.Count.Equals (1)) {
+            action.CollectionAction.ComponentInfoCollection.Remove (list [0]);
           }
         }
 

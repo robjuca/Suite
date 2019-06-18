@@ -1,0 +1,68 @@
+﻿<base:ViewChildBase x:Class="Layout.Factory.Pattern.Views.TDashBoardView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
+                    xmlns:controls="clr-namespace:Shared.DashBoard;assembly=Suite.Shared.DashBoard"
+                    xmlns:caliburn="http://www.caliburnproject.org"
+                    DataContext="{x:Null}"
+                    x:Name="DashBoardViewModel">
+
+    <Border Padding="4">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--title, back-->
+            <Border Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <!--dashboard-->
+                    <Border Grid.Column="0">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentControl Style="{DynamicResource DashBoardIcon}" />
+
+                            <TextBlock Margin="5 0 0 0"
+                                       VerticalAlignment="Center"
+                                       Text="dashboard" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--back-->
+                    <Border Grid.Column="1">
+                        <Button HorizontalAlignment="Right"
+                                caliburn:Message.Attach="[Event Click] = [OnBackCommadClicked ()]">
+                            <ContentControl Style="{DynamicResource BackIcon}" />
+                        </Button>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!--dashboard-->
+            <Border Grid.Row="1"
+                    Width="223">
+                <controls:TDashBoardSummaryControl x:Name="DashBoardSummaryControl"
+                                                   caliburn:Message.Attach="[Event ItemClicked] = [OnItemClicked ($eventArgs)]" />
+            </Border>
+
+            <!--total count-->
+            <Border Grid.Row="2"
+                    VerticalAlignment="Bottom">
+                <StackPanel Orientation="Horizontal">
+                    <ContentControl Style="{DynamicResource BagMiniIcon}" />
+
+                    <TextBlock Margin="5 0 0 0"
+                               VerticalAlignment="Center"
+                               Text="{Binding Model.Summary.TotalCount}" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+
+</base:ViewChildBase>

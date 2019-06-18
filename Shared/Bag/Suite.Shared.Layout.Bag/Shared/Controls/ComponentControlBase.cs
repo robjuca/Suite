@@ -13,7 +13,7 @@ using Shared.Types;
 
 namespace Shared.Layout.Bag
 {
-  public abstract class TComponentControlBase : ContentControl
+  public abstract class TComponentControlBase : Border
   {
     #region Property
     public TComponentControlModel Model
@@ -64,7 +64,7 @@ namespace Shared.Layout.Bag
       grid.Children.Add (m_DocumentControl);
       grid.Children.Add (m_ImageControl);
 
-      AddChild (grid);
+      Child = grid;
 
       ControlMode = TControlMode.None;
       ControlModelMode = TControlModelMode.None;
@@ -92,9 +92,8 @@ namespace Shared.Layout.Bag
     #region Members
     public void Select (Server.Models.Infrastructure.TCategory category, Shared.Gadget.Document.TComponentControlModel model)
     {
-      m_DocumentControl.Model.Cleanup ();
-
       if (category.Equals (Server.Models.Infrastructure.TCategory.Document)) {
+        m_DocumentControl.Model.Cleanup ();
         m_DocumentControl.Model.CopyFrom (model);
         m_DocumentControl.Model.PropertyName = "all";
         m_DocumentControl.Visibility = Visibility.Visible;
@@ -104,9 +103,8 @@ namespace Shared.Layout.Bag
 
     public void Select (Server.Models.Infrastructure.TCategory category, Shared.Gadget.Image.TComponentControlModel model)
     {
-      m_ImageControl.Model.Cleanup ();
-
       if (category.Equals (Server.Models.Infrastructure.TCategory.Image)) {
+        m_ImageControl.Model.Cleanup ();
         m_ImageControl.Model.CopyFrom (model);
         m_ImageControl.Visibility = Visibility.Visible;
         m_ImageControl.RefreshDesign ();

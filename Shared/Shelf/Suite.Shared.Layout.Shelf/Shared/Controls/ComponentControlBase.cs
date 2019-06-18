@@ -57,8 +57,8 @@ namespace Shared.Layout.Shelf
       VerticalAlignment = VerticalAlignment.Top;
 
       // default 4x4 matrix
-      SizeCols = 4;
-      SizeRows = 4;
+      SizeCols = 0;
+      SizeRows = 0;
 
       m_ContentItems = new Collection<TContentItemModel> ();
 
@@ -68,6 +68,7 @@ namespace Shared.Layout.Shelf
       ModelLocal = TComponentControlModel.CreateDefault;
 
       m_ContainerCreated = false;
+      m_SizeLocked = false;
 
       Loaded += OnLoaded;
     }
@@ -92,14 +93,18 @@ namespace Shared.Layout.Shelf
     #region Members
     public void ChangeSize (TSize size)
     {
-      SizeCols = size.Columns;
-      SizeRows = size.Rows;
+      if (size.IsSize (SizeCols, SizeRows).IsFalse ()) {
+        if (m_SizeLocked.IsFalse ()) {
+          SizeCols = size.Columns;
+          SizeRows = size.Rows;
 
-      m_ContainerCreated = false;
-      CreateContentContainer ();
+          m_ContainerCreated = false;
+          CreateContentContainer ();
+        }
+      }
     }
 
-    public void InsertContent (IList<TComponentModelItem> contentCollection)
+    public void InsertContent (IList<TComponentModelItem> contentCollection, bool blockSize = false)
     {
       // contentCollection contains only Bag
       if (contentCollection.NotNull ()) {
@@ -128,6 +133,8 @@ namespace Shared.Layout.Shelf
 
           InsertContent (position, controlModel);
         }
+
+        m_SizeLocked = m_ContentItems.Count.Equals (0) ? false : blockSize;
       }
     }
 
@@ -177,6 +184,8 @@ namespace Shared.Layout.Shelf
         m_ContentItems.RemoveAt (index);
         RemoveChild (contentId);
       }
+
+      m_SizeLocked = m_ContentItems.Count.Equals (0).IsFalse ();
     }
 
     public void DoMove (TPosition sourcePosition, TPosition targetPosition)
@@ -213,6 +222,8 @@ namespace Shared.Layout.Shelf
       foreach (var id in ids) {
         RemoveContent (id);
       }
+
+      m_SizeLocked = false;
     }
     #endregion
 
@@ -270,6 +281,7 @@ namespace Shared.Layout.Shelf
     Grid                                              m_ContentContainer;
     Collection<TContentItemModel>                     m_ContentItems;
     bool                                              m_ContainerCreated;
+    bool                                              m_SizeLocked;
     #endregion
 
     #region Support

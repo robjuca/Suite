@@ -38,6 +38,7 @@ namespace Shared.Gadget.Document
       get;
       private set;
     }
+
     public TComponentControlModel Model
     {
       get

@@ -50,6 +50,9 @@ namespace Shared.Gadget.Image
       HorizontalAlignment = HorizontalAlignment.Stretch;
       VerticalAlignment = VerticalAlignment.Stretch;
 
+      SetValue (ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Hidden);
+      SetValue (ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Hidden);
+
       string normalTemplate = @"
         <DataTemplate
             xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'

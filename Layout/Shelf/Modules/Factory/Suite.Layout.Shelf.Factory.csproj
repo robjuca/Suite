@@ -144,21 +144,27 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factory\Pattern\Models\DashBoardModel.cs" />
     <Compile Include="Factory\Pattern\Models\FactoryComponentListModel.cs" />
     <Compile Include="Factory\Pattern\Models\FactoryBoardModel.cs" />
     <Compile Include="Factory\Pattern\Models\FactoryDisplayModel.cs" />
     <Compile Include="Factory\Pattern\Models\FactoryModel.cs" />
     <Compile Include="Factory\Pattern\Models\FactoryPropertyModel.cs" />
+    <Compile Include="Factory\Pattern\ViewModels\DashBoardViewModel.cs" />
     <Compile Include="Factory\Pattern\ViewModels\FactoryComponentListViewModel.cs" />
     <Compile Include="Factory\Pattern\ViewModels\FactoryBoardViewModel.cs" />
     <Compile Include="Factory\Pattern\ViewModels\FactoryDisplayViewModel.cs" />
     <Compile Include="Factory\Pattern\ViewModels\FactoryPropertyViewModel.cs" />
     <Compile Include="Factory\Pattern\ViewModels\FactoryViewModel.cs" />
+    <Compile Include="Factory\Pattern\ViewModels\Interfaces\IDashBoardViewModel.cs" />
     <Compile Include="Factory\Pattern\ViewModels\Interfaces\IFactoryComponentListViewModel.cs" />
     <Compile Include="Factory\Pattern\ViewModels\Interfaces\IFactoryPropertyViewModel.cs" />
     <Compile Include="Factory\Pattern\ViewModels\Interfaces\IFactoryDisplayViewModel.cs" />
     <Compile Include="Factory\Pattern\ViewModels\Interfaces\IFactoryBoardViewModel.cs" />
     <Compile Include="Factory\Pattern\ViewModels\Interfaces\IFactoryViewModel.cs" />
+    <Compile Include="Factory\Pattern\Views\DashBoardView.xaml.cs">
+      <DependentUpon>DashBoardView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Factory\Pattern\Views\FactoryComponentListView.xaml.cs">
       <DependentUpon>FactoryComponentListView.xaml</DependentUpon>
     </Compile>
@@ -184,6 +190,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Factory\Pattern\Views\DashBoardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Factory\Pattern\Views\FactoryComponentListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -216,11 +216,11 @@ namespace Layout.Factory.Pattern.Models
     {
       OrderFrameItemsSource.Clear ();
 
-      var list = new List<TComponentModelItem> ();
+      var models = new List<TComponentModelItem> ();
 
-      ComponentImageControlModel.Request (list);
+      ComponentImageControlModel.RequestComponentModel (models);
 
-      foreach (var item in list) {
+      foreach (var item in models) {
         OrderFrameItemsSource.Add (item);
       }
     }

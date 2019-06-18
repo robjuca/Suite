@@ -159,9 +159,33 @@ namespace Layout.Collection.Pattern.Models
     {
       action.ThrowNull ();
 
+      var models = new Collection<TComponentModelItem> ();
+
+      foreach (var item in ComponentModelItemCollection) {
+        models.Add (item.Clone ());
+      }
+
+      foreach (var item in ControlModelCollection) {
+        var id = item.Value.Id;
+        var itemModels = new List<TComponentModelItem> ();
+
+        item.Value.RequestChildComponentModel (itemModels);
+
+        var list = models
+          .Where (p => p.Id.Equals (id))
+          .ToList ()
+        ;
+
+        if (list.Count.Equals (1)) {
+          foreach (var model in itemModels) {
+            list [0].ChildCollection.Add (model);
+          }
+        }
+      }
+
       action.Id = ComponentModelItem.Id; // shelf Id
       action.ModelAction.CopyFrom (ComponentModelItem.RequestModel ()); // shelf model
-      action.Param1 = new Collection<TComponentModelItem> (ComponentModelItemCollection); // relation
+      action.Param1 = models;
       action.Param2 = new Dictionary<TPosition, Shared.Layout.Bag.TComponentControlModel> (ControlModelCollection); // child model
     }
 

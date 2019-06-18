@@ -6,7 +6,7 @@
 //----- Include
 using System;
 using System.ComponentModel.Composition;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 using rr.Library.Infrastructure;
 using rr.Library.Helper;
@@ -297,24 +297,16 @@ namespace Layout.Factory.Pattern.ViewModels
 
     void EditDispatcher (Server.Models.Component.TEntityAction action)
     {
-      var controlModelCollection = new Dictionary<TPosition, Shared.Layout.Bag.TComponentControlModel> (); // bag child model (document or image or video)
+      action.ThrowNull ();
 
-      if (action.Param2 is Dictionary<TPosition, Shared.Layout.Bag.TComponentControlModel> childModels) {
-        controlModelCollection = new Dictionary<TPosition, Shared.Layout.Bag.TComponentControlModel> (childModels); // child model
+      if (action.Param1 is Collection<TComponentModelItem> models) {
+        var size = TSize.Create (action.ModelAction.ExtensionGeometryModel.SizeCols, action.ModelAction.ExtensionGeometryModel.SizeRows);
+
+        m_ComponentControl.ChangeSize (size);
+        m_ComponentControl.InsertContent (models, blockSize:true);
       }
 
-      foreach (var item in controlModelCollection) {
-        var position = item.Key;
-        var controlModel = item.Value;
-
-        var contentInfo = TContentInfo.CreateDefault;
-        contentInfo.Select (controlModel.Id, position);
-        contentInfo.Select (controlModel.Category);
-        contentInfo.Select (TContentStyle.Mode.Horizontal, controlModel.HorizontalStyle.Style.ToString ());
-        contentInfo.Select (TContentStyle.Mode.Vertical, controlModel.VerticalStyle.Style.ToString ());
-
-        TDispatcher.BeginInvoke (ContentSelectedDispatcher, contentInfo);
-      }
+      RaiseChanged ();
     }
     #endregion
 

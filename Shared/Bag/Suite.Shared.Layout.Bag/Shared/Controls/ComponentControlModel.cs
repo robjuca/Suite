@@ -5,6 +5,7 @@
 
 //----- Include
 using System;
+using System.Collections.Generic;
 using System.Windows;
 
 using rr.Library.Types;
@@ -140,6 +141,24 @@ namespace Shared.Layout.Bag
 
       Size.SelectColumns (colSize);
       Size.SelectRows (rowSize);
+    }
+
+    public void RequestChildComponentModel (List<TComponentModelItem> models)
+    {
+      if (models.NotNull ()) {
+        switch (ChildCategory) {
+          case Server.Models.Infrastructure.TCategory.Document:
+            ComponentDocumentControlModel.RequestComponentModel (models);
+            break;
+
+          case Server.Models.Infrastructure.TCategory.Image:
+            ComponentImageControlModel.RequestComponentModel (models);
+            break;
+
+          case Server.Models.Infrastructure.TCategory.Video:
+            break;
+        }
+      }
     }
 
     public void CopyFrom (TComponentControlModel alias)

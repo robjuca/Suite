@@ -211,7 +211,7 @@ namespace Layout.Collection.Pattern.ViewModels
       var modelItem = TComponentModelItem.CreateDefault;
       modelItem.CopyFrom (Model.Current);
 
-      // to Sibling display
+      // to Sibling display (PropertySelect)
       var message = new TCollectionSiblingMessageInternal (TInternalMessageAction.PropertySelect, TChild.List, TypeInfo);
       message.Support.Argument.Args.Select (propertyName);
       message.Support.Argument.Types.Item.CopyFrom (modelItem);
@@ -219,7 +219,7 @@ namespace Layout.Collection.Pattern.ViewModels
       DelegateCommand.PublishInternalMessage.Execute (message);
 
       if (Model.IsEmpty) {
-        // to Sibling display
+        // to Sibling display (Cleanup)
         message = new TCollectionSiblingMessageInternal (TInternalMessageAction.Cleanup, TChild.List, TypeInfo);
         DelegateCommand.PublishInternalMessage.Execute (message);
       }

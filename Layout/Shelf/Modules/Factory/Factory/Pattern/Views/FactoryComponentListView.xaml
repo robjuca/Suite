@@ -4,6 +4,7 @@
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:base="clr-namespace:rr.Library.Infrastructure;assembly=rr.Library.Infrastructure"
                     xmlns:dragdrop="urn:gong-wpf-dragdrop"
+                    xmlns:views="clr-namespace:Layout.Factory.Pattern.Views"
                     xmlns:controls="clr-namespace:Shared.Resources;assembly=Suite.Shared.Resources"
                     xmlns:caliburn="http://www.caliburnproject.org"
                     DataContext="{x:Null}"
@@ -19,113 +20,142 @@
         </CollectionViewSource>
     </UserControl.Resources>
 
-    <Border Padding="2">
+    <Border >
         <!--source bag-->
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
+        <materialDesign:Transitioner SelectedIndex="{Binding Model.SlideIndex}">
+            <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect FadeIn}">
+                <materialDesign:TransitionerSlide.BackwardWipe>
+                    <materialDesign:CircleWipe />
+                </materialDesign:TransitionerSlide.BackwardWipe>
 
-            <!--title-->
-            <Border Grid.Row="0"
-                    Padding="2">
+                <!--title, style, list-->
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
-                    <!--icon, name-->
-                    <Border Grid.Column="0">
-                        <StackPanel Orientation="Horizontal">
-                            <ContentControl Style="{DynamicResource ContentBagIcon}" />
+                    <!--title-->
+                    <Border Grid.Row="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
 
-                            <TextBlock Margin="3 0 0 0"
-                                       VerticalAlignment="Center"
-                                       Text="bag" />
-                        </StackPanel>
+                            <!--icon, name-->
+                            <Border Grid.Column="0">
+                                <StackPanel Orientation="Horizontal">
+                                    <ContentControl Style="{DynamicResource ContentBagIcon}" />
 
+                                    <TextBlock Margin="3 0 0 0"
+                                               VerticalAlignment="Center"
+                                               Text="bag" />
+                                </StackPanel>
+                            </Border>
+
+                            <!--dashboard command-->
+                            <Border Grid.Column="1">
+                                <Border Width="80">
+                                    <Button HorizontalAlignment="Right"
+                                            caliburn:Message.Attach="[Event Click] = [OnDashBoardClicked ()]">
+                                        <ContentControl Style="{StaticResource DashBoardIcon}" />
+                                    </Button>
+                                </Border>
+                            </Border>
+
+                            <!--StyleSelectorString-->
+                            <Border Grid.Column="2"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Model.StyleSelectorString}" />
+                            </Border>
+
+                            <!--count-->
+                            <Border Grid.Column="3"
+                                    Margin="0 0 5 0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Model.ComponentCount}" />
+                            </Border>
+                        </Grid>
                     </Border>
 
-                    <!--StyleSelectorString-->
-                    <Border Grid.Column="1"
-                            HorizontalAlignment="Center">
-                        <TextBlock Text="{Binding Model.StyleSelectorString}" />
-                    </Border>
+                    <!--style, list-->
+                    <Border Grid.Row="1">
+                        <!--style, list-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
 
-                    <!--count-->
-                    <Border Grid.Column="2"
-                            Margin="0 0 2 0"
-                            HorizontalAlignment="Right">
-                        <TextBlock Text="{Binding Model.ComponentCount}" />
+                            <!--style-->
+                            <Border Grid.Column="0"
+                                    Margin="3 0 3 0">
+                                <controls:TStyleSelector x:Name="StyleSelector"
+                                                         Orientation="Vertical"
+                                                         SelectStyleHorizontal="{Binding Model.StyleHorizontalSelectorSelect}"
+                                                         SelectStyleVertical="{Binding Model.StyleVerticalSelectorSelect}"
+                                                         caliburn:Message.Attach="[Event StyleHorizontalSelected] = [OnStyleHorizontalSelected (StyleSelector.StyleHorizontalName)]; [Event StyleVerticalSelected] = [OnStyleVerticalSelected (StyleSelector.StyleVerticalName)]" />
+                            </Border>
+
+                            <!--list-->
+                            <Border Grid.Column="1">
+                                <materialDesign:Card  Padding="2"
+                                                      HorizontalAlignment="Stretch"
+                                                      VerticalAlignment="Stretch">
+                                    <ListView Tag="Bag"
+                                              ItemsSource="{Binding Source={StaticResource ComponentCollectionViewSource}}"
+                                              dragdrop:DragDrop.IsDragSource="True"
+                                              dragdrop:DragDrop.IsDropTarget="True"
+                                              dragdrop:DragDrop.DropHandler="{Binding DragDropHandler}"
+                                              dragdrop:DragDrop.UseDefaultEffectDataTemplate="True"
+                                              dragdrop:DragDrop.UseDefaultDragAdorner="True">
+
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Width="120">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <ContentControl Style="{StaticResource ContentDocumentIcon}"
+                                                                        Visibility="{Binding NodeDocumentVisibility}" />
+
+                                                        <ContentControl Style="{StaticResource ContentImageIcon}"
+                                                                        Visibility="{Binding NodeImageVisibility}" />
+
+                                                        <TextBlock Margin="5 0 0 0"
+                                                                   VerticalAlignment="Center"
+                                                                   Text="{Binding Name}"
+                                                                   FontWeight="Bold" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel HorizontalAlignment="Left" />
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                    </ListView>
+                                </materialDesign:Card>
+                            </Border>
+                        </Grid>
                     </Border>
                 </Grid>
-            </Border>
+            </materialDesign:TransitionerSlide>
 
-            <!--style, list-->
-            <Border Grid.Row="2">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+            <!--dashboard-->
+            <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect SlideInFromRight}">
+                <materialDesign:TransitionerSlide.BackwardWipe>
+                    <materialDesign:SlideOutWipe />
+                </materialDesign:TransitionerSlide.BackwardWipe>
 
-                    <!--style-->
-                    <Border Grid.Column="0"
-                            Margin="3 0 3 0">
-                        <controls:TStyleSelector x:Name="StyleSelector"
-                                                 Orientation="Vertical"
-                                                 SelectStyleHorizontal="{Binding Model.StyleHorizontalSelectorSelect}"
-                                                 SelectStyleVertical="{Binding Model.StyleVerticalSelectorSelect}"
-                                                 caliburn:Message.Attach="[Event StyleHorizontalSelected] = [OnStyleHorizontalSelected (StyleSelector.StyleHorizontalName)]; [Event StyleVerticalSelected] = [OnStyleVerticalSelected (StyleSelector.StyleVerticalName)]" />
-                    </Border>
-
-                    <!--list-->
-                    <Border Grid.Column="1">
-                        <materialDesign:Card  Padding="2"
-                                              HorizontalAlignment="Stretch"
-                                              VerticalAlignment="Stretch">
-                            <ListView Tag="Bag"
-                                      ItemsSource="{Binding Source={StaticResource ComponentCollectionViewSource}}"
-                                      dragdrop:DragDrop.IsDragSource="True"
-                                      dragdrop:DragDrop.IsDropTarget="True"
-                                      dragdrop:DragDrop.DropHandler="{Binding DragDropHandler}"
-                                      dragdrop:DragDrop.UseDefaultEffectDataTemplate="True"
-                                      dragdrop:DragDrop.UseDefaultDragAdorner="True">
-
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Width="120">
-                                            <StackPanel Orientation="Horizontal">
-                                                <ContentControl Style="{StaticResource ContentDocumentIcon}"
-                                                                Visibility="{Binding NodeDocumentVisibility}" />
-
-                                                <ContentControl Style="{StaticResource ContentImageIcon}"
-                                                                Visibility="{Binding NodeImageVisibility}" />
-
-                                                <TextBlock Margin="5 0 0 0"
-                                                           VerticalAlignment="Center"
-                                                           Text="{Binding Name}"
-                                                           FontWeight="Bold" />
-                                            </StackPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-
-                                <ListView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel HorizontalAlignment="Left" />
-                                    </ItemsPanelTemplate>
-                                </ListView.ItemsPanel>
-                            </ListView>
-                        </materialDesign:Card>
-                    </Border>
-                </Grid>
-            </Border>
-        </Grid>
+                <views:TDashBoardView />
+            </materialDesign:TransitionerSlide>
+        </materialDesign:Transitioner>
     </Border>
 
 </base:ViewChildBase>

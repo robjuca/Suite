@@ -98,6 +98,19 @@ namespace Layout.Factory.Pattern.ViewModels
           if (message.IsAction (TInternalMessageAction.Refresh)) {
             TDispatcher.Invoke (RequestComponentRelationDispatcher);
           }
+
+          // Style
+          if (message.IsAction (TInternalMessageAction.Style)) {
+            TDispatcher.BeginInvoke (StyleHorizontalChangedDispatcher, message.Support.Argument.Types.HorizontalStyle.StyleString);
+            TDispatcher.BeginInvoke (StyleVerticalChangedDispatcher, message.Support.Argument.Types.VerticalStyle.StyleString);
+          }
+
+          // Back
+          if (message.IsAction (TInternalMessageAction.Back)) {
+            Model.SlideIndex = 0;
+
+            TDispatcher.Invoke (RefreshAllDispatcher);
+          }
         }
       }
     }
@@ -120,6 +133,21 @@ namespace Layout.Factory.Pattern.ViewModels
       Model.SelectStyleVertical (selectedStyle);
 
       TDispatcher.Invoke (RefreshAllDispatcher);
+    }
+
+    public void OnDashBoardClicked ()
+    {
+      Model.SlideIndex = 1;
+      TDispatcher.Invoke (RefreshAllDispatcher);
+
+      //to Sibling
+      var action = Server.Models.Component.TEntityAction.CreateDefault;
+      action.Summary.Select (Server.Models.Infrastructure.TCategory.Bag);
+
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Summary, TChild.List, TypeInfo);
+      message.Support.Argument.Types.Select (action);
+
+      DelegateCommand.PublishInternalMessage.Execute (message);
     }
 
     //public void OnStyleSelected (string style)
@@ -230,6 +258,16 @@ namespace Layout.Factory.Pattern.ViewModels
       DelegateCommand.PublishInternalMessage.Execute (message);
 
       TDispatcher.Invoke (RefreshAllDispatcher);
+    }
+
+    void StyleHorizontalChangedDispatcher (string style)
+    {
+      OnStyleHorizontalSelected (style);
+    }
+
+    void StyleVerticalChangedDispatcher (string style)
+    {
+      OnStyleVerticalSelected (style);
     }
     #endregion
 

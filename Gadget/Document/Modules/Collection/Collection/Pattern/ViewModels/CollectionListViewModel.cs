@@ -88,7 +88,7 @@ namespace Gadget.Collection.Pattern.ViewModels
             TDispatcher.Invoke (RequestDataDispatcher);
           }
 
-          // Select
+          // Style
           if (message.IsAction (TInternalMessageAction.Style)) {
             TDispatcher.BeginInvoke (StyleHorizontalChangedDispatcher, message.Support.Argument.Types.HorizontalStyle.StyleString);
             TDispatcher.BeginInvoke (StyleVerticalChangedDispatcher, message.Support.Argument.Types.VerticalStyle.StyleString);

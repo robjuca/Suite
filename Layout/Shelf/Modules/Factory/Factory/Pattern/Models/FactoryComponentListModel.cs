@@ -62,6 +62,12 @@ namespace Layout.Factory.Pattern.Models
         return (StyleComponentModel.ItemsCount);
       }
     }
+
+    public int SlideIndex
+    {
+      get;
+      set;
+    }
     #endregion
 
     #region Constructor
@@ -81,6 +87,8 @@ namespace Layout.Factory.Pattern.Models
 
       m_SelectedStyleHorizontal = TContentStyle.Style.mini;
       m_SelectedStyleVertical = TContentStyle.Style.mini;
+
+      SlideIndex = 0;
     }
     #endregion
 
@@ -192,7 +200,10 @@ namespace Layout.Factory.Pattern.Models
 
     internal void SelectDefault ()
     {
+      m_ComponentItems.Clear ();
+
       StyleComponentModel.Cleanup ();
+
       Populate ();
     }
 

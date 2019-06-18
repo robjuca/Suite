@@ -15,19 +15,19 @@ using Shared.Resources;
 using Shared.ViewModel;
 using Shared.DashBoard;
 
-using Gadget.Collection.Presentation;
-using Gadget.Collection.Pattern.Models;
+using Layout.Factory.Presentation;
+using Layout.Factory.Pattern.Models;
 //---------------------------//
 
-namespace Gadget.Collection.Pattern.ViewModels
+namespace Layout.Factory.Pattern.ViewModels
 {
-  [Export ("ModuleCollectionListDashBoardViewModel", typeof (ICollectionListDashBoardViewModel))]
-  public class TCollectionListDashBoardViewModel : TViewModelAware<TCollectionListDashBoardModel>, IHandleMessageInternal, ICollectionListDashBoardViewModel
+  [Export ("DashBoardViewModel", typeof (IDashBoardViewModel))]
+  public class TDashBoardViewModel : TViewModelAware<TDashBoardModel>, IHandleMessageInternal, IDashBoardViewModel
   {
     #region Constructor
     [ImportingConstructor]
-    public TCollectionListDashBoardViewModel (ICollectionPresentation presentation)
-      : base (new TCollectionListDashBoardModel ())
+    public TDashBoardViewModel (IFactoryPresentation presentation)
+      : base (new TDashBoardModel ())
     {
       TypeName = GetType ().Name;
 
@@ -41,7 +41,7 @@ namespace Gadget.Collection.Pattern.ViewModels
     #region IHandle
     public void Handle (TMessageInternal message)
     {
-      if (message.IsModule (TResource.TModule.Collection)) {
+      if (message.IsModule (TResource.TModule.Factory)) {
         // from parent
         if (message.Node.IsParentToMe (TChild.Board)) {
           if (message.IsAction (TInternalMessageAction.Response)) {
@@ -91,9 +91,7 @@ namespace Gadget.Collection.Pattern.ViewModels
     void BackDispatcher ()
     {
       // to Sibling
-      var message = new TCollectionMessageInternal (TInternalMessageAction.Back, TypeInfo);
-      message.Node.SelectRelationSibling (TChild.Board);
-
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Back, TChild.Board, TypeInfo);
       DelegateCommand.PublishInternalMessage.Execute (message);
     }
 
@@ -109,7 +107,11 @@ namespace Gadget.Collection.Pattern.ViewModels
 
         action.Summary.Select (category);
 
-        var message = new TCollectionMessageInternal (TInternalMessageAction.Request, TChild.Board, TypeInfo);
+        // only Enabled = true and Busy = false
+        action.Summary.ZapDisable = true;
+        action.Summary.ZapBusy = true;
+
+        var message = new TFactoryMessageInternal (TInternalMessageAction.Request, TChild.Board, TypeInfo);
         message.Support.Argument.Types.Select (action);
 
         DelegateCommand.PublishInternalMessage.Execute (message);
@@ -132,8 +134,7 @@ namespace Gadget.Collection.Pattern.ViewModels
     void ItemClickedDispatcher (TDashBoardEventArgs args)
     {
       // to Sibling
-      var message = new TCollectionMessageInternal (TInternalMessageAction.Style, TypeInfo);
-      message.Node.SelectRelationSibling (TChild.Board);
+      var message = new TFactorySiblingMessageInternal (TInternalMessageAction.Style, TChild.Board, TypeInfo);
       message.Support.Argument.Types.HorizontalStyle.CopyFrom (args.HorizontalStyleInfo);
       message.Support.Argument.Types.VerticalStyle.CopyFrom (args.VerticalStyleInfo);
 

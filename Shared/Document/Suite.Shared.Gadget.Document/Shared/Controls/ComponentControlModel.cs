@@ -5,7 +5,7 @@
 
 //----- Include
 using System;
-
+using System.Collections.Generic;
 using rr.Library.Types;
 
 using Shared.ViewModel;
@@ -160,6 +160,8 @@ namespace Shared.Gadget.Document
     public void SelectModel (TComponentModelItem item)
     {
       if (item.NotNull ()) {
+        ComponentModelItem.CopyFrom (item);
+
         Id = item.Id;
 
         HorizontalStyleString = item.LayoutModel.StyleHorizontal;
@@ -182,6 +184,14 @@ namespace Shared.Gadget.Document
         RtfParagraph = item.DocumentModel.Paragraph;
 
         ExternalLink = item.TextModel.ExternalLink;
+      }
+    }
+
+    public void RequestComponentModel (List<TComponentModelItem> models)
+    {
+      if (models.NotNull ()) {
+        models.Clear ();
+        models.Add (ComponentModelItem);
       }
     }
 
@@ -245,8 +255,20 @@ namespace Shared.Gadget.Document
       InfoReport = string.Empty;
 
       Id = Guid.Empty;
-    }
 
+      ComponentModelItem = TComponentModelItem.CreateDefault;
+    }
+    #endregion
+
+    #region Property
+    TComponentModelItem ComponentModelItem
+    {
+      get;
+      set;
+    }
+    #endregion
+
+    #region Static
     public static TComponentControlModel Create (TComponentModelItem item)
     {
       var model = CreateDefault;
@@ -254,9 +276,7 @@ namespace Shared.Gadget.Document
 
       return (model);
     }
-    #endregion
-
-    #region Static
+    
     public static TComponentControlModel CreateDefault => new TComponentControlModel ();
     #endregion
   };

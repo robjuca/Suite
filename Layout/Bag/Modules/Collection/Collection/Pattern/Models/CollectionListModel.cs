@@ -174,6 +174,9 @@ namespace Layout.Collection.Pattern.Models
     {
       IsEnabledFilter = false;
       SelectedIndex = -1;
+
+      StyleHorizontalSelectorModel.Select (TContentStyle.Style.None);
+      StyleVerticalSelectorModel.Select (TContentStyle.Style.None);
     }
     #endregion
 

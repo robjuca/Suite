@@ -73,10 +73,10 @@ namespace Shared.Gadget.Image
       }
     }
 
-    public void Request (List<TComponentModelItem> list)
+    public void RequestComponentModel (List<TComponentModelItem> models)
     {
-      if (list.NotNull ()) {
-        list.Clear ();
+      if (models.NotNull ()) {
+        models.Clear ();
 
         var orderList = FrameCollection
           .OrderBy (p => p.Value.NodeModel.Position)
@@ -84,7 +84,7 @@ namespace Shared.Gadget.Image
         ;
 
         foreach (var item in orderList) {
-          list.Add (item.Value);
+          models.Add (item.Value);
         }
       }
     }
