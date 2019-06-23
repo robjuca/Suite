@@ -117,6 +117,54 @@ namespace Shared.Layout.Bag
       }
     }
 
+    public void SelectModel (TComponentModelItem model)
+    {
+      if (model.NotNull ()) {
+        SelectModel (model.Id, model.Category);
+
+        // child category
+        if (model.ChildCollection.Count > 0) {
+          var childModel = model.ChildCollection [0];
+          var childHorizontalStyle = TStyleInfo.Create (TContentStyle.Mode.Horizontal);
+          childHorizontalStyle.Select (childModel.StyleHorizontal);
+
+          var childVerticalStyle = TStyleInfo.Create (TContentStyle.Mode.Vertical);
+          childVerticalStyle.Select (childModel.StyleVertical);
+
+          ChildId = childModel.Id;
+          ChildCategory = childModel.Category;
+          HorizontalStyle.Select (childHorizontalStyle.Style);
+          VerticalStyle.Select (childVerticalStyle.Style);
+
+          switch (ChildCategory) {
+            case Server.Models.Infrastructure.TCategory.Document:
+              if (model.ChildCollection.Count.Equals (1)) {
+                ComponentDocumentControlModel.SelectModel (childModel);
+              }
+              break;
+
+            case Server.Models.Infrastructure.TCategory.Image:
+              foreach (var itemChildModel in model.ChildCollection) {
+                ComponentImageControlModel.SelectModel (itemChildModel);
+              }
+              break;
+
+            case Server.Models.Infrastructure.TCategory.Video:
+              // not now
+              break;
+          }
+
+          var contentStyle = TContentStyle.CreateDefault;
+
+          var colSize = contentStyle.RequestBoardStyleSize (HorizontalStyle.Style);
+          var rowSize = contentStyle.RequestBoardStyleSize (VerticalStyle.Style);
+
+          Size.SelectColumns (colSize);
+          Size.SelectRows (rowSize);
+        }
+      }
+    }
+
     public void SelectChildModel (Guid childId, Server.Models.Infrastructure.TCategory childCategory, TStyleInfo horizontalStyle, TStyleInfo verticalStyle, TComponentModelItem childModel)
     {
       ChildId = childId;

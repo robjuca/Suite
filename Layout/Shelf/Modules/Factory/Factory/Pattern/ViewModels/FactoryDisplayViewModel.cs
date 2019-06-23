@@ -124,7 +124,13 @@ namespace Layout.Factory.Pattern.ViewModels
     public void OnComponentControlLoaded (object control)
     {
       if (control is TComponentDisplayControl) {
+        bool changeSize = m_ComponentControl.IsNull ();
+        
         m_ComponentControl = m_ComponentControl ?? (TComponentDisplayControl) control;
+
+        if (changeSize) {
+          m_ComponentControl.ChangeSize (TSize.Create (4, 4)); // matrix 4x4
+        }
       }
     }
     #endregion
@@ -233,7 +239,7 @@ namespace Layout.Factory.Pattern.ViewModels
     void ResponseSelectByIdDispatcher (Server.Models.Component.TEntityAction action)
     {
       /*
-       - action.ModelAction {child model (Document}
+       - action.ModelAction {child model (gadget}
        - action.ModelAction.ExtensionNodeModel;
       */
 
@@ -303,7 +309,7 @@ namespace Layout.Factory.Pattern.ViewModels
         var size = TSize.Create (action.ModelAction.ExtensionGeometryModel.SizeCols, action.ModelAction.ExtensionGeometryModel.SizeRows);
 
         m_ComponentControl.ChangeSize (size);
-        m_ComponentControl.InsertContent (models, blockSize:true);
+        m_ComponentControl.InsertContent (models, sizeLocked: true);
       }
 
       RaiseChanged ();

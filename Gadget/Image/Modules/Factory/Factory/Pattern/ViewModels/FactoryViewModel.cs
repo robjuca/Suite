@@ -71,14 +71,12 @@ namespace Gadget.Factory.Pattern.ViewModels
         if (message.Node.IsRelationChild) {
           // Request
           if (message.IsAction (TInternalMessageAction.Request)) {
-            //if (requestData.IsWhat (TWhat.None) == false) {
-              // to module
-              var messageModule = new TFactoryMessage (TMessageAction.Request, TypeInfo);
-              messageModule.Node.SelectRelationModule (message.Node.Child);
-              messageModule.Support.Argument.Types.CopyFrom (message.Support.Argument.Types);
+            // to module
+            var messageModule = new TFactoryMessage (TMessageAction.Request, TypeInfo);
+            messageModule.Node.SelectRelationModule (message.Node.Child);
+            messageModule.Support.Argument.Types.CopyFrom (message.Support.Argument.Types);
 
-              DelegateCommand.PublishMessage.Execute (messageModule);
-            //}
+            DelegateCommand.PublishMessage.Execute (messageModule);
           }
 
           // Reload

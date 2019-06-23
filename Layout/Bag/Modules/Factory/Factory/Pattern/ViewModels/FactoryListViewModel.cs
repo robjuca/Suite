@@ -84,11 +84,6 @@ namespace Layout.Factory.Pattern.ViewModels
             RaiseChanged ();
           }
 
-          // Select
-          if (message.IsAction (TInternalMessageAction.Select)) {
-            //TDispatcher.BeginInvoke (SelectDispatcher, TEntityAction.Request (message.Support.Argument.Types.EntityAction));
-          }
-
           // Cleanup
           if (message.IsAction (TInternalMessageAction.Cleanup)) {
             Model.Cleanup ();

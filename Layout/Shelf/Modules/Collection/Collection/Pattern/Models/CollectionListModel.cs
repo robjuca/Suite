@@ -65,25 +65,6 @@ namespace Layout.Collection.Pattern.Models
       SelectedIndex = ItemsCollection.Count.Equals (0) ? -1 : 0;
     }
 
-    internal void Select2 (Server.Models.Component.TEntityAction action)
-    {
-      /*
-        action.CollectionAction.ContentOperation.ContentTypeCollection
-      */
-      action.ThrowNull ();
-
-      //var typeCollection = action.CollectionAction.ContentOperation.ContentTypeCollection [Server.Models.Infrastructure.TContextType.ToValue (Server.Models.Infrastructure.TContextType.Context.Shelf)];
-
-      //var contentAction = Server.Models.Content.TEntityAction.CreateDefault;
-      //contentAction.CollectionAction.SetCollection (typeCollection);
-
-      //foreach (var item in ItemsCollection) {
-      //  item.Select (contentAction);
-      //}
-
-
-    }
-
     internal void Cleanup ()
     {
       ItemsCollection.Clear ();

@@ -149,16 +149,6 @@ namespace Layout.Factory.Pattern.ViewModels
 
       DelegateCommand.PublishInternalMessage.Execute (message);
     }
-
-    //public void OnStyleSelected (string style)
-    //{
-    //  Enum.TryParse (style, out TContentStyle.Style selectedStyle);
-
-    //  //TODO: ????
-    //  //Model.SelectStyle (selectedStyle);
-
-    //  TDispatcher.Invoke (RefreshAllDispatcher);
-    //}
     #endregion
 
     #region Dispatcher

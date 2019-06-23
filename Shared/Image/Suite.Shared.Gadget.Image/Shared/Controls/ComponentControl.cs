@@ -11,7 +11,7 @@ using System.Windows.Controls;
 
 namespace Shared.Gadget.Image
 {
-  public sealed  class TComponentControl : ListBox
+  public sealed  class TComponentControl : ItemsControl
   {
     #region Dependency Property
     public static readonly DependencyProperty ModelProperty =
@@ -87,7 +87,7 @@ namespace Shared.Gadget.Image
     static void ModelPropertyChanged (DependencyObject source, DependencyPropertyChangedEventArgs e)
     {
       if (source is TComponentControl control) {
-        if (e.NewValue is TComponentControlModel model) {
+        if (e.NewValue is TComponentControlModel) {
           // do nothing
         }
       }

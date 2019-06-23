@@ -175,9 +175,6 @@ namespace Shared.Gadget.Document
       grid.RowDefinitions.Add (new RowDefinition () { Height = new GridLength (1, GridUnitType.Auto) }); // row 2 preview button
       grid.RowDefinitions.Add (new RowDefinition () { Height = new GridLength (1, GridUnitType.Star) }); // row 3 Document
 
-      //grid.Children.Add (m_DocumentInfo);
-      //grid.Children.Add (m_ImageInfo);
-      //grid.Children.Add (m_PreviewButton);
       grid.Children.Add (DocumentGrid);
 
       AddChild (grid);

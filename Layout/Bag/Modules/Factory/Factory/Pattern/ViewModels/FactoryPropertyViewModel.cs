@@ -114,8 +114,10 @@ namespace Layout.Factory.Pattern.ViewModels
       Model.ShowPanels ();
       RaiseChanged ();
 
+      // Insert
       var action = TEntityAction.Create (Server.Models.Infrastructure.TCategory.Bag, Server.Models.Infrastructure.TOperation.Insert);
 
+      // Change - Full
       if (IsViewModeEdit) {
         action = TEntityAction.Create (Server.Models.Infrastructure.TCategory.Bag, Server.Models.Infrastructure.TOperation.Change, Server.Models.Infrastructure.TExtension.Full);
       }

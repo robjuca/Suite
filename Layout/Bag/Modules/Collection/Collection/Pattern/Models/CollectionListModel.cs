@@ -113,8 +113,6 @@ namespace Layout.Collection.Pattern.Models
 
       SelectedIndex = -1;
       SlideIndex = 0;
-
-      m_NodeCollection = new Collection<ExtensionNode> ();
     }
     #endregion
 
@@ -135,8 +133,6 @@ namespace Layout.Collection.Pattern.Models
       m_SelectedStyleVertical = TContentStyle.TryToParse (StyleVerticalSelectorSelect);
 
       SelectStyle (m_SelectedStyleHorizontal, m_SelectedStyleVertical, action);
-
-      m_NodeCollection = new Collection<ExtensionNode> (action.CollectionAction.ExtensionNodeCollection);
     }
 
     internal void SelectStyleHorizontal (TContentStyle.Style selectedStyleHorizontal)
@@ -193,7 +189,6 @@ namespace Layout.Collection.Pattern.Models
     #region Fields
     TContentStyle.Style                                         m_SelectedStyleHorizontal;
     TContentStyle.Style                                         m_SelectedStyleVertical;
-    Collection<ExtensionNode>                                   m_NodeCollection;
     #endregion
 
     #region Support

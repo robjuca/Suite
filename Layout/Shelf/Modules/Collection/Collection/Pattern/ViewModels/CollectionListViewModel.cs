@@ -58,17 +58,6 @@ namespace Layout.Collection.Pattern.ViewModels
                 }
               }
             }
-
-            // Select Many
-            if (message.Support.Argument.Types.IsOperation (Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Many)) {
-              if (message.Result.IsValid) {
-                // Content
-                //if (message.Support.Argument.Types.IsContextType (Server.Models.Infrastructure.TContextType.Context.Content)) {
-                //  var entityAction = Server.Models.Content.TEntityAction.Request (message.Support.Argument.Types.EntityAction);
-                //  TDispatcher.BeginInvoke (ResponseDataDispatcher, entityAction);
-                //}
-              }
-            }
           }
 
           // Reload
@@ -109,36 +98,13 @@ namespace Layout.Collection.Pattern.ViewModels
       DelegateCommand.PublishInternalMessage.Execute (message);
     }
 
-    void RequestDataContentDispatcher ()
-    {
-      // to parent
-
-      //var action = Server.Models.Content.TEntityAction.Create (Server.Models.Infrastructure.TOperation.Select, Server.Models.Infrastructure.TExtension.Many);
-      //action.Select (Server.Models.Content.TContentOperation.TInternalOperation.Type);
-      //action.SelectType (Server.Models.Infrastructure.TContextType.Context.Shelf);
-
-      //var message = new TCollectionMessageInternal (TInternalMessageAction.Request, TChild.List, TypeInfo);
-      //message.Support.Argument.Types.Select (action);
-
-      //DelegateCommand.PublishInternalMessage.Execute (message);
-    }
-
     void ResponseDataDispatcher (Server.Models.Component.TEntityAction action)
     {
       Model.Select (action);
       RaiseChanged ();
 
       RefreshCollection ("ModelItemsViewSource");
-      //TDispatcher.Invoke (RequestDataContentDispatcher);
     }
-
-    //void ResponseDataDispatcher (Server.Models.Content.TEntityAction action)
-    //{
-    //  Model.Select (action);
-    //  RaiseChanged ();
-
-    //  RefreshCollection ("ModelItemsViewSource");
-    //}
 
     void ItemSelectedDispatcher (TComponentModelItem item)
     {

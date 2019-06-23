@@ -135,10 +135,6 @@ namespace Layout.Factory.Pattern.Models
 
       int index = 0;
 
-      if (action.CollectionAction.ModelCollection.Count.Equals (1)) {
-        //var modelAction = action.CollectionAction.ModelCollection [0];
-      }
-
       foreach (var item in action.CollectionAction.ModelCollection) {
         var id = item.Key;
         var modelAction = item.Value;

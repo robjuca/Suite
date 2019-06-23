@@ -147,7 +147,7 @@ namespace Shared.Layout.Bag
     static void ModelPropertyChanged (DependencyObject source, DependencyPropertyChangedEventArgs e)
     {
       if (source is TComponentControlBase control) {
-        if (e.NewValue is TComponentControlModel model) {
+        if (e.NewValue is TComponentControlModel) {
           control.SelectModel ();
         }
       }

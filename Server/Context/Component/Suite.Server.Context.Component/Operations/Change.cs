@@ -167,6 +167,7 @@ namespace Server.Context.Component
                 }
               }
 
+              context.SaveChanges (); // save here
 
               // Component Relation Collection
 
@@ -317,6 +318,21 @@ namespace Server.Context.Component
                           // validate same parent
                           if (node.ParentId.Equals (id)) {
                             context.ExtensionNode.Add (node);
+                          }
+                        }
+
+                        // update status
+                        foreach (var node in nodeList) {
+                          var list = context.ComponentStatus
+                            .Where (p => p.Id.Equals (node.ChildId))
+                            .ToList ()
+                          ;
+
+                          // found
+                          if (list.Count.Equals (1)) {
+                            var model = list [0];
+                            model.Busy = true;
+                            context.ComponentStatus.Update (model);
                           }
                         }
                       }

@@ -130,7 +130,7 @@ namespace Shared.Gadget.Image
         Frames.Clear ();
 
         foreach (var item in alias.Frames) {
-          Frames.Add (item);
+          Frames.Add (item.Clone ());
         }
       }
     }
