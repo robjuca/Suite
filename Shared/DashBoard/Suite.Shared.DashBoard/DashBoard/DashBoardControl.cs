@@ -213,6 +213,7 @@ namespace Shared.DashBoard
 
         ContentRemoved?.Invoke (this, args);
 
+        m_SlideStatusDisable = IsDashBoardEmpty ().IsFalse ();
         SlideSetup ();
       }
 
@@ -248,14 +249,14 @@ namespace Shared.DashBoard
         if (dashBoardItem.NotNull ()) {
           dashBoardItem.SelectModel (item);
 
+          m_SlideStatusDisable = true;
+          
           TDispatcher.BeginInvoke (ChangeStatusToBusyDispatcher, dashBoardItem);
         }
       }
 
       TDispatcher.Invoke (RefreshCollectionDispatcher);
-
-      m_SlideStatusDisable = true;
-
+      
       SlideSetup ();
     }
 

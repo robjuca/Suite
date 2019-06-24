@@ -64,25 +64,6 @@ namespace Layout.Collection.Pattern.Models
       SelectedIndex = ItemsCollection.Count.Equals (0) ? -1 : 0;
     }
 
-    internal void Select2 (Server.Models.Component.TEntityAction action)
-    {
-      /*
-        action.CollectionAction.ContentOperation.ContentTypeCollection [type] {ContentLayoutCollection}
-      */
-      action.ThrowNull ();
-
-      //var typeCollection = action.CollectionAction.ContentOperation.ContentTypeCollection [Server.Models.Infrastructure.TContextType.ToValue (Server.Models.Infrastructure.TContextType.Context.Drawer)];
-
-      //var contentAction = Server.Models.Content.TEntityAction.CreateDefault;
-      //contentAction.CollectionAction.SetCollection (typeCollection);
-
-      //foreach (var item in ItemsCollection) {
-      //  item.Select (contentAction);
-      //}
-
-      SelectedIndex = ItemsCollection.Count.Equals (0) ? -1 : 0;
-    }
-
     internal void Cleanup ()
     {
       ItemsCollection = new ObservableCollection<TComponentModelItem> ();
