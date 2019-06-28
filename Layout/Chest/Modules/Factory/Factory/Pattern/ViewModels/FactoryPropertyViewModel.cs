@@ -286,21 +286,6 @@ namespace Layout.Factory.Pattern.ViewModels
     #endregion
 
     #region Support
-    //void PropertySelect (string propertyName)
-    //{
-    //  var action = Server.Models.Component.TEntityAction.CreateDefault;
-    //  Model.ComponentModelProperty.RequestModel (action);
-
-    //  // to Sibling
-    //  var message = new TFactorySiblingMessageInternal (TInternalMessageAction.PropertySelect, TChild.Property, TypeInfo);
-    //  message.Support.Argument.Types.Select (action);
-    //  message.Support.Argument.Args.Select (propertyName);
-
-    //  DelegateCommand.PublishInternalMessage.Execute (message);
-
-    //  RaiseChanged ();
-    //}
-
     void Cleanup ()
     {
       CleanupSibling ();
