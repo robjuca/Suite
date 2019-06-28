@@ -142,6 +142,8 @@ usa-se “style”.
 *Message* : (Dispatcher)
 ![](Docs/media/MessageDispatcher.jpg)
 
-*Suite* : (Screen)
-*Settings* 
+*Suite* : (Screen)*Settings* 
 ![](Docs/media/SuiteSettingsScreen.jpg)
+
+*Suite* : (Screen)*Gadget Document* 
+![](Docs/media/SuiteGadgetDocumentScreen.jpg)
