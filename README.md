@@ -150,3 +150,15 @@ usa-se “style”.
 
 *Suite* : (Screen) *Gadget Image* 
 ![](Docs/media/SuiteGadgetImageScreen.jpg)
+
+*Suite* : (Screen) *Layout Bag* 
+![](Docs/media/SuiteLayoutBagScreen.jpg)
+
+*Suite* : (Screen) *Layout Shelf* 
+![](Docs/media/SuiteLayoutShelfScreen.jpg)
+
+*Suite* : (Screen) *Layout Drawer* 
+![](Docs/media/SuiteLayoutDrawerScreen.jpg)
+
+*Suite* : (Screen) *Layout Chest* 
+![](Docs/media/SuiteLayoutChestScreen.jpg)
