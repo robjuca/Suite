@@ -4,15 +4,13 @@
 ----------------------------------------------------------------*/
 
 //----- Include
-using System;
-
-using XDMessaging;
-
 using rr.Library.Helper;
 using rr.Library.Infrastructure;
 using rr.Library.Types;
+using rr.Library.Communication;
 
 using Shared.Types;
+using Shared.Communication;
 //---------------------------//
 
 namespace Shared.ViewModel
@@ -37,8 +35,10 @@ namespace Shared.ViewModel
 
       m_ModalCount = 0;
 
-      m_MessagingClient = new XDMessagingClient ();
-      m_Broadcaster = m_MessagingClient.Broadcasters.GetBroadcasterForMode (XDTransportMode.HighPerformanceUI);
+      m_DataComm = TDataComm.CreateDefault;
+
+      m_Communication = new TMessagingComm<TDataComm> (m_DataComm);
+      m_Communication.Handle += OnCommunicationHandle;
     }
     #endregion
 
@@ -108,9 +108,11 @@ namespace Shared.ViewModel
       Model.Select (authentication);
     }
 
-    public void NotifyMainProcess (string message)
+    public void NotifyMainProcess (TCommandComm command)
     {
-      m_Broadcaster.SendToChannel (ProcessName, message);
+      m_DataComm.Select (command, ProcessName);
+
+      m_Communication.Publish (m_DataComm);
     }
     #endregion
 
@@ -121,9 +123,15 @@ namespace Shared.ViewModel
     #endregion
 
     #region Event
+    void OnCommunicationHandle (object sender, TMessagingEventArgs<TDataComm> e)
+    {
+    
+    }
+
     void OnClosing (object sender, System.ComponentModel.CancelEventArgs e)
     {
-      NotifyMainProcess ("closed");
+      
+      NotifyMainProcess (TCommandComm.Closed);
     }
     #endregion
 
@@ -140,13 +148,13 @@ namespace Shared.ViewModel
     protected override void AllDone ()
     {
       (FrameworkElementView as System.Windows.Window).Closing += OnClosing;
-    } 
+    }
     #endregion
 
     #region Fields
-    XDMessagingClient                       m_MessagingClient;
-    IXDBroadcaster                          m_Broadcaster;
-    int                                     m_ModalCount;
+    readonly TMessagingComm<TDataComm>                          m_Communication;
+    readonly TDataComm                                          m_DataComm;
+    int                                                         m_ModalCount;
     #endregion
   };
   //---------------------------//

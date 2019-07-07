@@ -9,10 +9,11 @@ using System.ComponentModel.Composition;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-using XDMessaging;
-
 using rr.Library.Infrastructure;
 using rr.Library.Helper;
+using rr.Library.Communication;
+
+using Shared.Communication;
 
 using Suite.Launcher.Shell.Presentation;
 using Suite.Launcher.Shell.Pattern.Models;
@@ -53,19 +54,10 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
       m_CurrentModule = TProcessName.Settings;
       m_SettingsValidating = true;
 
-      m_MessagingClient = new XDMessagingClient ();
-      
-      m_Listener = m_MessagingClient.Listeners.GetListenerForMode (XDTransportMode.HighPerformanceUI);
-      m_Listener.MessageReceived += OnMessageReceived; // Attach event handler for incoming messages
+      m_DataComm = TDataComm.CreateDefault;
 
-      // register modules
-      m_Listener.RegisterChannel (SETTINGS);
-      m_Listener.RegisterChannel (DOCUMENT);
-      m_Listener.RegisterChannel (IMAGE);
-      m_Listener.RegisterChannel (BAG);
-      m_Listener.RegisterChannel (SHELF);
-      m_Listener.RegisterChannel (DRAWER);
-      m_Listener.RegisterChannel (CHEST);
+      m_Communication = new TMessagingComm<TDataComm> (m_DataComm);
+      m_Communication.Handle += OnCommunicationHandle; // Attach event handler for incoming messages
     }
     #endregion
 
@@ -207,35 +199,31 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
     #endregion
 
     #region MessageEvent
-    void OnMessageReceived (object sender, XDMessageEventArgs messageEventArgs)
+    void OnCommunicationHandle (object sender, TMessagingEventArgs<TDataComm> e)
     {
-      // e.DataGram.Message is the message
-      // e.DataGram.Channel is the channel name
-
-      var module = Enum.Parse (typeof (TProcessName), messageEventArgs.DataGram.Channel);
-      var message = messageEventArgs.DataGram.Message;
+      var module = Enum.Parse (typeof (TProcessName), e.Data.ClientName);
 
       switch (module) {
         case TProcessName.Settings: {
-            switch (message) {
-              case "shutdown": {
+            switch (e.Data.Command) {
+              case TCommandComm.Shutdown: {
                   RemoveProcess (SETTINGS);
                 }
                 break;
 
-              case "closed": {
+              case TCommandComm.Closed: {
                   RemoveProcess (SETTINGS);
                   Model.EnableAll ();
                   RaiseChanged ();
                 }
                 break;
 
-              case "success": {
+              case TCommandComm.Success: {
                   m_SettingsValidating = false;
                 }
                 break;
 
-              case "error": {
+              case TCommandComm.Error: {
                   Model.SettingsOnly ();
                   RaiseChanged ();
 
@@ -249,8 +237,8 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
           break;
 
         case TProcessName.Document: {
-            switch (message) {
-              case "closed": {
+            switch (e.Data.Command) {
+              case TCommandComm.Closed: {
                   RemoveProcess (DOCUMENT);
                 }
                 break;
@@ -259,8 +247,8 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
           break;
 
         case TProcessName.Image: {
-            switch (message) {
-              case "closed": {
+            switch (e.Data.Command) {
+              case TCommandComm.Closed: {
                   RemoveProcess (IMAGE);
                 }
                 break;
@@ -269,8 +257,8 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
           break;
 
         case TProcessName.Bag: {
-            switch (message) {
-              case "closed": {
+            switch (e.Data.Command) {
+              case TCommandComm.Closed: {
                   RemoveProcess (BAG);
                 }
                 break;
@@ -279,8 +267,8 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
           break;
 
         case TProcessName.Shelf: {
-            switch (message) {
-              case "closed": {
+            switch (e.Data.Command) {
+              case TCommandComm.Closed: {
                   RemoveProcess (SHELF);
                 }
                 break;
@@ -289,8 +277,8 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
           break;
 
         case TProcessName.Drawer: {
-            switch (message) {
-              case "closed": {
+            switch (e.Data.Command) {
+              case TCommandComm.Closed: {
                   RemoveProcess (DRAWER);
                 }
                 break;
@@ -299,8 +287,8 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
           break;
 
         case TProcessName.Chest: {
-            switch (message) {
-              case "closed": {
+            switch (e.Data.Command) {
+              case TCommandComm.Closed: {
                   RemoveProcess (CHEST);
                 }
                 break;
@@ -402,13 +390,13 @@ namespace Suite.Launcher.Shell.Pattern.ViewModels
     #endregion
 
     #region Fields
-    XDMessagingClient                                         m_MessagingClient;
-    IXDListener                                               m_Listener;
-    Dictionary<string, Process>                               m_Process;
-    Dictionary<string, string>                                m_Modules;
-    TProcessName                                              m_CurrentModule;
-    bool                                                      m_SettingsValidating;
-    static readonly string []                                 Modules = new string [] { DOCUMENT, IMAGE, BAG, SHELF, DRAWER, CHEST, SETTINGS };
+    readonly TMessagingComm<TDataComm>                                    m_Communication;
+    readonly TDataComm                                                    m_DataComm;
+    readonly Dictionary<string, Process>                                  m_Process;
+    readonly Dictionary<string, string>                                   m_Modules;
+    TProcessName                                                          m_CurrentModule;
+    bool                                                                  m_SettingsValidating;
+    static readonly string []                                             Modules = new string [] { DOCUMENT, IMAGE, BAG, SHELF, DRAWER, CHEST, SETTINGS };
     #endregion
 
     #region Support

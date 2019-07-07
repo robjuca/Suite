@@ -16,6 +16,7 @@ using Shared.Types;
 using Shared.Resources;
 using Shared.Message;
 using Shared.ViewModel;
+using Shared.Communication;
 
 using Module.Settings.Shell.Presentation;
 using Module.Settings.Shell.Pattern.Models;
@@ -233,7 +234,7 @@ namespace Module.Settings.Shell.Pattern.ViewModels
     void DatabaseSettingsSuccessDispatcher ()
     {
       // notify main process
-      NotifyMainProcess ("success");
+      NotifyMainProcess (TCommandComm.Success);
 
       // update INI file
       var filePath = System.Environment.CurrentDirectory;
@@ -263,7 +264,7 @@ namespace Module.Settings.Shell.Pattern.ViewModels
     void DatabaseSettingsErrorDispatcher ()
     {
       // notify main process
-      NotifyMainProcess ("error");
+      NotifyMainProcess (TCommandComm.Error);
 
       Model.ClearPanels ();
       Model.DatabaseStatus (false);
@@ -346,7 +347,7 @@ namespace Module.Settings.Shell.Pattern.ViewModels
           Thread.Sleep (4500);
         }).ContinueWith (t =>
         {
-          NotifyMainProcess ("shutdown");
+          NotifyMainProcess (TCommandComm.Shutdown);
 
           (FrameworkElementView as System.Windows.Window).Close ();
         }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext ());

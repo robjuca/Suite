@@ -38,6 +38,9 @@ CALL :error "Could not find Visual Studio directory."
 	echo --- VIEWMODEL . . .
 	msbuild.exe "D:\Documents\GitHub\Source\Repository\WPF\Suite\Shared\ViewModel\Suite Shared ViewModel.sln" -t:rebuild -verbosity:minimal -nologo
 	
+	echo --- COMMUNICATION . . .
+	msbuild.exe "D:\Documents\GitHub\Source\Repository\WPF\Suite\Shared\Communication\Suite Shared Communication.sln" -t:rebuild -verbosity:minimal -nologo
+	
 	echo --- DASHBOARD . . .
 	msbuild.exe "D:\Documents\GitHub\Source\Repository\WPF\Suite\Shared\DashBoard\Suite Shared DashBoard.sln" -t:rebuild -verbosity:minimal -nologo
 	
