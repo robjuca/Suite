@@ -321,7 +321,14 @@ namespace Server.Context.Component
                           }
                         }
 
+                        context.SaveChanges (); // update
+
                         // update status
+                        nodeList = context.ExtensionNode
+                          .Where (p => p.ParentId.Equals (id))
+                          .ToList ()
+                        ;
+
                         foreach (var node in nodeList) {
                           var list = context.ComponentStatus
                             .Where (p => p.Id.Equals (node.ChildId))

@@ -4,6 +4,8 @@
 ----------------------------------------------------------------*/
 
 //----- Include
+using System;
+
 using rr.Library.Helper;
 using rr.Library.Infrastructure;
 using rr.Library.Types;
@@ -100,6 +102,11 @@ namespace Shared.ViewModel
         RaiseChanged ();
       }
 
+      // Update
+      if (message.IsAction (TMessageAction.Update)) {
+        NotifyProcess (TCommandComm.Refresh);
+      }
+
       ProcessMessage (message);
     }
 
@@ -108,7 +115,7 @@ namespace Shared.ViewModel
       Model.Select (authentication);
     }
 
-    public void NotifyMainProcess (TCommandComm command)
+    public void NotifyProcess (TCommandComm command)
     {
       m_DataComm.Select (command, ProcessName);
 
@@ -120,18 +127,27 @@ namespace Shared.ViewModel
     public virtual void ProcessMessage (Shared.Message.TMessageModule message)
     {
     }
+
+    public virtual void RefreshProcess ()
+    {
+    }
     #endregion
 
     #region Event
     void OnCommunicationHandle (object sender, TMessagingEventArgs<TDataComm> e)
     {
-    
+      switch (e.Data.Command) {
+        case TCommandComm.Refresh:
+          if (e.Data.ClientName.NotEquals (ProcessName)) {
+            RefreshProcess ();
+          }
+          break;
+      }
     }
 
     void OnClosing (object sender, System.ComponentModel.CancelEventArgs e)
     {
-      
-      NotifyMainProcess (TCommandComm.Closed);
+      NotifyProcess (TCommandComm.Closed);
     }
     #endregion
 

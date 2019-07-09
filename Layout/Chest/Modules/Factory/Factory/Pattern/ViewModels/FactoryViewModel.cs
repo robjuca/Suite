@@ -57,6 +57,15 @@ namespace Layout.Factory.Pattern.ViewModels
 
           DelegateCommand.PublishInternalMessage.Execute (messageInternal);
         }
+
+        // RefreshProcess
+        if (message.IsAction (TMessageAction.RefreshProcess)) {
+          // to child property (Edit Leave)
+          var messageInternal = new TFactoryMessageInternal (TInternalMessageAction.EditLeave, TypeInfo);
+          messageInternal.Node.SelectRelationParent (TChild.Property);
+
+          DelegateCommand.PublishInternalMessage.Execute (messageInternal);
+        }
       }
 
       // services

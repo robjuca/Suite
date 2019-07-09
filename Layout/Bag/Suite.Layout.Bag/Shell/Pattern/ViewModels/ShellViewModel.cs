@@ -64,6 +64,13 @@ namespace Layout.Bag.Shell.Pattern.ViewModels
         }
       }
     }
+
+    public override void RefreshProcess ()
+    {
+      // notify modules
+      var message = new TShellMessage (TMessageAction.RefreshProcess, TypeInfo);
+      DelegateCommand.PublishModuleMessage.Execute (message);
+    }
     #endregion
 
     #region View Event

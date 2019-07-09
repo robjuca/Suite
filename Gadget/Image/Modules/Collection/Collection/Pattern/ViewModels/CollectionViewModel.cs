@@ -47,6 +47,15 @@ namespace Gadget.Collection.Pattern.ViewModels
 
           DelegateCommand.PublishInternalMessage.Execute (messageInternal);
         }
+
+        // RefreshProcess
+        if (message.IsAction (TMessageAction.RefreshProcess)) {
+          // to child list (Reload)
+          var messageInternal = new TCollectionMessageInternal (TInternalMessageAction.Reload, TypeInfo);
+          messageInternal.Node.SelectRelationParent (TChild.List);
+
+          DelegateCommand.PublishInternalMessage.Execute (messageInternal);
+        }
       }
 
       // services
@@ -71,6 +80,12 @@ namespace Gadget.Collection.Pattern.ViewModels
           messageInternal.Node.SelectRelationParent (TChild.List);
 
           DelegateCommand.PublishInternalMessage.Execute (messageInternal);
+
+          // to module (Update)
+          var messageModule = new TCollectionMessage (TMessageAction.Update, TypeInfo);
+          messageModule.Node.SelectRelationModule (TChild.None);
+
+          DelegateCommand.PublishMessage.Execute (messageModule);
         }
       }
     }

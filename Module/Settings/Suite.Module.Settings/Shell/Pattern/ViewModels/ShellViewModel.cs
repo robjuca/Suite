@@ -234,7 +234,7 @@ namespace Module.Settings.Shell.Pattern.ViewModels
     void DatabaseSettingsSuccessDispatcher ()
     {
       // notify main process
-      NotifyMainProcess (TCommandComm.Success);
+      NotifyProcess (TCommandComm.Success);
 
       // update INI file
       var filePath = System.Environment.CurrentDirectory;
@@ -264,7 +264,7 @@ namespace Module.Settings.Shell.Pattern.ViewModels
     void DatabaseSettingsErrorDispatcher ()
     {
       // notify main process
-      NotifyMainProcess (TCommandComm.Error);
+      NotifyProcess (TCommandComm.Error);
 
       Model.ClearPanels ();
       Model.DatabaseStatus (false);
@@ -347,7 +347,7 @@ namespace Module.Settings.Shell.Pattern.ViewModels
           Thread.Sleep (4500);
         }).ContinueWith (t =>
         {
-          NotifyMainProcess (TCommandComm.Shutdown);
+          NotifyProcess (TCommandComm.Shutdown);
 
           (FrameworkElementView as System.Windows.Window).Close ();
         }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext ());

@@ -50,6 +50,13 @@ namespace Gadget.Factory.Pattern.ViewModels
             TDispatcher.BeginInvoke (EditDispatcher, Server.Models.Component.TEntityAction.Request (message.Support.Argument.Types.EntityAction));
           }
 
+          // EditLeave
+          if (message.IsAction (TInternalMessageAction.EditLeave)) {
+            if (IsViewModeEdit) {
+              OnCancelCommadClicked ();
+            }
+          }
+
           // Response
           if (message.IsAction (TInternalMessageAction.Response)) {
             // Insert

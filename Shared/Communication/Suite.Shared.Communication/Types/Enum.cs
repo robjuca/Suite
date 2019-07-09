@@ -4,7 +4,6 @@
 ----------------------------------------------------------------*/
 
 //----- Include
-using System;
 //---------------------------//
 
 namespace Shared.Communication
@@ -12,10 +11,11 @@ namespace Shared.Communication
   public enum TCommandComm
   {
     None,
-    Closed              = 1,
-    Success,
+    Closed,
     Error,
+    Refresh,
     Shutdown,
+    Success,
   };
   //---------------------------//
 

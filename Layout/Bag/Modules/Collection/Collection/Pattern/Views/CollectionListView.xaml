@@ -35,16 +35,23 @@
                                             Style="{StaticResource DisableIcon}" />
                         </Border>
 
-                        <!--name, busy-->
+                        <!--busy, name-->
                         <Border Grid.Row="1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
                                     <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
 
+                                <!--busy-->
+                                <Border Grid.Column="0"
+                                        Padding="0 0 3 0">
+                                    <ContentControl Visibility="{Binding BusyVisibility}"
+                                                    Style="{StaticResource ContentBusyIcon}" />
+                                </Border>
+                                
                                 <!--name-->
-                                <Border Grid.Column="0">
+                                <Border Grid.Column="1">
                                     <StackPanel Orientation="Horizontal">
                                         <ContentControl Style="{StaticResource ContentDocumentIcon}"
                                                         Visibility="{Binding NodeDocumentVisibility}" />
@@ -57,13 +64,6 @@
                                                    Text="{Binding Name}"
                                                    FontWeight="Bold" />
                                     </StackPanel>
-                                </Border>
-
-                                <!--busy-->
-                                <Border Grid.Column="1"
-                                        Padding="0 0 3 0">
-                                    <ContentControl Visibility="{Binding BusyVisibility}"
-                                                    Style="{StaticResource ContentBusyIcon}" />
                                 </Border>
                             </Grid>
                         </Border>

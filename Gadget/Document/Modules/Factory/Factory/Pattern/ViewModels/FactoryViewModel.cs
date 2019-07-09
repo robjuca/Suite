@@ -37,6 +37,18 @@ namespace Gadget.Factory.Pattern.ViewModels
     #region IHandle
     public void Handle (TMessageModule message)
     {
+      // shell
+      if (message.IsModule (TResource.TModule.Shell)) {
+        // RefreshProcess
+        if (message.IsAction (TMessageAction.RefreshProcess)) {
+          // to child property (Edit Leave)
+          var messageInternal = new TFactoryMessageInternal (TInternalMessageAction.EditLeave, TypeInfo);
+          messageInternal.Node.SelectRelationParent (TChild.Property);
+
+          DelegateCommand.PublishInternalMessage.Execute (messageInternal);
+        }
+      }
+
       // services
       if (message.IsModule (TResource.TModule.Services)) {
         // Response

@@ -63,6 +63,7 @@ namespace Shared.Types
     ModalLeave,
     Modify,
     None,
+    RefreshProcess,
     Release,
     Reload,
     Remove,
@@ -79,6 +80,7 @@ namespace Shared.Types
     Style,
     Summary,
     Unlocked,
+    Update,
   };
   //---------------------------// 
 
@@ -128,6 +130,7 @@ namespace Shared.Types
     Size,
     Style,
     Summary,
+    Update,
   };
   //---------------------------// 
 

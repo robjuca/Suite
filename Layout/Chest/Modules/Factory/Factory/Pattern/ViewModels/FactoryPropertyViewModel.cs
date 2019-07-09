@@ -52,6 +52,13 @@ namespace Layout.Factory.Pattern.ViewModels
             TDispatcher.BeginInvoke (EditDispatcher, TEntityAction.Request (message.Support.Argument.Types.EntityAction));
           }
 
+          // EditLeave
+          if (message.IsAction (TInternalMessageAction.EditLeave)) {
+            if (IsViewModeEdit) {
+              OnCancelCommadClicked ();
+            }
+          }
+
           // Response
           if (message.IsAction (TInternalMessageAction.Response)) {
             if (message.Result.IsValid) {
@@ -93,6 +100,8 @@ namespace Layout.Factory.Pattern.ViewModels
 
             TDispatcher.Invoke (RefreshAllDispatcher);
           }
+
+          
         }
       }
     }
