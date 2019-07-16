@@ -1,0 +1,58 @@
+﻿@model Suite.Core.ViewModel.TComponentModelItem
+
+<!-- Grid Display-->
+@{
+    var sizeCols = Model.GeometryModel.SizeCols;
+    var positionCol = Model.GeometryModel.PositionCol;
+    var offset = ((positionCol - 1) * 3);
+    var colClass = "col-md-" + (sizeCols * 3) + " offset-md-" + offset;
+
+    <div class="row">
+        <div class="@colClass" style="padding:0">
+            @{
+                <!-- SHELF-->
+                if (Model.HasChild) {
+
+                    var dummywidth = (Model.LayoutModel.Width / Model.Size.Columns) + "px";
+                    var dummyheight = (Model.LayoutModel.Height / Model.Size.Rows) + "px";
+
+                    var shelfSizeCols = Model.GeometryModel.SizeCols;
+                    var shelfSizeRows = Model.GeometryModel.SizeRows;
+
+                    var childCount = Model.ChildCollectionCount;
+
+                    for (int row = 1; row <= shelfSizeRows; row++) {
+                        <table>
+                            <tr>
+                                @{
+                                    for (int col = 1; col <= shelfSizeCols; col++) {
+                                        var child = Model.RequestChild (col, row);
+
+                                        if (child != null) {
+                                            <!-- BAG-->
+                                            <td style="vertical-align:top;background-color:yellow">
+                                                <partial name="~/Views/Display/ChildDisplay.cshtml" model="child" />
+                                            </td>
+
+                                            col += (child.Size.Columns - 1);
+                                            childCount--;
+                                        }
+
+                                        else {
+                                            if (childCount > 0) {
+                                                <td style="background-color:green;width:@dummywidth;height:@dummyheight">
+                                                    <!--dummy-->
+                                                </td>
+                                            }
+                                        }
+                                    }
+                                }
+                            </tr>
+                        </table>
+                    }
+                }
+            }
+        </div>
+    </div>
+}
+

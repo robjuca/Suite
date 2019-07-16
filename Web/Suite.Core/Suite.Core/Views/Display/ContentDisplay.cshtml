@@ -1,0 +1,51 @@
+﻿@model Suite.Core.ViewModel.TComponentModelItem
+<!-- Content Display-->
+
+@{
+    <!--DRAWER-->
+    if (Model.HasChild) {
+        <!--SHELF-->
+        foreach (var child in Model.ChildCollection) {
+
+            @*<div class="card" style="width:@sizewidth"></div>*@
+            @*<div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Active</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        </li>
+                    </ul>
+                </div>*@
+
+            @*<hr style=" width:@sizewidth;border-top:2px solid black" />
+
+                <ul class="nav " style="font-size:10pt">
+                    <li class="nav-item" >
+                        <a class="nav-link active" href="#">Active</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>*@
+
+
+
+            <partial name="~/Views/Display/GridDisplay.cshtml" model="child" />
+
+
+
+
+        }
+    }
+}

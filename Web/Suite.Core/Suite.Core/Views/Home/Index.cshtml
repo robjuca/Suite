@@ -1,0 +1,13 @@
+﻿@model Suite.Core.ViewModel.TComponentModelItem
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (Model.HasChild) {
+        foreach (var child in Model.ChildCollection) {
+            <partial name="~/Views/Display/ContentDisplay.cshtml" model="child" />
+        }
+    }
+}

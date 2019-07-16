@@ -1,0 +1,73 @@
+﻿@model Suite.Core.ViewModel.TComponentModelItem
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description" content="Using Microsoft Visual Studio Enterprise 2019 with ASP.NET MVC Core 2.2 and Entity Framework Core 2.2" />
+    <meta name="author" content="Roberto Oliveira Jucá rrsoft 2001">
+
+    <title>Suite</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+
+<body>
+    <div class="container" >
+        <main>
+
+            <div class="row" >
+                <div class="col-md-3" style="padding:0">
+                    <div style="background-color:yellow">
+                        1
+                    </div>
+                </div>
+                <div class="col-md-3" style="padding:0">
+                    <div style="background-color:red">
+                        2
+                    </div>
+                </div>
+                <div class="col-md-3" style="padding:0">
+                    <div style="background-color:green">
+                        3
+                    </div>
+                </div>
+                <div class="col-md-3" style="padding:0">
+                    <div style="background-color:magenta">
+                        4
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" >
+                <div class="col-md-6" style="padding:0">
+                    <div style="background-color:lightpink">
+                        1 - 2
+                    </div>
+                </div>
+                <div class="col-md-6" style="padding:0">
+                    <div style="background-color:lightblue">
+                        3 - 4
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row" >
+                <div class="col" style="padding:0">
+                    @RenderBody()
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

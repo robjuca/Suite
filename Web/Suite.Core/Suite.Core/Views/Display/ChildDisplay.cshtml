@@ -1,0 +1,27 @@
+﻿@model Suite.Core.ViewModel.TComponentModelItem
+<!-- Child Display-->
+
+@{
+    <!--BAG-->
+    if (Model.HasChild) {
+        <!--Image-->
+        if (Model.IsChildCategoryImage) {
+            <partial name="~/Views/Display/ImageDisplay.cshtml" model="Model" />
+        }
+
+        else {
+            <!--Document or Video-->
+            foreach (var child in Model.ChildCollection) {
+                switch (child.Category) {
+                    case Server.Models.Infrastructure.TCategory.Document:
+                        <partial name="~/Views/Display/DocumentDisplay.cshtml" model="child" />
+                        break;
+
+                    case Server.Models.Infrastructure.TCategory.Video:
+                        break;
+                }
+            }
+        }
+    }
+}
+

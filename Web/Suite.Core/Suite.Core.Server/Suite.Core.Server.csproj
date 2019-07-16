@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Server\Context\Component\Context\" />
+    <Folder Include="Server\Context\Component\Operation\" />
+    <Folder Include="Server\Models\Component\Infrastructure\Model\" />
+    <Folder Include="Server\Models\Component\Models\Extension\" />
+    <Folder Include="Server\Models\Infrastructure\Interfaces\" />
+    <Folder Include="Server\Models\Infrastructure\Types\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="rr.Library.Helper">
+      <HintPath>..\..\..\Bin\rr.Library.Helper.dll</HintPath>
+    </Reference>
+    <Reference Include="rr.Library.Services">
+      <HintPath>..\..\..\Bin\rr.Library.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="rr.Library.Types">
+      <HintPath>..\..\..\Bin\rr.Library.Types.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

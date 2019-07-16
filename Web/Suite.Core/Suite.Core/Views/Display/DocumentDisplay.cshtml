@@ -1,0 +1,63 @@
+﻿@model Suite.Core.ViewModel.TComponentModelItem
+<!-- Document Display-->
+
+@{
+    var sizewidth = Model.LayoutModel.Width;
+    var sizeheight = Model.LayoutModel.Height;
+    var style = "width:" + sizewidth + "px;height:" + sizeheight + "px";
+
+    <table style="@style">
+        @{
+            switch (Model.GeometryModel.PositionImage) {
+                case "Left":
+                    <tr>
+                        <!--image left-->
+                        <partial name="~/Views/Display/ImageContentView.cshtml" model="Model" />
+                        <partial name="~/Views/Display/DocumentContentView.cshtml" model="Model" />
+                    </tr>
+                    break;
+
+                case "Right":
+                    <tr>
+                        <partial name="~/Views/Display/DocumentContentView.cshtml" model="Model" />
+                        <!--image right-->
+                        <partial name="~/Views/Display/ImageContentView.cshtml" model="Model" />
+                    </tr>
+                    break;
+
+                case "Top":
+                    <tr>
+                        <!--image top-->
+                        <partial name="~/Views/Display/ImageContentView.cshtml" model="Model" />
+                    </tr>
+                    <tr>
+                        <partial name="~/Views/Display/DocumentContentView.cshtml" model="Model" />
+                    </tr>
+                    break;
+
+                case "Bottom":
+                    <tr>
+                        <partial name="~/Views/Display/DocumentContentView.cshtml" model="Model" />
+                    </tr>
+                    <tr>
+                        <!--image bottom-->
+                        <partial name="~/Views/Display/ImageContentView.cshtml" model="Model" />
+                    </tr>
+                    break;
+
+                case "Full":
+                    <tr>
+                        <!--image full-->
+                        <partial name="~/Views/Display/DocumentImageFullView.cshtml" model="Model" />
+                    </tr>
+                    break;
+
+                case "None":
+                    <tr>
+                        <partial name="~/Views/Display/DocumentContentView.cshtml" model="Model" />
+                    </tr>
+                    break;
+            }
+        }
+    </table>
+}

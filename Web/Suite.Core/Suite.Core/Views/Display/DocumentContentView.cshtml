@@ -1,0 +1,77 @@
+﻿@model Suite.Core.ViewModel.TComponentModelItem
+<!-- Document Content View-->
+
+@{
+  var sizewidth = Model.LayoutModel.Width;
+  var sizeheight = Model.LayoutModel.Height;
+  var imagewidth = Model.ImageModel.Width;
+  var imageheight = Model.ImageModel.Height;
+
+  var width = sizewidth;
+  var height = sizeheight;
+
+
+  switch (Model.GeometryModel.PositionImage) {
+      case "Left":
+      case "Right":
+          width -= imagewidth;
+          break;
+
+      case "Top":
+      case "Bottom":
+          height -= imageheight;
+          break;
+
+      case "Full":
+          break;
+
+      case "None":
+          break;
+  }
+
+  var headervisible = Model.DocumentModel.HeaderVisibility.Equals ("visible");
+  var footervisible = Model.DocumentModel.FooterVisibility.Equals ("visible");
+
+  var headerdisplay = headervisible ? "normal" : "none";
+  var footerdisplay = footervisible ? "normal" : "none";
+
+  var headerheight = headervisible ? 20 : 0;
+  var headerheightpx = headerheight + "px";
+
+  var footerheight = footervisible ? 20 : 0;
+  var footerheightpx = footerheight + "px";
+
+  var paragraphheight = height - (headerheight + footerheight);
+  var paragraphheightpx = paragraphheight + "px";
+
+  var color = Model.IsImageFull ? "transparent" : "white";
+
+  var style = "width:" + width + "px;height:" + height + "px;vertical-align:top;background-color:" + color;
+
+    <!--Document View-->
+
+<td style="@style">
+    <div class="row" >
+        <!--header-->
+        <div class="col" style="display:@headerdisplay; height:@headerheightpx">
+            <span>@Html.Raw(@Model.DocumentModel.HtmlHeader)</span>
+        </div>
+    </div>
+
+    <!--paragraph-->
+    <div class="row">
+        <div class="col" style="height:@paragraphheightpx">
+            <div style="margin-left:2px; margin-right:2px">
+                <span>@Html.Raw(@Model.DocumentModel.HtmlParagraph)</span>
+            </div>
+        </div>
+    </div>
+
+    <!--footer-->
+    <div class="row">
+        <div class="col" style="display:@footerdisplay; height:@footerheightpx">
+            <span>@Html.Raw(@Model.DocumentModel.HtmlFooter)</span>
+        </div>
+    </div>
+</td>
+}

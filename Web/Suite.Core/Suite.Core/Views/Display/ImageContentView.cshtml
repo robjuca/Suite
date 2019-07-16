@@ -1,0 +1,18 @@
+﻿@model Suite.Core.ViewModel.TComponentModelItem
+<!-- Image Content View-->
+
+@{
+    var imgwidth = Model.ImageModel.Width;
+    var imgheight = Model.ImageModel.Height;
+    var style = "width:" + imgwidth + "px;height:" + imgheight + "px" ;
+
+    Model.WriteImageToFile ();
+
+    <!-- Image View-->
+    <td style="margin:0px; padding:0px">
+        <img src="@Model.ImagePath" style="@style"  >
+    </td>
+}
+
+
+

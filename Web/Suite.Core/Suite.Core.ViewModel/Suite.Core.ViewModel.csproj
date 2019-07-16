@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Suite.Core.Server\Suite.Core.Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="rr.Library.Helper">
+      <HintPath>..\..\..\Bin\rr.Library.Helper.dll</HintPath>
+    </Reference>
+    <Reference Include="rr.Library.Types">
+      <HintPath>..\..\..\Bin\rr.Library.Types.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

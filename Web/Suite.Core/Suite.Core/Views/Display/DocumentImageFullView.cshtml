@@ -1,0 +1,22 @@
+﻿@model Suite.Core.ViewModel.TComponentModelItem
+<!-- Document Image Full View-->
+
+@{
+    var imgwidth = Model.ImageModel.Width;
+    var imgheight = Model.ImageModel.Height;
+
+    Model.WriteImageToFile ();
+
+    string path = @Model.ImagePath;
+    path = path.Replace ('\\', '/');
+
+    var style = "width:" + imgwidth + "px;height:" + imgheight + "px" + ";background-image:url(" + path + ")";
+}
+
+<td style="@style">
+    <table>
+        <tr>
+            <partial name="~/Views/Display/DocumentContentView.cshtml" model="Model" />
+        </tr>
+    </table>
+</td>
